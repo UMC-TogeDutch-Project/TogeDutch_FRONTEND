@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">가치더치</string>
+    <string name="menu_home">홈</string>
+    <string name="menu_chat">채팅</string>
+    <string name="menu_mypage">마이페이지</string>
+    <string name="menu_restaurant">맛집</string>
+</resources>

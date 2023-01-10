@@ -2,10 +2,13 @@ package umc.mobile.project
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import umc.mobile.project.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
+    private lateinit var viewBinding: ActivityLoginBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        viewBinding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(viewBinding.root)
     }
 }

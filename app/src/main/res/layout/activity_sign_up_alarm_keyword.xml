@@ -69,7 +69,7 @@
         android:layout_width="60dp"
         android:layout_height="8dp"
         android:layout_gravity="center"
-        android:src="@drawable/sigh_up_status_bar_register"
+        android:src="@drawable/sign_up_status_bar_register"
         />
     <View
         android:layout_width="match_parent"

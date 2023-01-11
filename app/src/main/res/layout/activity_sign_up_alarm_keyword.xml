@@ -60,11 +60,21 @@
     <TableLayout
         android:id="@+id/tableLayoutEdit"
         android:layout_width="match_parent"
-        android:layout_height="440dp">
+        android:layout_height="400dp">
 
 
     </TableLayout>
 
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="8dp"
+        android:layout_gravity="center"
+        android:src="@drawable/sigh_up_status_bar_register"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="17dp"
+        />
     <Button
         android:id="@+id/btnNext"
         android:layout_width="230dp"

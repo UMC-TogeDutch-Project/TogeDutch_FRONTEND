@@ -28,7 +28,7 @@
         />
 
     <FrameLayout
-        android:id="@+id/frameLayoutEdit"
+        android:id="@+id/frameLayoutSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -39,7 +39,6 @@
             android:id="@+id/spinnerCategory"
             android:layout_width="370dp"
             android:layout_height="41dp"
-            android:hint="시/ 구/ 동"
             android:paddingLeft="17dp"
             android:background="@drawable/spinner_background"
             />
@@ -49,8 +48,8 @@
     <View
         android:id="@+id/tableLayoutEdit"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        />
+        android:layout_height="400dp" />
+
     <ImageView
         android:layout_width="60dp"
         android:layout_height="8dp"

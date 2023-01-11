@@ -17,16 +17,16 @@
         android:layout_marginLeft="16dp"
 
         />
-    
+
     <ImageView
         android:id="@+id/tvTitle"
-        android:layout_width="237dp"
+        android:layout_width="171dp"
         android:layout_height="27dp"
         android:layout_marginTop="25dp"
         android:layout_marginLeft="20dp"
-        android:src="@drawable/sign_up_alarm_title"
+        android:src="@drawable/sign_up_region_title"
         />
-    
+
     <FrameLayout
         android:id="@+id/frameLayoutEdit"
         android:layout_width="wrap_content"
@@ -39,7 +39,7 @@
             android:id="@+id/etInputAlarmKeyword"
             android:layout_width="328dp"
             android:layout_height="41dp"
-            android:hint="음식을 입력하세요"
+            android:hint="시/ 구/ 동"
             android:paddingLeft="17dp"
             android:background="@drawable/sign_up_alram__edit_text_box"
             />
@@ -57,14 +57,11 @@
 
     </FrameLayout>
 
-    <TableLayout
+    <View
         android:id="@+id/tableLayoutEdit"
         android:layout_width="match_parent"
         android:layout_height="440dp"
-        >
-
-
-    </TableLayout>
+        />
 
     <Button
         android:id="@+id/btnNext"

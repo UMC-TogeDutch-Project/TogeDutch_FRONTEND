@@ -32,12 +32,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="18dp"
+        android:layout_gravity="center"
         >
 
         <EditText
             android:id="@+id/etInputAlarmKeyword"
-            android:layout_width="328dp"
+            android:layout_width="370dp"
             android:layout_height="41dp"
             android:hint="음식을 입력하세요"
             android:paddingLeft="17dp"

@@ -37,6 +37,7 @@
         app:layout_constraintTop_toBottomOf="@id/tvTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="vertical"
         >
         
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -63,7 +64,7 @@
                 android:id="@+id/tvItemTitleFirst"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="버거킹 같이 시키실분 구합니다."
+                android:text="버거킹 같이 시키실 분 구합니다~"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 android:textSize="17dp"
@@ -121,7 +122,207 @@
 
                 />
             
+            <Button
+                android:id="@+id/btnLikeFirst"
+                android:layout_width="20dp"
+                android:layout_height="18dp"
+                android:background="@drawable/main_item_heart_icon"
+                app:layout_constraintTop_toTopOf="@id/viewFirst"
+                app:layout_constraintEnd_toEndOf="@id/viewFirst"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="14dp"
+                />
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/viewSecond"
+            android:layout_width="370dp"
+            android:layout_height="79dp"
+            android:background="@drawable/sign_up_alram__edit_text_box"
+            android:layout_marginTop="15dp"
+            >
+
+            <ImageView
+                android:id="@+id/ivItemImageSecond"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/main_rv_item_image"
+                app:layout_constraintTop_toTopOf="@id/viewSecond"
+                app:layout_constraintBottom_toBottomOf="@id/viewSecond"
+                app:layout_constraintStart_toStartOf="@id/viewSecond"
+                android:layout_marginStart="12dp"
+
+
+                />
+            <TextView
+                android:id="@+id/tvItemTitleSecond"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="버거킹 같이 시키실분 구합니다."
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="17dp"
+                app:layout_constraintTop_toTopOf="@id/viewSecond"
+                app:layout_constraintStart_toEndOf="@id/ivItemImageSecond"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="8dp"
+                />
+            <ImageView
+                android:id="@+id/ivMapPinIconSecond"
+                android:layout_width="17dp"
+                android:layout_height="15dp"
+                android:src="@drawable/main_item_icon_map_pin"
+                app:layout_constraintTop_toBottomOf="@id/tvItemTitleSecond"
+                app:layout_constraintStart_toEndOf="@id/ivItemImageSecond"
+                android:layout_marginTop="2dp"
+                android:layout_marginStart="8dp"
+
+                />
+
+            <TextView
+                android:id="@+id/tvItemWhereSecond"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="동덕여대 인문관 앞"
+                android:textColor="#557AFF"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/ivMapPinIconSecond"
+                app:layout_constraintTop_toBottomOf="@id/tvItemTitleSecond"
+                android:layout_marginTop="1dp"
+                />
+
+            <ImageView
+                android:id="@+id/ivTimeClockIconSecond"
+                android:layout_width="17dp"
+                android:layout_height="15dp"
+                android:src="@drawable/main_item_icon_clock"
+                app:layout_constraintTop_toBottomOf="@id/ivMapPinIconSecond"
+                app:layout_constraintStart_toEndOf="@id/ivItemImageSecond"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="2dp"
+                />
+
+            <TextView
+                android:id="@+id/tvItemTimeSecond"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3시 30분 주문"
+                android:textColor="#557AFF"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/ivMapPinIconSecond"
+                app:layout_constraintTop_toBottomOf="@id/tvItemWhereSecond"
+
+                />
+
+            <Button
+                android:id="@+id/btnLikeSecond"
+                android:layout_width="20dp"
+                android:layout_height="18dp"
+                android:background="@drawable/main_item_heart_icon"
+                app:layout_constraintTop_toTopOf="@id/viewSecond"
+                app:layout_constraintEnd_toEndOf="@id/viewSecond"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="14dp"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/viewThird"
+            android:layout_width="370dp"
+            android:layout_height="79dp"
+            android:background="@drawable/sign_up_alram__edit_text_box"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            >
+
+            <ImageView
+                android:id="@+id/ivItemImageThird"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/main_rv_item_image"
+                app:layout_constraintTop_toTopOf="@id/viewThird"
+                app:layout_constraintBottom_toBottomOf="@id/viewThird"
+                app:layout_constraintStart_toStartOf="@id/viewThird"
+                android:layout_marginStart="12dp"
+
+
+                />
+            <TextView
+                android:id="@+id/tvItemTitleThird"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="버거킹 같이 시키실분 구합니다."
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="17dp"
+                app:layout_constraintTop_toTopOf="@id/viewThird"
+                app:layout_constraintStart_toEndOf="@id/ivItemImageThird"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="8dp"
+                />
+            <ImageView
+                android:id="@+id/ivMapPinIconThird"
+                android:layout_width="17dp"
+                android:layout_height="15dp"
+                android:src="@drawable/main_item_icon_map_pin"
+                app:layout_constraintTop_toBottomOf="@id/tvItemTitleThird"
+                app:layout_constraintStart_toEndOf="@id/ivItemImageThird"
+                android:layout_marginTop="2dp"
+                android:layout_marginStart="8dp"
+
+                />
+
+            <TextView
+                android:id="@+id/tvItemWhereThird"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="동덕여대 인문관 앞"
+                android:textColor="#557AFF"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/ivMapPinIconThird"
+                app:layout_constraintTop_toBottomOf="@id/tvItemTitleThird"
+                android:layout_marginTop="1dp"
+                />
+
+            <ImageView
+                android:id="@+id/ivTimeClockIconThird"
+                android:layout_width="17dp"
+                android:layout_height="15dp"
+                android:src="@drawable/main_item_icon_clock"
+                app:layout_constraintTop_toBottomOf="@id/ivMapPinIconThird"
+                app:layout_constraintStart_toEndOf="@id/ivItemImageThird"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="2dp"
+                />
+
+            <TextView
+                android:id="@+id/tvItemTimeThird"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3시 30분 주문"
+                android:textColor="#557AFF"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/ivMapPinIconThird"
+                app:layout_constraintTop_toBottomOf="@id/tvItemWhereThird"
+
+                />
+
+            <Button
+                android:id="@+id/btnLikeThird"
+                android:layout_width="20dp"
+                android:layout_height="18dp"
+                android:background="@drawable/main_item_heart_icon"
+                app:layout_constraintTop_toTopOf="@id/viewThird"
+                app:layout_constraintEnd_toEndOf="@id/viewThird"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="14dp"
+                />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

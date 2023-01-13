@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="최신순"
+        android:textSize="23dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        />
+    
+    <Button
+        android:id="@+id/btnMore"
+        android:layout_width="12dp"
+        android:layout_height="18dp"
+        android:background="@drawable/main_more_btn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="20dp"
+        />
+
+    <LinearLayout
+        android:id="@+id/itemsLinear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+        
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/viewFirst"
+            android:layout_width="370dp"
+            android:layout_height="79dp"
+            android:background="@drawable/sign_up_alram__edit_text_box"
+            android:layout_marginTop="15dp"
+            >
+            
+            <ImageView
+                android:id="@+id/ivItemImageFirst"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/main_rv_item_image"
+                app:layout_constraintTop_toTopOf="@id/viewFirst"
+                app:layout_constraintBottom_toBottomOf="@id/viewFirst"
+                app:layout_constraintStart_toStartOf="@id/viewFirst"
+                android:layout_marginStart="12dp"
+
+
+                />
+            <TextView
+                android:id="@+id/tvItemTitleFirst"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="버거킹 같이 시키실분 구합니다."
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="17dp"
+                app:layout_constraintTop_toTopOf="@id/viewFirst"
+                app:layout_constraintStart_toEndOf="@id/ivItemImageFirst"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="8dp"
+                />
+            <ImageView
+                android:id="@+id/ivMapPinIcon"
+                android:layout_width="17dp"
+                android:layout_height="15dp"
+                android:src="@drawable/main_item_icon_map_pin"
+                app:layout_constraintTop_toBottomOf="@id/tvItemTitleFirst"
+                app:layout_constraintStart_toEndOf="@id/ivItemImageFirst"
+                android:layout_marginTop="2dp"
+                android:layout_marginStart="8dp"
+
+                />
+
+            <TextView
+                android:id="@+id/tvItemWhereFirst"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="동덕여대 인문관 앞"
+                android:textColor="#557AFF"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/ivMapPinIcon"
+                app:layout_constraintTop_toBottomOf="@id/tvItemTitleFirst"
+                android:layout_marginTop="1dp"
+                />
+
+            <ImageView
+                android:id="@+id/ivTimeClockIcon"
+                android:layout_width="17dp"
+                android:layout_height="15dp"
+                android:src="@drawable/main_item_icon_clock"
+                app:layout_constraintTop_toBottomOf="@id/ivMapPinIcon"
+                app:layout_constraintStart_toEndOf="@id/ivItemImageFirst"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="2dp"
+                />
+
+            <TextView
+                android:id="@+id/tvItemTimeFirst"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3시 30분 주문"
+                android:textColor="#557AFF"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/ivMapPinIcon"
+                app:layout_constraintTop_toBottomOf="@id/tvItemWhereFirst"
+
+                />
+            
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>>
+
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

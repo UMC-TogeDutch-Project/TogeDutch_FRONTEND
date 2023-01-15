@@ -3,6 +3,7 @@ package umc.mobile.project
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import umc.mobile.project.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity(), MyCustomDialogInterface {
@@ -16,6 +17,15 @@ class LoginActivity : AppCompatActivity(), MyCustomDialogInterface {
             val myCustomDialog = MyCustomDialog(this, this)
             myCustomDialog.show()
         }
+
+        viewBinding.tbSginUp.setOnClickListener {
+            val intent = Intent(this, SignUpActivity::class.java)
+            startActivity(intent)
+        }
+
+        
+
+
     }
 
     override fun onbtnGotoMainClicked() {

@@ -2,6 +2,7 @@ package umc.mobile.project
 
 import android.graphics.Color
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import umc.mobile.project.databinding.ActivityNewsBinding
 
@@ -21,6 +22,7 @@ class NewsActivity : AppCompatActivity(){
         viewBinding.btnMate.setOnClickListener {
             setflag(1)
         }
+
 
 
     }
@@ -44,5 +46,4 @@ class NewsActivity : AppCompatActivity(){
             }
         }
     }
-
 }

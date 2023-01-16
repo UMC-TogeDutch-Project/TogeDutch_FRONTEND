@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="132dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="wrap_content"
+        android:layout_height="19dp"
+        android:text="2023년 01월 16일 오후 10시 27분"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="18dp"
+        android:layout_marginStart="29dp"
+        />
+    
+    <ImageView
+        android:id="@+id/ivMainImage"
+        android:layout_width="71dp"
+        android:layout_height="71dp"
+        app:layout_constraintTop_toBottomOf="@id/tvDate"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="6dp"
+        android:layout_marginStart="26dp"
+        android:src="@drawable/main_rv_item_image"
+        />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:text="버거킹 같이 시키실 분 구합니다~"
+        app:layout_constraintTop_toBottomOf="@id/tvDate"
+        app:layout_constraintStart_toEndOf="@id/ivMainImage"
+        android:layout_marginTop="7dp"
+        android:layout_marginStart="23dp"
+        />
+    
+    <TextView
+        android:id="@+id/tvUserId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="aeeazip"
+        android:textSize="10dp"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintStart_toEndOf="@id/ivMainImage"
+        android:layout_marginStart="23dp"
+        />
+    
+    <ImageView
+        android:id="@+id/ivMapPinIcon"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:src="@drawable/main_item_icon_map_pin"
+        app:layout_constraintTop_toBottomOf="@id/tvUserId"
+        app:layout_constraintStart_toEndOf="@id/ivMainImage"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="2.5dp"
+        />
+
+    <ImageView
+        android:id="@+id/ivTimeClockIcon"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:src="@drawable/main_item_icon_clock"
+        app:layout_constraintTop_toBottomOf="@id/ivMapPinIcon"
+        app:layout_constraintStart_toEndOf="@id/ivMainImage"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="2.5dp"
+        />
+    
+    <TextView
+        android:id="@+id/tvItemWhere"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="동덕여대 인문관 앞"
+        android:textStyle="bold"
+        android:textSize="10dp"
+        android:textColor="#557AFF"
+        app:layout_constraintTop_toBottomOf="@id/tvUserId"
+        app:layout_constraintStart_toEndOf="@id/ivMapPinIcon"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="2.5dp"
+        />
+
+    <TextView
+        android:id="@+id/tvItemTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3시 30분 주문"
+        android:textStyle="bold"
+        android:textSize="10dp"
+        android:textColor="#557AFF"
+        app:layout_constraintTop_toBottomOf="@id/tvItemWhere"
+        app:layout_constraintStart_toEndOf="@id/ivTimeClockIcon"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="3.5dp"
+        />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#40000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

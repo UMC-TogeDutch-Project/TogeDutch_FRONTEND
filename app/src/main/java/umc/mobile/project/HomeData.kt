@@ -1,8 +1,6 @@
 package umc.mobile.project
 
-import android.graphics.drawable.Drawable
-
-data class Data(
+data class HomeData(
     val tvTitle: String?,
     val ivItemImageFirst: Int? = null,
     val tvItemTitleFirst: String,

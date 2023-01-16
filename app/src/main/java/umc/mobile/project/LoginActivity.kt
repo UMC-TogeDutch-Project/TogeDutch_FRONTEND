@@ -23,7 +23,7 @@ class LoginActivity : AppCompatActivity(), MyCustomDialogInterface {
             startActivity(intent)
         }
 
-        
+
 
 
     }

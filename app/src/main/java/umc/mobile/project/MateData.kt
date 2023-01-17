@@ -1,11 +1,9 @@
 package umc.mobile.project
 
-data class UpLoadData(
+data class MateData(
     val tvDate: String? = "",
     val ivMainImage: Int? = null,
     val tvTitle: String? = "",
-    val tvUserId: String? = "",
-    val tvItemWhere: String? = "",
-    val tvItemTime: String? = ""
+    val tvUserId: String? = ""
 
 )

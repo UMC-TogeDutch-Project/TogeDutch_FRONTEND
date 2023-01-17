@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import umc.mobile.project.databinding.ItemNewsUploadDataBinding
 
-
 class UpLoadDataRVAdapter(private val UpLoadDataList: ArrayList<UpLoadData>) : RecyclerView.Adapter<UpLoadDataRVAdapter.DataViewHolder>() {
 
     private val checkboxStatus = SparseBooleanArray()
@@ -15,21 +14,19 @@ class UpLoadDataRVAdapter(private val UpLoadDataList: ArrayList<UpLoadData>) : R
     inner class DataViewHolder(private val viewBinding: ItemNewsUploadDataBinding) :
         RecyclerView.ViewHolder(viewBinding.root) {
         fun bind(upLoadData: UpLoadData) {
-            viewBinding.tvTitle.text = upLoadData.tvTitle
+            viewBinding.tvDate.text = upLoadData.tvDate
             viewBinding.ivMainImage.setImageResource(upLoadData.ivMainImage!!)
+            viewBinding.tvTitle.text = upLoadData.tvTitle
             viewBinding.tvUserId.text = upLoadData.tvUserId
             viewBinding.tvItemWhere.text = upLoadData.tvItemWhere
             viewBinding.tvItemTime.text = upLoadData.tvItemTime
-
-
-
         }
     }
 
     //ViewHolder 만들어질 때 실행할 동작
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UpLoadDataRVAdapter.DataViewHolder {
         val viewBinding =
-            ItemNewsUploadDataBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemNewsUploadDataBinding.inflate(LayoutInflater.from(parent.context))
         return DataViewHolder(viewBinding)
     }
 

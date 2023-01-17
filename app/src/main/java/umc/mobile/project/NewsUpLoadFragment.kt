@@ -15,6 +15,7 @@ class NewsUpLoadFragment : Fragment(){
     private var _viewBinding: FragmentNewsUploadBinding? = null
     private val viewBinding get() = _viewBinding!!
 
+    //더미데이터 리스트
     private var dummyUpLoadData = ArrayList<UpLoadData>()
 
     override fun onCreateView(
@@ -24,19 +25,21 @@ class NewsUpLoadFragment : Fragment(){
     ): View? {
         _viewBinding = FragmentNewsUploadBinding.inflate(inflater, container, false)
 
+
+        //더미데이터
         dummyUpLoadData.apply {
-            add(UpLoadData("버거킹 같이 시키실 분 구합니다!", R.drawable.main_rv_item_image, "aeeazip", "덕성여대 인문관 앞", "3시 30분 주문"))
-            add(UpLoadData("버거킹 같이 시키실 분 구합니다!", R.drawable.main_rv_item_image, "aeeazip", "덕성여대 인문관 앞", "3시 30분 주문"))
-            add(UpLoadData("버거킹 같이 시키실 분 구합니다!", R.drawable.main_rv_item_image, "aeeazip", "덕성여대 인문관 앞", "3시 30분 주문"))
-            add(UpLoadData("버거킹 같이 시키실 분 구합니다!", R.drawable.main_rv_item_image, "aeeazip", "덕성여대 인문관 앞", "3시 30분 주문"))
-            add(UpLoadData("버거킹 같이 시키실 분 구합니다!", R.drawable.main_rv_item_image, "aeeazip", "덕성여대 인문관 앞", "3시 30분 주문"))
-            add(UpLoadData("버거킹 같이 시키실 분 구합니다!", R.drawable.main_rv_item_image, "aeeazip", "덕성여대 인문관 앞", "3시 30분 주문"))
-            add(UpLoadData("버거킹 같이 시키실 분 구합니다!", R.drawable.main_rv_item_image, "aeeazip", "덕성여대 인문관 앞", "3시 30분 주문"))
-            add(UpLoadData("버거킹 같이 시키실 분 구합니다!", R.drawable.main_rv_item_image, "aeeazip", "덕성여대 인문관 앞", "3시 30분 주문"))
-            add(UpLoadData("버거킹 같이 시키실 분 구합니다!", R.drawable.main_rv_item_image, "aeeazip", "덕성여대 인문관 앞", "3시 30분 주문"))
-            add(UpLoadData("버거킹 같이 시키실 분 구합니다!", R.drawable.main_rv_item_image, "aeeazip", "덕성여대 인문관 앞", "3시 30분 주문"))
-            add(UpLoadData("버거킹 같이 시키실 분 구합니다!", R.drawable.main_rv_item_image, "aeeazip", "덕성여대 인문관 앞", "3시 30분 주문"))
-            add(UpLoadData("버거킹 같이 시키실 분 구합니다!", R.drawable.main_rv_item_image, "aeeazip", "덕성여대 인문관 앞", "3시 30분 주문"))
+            add(UpLoadData("2023년 01월 16일 오후 10시 27분", R.drawable.main_rv_item_image,"버거킹 같이 시키실 분 구합니다!", "aeeazip", "덕성여대 인문관 앞", "3시 30분 주문"))
+            add(UpLoadData("2023년 02월 16일 오후 10시 27분", R.drawable.main_rv_item_image,"버거킹 같이 시키실 분 구합니다!", "aeeazip", "덕성여대 인문관 앞", "3시 30분 주문"))
+            add(UpLoadData("2023년 03월 16일 오후 10시 27분", R.drawable.main_rv_item_image,"버거킹 같이 시키실 분 구합니다!", "aeeazip", "덕성여대 인문관 앞", "3시 30분 주문"))
+            add(UpLoadData("2023년 04월 16일 오후 10시 27분", R.drawable.main_rv_item_image,"버거킹 같이 시키실 분 구합니다!", "aeeazip", "덕성여대 인문관 앞", "3시 30분 주문"))
+            add(UpLoadData("2023년 05월 16일 오후 10시 27분", R.drawable.main_rv_item_image,"버거킹 같이 시키실 분 구합니다!", "aeeazip", "덕성여대 인문관 앞", "3시 30분 주문"))
+            add(UpLoadData("2023년 06월 16일 오후 10시 27분", R.drawable.main_rv_item_image,"버거킹 같이 시키실 분 구합니다!", "aeeazip", "덕성여대 인문관 앞", "3시 30분 주문"))
+            add(UpLoadData("2023년 07월 16일 오후 10시 27분", R.drawable.main_rv_item_image,"버거킹 같이 시키실 분 구합니다!", "aeeazip", "덕성여대 인문관 앞", "3시 30분 주문"))
+            add(UpLoadData("2023년 08월 16일 오후 10시 27분", R.drawable.main_rv_item_image,"버거킹 같이 시키실 분 구합니다!", "aeeazip", "덕성여대 인문관 앞", "3시 30분 주문"))
+            add(UpLoadData("2023년 09월 16일 오후 10시 27분", R.drawable.main_rv_item_image,"버거킹 같이 시키실 분 구합니다!", "aeeazip", "덕성여대 인문관 앞", "3시 30분 주문"))
+            add(UpLoadData("2023년 01월 16일 오후 10시 27분", R.drawable.main_rv_item_image,"버거킹 같이 시키실 분 구합니다!", "aeeazip", "덕성여대 인문관 앞", "3시 30분 주문"))
+
+
         }
 
         //더미데이터와 리사이클러뷰 연결

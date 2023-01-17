@@ -9,7 +9,7 @@
 
     <include
         android:id="@+id/topView"
-        layout="@layout/actionbar_inner_page_top"
+        layout="@layout/actionbar_inner_page_top_two"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

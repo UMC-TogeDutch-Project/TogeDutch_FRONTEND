@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import umc.mobile.project.databinding.FragmentHomeBinding
+import umc.mobile.project.news.NewsActivity
 
 class HomeFragment: Fragment() {
 

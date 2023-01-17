@@ -1,4 +1,4 @@
-package umc.mobile.project
+package umc.mobile.project.signup
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

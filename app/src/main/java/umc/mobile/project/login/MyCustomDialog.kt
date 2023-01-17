@@ -1,4 +1,4 @@
-package umc.mobile.project
+package umc.mobile.project.login
 
 import android.app.Dialog
 import android.content.Context
@@ -12,7 +12,7 @@ class MyCustomDialog(context: Context, myCustomDialogInterface: MyCustomDialogIn
     private var mBinding : CustomDialogBinding? = null
     private val binding get() = mBinding!!
 
-    private var myCustomDialogInterface:MyCustomDialogInterface? = null
+    private var myCustomDialogInterface: MyCustomDialogInterface? = null
 
     // 인터페이스 연결
     init {

@@ -1,4 +1,4 @@
-package umc.mobile.project
+package umc.mobile.project.news
 
 
 import android.os.Bundle
@@ -8,8 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import umc.mobile.project.R
 import umc.mobile.project.databinding.FragmentNewsMateBinding
-import umc.mobile.project.databinding.FragmentNewsUploadBinding
 
 
 class NewsMateFragment : Fragment(){

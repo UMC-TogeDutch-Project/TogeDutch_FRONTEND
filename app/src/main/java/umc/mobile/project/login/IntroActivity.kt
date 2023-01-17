@@ -1,4 +1,4 @@
-package umc.mobile.project
+package umc.mobile.project.login
 
 import android.content.Intent
 import android.os.Bundle

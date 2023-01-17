@@ -1,10 +1,10 @@
-package umc.mobile.project
+package umc.mobile.project.signup
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import umc.mobile.project.databinding.ActivitySignUpUserPersonalInfoBinding
+import umc.mobile.project.login.LoginActivity
 
 class SignUpUserPersonalInfoActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivitySignUpUserPersonalInfoBinding

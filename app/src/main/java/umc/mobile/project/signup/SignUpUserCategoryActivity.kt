@@ -1,4 +1,4 @@
-package umc.mobile.project
+package umc.mobile.project.signup
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import umc.mobile.project.R
 import umc.mobile.project.databinding.ActivitySignUpUserCategoryBinding
 
 class SignUpUserCategoryActivity : AppCompatActivity() {

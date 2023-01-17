@@ -1,4 +1,4 @@
-package umc.mobile.project
+package umc.mobile.project.news
 
 data class UpLoadData(
     val tvDate: String? = "",

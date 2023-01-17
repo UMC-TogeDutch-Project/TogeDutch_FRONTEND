@@ -13,49 +13,49 @@
         android:theme="@style/Theme.Project"
         tools:targetApi="31" >
         <activity
-            android:name=".NewsActivity"
+            android:name=".news.NewsActivity"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".SignUpUserPersonalInfoActivity"
+            android:name=".signup.SignUpUserPersonalInfoActivity"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".SignUpUserCategoryActivity"
+            android:name=".signup.SignUpUserCategoryActivity"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".SignUpRegionActivity"
+            android:name=".signup.SignUpRegionActivity"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".SignUpAlarmKeywordActivity"
+            android:name=".signup.SignUpAlarmKeywordActivity"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".SignUpActivity"
+            android:name=".signup.SignUpActivity"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".login.LoginActivity"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
@@ -66,7 +66,7 @@
             android:exported="false" >
         </activity>
         <activity
-            android:name=".IntroActivity"
+            android:name=".login.IntroActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

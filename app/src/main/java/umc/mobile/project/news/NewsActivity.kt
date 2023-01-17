@@ -1,8 +1,7 @@
-package umc.mobile.project
+package umc.mobile.project.news
 
 import android.graphics.Color
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import umc.mobile.project.databinding.ActivityNewsBinding
 

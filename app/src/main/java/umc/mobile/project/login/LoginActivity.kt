@@ -1,9 +1,10 @@
-package umc.mobile.project
+package umc.mobile.project.login
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
+import umc.mobile.project.MainActivity
+import umc.mobile.project.signup.SignUpActivity
 import umc.mobile.project.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity(), MyCustomDialogInterface {

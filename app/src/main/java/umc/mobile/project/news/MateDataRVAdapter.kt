@@ -1,4 +1,4 @@
-package umc.mobile.project
+package umc.mobile.project.news
 
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
@@ -23,7 +23,7 @@ class MateDataRVAdapter (private val MateDataList: ArrayList<MateData>) : Recycl
     }
 
     //ViewHolder 만들어질 때 실행할 동작
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MateDataRVAdapter.DataViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
         val viewBinding =
             ItemNewsMateDataBinding.inflate(LayoutInflater.from(parent.context))
         return DataViewHolder(viewBinding)

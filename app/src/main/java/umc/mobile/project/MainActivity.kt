@@ -1,8 +1,11 @@
 package umc.mobile.project
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import umc.mobile.project.databinding.ActivityMainBinding
+
+
 class MainActivity : AppCompatActivity() {
     private val viewBinding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
@@ -52,6 +55,11 @@ class MainActivity : AppCompatActivity() {
             }
             //처음 실행시 자동으로 home 화면을 가르키게 됨.
             selectedItemId = R.id.menu_home
+        }
+        // 공고 등록버튼 클릭시 post 화면으로 이동
+        viewBinding.addBtn.setOnClickListener{
+            val intent = Intent(this, NoticePostActivity::class.java)
+            startActivity(intent)
         }
     }
 }

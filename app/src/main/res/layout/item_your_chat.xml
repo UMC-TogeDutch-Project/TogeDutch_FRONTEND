@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/your_chat_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="39.59dp"
+        android:background="@drawable/your_chat_box"
+        android:text="안녕하세요^^"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:textAlignment="center"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:clickable="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+    <TextView
+        android:id="@+id/your_chat_date_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12시 16분"
+        android:textSize="8sp"
+        android:textAlignment="textStart"
+        android:layout_marginTop="3.83dp"
+        android:paddingBottom="4.59dp"
+        app:layout_constraintStart_toStartOf="@id/your_chat_iv"
+        app:layout_constraintTop_toBottomOf="@id/your_chat_iv"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

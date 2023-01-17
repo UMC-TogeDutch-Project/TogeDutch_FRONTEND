@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <ImageView
+        android:id="@+id/item_apply_curr_iv"
+        android:layout_width="match_parent"
+        android:layout_height="132dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+    <TextView
+        android:id="@+id/item_date_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#737373"
+        android:text="2022년 12월 29일 오후 6시 35분"
+        android:textFontWeight="300"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="@id/item_apply_curr_iv"
+        app:layout_constraintTop_toTopOf="@id/item_apply_curr_iv"
+        android:layout_marginLeft="29dp"
+        android:layout_marginTop="18dp"/>
+
+    <ImageView
+        android:id="@+id/item_shop_img"
+        android:layout_width="71dp"
+        android:layout_height="71dp"
+        android:background="@drawable/square_background_gray_round"
+        app:layout_constraintStart_toStartOf="@+id/item_apply_curr_iv"
+        app:layout_constraintTop_toTopOf="@id/item_apply_curr_iv"
+        android:layout_marginLeft="26dp"
+        android:layout_marginTop="43dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="버거킹"
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        android:textFontWeight="700"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="@id/item_shop_img"
+        app:layout_constraintTop_toTopOf="@+id/item_shop_img"
+        app:layout_constraintEnd_toEndOf="@+id/item_shop_img"
+        app:layout_constraintBottom_toBottomOf="@+id/item_shop_img"
+        />
+    <TextView
+        android:id="@+id/item_subject_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="버거킹 같이 시키실 분 구합니다~"
+        android:textSize="10sp"
+        android:textColor="#8F8F8F"
+        android:textFontWeight="700"
+        app:layout_constraintStart_toEndOf="@id/item_shop_img"
+        app:layout_constraintTop_toTopOf="@id/item_apply_curr_iv"
+        android:layout_marginLeft="23dp"
+        android:layout_marginTop="43dp"
+        />
+
+    <TextView
+        android:id="@+id/item_alarm_id_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="홈런볼"
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        android:textFontWeight="700"
+        app:layout_constraintStart_toStartOf="@id/item_subject_txt"
+        app:layout_constraintTop_toTopOf="@+id/item_apply_curr_iv"
+        android:layout_marginTop="62dp"
+        />
+
+    <TextView
+        android:id="@+id/item_alarm_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="님이 메이트를 신청하셨습니다."
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        android:textFontWeight="700"
+        app:layout_constraintStart_toEndOf="@id/item_alarm_id_txt"
+        app:layout_constraintTop_toTopOf="@+id/item_apply_curr_iv"
+        android:layout_marginTop="62dp"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/item_accept_btn"
+        android:layout_width="86dp"
+        android:layout_height="25dp"
+        android:background="@drawable/sqare_background_blue_round"
+        android:text="수락"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@id/item_subject_txt"
+        app:layout_constraintTop_toTopOf="@+id/item_apply_curr_iv"
+        android:layout_marginTop="89dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/item_refuse_btn"
+        android:layout_width="86dp"
+        android:layout_height="25dp"
+        android:background="@drawable/square_background_pink_round"
+        android:text="거절"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@id/item_accept_btn"
+        app:layout_constraintTop_toTopOf="@+id/item_apply_curr_iv"
+        android:layout_marginTop="89dp"
+        android:layout_marginLeft="12dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

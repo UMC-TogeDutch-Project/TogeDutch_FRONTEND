@@ -25,6 +25,10 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity android:name=".NoticePostActivity"></activity>
+        <activity android:name=".notice.NoticeRecylcerviewItem"></activity>
+        <activity android:name=".notice.NoticeListActivity"></activity>
+
     </application>
 
 </manifest>

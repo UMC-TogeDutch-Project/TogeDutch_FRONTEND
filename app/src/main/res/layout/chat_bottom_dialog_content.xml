@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/chat_dialog_iv"
+        android:layout_width="match_parent"
+        android:layout_height="159dp"
+        android:background="@drawable/chat_square_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/phone_btn"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:background="@drawable/chat_square_background"
+        android:text="전화 걸기 (공고자)"
+        android:textSize="17sp"
+        android:textFontWeight="500"
+        app:layout_constraintStart_toStartOf="@id/chat_dialog_iv"
+        app:layout_constraintTop_toTopOf="@id/chat_dialog_iv"/>
+
+    <ImageView
+        android:src="@drawable/square_background_gray_round"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintBottom_toBottomOf="@id/phone_btn"
+        android:elevation="3dp"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/declaration_btn"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:background="#E5EBFF"
+        android:text="신고 하기"
+        android:textSize="17sp"
+        android:textFontWeight="500"
+        app:layout_constraintStart_toStartOf="@id/chat_dialog_iv"
+        app:layout_constraintTop_toBottomOf="@id/phone_btn"/>
+
+    <ImageView
+        android:src="@drawable/square_background_gray_round"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintBottom_toBottomOf="@id/declaration_btn"
+        android:elevation="3dp"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/exit_btn"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:background="#E5EBFF"
+        android:text="채팅방 나가기"
+        android:textSize="17sp"
+        android:textColor="#C854FF"
+        android:textFontWeight="500"
+        style="?android:attr/borderlessButtonStyle"
+        app:layout_constraintStart_toStartOf="@id/chat_dialog_iv"
+        app:layout_constraintTop_toBottomOf="@id/declaration_btn"/>
+
+    <ImageView
+        android:src="@drawable/square_background_gray_round"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintBottom_toBottomOf="@id/exit_btn"
+        android:elevation="3dp"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

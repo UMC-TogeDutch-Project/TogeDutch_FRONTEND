@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".signup.SignUpAlarmKeywordActivity">
+
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="54dp"
+        android:background="@drawable/sign_up_btn_backwork_icon"
+
+        />
+
+    <ImageView
+        android:id="@+id/tvTitle"
+        android:layout_width="153dp"
+        android:layout_height="27dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="25dp"
+        android:src="@drawable/sign_up_user_info_title" />
+
+    <LinearLayout
+        android:id="@+id/linearAgree"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="18dp"
+        android:background="@drawable/sign_up_alram__edit_text_box"
+        >
+
+        <TextView
+            android:id="@+id/tvAgreement"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="19dp"
+            android:layout_marginBottom="60dp"
+            android:layout_marginStart="21dp"
+            android:layout_marginEnd="21dp"
+            android:text="아직미정"
+            />
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="41dp"
+        />
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="8dp"
+        android:layout_gravity="center"
+        android:src="@drawable/sign_up_status_bar_user_info" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="17dp" />
+
+    <Button
+        android:id="@+id/btnNext"
+        android:layout_width="230dp"
+        android:layout_height="43dp"
+        android:layout_gravity="center"
+        android:background="@drawable/sign_up_btn_backgound_blue_color"
+        android:text="다음"
+        android:textColor="#FFFFFF" />
+
+
+</LinearLayout>

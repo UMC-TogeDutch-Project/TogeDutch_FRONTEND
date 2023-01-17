@@ -25,6 +25,10 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity android:name=".my_application_1.MyApplicationActivity"/>
+        <activity android:name=".my_application_1.CurrentApplicationActivity"/>
+        <activity android:name=".my_application_1.ParticipateActivity"/>
+        <activity android:name=".chat.ChattingActivity"/>
     </application>
 
 </manifest>

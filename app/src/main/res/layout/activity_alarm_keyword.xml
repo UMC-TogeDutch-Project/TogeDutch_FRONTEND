@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/actionbar_alarm_keyword_top"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/search_myWish"
+        android:layout_width="370dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/edittext_set_alarm_keyword_background"
+        android:hint="나의 알림 키워드를 설정해보세요"
+        android:inputType="textPersonName"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include" />
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/appCompatSearch"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="9dp"
+        android:src="@drawable/tabler_icon_search"
+        app:layout_constraintBottom_toBottomOf="@+id/search_myWish"
+        app:layout_constraintEnd_toEndOf="@+id/search_myWish"
+        app:layout_constraintTop_toTopOf="@+id/search_myWish" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="7dp"
+        android:text="최대 6개까지 설정 가능"
+        android:textColor="#AEAEAE"
+        android:textSize="11sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_myWish" />
+
+
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="260dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="467dp"
+        android:background="@drawable/btn_big_blue_background"
+        android:text="저장하기"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_myWish" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/actionbar_myprofile_top"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/profileImage"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:layout_marginTop="38dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include"
+        app:srcCompat="@drawable/profile" />
+
+    <TextView
+        android:id="@+id/nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:text="aeeazip님"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileImage" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="29dp"
+        android:text="내 정보 수정"
+        android:textColor="#000000"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nickname" />
+
+    <View
+        android:id="@+id/profileRevise"
+        android:layout_width="175dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="11dp"
+        android:background="@drawable/btn_profile_revise_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/appCompatPerson"
+        android:layout_width="19dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="31dp"
+        android:src="@drawable/icon_person"
+        app:layout_constraintBottom_toBottomOf="@+id/profileRevise"
+        app:layout_constraintStart_toStartOf="@+id/profileRevise"
+        app:layout_constraintTop_toTopOf="@+id/profileRevise" />
+
+    <TextView
+        android:id="@+id/tvProfileRevise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="37dp"
+        android:text="프로필 수정"
+        android:textColor="#000000"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/profileRevise"
+        app:layout_constraintEnd_toEndOf="@+id/profileRevise"
+        app:layout_constraintStart_toEndOf="@+id/appCompatPerson"
+        app:layout_constraintTop_toTopOf="@+id/profileRevise" />
+
+    <View
+        android:id="@+id/phoneNumRevise"
+        android:layout_width="175dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/btn_profile_phone_num_revise_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/profileRevise"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/appCompatPhone"
+        android:layout_width="19dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="30dp"
+        android:src="@drawable/icon_phone"
+        app:layout_constraintBottom_toBottomOf="@+id/phoneNumRevise"
+        app:layout_constraintStart_toStartOf="@+id/phoneNumRevise"
+        app:layout_constraintTop_toTopOf="@+id/phoneNumRevise" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginEnd="30dp"
+        android:text="전화번호 변경"
+        android:textColor="#000000"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/phoneNumRevise"
+        app:layout_constraintEnd_toEndOf="@+id/phoneNumRevise"
+        app:layout_constraintStart_toEndOf="@+id/appCompatPhone"
+        app:layout_constraintTop_toTopOf="@+id/phoneNumRevise" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="92dp"
+        android:text="주문 목록"
+        android:textColor="#000000"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

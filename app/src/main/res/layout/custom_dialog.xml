@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:orientation="vertical"
+        android:background="@drawable/login_dialog_background"
+
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        >
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:text="로그인이 완료되었습니다"
+            android:textAlignment="center"
+            android:textColor="#000000" />
+
+        <Button
+            android:id="@+id/btnGotoMain"
+            android:layout_width="256dp"
+            android:layout_height="43dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="27dp"
+            android:layout_marginBottom="27dp"
+            android:background="@drawable/login_btn_background"
+            android:text="메인으로 가기"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            />
+
+
+    </LinearLayout>
+
+</LinearLayout>

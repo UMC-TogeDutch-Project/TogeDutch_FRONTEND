@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <layer-list>
+            <item>
+                <shape>
+                    <solid
+                        android:color="#1F767680">
+                    </solid>
+                    <corners
+                        android:radius="3dp"/>
+                    <stroke
+                        android:width="1dp"
+                        android:color="#1F767680"/>
+                </shape>
+            </item>
+            <item android:drawable="@drawable/sign_up_category_spinner_icon"
+                android:width="14dp" android:height="13dp"
+                android:gravity="right|center" android:start="10dp" android:top="1dp"
+                android:end="10dp"
+                >
+            </item>
+
+        </layer-list>
+    </item>
+
+</selector>

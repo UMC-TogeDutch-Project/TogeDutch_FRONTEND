@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/item_apply_curr_iv"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+    <TextView
+        android:id="@+id/item_subject_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#557AFF"
+        android:text="버거킹 같이 시키실 분 구합니다~"
+        android:textFontWeight="800"
+        android:textSize="13sp"
+        app:layout_constraintStart_toStartOf="@id/item_apply_curr_iv"
+        app:layout_constraintTop_toTopOf="@id/item_apply_curr_iv"
+        android:layout_marginLeft="29dp"
+        android:layout_marginTop="14dp"/>
+
+    <ImageView
+        android:id="@+id/item_shop_img"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:background="@drawable/square_background_gray_round"
+        app:layout_constraintStart_toStartOf="@+id/item_apply_curr_iv"
+        app:layout_constraintTop_toTopOf="@id/item_apply_curr_iv"
+        android:layout_marginLeft="26dp"
+        android:layout_marginTop="43dp"/>
+
+    <TextView
+        android:id="@+id/item_id_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="aeeazip"
+        android:textSize="13sp"
+        android:textColor="@color/black"
+        android:textFontWeight="700"
+        app:layout_constraintStart_toEndOf="@id/item_shop_img"
+        app:layout_constraintTop_toTopOf="@id/item_apply_curr_iv"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="36dp"
+        />
+
+    <TextView
+        android:id="@+id/item_chat_content_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="알겠습니다~"
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        android:textFontWeight="700"
+        app:layout_constraintStart_toStartOf="@id/item_id_txt"
+        app:layout_constraintTop_toTopOf="@+id/item_apply_curr_iv"
+        android:layout_marginTop="62dp"
+        />
+
+    <TextView
+        android:id="@+id/item_date_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="오후 10시 30분"
+        android:textFontWeight="500"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/item_apply_curr_iv"
+        android:layout_marginRight="29dp"
+        android:layout_marginTop="42dp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

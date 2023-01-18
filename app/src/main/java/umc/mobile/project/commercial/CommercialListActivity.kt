@@ -3,17 +3,17 @@ package umc.mobile.project.commercial
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import umc.mobile.project.databinding.ActivityNoticeListBinding
-import umc.mobile.project.announcement.AnnouncementRVAdapterDecoration
+import umc.mobile.project.announcement.AnnounceRVAdapterDecoration
+import umc.mobile.project.databinding.ActivityCommercialListBinding
 
 class CommercialListActivity: AppCompatActivity() {
-    private lateinit var binding: ActivityNoticeListBinding
+    private lateinit var binding: ActivityCommercialListBinding
     private lateinit var commercialRVAdapter: CommercialRVAdapter
     var mCommercialData = ArrayList<CommercialData>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityNoticeListBinding.inflate(layoutInflater)
+        binding = ActivityCommercialListBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initRecyclerView()
 
@@ -28,6 +28,6 @@ class CommercialListActivity: AppCompatActivity() {
         commercialRVAdapter = CommercialRVAdapter(mCommercialData)
         binding.recyclerView.adapter=commercialRVAdapter //리사이클러뷰에 어댑터 연결
         binding.recyclerView.layoutManager= LinearLayoutManager(this) //레이아웃 매니저 연결
-        binding.recyclerView.addItemDecoration(AnnouncementRVAdapterDecoration(20))
+        binding.recyclerView.addItemDecoration(AnnounceRVAdapterDecoration(20))
     }
 }

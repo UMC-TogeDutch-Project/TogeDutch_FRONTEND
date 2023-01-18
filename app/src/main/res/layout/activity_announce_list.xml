@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <include
         android:id="@+id/include"
-        layout="@layout/actionbar_announcement_list_top" />
+        layout="@layout/actionbar_announce_list_top" />
 
     <LinearLayout
         android:id="@+id/search_post"
@@ -67,7 +67,7 @@
             android:layout_height="400dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            tools:listitem="@layout/announcement_recyclerview_item">
+            tools:listitem="@layout/announce_recyclerview_item">
 
         </androidx.recyclerview.widget.RecyclerView>
 

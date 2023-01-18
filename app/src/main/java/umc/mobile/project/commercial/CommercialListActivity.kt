@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import umc.mobile.project.databinding.ActivityNoticeListBinding
-import umc.mobile.project.notice.NoticeRVAdapterDecoration
+import umc.mobile.project.announcement.AnnouncementRVAdapterDecoration
 
 class CommercialListActivity: AppCompatActivity() {
     private lateinit var binding: ActivityNoticeListBinding
@@ -28,6 +28,6 @@ class CommercialListActivity: AppCompatActivity() {
         commercialRVAdapter = CommercialRVAdapter(mCommercialData)
         binding.recyclerView.adapter=commercialRVAdapter //리사이클러뷰에 어댑터 연결
         binding.recyclerView.layoutManager= LinearLayoutManager(this) //레이아웃 매니저 연결
-        binding.recyclerView.addItemDecoration(NoticeRVAdapterDecoration(20))
+        binding.recyclerView.addItemDecoration(AnnouncementRVAdapterDecoration(20))
     }
 }

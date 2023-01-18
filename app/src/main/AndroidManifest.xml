@@ -26,8 +26,8 @@
                 android:value="" />
         </activity>
         <activity android:name=".NoticePostActivity"></activity>
-        <activity android:name=".notice.NoticeRecylcerviewItem"></activity>
-        <activity android:name=".notice.NoticeListActivity"></activity>
+        <activity android:name=".announcement.AnnouncementRecyclerviewItem"></activity>
+        <activity android:name=".announcement.AnnouncementListActivity"></activity>
 
     </application>
 

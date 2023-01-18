@@ -1,6 +1,6 @@
-package umc.mobile.project.notice
+package umc.mobile.project.announcement
 
-data class NoticeData (
+data class AnnouncementData (
     val title : String,
     val place : String,
     val time : String,

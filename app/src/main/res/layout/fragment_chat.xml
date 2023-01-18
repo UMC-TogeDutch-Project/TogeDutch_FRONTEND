@@ -7,7 +7,7 @@
 
     <include
         android:id="@+id/main_actionbar"
-        layout="@layout/actionbar_announcement_list_top"/>
+        layout="@layout/actionbar_announce_list_top"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

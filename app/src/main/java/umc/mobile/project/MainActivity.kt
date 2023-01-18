@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         }
         // 공고 등록버튼 클릭시 post 화면으로 이동
         viewBinding.addBtn.setOnClickListener{
-            val intent = Intent(this, NoticePostActivity::class.java)
+            val intent = Intent(this, AnnouncePostActivity::class.java)
             startActivity(intent)
         }
     }

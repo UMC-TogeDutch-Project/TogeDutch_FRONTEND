@@ -2,12 +2,12 @@ package umc.mobile.project
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import umc.mobile.project.databinding.ActivityNoticePostBinding
+import umc.mobile.project.databinding.ActivityAnnouncePostBinding
 
 
-class NoticePostActivity : AppCompatActivity() {
-    private val viewBinding: ActivityNoticePostBinding by lazy {
-        ActivityNoticePostBinding.inflate(layoutInflater)
+class AnnouncePostActivity : AppCompatActivity() {
+    private val viewBinding: ActivityAnnouncePostBinding by lazy {
+        ActivityAnnouncePostBinding.inflate(layoutInflater)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

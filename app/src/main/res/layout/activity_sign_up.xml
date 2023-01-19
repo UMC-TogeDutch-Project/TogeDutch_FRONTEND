@@ -6,15 +6,29 @@
     android:layout_height="match_parent"
     tools:context=".signup.SignUpActivity">
 
-    <ImageView
+    <TextView
         android:id="@+id/tvTitle"
-        android:layout_width="74dp"
-        android:layout_height="27dp"
-        android:src="@drawable/sign_up_register_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="회원가입"
+        android:textSize="20dp"
+        android:fontFamily="@font/notosanskr_black"
+        android:textColor="@color/black"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="49dp"
+        android:layout_marginTop="25dp"
+        />
+
+    <ImageButton
+        android:id="@+id/ibProfileImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/profile"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         />
 
     <TextView
@@ -22,10 +36,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="이름을 입력해주세요"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintTop_toBottomOf="@id/ibProfileImage"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="23dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="10dp"
         />
     <!--margin51dp -->
 
@@ -79,7 +93,7 @@
         app:layout_constraintTop_toBottomOf="@id/etInputEmail"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="23dp"
-        android:layout_marginTop="47dp"
+        android:layout_marginTop="27dp"
         />
 
     <EditText
@@ -131,7 +145,7 @@
         app:layout_constraintTop_toBottomOf="@id/etInputPasswordCheck"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="23dp"
-        android:layout_marginTop="47dp"
+        android:layout_marginTop="20dp"
         />
 
     <EditText
@@ -153,7 +167,7 @@
         android:layout_height="39dp"
         android:text="문자 인증"
         android:textColor="#FFFFFF"
-        android:background="@drawable/sign_up_btn_backgound_blue_color"
+        android:background="@drawable/sign_up_btn_background_blue_color"
         app:layout_constraintTop_toBottomOf="@id/tvInputPhoneNumber"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="5dp"
@@ -192,7 +206,7 @@
         android:layout_height="43dp"
         android:text="확인"
         android:textColor="#FFFFFF"
-        android:background="@drawable/sign_up_btn_backgound_blue_color"
+        android:background="@drawable/sign_up_btn_background_blue_color"
         app:layout_constraintTop_toBottomOf="@id/etInputCertificationNumber"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -6,11 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".login.LoginActivity">
 
-    <ImageView
+    <TextView
         android:id="@+id/loginMainLogo"
-        android:layout_width="111dp"
-        android:layout_height="44dp"
-        android:src="@drawable/intro_new_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="가치더치"
+        android:textSize="30dp"
+        android:textColor="#557AFF"
+        android:fontFamily="@font/notosanskr_black"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

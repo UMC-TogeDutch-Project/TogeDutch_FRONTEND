@@ -18,13 +18,16 @@
 
         />
 
-    <ImageView
+    <TextView
         android:id="@+id/tvTitle"
-        android:layout_width="268dp"
-        android:layout_height="27dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:layout_marginLeft="20dp"
-        android:src="@drawable/sign_up_category_title"
+        android:text="사용자 카테고리를 설정해보세요"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="20dp"
         />
 
     <FrameLayout
@@ -68,7 +71,7 @@
         android:text="다음"
         android:textColor="#FFFFFF"
         android:layout_gravity="center"
-        android:background="@drawable/sign_up_btn_backgound_blue_color"
+        android:background="@drawable/sign_up_btn_background_blue_color"
         />
 
 

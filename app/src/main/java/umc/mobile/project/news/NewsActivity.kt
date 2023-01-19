@@ -37,10 +37,10 @@ class NewsActivity : AppCompatActivity(){
                 ft.replace(viewBinding.containerFragment.id, NewsUpLoadFragment()).commit()
             }
             1 -> {
-                viewBinding.btnMate.setTextColor(Color.parseColor("#557AFF"))
+                viewBinding.btnMate.setTextColor(Color.parseColor("#C854FF"))
                 viewBinding.btnUpLoad.setTextColor(Color.parseColor("#66000000"))
                 viewBinding.ivUnderBarUpLoad.setBackgroundColor(Color.parseColor("#FFFFFF"))
-                viewBinding.ivUnderBarMate.setBackgroundColor(Color.parseColor("#557AFF"))
+                viewBinding.ivUnderBarMate.setBackgroundColor(Color.parseColor("#C854FF"))
                 ft.replace(viewBinding.containerFragment.id, NewsMateFragment()).commit()
             }
         }

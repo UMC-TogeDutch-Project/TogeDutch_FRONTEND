@@ -17,13 +17,17 @@
 
         />
 
-    <ImageView
+    <TextView
         android:id="@+id/tvTitle"
         android:layout_width="153dp"
         android:layout_height="27dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="25dp"
-        android:src="@drawable/sign_up_user_info_title" />
+        android:text="개인정보 이용처리"
+        android:textSize="20dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        />
 
     <LinearLayout
         android:id="@+id/linearAgree"
@@ -69,7 +73,7 @@
         android:layout_width="230dp"
         android:layout_height="43dp"
         android:layout_gravity="center"
-        android:background="@drawable/sign_up_btn_backgound_blue_color"
+        android:background="@drawable/sign_up_btn_background_blue_color"
         android:text="다음"
         android:textColor="#FFFFFF" />
 

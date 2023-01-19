@@ -61,7 +61,7 @@
         app:layout_constraintTop_toBottomOf="@id/tvUserId"
         app:layout_constraintStart_toEndOf="@id/ivMainImage"
         android:layout_marginStart="23dp"
-        android:background="@drawable/sign_up_btn_backgound_blue_color"
+        android:background="@drawable/sign_up_btn_background_blue_color"
         android:layout_marginTop="5dp"
         />
 
@@ -74,7 +74,7 @@
         app:layout_constraintTop_toBottomOf="@id/tvUserId"
         app:layout_constraintStart_toEndOf="@id/btnAcept"
         android:layout_marginStart="12dp"
-        android:background="@drawable/sign_up_btn_backgound_purple_color"
+        android:background="@drawable/sign_up_btn_background_purple_color"
         android:layout_marginTop="5dp"
         />
 

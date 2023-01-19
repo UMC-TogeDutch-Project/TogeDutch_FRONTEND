@@ -4,35 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".login.IntroActivity">
+    tools:context=".login.IntroActivity"
+    android:background="#557AFF"
+    >
 
-    <ImageView
+    <TextView
         android:id="@+id/imgSubTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="1dp"
-        android:src="@drawable/intro_sub_title_blue"
-        app:layout_constraintBottom_toTopOf="@id/imgTitle"
+        android:text="배달 공유 서비스"
+        android:fontFamily="@font/notosanskr_black"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toTopOf="@id/imgTitle"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" 
+        app:layout_constraintEnd_toEndOf="parent"
         />
 
-    <ImageView
+    <TextView
         android:id="@+id/imgTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/intro_title_blue"
+        android:text="가치더치"
+        android:textSize="50dp"
+        android:fontFamily="@font/notosanskr_black"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@id/imgLogo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="44dp"
+
         />
 
     <ImageView
         android:id="@+id/imgLogo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/intro_logo_blue"
+        android:src="@drawable/intro_logo"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -22,16 +22,6 @@
         app:layout_constraintTop_toBottomOf="@+id/include"
         app:srcCompat="@drawable/profile" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/appCompatPerson"
-        android:layout_width="33dp"
-        android:layout_height="33dp"
-        android:layout_marginStart="248dp"
-        android:layout_marginTop="43dp"
-        android:src="@drawable/icon_revise"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include" />
-
     <TextView
         android:id="@+id/nickname"
         android:layout_width="wrap_content"
@@ -103,6 +93,7 @@
         android:layout_height="43dp"
         android:layout_marginTop="160dp"
         android:background="@drawable/btn_big_blue_background"
+        android:onClick="onClick"
         android:text="저장하기"
         android:textColor="#FFFFFF"
         android:textSize="18sp"

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="316dp"
+    android:layout_height="586dp"
+    android:background="@drawable/button_round_13"
+    android:backgroundTint="@color/white">
+
+
+    <ImageButton
+        android:id="@+id/back_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_baseline_close_24"
+        android:layout_marginTop="17dp"
+        android:layout_marginRight="17dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/res_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/notosanskr_bold"
+        android:includeFontPadding="false"
+        android:layout_marginTop="30dp"
+        android:text="가게이름"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:id="@+id/res_img"
+        android:layout_width="260dp"
+        android:layout_height="300dp"
+        android:background="@drawable/button_round_13"
+        android:backgroundTint="@color/grey_2"
+        android:layout_marginTop="17dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/res_title" />
+
+    <TextView
+        android:id="@+id/res_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_map_2"
+        android:drawablePadding="10dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/notosanskr_bold"
+        android:includeFontPadding="false"
+        android:text="00000 00구 00로 00길 000 "
+        android:textColor="@color/black"
+        android:layout_marginLeft="27dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/res_img" />
+
+    <TextView
+        android:id="@+id/res_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_star_2"
+        android:drawablePadding="10dp"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/notosanskr_bold"
+        android:includeFontPadding="false"
+        android:text=" 메뉴 이름"
+        android:textColor="@color/black"
+        android:layout_marginLeft="27dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/res_address" />
+
+    <TextView
+        android:id="@+id/res_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_phone"
+        android:includeFontPadding="false"
+        android:drawablePadding="10dp"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/notosanskr_bold"
+        android:text="전화 번호"
+        android:textColor="@color/black"
+        android:layout_marginLeft="27dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/res_menu" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/res_blog"
+        android:layout_width="258dp"
+        android:layout_height="217dp"
+        android:background="@drawable/button_round_18"
+        android:backgroundTint="#0D000000"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/res_phone">
+
+        <TextView
+            android:id="@+id/res_blog_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/notosanskr_bold"
+            android:text="BLOG 검색결과"
+            android:textColor="@color/purple"
+            android:textSize="13dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import umc.mobile.project.databinding.ActivityAnnounceListBinding
 
-class AnnounceListActivity(intent: Intent) : AppCompatActivity() {
+class AnnounceListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAnnounceListBinding
     private lateinit var announceRvAdapter: AnnounceRVAdapter
     var mAnnounceData = ArrayList<AnnounceData>()

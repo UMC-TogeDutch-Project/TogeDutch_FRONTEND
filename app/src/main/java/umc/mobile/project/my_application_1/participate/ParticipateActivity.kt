@@ -19,6 +19,8 @@ class ParticipateActivity : AppCompatActivity() {
         binding = ActivityParticipateBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initActionBar()
+
         // 검색창
         var searchViewListener : SearchView.OnQueryTextListener =
             object : SearchView.OnQueryTextListener {
@@ -34,6 +36,16 @@ class ParticipateActivity : AppCompatActivity() {
                     return false
                 }
             }
+
+    }
+
+    private fun initActionBar() {
+
+        binding.mainActionbar.appbarPageNameLeftTv.text = "참여 내역"
+
+        binding.mainActionbar.appbarBackBtn.setOnClickListener {
+            finish()
+        }
 
     }
 

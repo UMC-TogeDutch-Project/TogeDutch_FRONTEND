@@ -3,135 +3,114 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="79dp">
+    android:layout_height="79dp"
+    android:background="@drawable/button_round_13"
+    android:backgroundTint="#66D9D9D9"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/button_round_13"
-        android:backgroundTint="#66D9D9D9"
+
+    <ImageView
+        android:id="@+id/ann_img"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:background="@drawable/button_round_8"
+        android:backgroundTint="@color/grey_2"
+        android:layout_marginLeft="11dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/not_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/notosanskr_bold"
+        android:text="제목"
+        android:textColor="@color/black"
+        android:textSize="13dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginLeft="8dp"
+        android:includeFontPadding="false"
+        app:layout_constraintStart_toEndOf="@+id/ann_img"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/ic_map_2"
+        app:layout_constraintStart_toEndOf="@+id/ann_img"
+        app:layout_constraintTop_toBottomOf="@+id/not_title" />
+
+    <TextView
+        android:id="@+id/not_place"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/notosanskr_bold"
+        android:text="장소"
+        android:textColor="@color/main_color"
+        android:textSize="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="7dp"
+        android:includeFontPadding="false"
+        app:layout_constraintStart_toEndOf="@+id/imageView4"
+        app:layout_constraintTop_toBottomOf="@+id/not_title" />
+
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginLeft="8dp"
+        android:src="@drawable/ic_clock"
+        app:layout_constraintStart_toEndOf="@+id/ann_img"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+
+    <TextView
+        android:id="@+id/not_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/notosanskr_bold"
+        android:text="시간"
+        android:includeFontPadding="false"
+        android:textColor="@color/main_color"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="7dp"
+        android:textSize="10dp"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
+        app:layout_constraintTop_toBottomOf="@+id/not_place" />
+
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_baseline_favorite_border_24" />
 
-        android:paddingLeft="11dp"
-        android:paddingRight="11dp">
-
-        <LinearLayout
-            android:id="@+id/image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/bunch"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/image_view"
-                android:layout_width="54dp"
-                android:layout_height="54dp"
-                android:background="@drawable/button_round_8"
-                android:backgroundTint="@color/grey_2"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/bunch"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingLeft="7dp"
-            android:weightSum="5"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/image"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/not_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="-10dp"
-                android:fontFamily="@font/notosanskr_bold"
-                android:text="제목"
-                android:textColor="@color/black"
-                android:textSize="13dp" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="-14dp">
-
-                <ImageView
-                    android:layout_width="11dp"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/ic_map" />
-
-                <TextView
-                    android:id="@+id/not_place"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/notosanskr_bold"
-                    android:paddingLeft="5dp"
-                    android:text="장소"
-                    android:textColor="@color/main_color"
-                    android:textSize="10dp" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:layout_width="12dp"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/ic_clock" />
-
-                <TextView
-                    android:id="@+id/not_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/notosanskr_bold"
-                    android:paddingLeft="5dp"
-                    android:text="시간"
-                    android:textColor="@color/main_color"
-                    android:textSize="10dp" />
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="end"
-            android:orientation="vertical"
-            android:paddingRight="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="22dp"
-                app:srcCompat="@drawable/ic_baseline_favorite_border_24" />
-
-            <TextView
-                android:id="@+id/not_person"
-                android:layout_width="52dp"
-                android:layout_height="19dp"
-                android:background="@drawable/button_round_8"
-                android:backgroundTint="@color/grey_2"
-                android:drawableStart="@drawable/ic_basic_person"
-                android:gravity="center"
-                android:paddingLeft="7dp"
-                android:text="0/0" />
-
-
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/not_person"
+        android:layout_width="52dp"
+        android:layout_height="19dp"
+        android:background="@drawable/button_round_8"
+        android:backgroundTint="@color/grey_2"
+        android:drawableStart="@drawable/ic_basic_person"
+        android:gravity="center"
+        android:paddingLeft="7dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="14dp"
+        android:text="0/0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 

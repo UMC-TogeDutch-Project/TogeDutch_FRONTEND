@@ -1,18 +1,19 @@
-package umc.mobile.project
+package umc.mobile.project.profile
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import umc.mobile.project.databinding.FragmentMypageBinding
+import umc.mobile.project.databinding.FragmentMypageProfileReviseBinding
 
-class MypageFragment: Fragment() {
+
+class MyProfileReviseFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return FragmentMypageBinding.inflate(layoutInflater).root
+        return FragmentMypageProfileReviseBinding.inflate(layoutInflater).root
     }
 }

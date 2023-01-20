@@ -30,7 +30,9 @@
         <activity android:name=".AnnouncePostActivity"></activity>
         <activity android:name=".announcement.AnnounceRecyclerviewItem"></activity>
         <activity android:name=".announcement.AnnounceListActivity"></activity>
-
+        <activity android:name=".profile.MyProfileActivity"></activity>
+        <activity android:name=".my_application_1.MyApplicationActivity"></activity>
+        <activity android:name=".commercial.CommercialListActivity"></activity>
     </application>
 
 </manifest>

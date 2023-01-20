@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingBottom="12dp">
 
     <View
         android:id="@+id/list_item"
@@ -106,13 +107,25 @@
         android:id="@+id/score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:text="10점"
+        android:text="10"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        android:textColor="#A6000000"
+        app:layout_constraintBottom_toBottomOf="@+id/list_item_score"
+        app:layout_constraintEnd_toStartOf="@+id/scoreText"
+        app:layout_constraintTop_toTopOf="@+id/list_item_score" />
+
+    <TextView
+        android:id="@+id/scoreText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="점"
         android:textColor="#A6000000"
         android:textSize="10sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/list_item_score"
-        app:layout_constraintStart_toEndOf="@+id/appCompatPersonNum"
+        app:layout_constraintEnd_toEndOf="@+id/list_item_score"
         app:layout_constraintTop_toTopOf="@+id/list_item_score" />
 
     <androidx.appcompat.widget.AppCompatImageView

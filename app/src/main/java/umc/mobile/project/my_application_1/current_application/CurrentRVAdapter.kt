@@ -1,14 +1,8 @@
-package umc.mobile.project.my_application_1
+package umc.mobile.project.my_application_1.current_application
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import umc.mobile.project.R
-import umc.mobile.project.chat.ChatRoom
 import umc.mobile.project.databinding.ItemApplyCurrentBinding
 
 class CurrentRVAdapter(private val currentList: ArrayList<CurrentData>) : RecyclerView.Adapter<CurrentRVAdapter.ViewHolder>(){

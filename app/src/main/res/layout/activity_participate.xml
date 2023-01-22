@@ -29,7 +29,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="10dp"
-        android:background="#EFEFF0" />
+        android:background="@drawable/square_background_light_gray_round" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/clear_glyph"
+            app:layout_constraintEnd_toEndOf="@id/search_view"
+            app:layout_constraintTop_toTopOf="@id/search_view"
+            android:layout_marginTop="7.5dp"
+            android:layout_marginRight="7.5dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
@@ -37,7 +46,7 @@
         android:id="@+id/rv_application"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:orientation="vertical"
-        tools:listitem="@layout/item_apply_current"
+        tools:listitem="@layout/item_participate"
         app:layout_constraintTop_toBottomOf="@id/search_view"
         android:layout_marginTop="28dp"
         app:layout_constraintLeft_toLeftOf="parent"

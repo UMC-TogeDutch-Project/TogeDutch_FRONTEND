@@ -1,6 +1,233 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+
+            android:weightSum="4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3.5"
+                android:fontFamily="@font/notosanskr_black"
+                android:gravity="center"
+                android:text="내 공고"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+
+            <ImageButton
+                android:id="@+id/back_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_baseline_close_24"
+                android:gravity="right" />
+
+        </LinearLayout>
+
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="wrap_content"
+            android:layout_height="550dp"
+            android:layout_gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/notosanskr_black"
+                    android:text="공고 제목"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:layout_width="370dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/button_round_11"
+                    android:backgroundTint="#1F767680"
+                    android:fontFamily="@font/notosanskr_regular"
+                    android:gravity="center"
+                    android:hint="공고 제목을 입력해주세요"
+                    android:paddingLeft="7dp"
+                    android:paddingRight="7dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/notosanskr_black"
+                    android:text="가게 정보"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:layout_width="370dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/button_round_11"
+                    android:backgroundTint="#1F767680"
+                    android:fontFamily="@font/notosanskr_regular"
+                    android:gravity="center"
+                    android:hint="UPL 링크"
+                    android:paddingLeft="7dp"
+                    android:paddingRight="7dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/notosanskr_black"
+                    android:text="배달팁"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:layout_width="370dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/button_round_11"
+                    android:backgroundTint="#1F767680"
+                    android:fontFamily="@font/notosanskr_regular"
+                    android:gravity="center"
+                    android:hint="0000 원"
+                    android:paddingLeft="7dp"
+                    android:paddingRight="7dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/notosanskr_black"
+                    android:text="최소 주문 금액"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:layout_width="370dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/button_round_11"
+                    android:backgroundTint="#1F767680"
+                    android:fontFamily="@font/notosanskr_regular"
+
+                    android:gravity="center"
+                    android:hint="0000 원"
+                    android:paddingLeft="7dp"
+                    android:paddingRight="7dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/notosanskr_black"
+                    android:text="위치"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:layout_width="370dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/button_round_11"
+                    android:backgroundTint="#1F767680"
+                    android:drawableEnd="@drawable/ic_map"
+                    android:fontFamily="@font/notosanskr_regular"
+                    android:gravity="center"
+                    android:hint="위치를 설정해주세요"
+                    android:paddingLeft="7dp"
+                    android:paddingRight="7dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/notosanskr_black"
+                    android:text="주문 시간"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:layout_width="370dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/button_round_11"
+                    android:backgroundTint="#1F767680"
+                    android:fontFamily="@font/notosanskr_regular"
+                    android:gravity="center"
+                    android:hint="00 : 00"
+                    android:paddingLeft="7dp"
+                    android:paddingRight="7dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/notosanskr_black"
+                    android:text="모집 인원"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:layout_width="370dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/button_round_11"
+                    android:backgroundTint="#1F767680"
+                    android:fontFamily="@font/notosanskr_regular"
+                    android:gravity="center"
+                    android:hint="0000 명"
+                    android:paddingLeft="7dp"
+                    android:paddingRight="7dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/notosanskr_black"
+                    android:text="공고 이미지"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:layout_width="370dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/button_round_11"
+                    android:backgroundTint="#1F767680"
+                    android:drawableEnd="@drawable/ic_photo_camera"
+                    android:fontFamily="@font/notosanskr_regular"
+                    android:gravity="center"
+                    android:hint="선택된 이미지 없음"
+                    android:paddingLeft="7dp"
+                    android:paddingRight="7dp" />
+
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <Button
+            android:id="@+id/btn_see_current"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_round_13"
+            android:backgroundTint="@color/grey_3"
+            android:fontFamily="@font/notosanskr_bold"
+            android:layout_gravity="center"
+            android:includeFontPadding="false"
+            android:layout_marginTop="20dp"
+            android:text="신청 현황 보기"
+            android:textSize="18dp"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scrollView" />
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <item>
+        <layer-list>
+            <item
+                android:drawable="@drawable/square_background_light_gray_round"/>
+            <item
+                android:drawable="@drawable/ic_spinner_btn"
+                android:gravity="center|end"
+                android:width="9.53dp"
+                android:right="6.61dp"
+                android:height="7.5dp"
+                />
+        </layer-list>
+    </item>
 </selector>

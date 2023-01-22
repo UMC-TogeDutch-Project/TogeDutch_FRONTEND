@@ -1,16 +1,8 @@
-package umc.mobile.project.my_application_1
+package umc.mobile.project.my_application_1.current_application
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.recyclerview.widget.LinearLayoutManager
-import umc.mobile.project.MainActivity
-import umc.mobile.project.chat.ChatRoom
-import umc.mobile.project.chat.ChatRoomRVAdapter
-import umc.mobile.project.chat.ChattingActivity
 import umc.mobile.project.databinding.ActivityCurrentapplicationBinding
-import umc.mobile.project.databinding.ActivityMyapplicationBinding
 
 class CurrentApplicationActivity : AppCompatActivity() {
     lateinit var binding: ActivityCurrentapplicationBinding
@@ -29,7 +21,7 @@ class CurrentApplicationActivity : AppCompatActivity() {
         currentList.apply {
             add(CurrentData("2022년 12월 29일 오후 6시 35분", "버거킹 같이 시키실 분 구합니다~", "홈런볼", "님이 메이트를 신청하셨습니다."))
             add(CurrentData("2022년 12월 29일 오후 6시 40분", "피자헛 같이 시키실 분 구합니다~", "쿠키", "님이 메이트를 신청하셨습니다."))
-
+            add(CurrentData("2022년 12월 29일 오후 6시 40분", "베라 같이 시키실 분 구합니다~", "우왕", "님이 메이트를 신청하셨습니다."))
 
             currentRVAdapter = CurrentRVAdapter(currentList)
             binding.rvApplication.adapter = currentRVAdapter

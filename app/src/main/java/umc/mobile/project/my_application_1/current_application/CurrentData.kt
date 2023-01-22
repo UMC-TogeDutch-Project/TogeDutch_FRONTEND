@@ -1,4 +1,4 @@
-package umc.mobile.project.my_application_1
+package umc.mobile.project.my_application_1.current_application
 
 data class CurrentData(
     var time : String,

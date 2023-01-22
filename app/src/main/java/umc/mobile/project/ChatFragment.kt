@@ -43,6 +43,7 @@ class ChatFragment: Fragment() {
             chatRoomRVAdapter.setItemClickListener(object: ChatRoomRVAdapter.OnItemClickListener{
                 override fun onItemClick(chatRoom: ChatRoom) {
                     activity?.let {
+                        chatRoomRVAdapter.notifyDataSetChanged()
                         val intent = Intent(context, ChattingActivity::class.java)
                         startActivity(intent)
                     }
@@ -63,5 +64,9 @@ class ChatFragment: Fragment() {
                 .popBackStack()
         }
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 }

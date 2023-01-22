@@ -1,4 +1,4 @@
-package umc.mobile.project.my_application_1
+package umc.mobile.project.my_application_1.participate
 
 import android.content.ContentValues
 import android.os.Bundle

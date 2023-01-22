@@ -4,8 +4,10 @@ import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -38,8 +40,30 @@ class ChattingActivity: AppCompatActivity() {
             declaration_btn?.setOnClickListener {
                 Toast.makeText(this, "신고 버튼 클릭", Toast.LENGTH_LONG).show()
 
-                val intent = Intent(this, PopUpActivity::class.java)
-                startActivity(intent)
+                val dlg = DeclarationPopupDialog(this)
+                dlg.start()
+
+//                // 이벤트 설정 -> 신고버튼
+//                val mDialogView = LayoutInflater.from(this).inflate(R.layout.declaration_popup_dialog, null)
+//                val mBuilder = AlertDialog.Builder(this)
+//                    .setView(mDialogView)
+//
+//                val mAlertDialog = mBuilder.show()
+//
+//                // 신고 접수
+//                val send_btn = mDialogView.findViewById<AppCompatButton>(R.id.send_btn)
+//                send_btn.setOnClickListener {
+//
+//                }
+//
+//                // 창 닫기
+//                val close_btn = mDialogView.findViewById<AppCompatButton>(R.id.close_btn)
+//                close_btn.setOnClickListener {
+//                    mAlertDialog.dismiss()
+//                }
+//
+//                // 텍스트 저장해주는 거 추가
+
             }
 
             val exit_btn = dialog.findViewById<AppCompatButton>(R.id.exit_btn)

@@ -15,12 +15,14 @@ class SignUpAlarmKeywordActivity : AppCompatActivity() {
         viewBinding.btnNext.setOnClickListener {
             val intent = Intent(this, SignUpRegionActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(0, 0)
         }
 
         viewBinding.btnBack.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
             finish()
             startActivity(intent)
+            overridePendingTransition(0, 0)
 
         }
     }

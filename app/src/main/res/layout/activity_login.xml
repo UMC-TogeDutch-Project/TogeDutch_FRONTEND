@@ -45,9 +45,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:background="@drawable/edit_text_box"
-        android:hint="business@makeus.in"
+        android:hint="이메일을 입력해주세요"
         android:paddingLeft="16.5dp"
         android:inputType="textEmailAddress"
+        />
+
+    <TextView
+        android:id="@+id/tvEmailCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#C854FF"
+        android:textSize="13dp"
+        android:text=""
+        app:layout_constraintStart_toStartOf="@id/etEmailId"
+        app:layout_constraintTop_toBottomOf="@id/etEmailId"
+        android:layout_marginStart="15dp"
         />
 
     <TextView
@@ -74,9 +86,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:background="@drawable/edit_text_box"
-        android:hint="*********"
+        android:hint="비밀번호를 입력해주세요"
         android:paddingLeft="16.5dp"
         android:inputType="textPassword"
+        />
+
+    <TextView
+        android:id="@+id/tvPasswordCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#C854FF"
+        android:textSize="13dp"
+        android:text=""
+        app:layout_constraintStart_toStartOf="@id/etPassword"
+        app:layout_constraintTop_toBottomOf="@id/etPassword"
+        android:layout_marginStart="15dp"
         />
 
     <Button

@@ -46,6 +46,7 @@
             android:hint="음식을 입력하세요"
             android:paddingLeft="17dp"
             android:background="@drawable/sign_up_alram__edit_text_box"
+            android:singleLine="true"
             />
 
         <Button
@@ -61,10 +62,22 @@
 
     </FrameLayout>
 
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="7dp"
+        android:text="최대 6개까지 설정 가능"
+        android:textColor="#AEAEAE"
+        android:textSize="11dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etInputAlarmKeyword" />
+
     <TableLayout
         android:id="@+id/tableLayoutEdit"
         android:layout_width="match_parent"
-        android:layout_height="400dp">
+        android:layout_height="363dp">
 
 
     </TableLayout>

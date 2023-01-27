@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="316dp"
+    android:layout_height="525dp">
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/button_round_11"
+        android:backgroundTint="@color/white"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:text="후기 작성"
+        android:textColor="@color/black"
+        android:textFontWeight="700"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/close_btn"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/ic_baseline_close_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/reviewQuestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="27dp"
+        android:text="000님과 공동 주문이 어떠셨나요?"
+        android:textColor="#000000"
+        android:textFontWeight="700"
+        android:textSize="13sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+    <ImageView
+        android:id="@+id/sad"
+        android:layout_width="37.5dp"
+        android:layout_height="37.5dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="13dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reviewQuestion"
+        app:srcCompat="@drawable/tabler_icon_mood_sad" />
+
+    <ImageView
+        android:id="@+id/good"
+        android:layout_width="37.5dp"
+        android:layout_height="37.5dp"
+        android:layout_marginStart="53dp"
+        android:layout_marginTop="13dp"
+        app:layout_constraintStart_toEndOf="@+id/sad"
+        app:layout_constraintTop_toBottomOf="@+id/reviewQuestion"
+        app:srcCompat="@drawable/tabler_icon_mood_empty" />
+
+    <ImageView
+        android:id="@+id/best"
+        android:layout_width="37.5dp"
+        android:layout_height="37.5dp"
+        android:layout_marginStart="53dp"
+        android:layout_marginTop="13dp"
+        app:layout_constraintStart_toEndOf="@+id/good"
+        app:layout_constraintTop_toBottomOf="@+id/reviewQuestion"
+        app:srcCompat="@drawable/tabler_icon_mood_happy" />
+
+    <TextView
+        android:id="@+id/badText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="9dp"
+        android:text="BAD"
+        android:textColor="#80000000"
+        android:textFontWeight="400"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sad" />
+
+    <TextView
+        android:id="@+id/goodText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="9dp"
+        android:text="GOOD"
+        android:textColor="#80000000"
+        android:textFontWeight="400"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@+id/badText"
+        app:layout_constraintTop_toBottomOf="@+id/good" />
+
+    <TextView
+        android:id="@+id/bestText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="66dp"
+        android:layout_marginTop="9dp"
+        android:text="BEST"
+        android:textColor="#80000000"
+        android:textFontWeight="400"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@+id/goodText"
+        app:layout_constraintTop_toBottomOf="@+id/best" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="103dp"
+        android:text="공동 주문 후기를 알려주세요 !"
+        android:textColor="#000000"
+        android:textFontWeight="700"
+        android:textSize="13sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reviewQuestion" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="7dp"
+        android:textColor="#80000000"
+        android:text="남겨주신 후기는 상대방의 프로필에 공개돼요."
+        android:textFontWeight="400"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+    <EditText
+        android:id="@+id/reviewContent"
+        android:layout_width="282dp"
+        android:layout_height="201dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edittext_withdrawal_content_background"
+        android:gravity="top"
+        android:hint="후기를 적어주세요 (선택사항)"
+        android:textColorHint="#A6000000"
+        android:inputType="textPersonName"
+        android:textColor="#CC000000"
+        android:textSize="11sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView16" />
+
+    <Button
+        android:id="@+id/btn_sendReview"
+        android:layout_width="256dp"
+        android:layout_height="43dp"
+        android:layout_marginBottom="28dp"
+        android:background="@drawable/btn_big_blue_background"
+        android:text="후기 보내기"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

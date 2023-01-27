@@ -21,4 +21,5 @@ class IntroActivity : AppCompatActivity() {
         }, 2500)
 
     }
+
 }

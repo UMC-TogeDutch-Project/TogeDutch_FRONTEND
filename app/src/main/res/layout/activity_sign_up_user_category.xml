@@ -51,7 +51,7 @@
     <View
         android:id="@+id/tableLayoutEdit"
         android:layout_width="match_parent"
-        android:layout_height="400dp" />
+        android:layout_height="385dp" />
 
     <ImageView
         android:layout_width="60dp"

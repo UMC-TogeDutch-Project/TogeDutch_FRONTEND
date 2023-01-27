@@ -95,7 +95,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/appCompatParticipation"
             android:layout_width="28dp"
             android:layout_height="23dp"
@@ -119,7 +119,7 @@
             app:layout_constraintStart_toEndOf="@+id/appCompatParticipation"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/appCompatHeart"
             android:layout_width="28dp"
             android:layout_height="23dp"
@@ -165,7 +165,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/appCompatAdvertise"
             android:layout_width="28dp"
             android:layout_height="23dp"
@@ -211,7 +211,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view2" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/appCompatNotice"
             android:layout_width="28dp"
             android:layout_height="23dp"
@@ -235,7 +235,7 @@
             app:layout_constraintStart_toEndOf="@+id/appCompatNotice"
             app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/appCompatAlarmKeyword"
             android:layout_width="28dp"
             android:layout_height="23dp"
@@ -260,7 +260,7 @@
             app:layout_constraintStart_toEndOf="@+id/appCompatAlarmKeyword"
             app:layout_constraintTop_toBottomOf="@+id/notice" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/appCompatWithdrawal"
             android:layout_width="28dp"
             android:layout_height="23dp"

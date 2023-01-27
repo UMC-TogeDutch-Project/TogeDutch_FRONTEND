@@ -16,6 +16,21 @@
         tools:targetApi="31">
         <activity
             android:name=".MainActivity"
+            android:exported="false">
+
+        </activity>
+        <activity android:name=".AnnouncePostActivity"></activity>
+        <activity android:name=".announcement.AnnounceRecyclerviewItem"></activity>
+        <activity android:name=".announcement.AnnounceListActivity"></activity>
+        <activity android:name=".profile.MyProfileActivity"></activity>
+        <activity android:name=".ram.my_application_1.MyPostActivity"></activity>
+        <activity android:name=".commercial.CommercialListActivity"></activity>
+        <activity android:name=".ram.my_application_1.MyPostDetailActivity"></activity>
+        <activity android:name=".ram.my_application_1.current_application.CurrentApplicationActivity"></activity>
+        <activity android:name=".ram.chat.ChattingActivity"></activity>
+
+        <activity
+            android:name=".login.IntroActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,17 +42,38 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity android:name=".AnnouncePostActivity"></activity>
+
         <activity android:name=".announcement.AnnounceRecyclerviewItem"></activity>
         <activity android:name=".announcement.AnnounceListActivity"></activity>
-        <activity android:name=".announcement.AnnounceDetailActivity"></activity>
         <activity android:name=".profile.MyProfileActivity"></activity>
-        <activity android:name=".my_application_1.MyApplicationActivity"></activity>
+        <activity android:name=".ram.my_application_1.MyPostActivity"></activity>
         <activity android:name=".commercial.CommercialListActivity"></activity>
-        <activity android:name=".commercial.CommercialSignUpActivity"></activity>
+        <activity android:name=".ram.my_application_1.MyPostDetailActivity"></activity>
+        <activity android:name=".ram.my_application_1.current_application.CurrentApplicationActivity"></activity>
+        <activity android:name=".ram.chat.ChattingActivity"></activity>
         <activity android:name=".my_application_1.MyApplicationDetailActivity"></activity>
         <activity android:name=".my_application_1.current_application.CurrentApplicationActivity"></activity>
         <activity android:name=".chat.ChattingActivity"></activity>
+        <activity android:name=".signup.SignUpUserCategoryActivity"></activity>
+        <activity android:name=".signup.SignUpUserPersonalInfoActivity"></activity>
+        <activity android:name=".news.NewsActivity"></activity>
+
+
+        <activity
+            android:name=".login.LoginActivity"
+            android:exported="false">
+        </activity>
+
+        <activity android:name=".signup.SignUpActivity"></activity>
+        <activity android:name=".signup.SignUpAlarmKeywordActivity"></activity>
+        <activity android:name=".signup.SignUpRegionActivity"></activity>
+        <activity android:name=".signup.SignUpUserCategoryActivity"></activity>
+        <activity android:name=".signup.SignUpUserPersonalInfoActivity"></activity>
+        <activity android:name=".news.NewsActivity"></activity>
+        <activity android:name=".withdrawal.WithdrawalActivity"></activity>
+        <activity android:name=".wishlist.WishListActivity"></activity>
+        <activity android:name=".notice.NoticeActivity"></activity>
+
     </application>
 
 </manifest>

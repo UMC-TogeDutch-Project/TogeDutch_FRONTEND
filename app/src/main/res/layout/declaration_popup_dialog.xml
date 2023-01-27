@@ -18,11 +18,11 @@
         android:text="신고 사유"
         android:textSize="17sp"
         android:textColor="@color/black"
+        android:fontFamily="@font/notosanskr_bold"
         android:textFontWeight="700"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/declaration_reason_txt"
-        android:layout_marginBottom="12dp"/>
+        app:layout_constraintBottom_toTopOf="@+id/declaration_reason_txt" />
 
 
     <androidx.appcompat.widget.AppCompatButton

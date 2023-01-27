@@ -8,8 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import umc.mobile.project.commercial.CommercialListActivity
 import umc.mobile.project.databinding.FragmentMypageBinding
-import umc.mobile.project.my_application_1.MyApplicationActivity
+import umc.mobile.project.notice.NoticeActivity
+import umc.mobile.project.ram.my_application_1.MyPostActivity
 import umc.mobile.project.profile.MyProfileActivity
+import umc.mobile.project.wishlist.WishListActivity
+import umc.mobile.project.withdrawal.WithdrawalActivity
 
 class MyPageFragment: Fragment() {
     private lateinit var viewBinding: FragmentMypageBinding
@@ -31,12 +34,13 @@ class MyPageFragment: Fragment() {
         }
 
         viewBinding.participation.setOnClickListener {
-            val intent = Intent(context, MyApplicationActivity::class.java)
+            val intent = Intent(context, MyPostActivity::class.java)
             startActivity(intent)
         }
 
         viewBinding.favorite.setOnClickListener {
-
+            val intent = Intent(context, WishListActivity::class.java)
+            startActivity(intent)
         }
 
         viewBinding.advertise.setOnClickListener {
@@ -45,7 +49,8 @@ class MyPageFragment: Fragment() {
         }
 
         viewBinding.notice.setOnClickListener {
-
+            val intent = Intent(context, NoticeActivity::class.java)
+            startActivity(intent)
         }
 
         viewBinding.alarmKeyword.setOnClickListener {
@@ -53,7 +58,8 @@ class MyPageFragment: Fragment() {
         }
 
         viewBinding.withdrawal.setOnClickListener {
-
+            val intent = Intent(context, WithdrawalActivity::class.java)
+            startActivity(intent)
         }
 
         return viewBinding.root

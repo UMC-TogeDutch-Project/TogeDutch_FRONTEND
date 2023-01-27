@@ -34,4 +34,15 @@ class OrderRVAdapter (private val orderList: ArrayList<OrderData>): RecyclerView
             binding.score.text = orderData.score.toString()
         }
     }
+
+
+    interface OnItemClickListener {
+        fun onItemClick(order: OrderData)
+    }
+
+    fun setItemClickListener(onItemClickListener: OnItemClickListener) {
+        this.itemClickListener = onItemClickListener
+    }
+
+    private lateinit var itemClickListener : OnItemClickListener
 }

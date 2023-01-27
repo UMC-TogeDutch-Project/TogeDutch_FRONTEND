@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EEF2FF"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".withdrawal.WithdrawalActivity">
 
     <include
         android:id="@+id/include"
@@ -80,7 +81,7 @@
             android:inputType="textPersonName"
             android:text="ㅇㅇㅇㅇㅇ"
             android:textColor="#CC000000"
-            android:textSize="15sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.487"
             app:layout_constraintStart_toStartOf="parent"

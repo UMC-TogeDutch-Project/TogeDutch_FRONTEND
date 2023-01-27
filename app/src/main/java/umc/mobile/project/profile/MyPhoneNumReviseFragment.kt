@@ -8,11 +8,27 @@ import androidx.fragment.app.Fragment
 import umc.mobile.project.databinding.FragmentMypagePhonenumberReviseBinding
 
 class MyPhoneNumReviseFragment : Fragment() {
+    private lateinit var viewBinding: FragmentMypagePhonenumberReviseBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return FragmentMypagePhonenumberReviseBinding.inflate(layoutInflater).root
+        viewBinding = FragmentMypagePhonenumberReviseBinding.inflate(layoutInflater)
+
+        initActionBar()
+
+        return viewBinding.root
+    }
+
+    private fun initActionBar() {
+        viewBinding.include.appbarPageNameLeftTv.text = "내 프로필 수정"
+
+        viewBinding.include.appbarBackBtn.setOnClickListener {
+            (context as MyProfileActivity).supportFragmentManager.beginTransaction().remove(this).commit()
+            (context as MyProfileActivity).supportFragmentManager
+                .popBackStack()
+        }
     }
 }

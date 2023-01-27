@@ -49,7 +49,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/list_item"
         app:layout_constraintEnd_toEndOf="@+id/list_item" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/appCompatLocation"
         android:layout_width="11.33dp"
         android:layout_height="12.32dp"
@@ -71,7 +71,7 @@
         app:layout_constraintStart_toEndOf="@+id/appCompatLocation"
         app:layout_constraintTop_toBottomOf="@+id/orderListTitle" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/appCompatClock"
         android:layout_width="12.75dp"
         android:layout_height="12dp"
@@ -93,7 +93,7 @@
         app:layout_constraintStart_toEndOf="@+id/appCompatClock"
         app:layout_constraintTop_toBottomOf="@+id/orderListLocation" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/appCompatPersonNum"
         android:layout_width="10.67dp"
         android:layout_height="14.38dp"
@@ -104,19 +104,41 @@
         app:layout_constraintTop_toTopOf="@+id/list_item_score" />
 
     <TextView
-        android:id="@+id/numberOfPerson"
+        android:id="@+id/currentPersonNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:text="1 / 3"
+        android:text="1"
         android:textColor="#A6000000"
         android:textSize="10sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/list_item_score"
         app:layout_constraintStart_toEndOf="@+id/appCompatPersonNum"
         app:layout_constraintTop_toTopOf="@+id/list_item_score" />
+    <TextView
+        android:id="@+id/dash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" / "
+        android:textColor="#A6000000"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/list_item_score"
+        app:layout_constraintStart_toEndOf="@+id/currentPersonNum"
+        app:layout_constraintTop_toTopOf="@+id/list_item_score" />
+    <TextView
+        android:id="@+id/totalPersonNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3"
+        android:textColor="#A6000000"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/list_item_score"
+        app:layout_constraintStart_toEndOf="@+id/dash"
+        app:layout_constraintTop_toTopOf="@+id/list_item_score" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/appCompatLike"
         android:layout_width="20dp"
         android:layout_height="18dp"

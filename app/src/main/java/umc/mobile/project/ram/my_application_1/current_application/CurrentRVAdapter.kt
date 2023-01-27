@@ -1,11 +1,11 @@
-package umc.mobile.project.my_application_1.current_application
+package umc.mobile.project.ram.my_application_1.current_application
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import umc.mobile.project.databinding.ItemApplyCurrentBinding
 
-class CurrentRVAdapter(private val currentList: ArrayList<CurrentData>) : RecyclerView.Adapter<CurrentRVAdapter.ViewHolder>(){
+class CurrentRVAdapter(private val currentList: ArrayList<CurrentApplicatoin>) : RecyclerView.Adapter<CurrentRVAdapter.ViewHolder>(){
 
     // 아이템 레이아웃 결합
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
@@ -29,12 +29,12 @@ class CurrentRVAdapter(private val currentList: ArrayList<CurrentData>) : Recycl
 
     // 레이아웃 내 view 연결
     inner class ViewHolder(val binding: ItemApplyCurrentBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(currentData: CurrentData) {
+        fun bind(currentApplicatoin: CurrentApplicatoin) {
 
-            val txtSubject : String = currentData.subject
-            val txtUserID : String = currentData.nickname
-            val txtAlaram : String = currentData.alarm_txt
-            val txtDate : String = currentData.time
+            val txtSubject : String = currentApplicatoin.subject
+            val txtUserID : String = currentApplicatoin.nickname
+            val txtAlaram : String = currentApplicatoin.alarm_txt
+            val txtDate : String = currentApplicatoin.time
 
             binding.itemDateTxt.text = txtDate
             binding.itemSubjectTxt.text = txtSubject
@@ -52,7 +52,7 @@ class CurrentRVAdapter(private val currentList: ArrayList<CurrentData>) : Recycl
     }
 
     interface OnItemClickListener {
-        fun onItemClick(currentData: CurrentData)
+        fun onItemClick(currentApplicatoin: CurrentApplicatoin)
     }
 
     fun setItemClickListener(onItemClickListener: OnItemClickListener) {

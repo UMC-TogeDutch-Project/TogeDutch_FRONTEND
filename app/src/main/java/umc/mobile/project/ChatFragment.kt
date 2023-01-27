@@ -7,9 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import umc.mobile.project.chat.ChatRoom
-import umc.mobile.project.chat.ChatRoomRVAdapter
-import umc.mobile.project.chat.ChattingActivity
+import umc.mobile.project.ram.chat.ChatRoom
+import umc.mobile.project.ram.chat.ChatRoomRVAdapter
+import umc.mobile.project.ram.chat.ChattingActivity
 import umc.mobile.project.databinding.FragmentChatBinding
 
 class ChatFragment: Fragment() {

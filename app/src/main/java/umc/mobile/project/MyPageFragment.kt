@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import umc.mobile.project.commercial.CommercialListActivity
 import umc.mobile.project.databinding.FragmentMypageBinding
-import umc.mobile.project.my_application_1.MyApplicationActivity
+import umc.mobile.project.ram.my_application_1.MyPostActivity
 import umc.mobile.project.profile.MyProfileActivity
 
 class MyPageFragment: Fragment() {
@@ -31,7 +31,7 @@ class MyPageFragment: Fragment() {
         }
 
         viewBinding.participation.setOnClickListener {
-            val intent = Intent(context, MyApplicationActivity::class.java)
+            val intent = Intent(context, MyPostActivity::class.java)
             startActivity(intent)
         }
 

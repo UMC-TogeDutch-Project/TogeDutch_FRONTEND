@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="316dp"
-    android:layout_height="484dp">
+    android:layout_height="184dp">
 
     <ImageView
         android:layout_width="match_parent"
@@ -15,15 +15,31 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="신고 사유"
+        android:text="약속 시간"
         android:textSize="17sp"
-        android:textColor="@color/black"
         android:fontFamily="@font/notosanskr_bold"
+        android:textColor="@color/black"
         android:textFontWeight="700"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/calendar_chose_btn"
+        android:layout_width="282dp"
+        android:layout_height="39dp"
+        android:background="@drawable/square_background_white_round"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/declaration_reason_txt" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="84dp"
 
+        android:drawableEnd="@drawable/ic_calendar_chatting_icon"
+        android:paddingRight="18dp"
+
+
+        />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/close_btn"
@@ -36,40 +52,16 @@
         android:layout_marginRight="15dp"/>
 
 
-
-   <EditText
-       android:id="@+id/declaration_reason_txt"
-        android:layout_width="282dp"
-        android:layout_height="347dp"
-        android:background="@drawable/square_background_white_round"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="51dp"
-
-        android:text=""
-        android:hint="신고 사유를 적어주세요 (필수 사항)"
-        android:textColorHint="#737373"
-        android:textColor="#FF7F61"
-        android:textSize="12sp"
-
-        android:paddingLeft="19dp"
-        android:paddingRight="19dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        android:gravity="top"
-        />
-    
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/send_btn"
-        android:layout_width="279dp"
-        android:layout_height="47dp"
+        android:layout_width="280dp"
+        android:layout_height="43dp"
         android:background="@drawable/sqare_background_blue_round"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="24dp"
-        android:text="신고 접수"
+        android:text="완료"
         android:textAlignment="center"
         android:gravity="center"
 

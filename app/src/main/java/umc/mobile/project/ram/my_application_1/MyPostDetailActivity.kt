@@ -1,17 +1,17 @@
-package umc.mobile.project.my_application_1
+package umc.mobile.project.ram.my_application_1
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import umc.mobile.project.databinding.ActivityMyApplicationDetailBinding
-import umc.mobile.project.my_application_1.current_application.CurrentApplicationActivity
+import umc.mobile.project.databinding.ActivityMyPostDetailBinding
+import umc.mobile.project.ram.my_application_1.current_application.CurrentApplicationActivity
 
-class MyApplicationDetailActivity : AppCompatActivity() {
-    lateinit var binding: ActivityMyApplicationDetailBinding
+class MyPostDetailActivity : AppCompatActivity() {
+    lateinit var binding: ActivityMyPostDetailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMyApplicationDetailBinding.inflate(layoutInflater)
+        binding = ActivityMyPostDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.btnSeeCurrent.setOnClickListener {

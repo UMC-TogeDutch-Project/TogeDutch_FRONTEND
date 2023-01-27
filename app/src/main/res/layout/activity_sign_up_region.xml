@@ -45,10 +45,11 @@
             android:hint="시/ 구/ 동"
             android:paddingLeft="17dp"
             android:background="@drawable/sign_up_alram__edit_text_box"
+            android:singleLine="true"
             />
 
         <Button
-            android:id="@+id/btnInputAlarm"
+            android:id="@+id/btnInputRegion"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="right"
@@ -60,10 +61,20 @@
 
     </FrameLayout>
 
+    <TextView
+        android:id="@+id/tvRegionCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12dp"
+        android:text=" "
+        android:textColor="#C854FF"
+        android:layout_marginStart="20dp"
+        />
+
     <View
         android:id="@+id/tableLayoutEdit"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="369dp"
         />
     <ImageView
         android:layout_width="60dp"

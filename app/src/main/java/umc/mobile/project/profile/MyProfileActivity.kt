@@ -5,11 +5,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import umc.mobile.project.*
-import umc.mobile.project.databinding.ActivityMainBinding
+import umc.mobile.project.databinding.ActivityMyprofileBinding
 
 class MyProfileActivity : AppCompatActivity() {
-    private val viewBinding: ActivityMainBinding by lazy {
-        ActivityMainBinding.inflate(layoutInflater)
+    private val viewBinding: ActivityMyprofileBinding by lazy {
+        ActivityMyprofileBinding.inflate(layoutInflater)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +28,6 @@ class MyProfileActivity : AppCompatActivity() {
             1 -> transaction.replace(viewBinding.containerFragment.id, MyProfileReviseFragment())
             2 -> transaction.replace(viewBinding.containerFragment.id, MyPhoneNumReviseFragment())
         }
-        transaction.commitAllowingStateLoss()
+        transaction.addToBackStack(null).commitAllowingStateLoss()
     }
 }

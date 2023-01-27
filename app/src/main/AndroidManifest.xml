@@ -36,6 +36,9 @@
         <activity android:name=".my_application_1.MyApplicationDetailActivity"></activity>
         <activity android:name=".my_application_1.current_application.CurrentApplicationActivity"></activity>
         <activity android:name=".chat.ChattingActivity"></activity>
+        <activity android:name=".withdrawal.WithdrawalActivity"></activity>
+        <activity android:name=".wishlist.WishListActivity"></activity>
+        <activity android:name=".notice.NoticeActivity"></activity>
     </application>
 
 </manifest>

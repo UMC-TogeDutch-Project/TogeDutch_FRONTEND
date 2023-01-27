@@ -8,12 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import umc.mobile.project.databinding.FragmentMyprofileBinding
+import umc.mobile.project.my_application_1.Application
+import umc.mobile.project.my_application_1.MyApplicationDetailActivity
+import umc.mobile.project.my_application_1.MyApplicationRVAdapter
 
 
 class MyProfileFragment : Fragment() {
     private lateinit var viewBinding: FragmentMyprofileBinding
     private lateinit var orderRVAdapter: OrderRVAdapter
-    val orderList = ArrayList<OrderData>()
+    var orderList = ArrayList<OrderData>()
+    var reviewList = ArrayList<ReviewData>()
 
     var myProfileActivity:MyProfileActivity? = null
 
@@ -30,6 +34,7 @@ class MyProfileFragment : Fragment() {
         viewBinding = FragmentMyprofileBinding.inflate(layoutInflater)
 
         initRecyclerView()
+        initReview()
 
         viewBinding.profileRevise.setOnClickListener {
             myProfileActivity!!.replaceFragment(1)
@@ -37,6 +42,11 @@ class MyProfileFragment : Fragment() {
 
         viewBinding.phoneNumRevise.setOnClickListener {
             myProfileActivity!!.replaceFragment(2)
+        }
+
+        // 뒤로 가기
+        viewBinding.myprofileActionbar.appbarBackBtn.setOnClickListener {
+            (context as MyProfileActivity).finish()
         }
 
         return viewBinding.root
@@ -51,6 +61,27 @@ class MyProfileFragment : Fragment() {
         orderRVAdapter = OrderRVAdapter(orderList)
         viewBinding.orderList.adapter = orderRVAdapter
 
+        orderRVAdapter.setItemClickListener(object: OrderRVAdapter.OnItemClickListener{
+            override fun onItemClick(order: OrderData) {
+                // 공고 상세 페이지 이동
+            }
+        })
+
+
+
         orderRVAdapter.notifyDataSetChanged()
+    }
+
+    private fun initReview() {
+        reviewList.apply {
+            add(ReviewData("친절하고 약속을 잘 지켜서 좋았어요!"))
+            add(ReviewData("좋았습니당"))
+            add(ReviewData("굿굿"))
+            add(ReviewData("친절해요"))
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 }

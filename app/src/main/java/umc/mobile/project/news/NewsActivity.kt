@@ -1,9 +1,12 @@
 package umc.mobile.project.news
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import umc.mobile.project.MainActivity
 import umc.mobile.project.databinding.ActivityNewsBinding
+import umc.mobile.project.signup.SignUpAlarmKeywordActivity
 
 
 class NewsActivity : AppCompatActivity(){
@@ -20,6 +23,12 @@ class NewsActivity : AppCompatActivity(){
 
         viewBinding.btnMate.setOnClickListener {
             setflag(1)
+        }
+
+        viewBinding.topView.appbarBackBtn.setOnClickListener{
+            val intent = Intent(this, MainActivity::class.java)
+            finish()
+            startActivity(intent)
         }
 
 

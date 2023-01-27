@@ -1,4 +1,4 @@
-package umc.mobile.project.chat
+package umc.mobile.project.ram.chat
 
 data class ChatRoom(
     var subject : String,

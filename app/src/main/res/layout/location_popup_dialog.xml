@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="316dp"
+    android:layout_height="484dp">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/square_backgound_light_blue_round"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/search_view"
+        android:layout_width="286dp"
+        android:layout_height="37dp"
+        app:iconifiedByDefault="false"
+        app:queryHint="검색"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="41dp"
+        android:background="@drawable/square_round_dark_blue_background" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/close_btn"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:background="@drawable/ic_baseline_close_24"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="19dp"
+        android:layout_marginRight="15dp"/>
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

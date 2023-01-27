@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="316dp"
+    android:layout_height="584dp">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/square_background_white_round"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <TextView
+        android:id="@+id/post_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="공고 제목"
+        android:fontFamily="@font/notosanskr_bold"
+        android:textSize="12sp"
+        android:textFontWeight="600"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="26dp"/>
+
+    <TextView
+        android:id="@+id/post_title_txt"
+        android:layout_width="278dp"
+        android:layout_height="37dp"
+        android:background="@drawable/square_background_light_gray_round"
+        android:text="버거킹에서 같이 주문할 분 계신가요?"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:fontFamily="@font/notosanskr_regular"
+        android:textFontWeight="500"
+        app:layout_constraintStart_toStartOf="@id/post_title"
+        app:layout_constraintTop_toBottomOf="@id/post_title"/>
+
+    <TextView
+        android:id="@+id/shop_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="가게 정보"
+        android:fontFamily="@font/notosanskr_bold"
+        android:textSize="12sp"
+        android:textFontWeight="600"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/post_title_txt"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="4dp"/>
+
+    <TextView
+        android:id="@+id/shop_info_txt"
+        android:layout_width="278dp"
+        android:layout_height="37dp"
+        android:background="@drawable/square_background_light_gray_round"
+        android:text="https://baemin.me/7-SBcbMHs"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textColor="@color/grey_1"
+        android:textSize="14sp"
+        android:fontFamily="@font/notosanskr_regular"
+        android:textFontWeight="500"
+        app:layout_constraintStart_toStartOf="@id/post_title"
+        app:layout_constraintTop_toBottomOf="@id/shop_info"/>
+
+    <TextView
+        android:id="@+id/deliver_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="배달팁"
+        android:fontFamily="@font/notosanskr_bold"
+        android:textSize="12sp"
+        android:textFontWeight="600"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/shop_info_txt"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="4dp"/>
+
+    <TextView
+        android:id="@+id/deliver_tip_txt"
+        android:layout_width="278dp"
+        android:layout_height="37dp"
+        android:background="@drawable/square_background_light_gray_round"
+        android:text="5000원"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:fontFamily="@font/notosanskr_regular"
+        android:textFontWeight="700"
+        app:layout_constraintStart_toStartOf="@id/post_title"
+        app:layout_constraintTop_toBottomOf="@id/deliver_tip"/>
+
+    <TextView
+        android:id="@+id/minimum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="최소 주문 금액"
+        android:fontFamily="@font/notosanskr_bold"
+        android:textSize="12sp"
+        android:textFontWeight="600"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/deliver_tip_txt"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="4dp"/>
+
+    <TextView
+        android:id="@+id/minimum_txt"
+        android:layout_width="278dp"
+        android:layout_height="37dp"
+        android:background="@drawable/square_background_light_gray_round"
+        android:text="15000원"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:fontFamily="@font/notosanskr_regular"
+        android:textFontWeight="700"
+        app:layout_constraintStart_toStartOf="@id/post_title"
+        app:layout_constraintTop_toBottomOf="@id/minimum"/>
+
+    <TextView
+        android:id="@+id/direction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="위치"
+        android:fontFamily="@font/notosanskr_bold"
+        android:textSize="12sp"
+        android:textFontWeight="600"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/minimum_txt"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="4dp"/>
+
+    <TextView
+        android:id="@+id/direction_txt"
+        android:layout_width="278dp"
+        android:layout_height="37dp"
+        android:background="@drawable/square_background_light_gray_round"
+        android:text="동덕여대 인문관"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:fontFamily="@font/notosanskr_regular"
+        android:textFontWeight="700"
+        app:layout_constraintStart_toStartOf="@id/post_title"
+        app:layout_constraintTop_toBottomOf="@id/direction"/>
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="주문 시간"
+        android:fontFamily="@font/notosanskr_bold"
+        android:textSize="12sp"
+        android:textFontWeight="600"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/direction_txt"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="4dp"/>
+
+    <TextView
+        android:id="@+id/time_announce_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/direction_txt"
+        app:layout_constraintBottom_toBottomOf="@id/time"
+        android:text="주문 마감 까지 00:03:40"
+        android:layout_marginTop="4dp"
+        android:textSize="10sp"
+        android:fontFamily="@font/notosanskr_regular"
+        android:textColor="#C854FF"
+        android:layout_marginLeft="80dp"
+        />
+
+    <TextView
+        android:id="@+id/time_txt"
+        android:layout_width="278dp"
+        android:layout_height="37dp"
+        android:background="@drawable/square_background_light_gray_round"
+        android:text="2022년 12월 29일 오후 6:58"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:fontFamily="@font/notosanskr_regular"
+        android:textFontWeight="500"
+        app:layout_constraintStart_toStartOf="@id/post_title"
+        app:layout_constraintTop_toBottomOf="@id/time"/>
+        
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/close_btn"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:background="@drawable/ic_baseline_close_24"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="19dp"
+        android:layout_marginRight="15dp"/>
+
+
+    <TextView
+        android:id="@+id/people"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="모집 인원"
+        android:fontFamily="@font/notosanskr_bold"
+        android:textSize="12sp"
+        android:textFontWeight="600"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/time_txt"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="4dp"/>
+
+    <TextView
+        android:id="@+id/people_txt"
+        android:layout_width="278dp"
+        android:layout_height="37dp"
+        android:background="@drawable/square_background_light_gray_round"
+        android:text="3명"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:fontFamily="@font/notosanskr_regular"
+        android:textFontWeight="700"
+        app:layout_constraintStart_toStartOf="@id/post_title"
+        app:layout_constraintTop_toBottomOf="@id/people"
+        android:layout_marginBottom="44dp"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

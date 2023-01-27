@@ -1,7 +1,7 @@
-package umc.mobile.project.my_application_1
+package umc.mobile.project.ram.my_application_1
 
 
-data class Application(
+data class Post(
     var post_id : Int,
     var title : String,
     var url : String,

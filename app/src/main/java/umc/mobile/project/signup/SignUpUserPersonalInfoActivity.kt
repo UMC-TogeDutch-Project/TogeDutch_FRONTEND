@@ -23,6 +23,7 @@ class SignUpUserPersonalInfoActivity : AppCompatActivity() {
             val intent = Intent(this, SignUpUserCategoryActivity::class.java)
             finish()
             startActivity(intent)
+            overridePendingTransition(0, 0)
         }
 
     }

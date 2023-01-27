@@ -1,4 +1,4 @@
-package umc.mobile.project.chat
+package umc.mobile.project.ram.chat
 
 import android.content.Intent
 import android.view.LayoutInflater

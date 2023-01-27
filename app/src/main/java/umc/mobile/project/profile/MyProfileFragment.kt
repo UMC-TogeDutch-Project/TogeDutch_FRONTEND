@@ -8,9 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import umc.mobile.project.databinding.FragmentMyprofileBinding
-import umc.mobile.project.my_application_1.Application
-import umc.mobile.project.my_application_1.MyApplicationDetailActivity
-import umc.mobile.project.my_application_1.MyApplicationRVAdapter
 
 
 class MyProfileFragment : Fragment() {

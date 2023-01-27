@@ -1,18 +1,27 @@
 package umc.mobile.project
 
-data class HomeData(
-    val tvTitle: String?,
-    val ivItemImageFirst: Int? = null,
-    val tvItemTitleFirst: String,
-    val tvItemWhereFirst: String,
-    val tvItemTimeFirst: String,
-    val ivItemImageSecond: Int? = null,
-    val tvItemTitleSecond: String,
-    val tvItemWhereSecond: String,
-    val tvItemTimeSecond: String,
-    val ivItemImageThird: Int? = null,
-    val tvItemTitleThird: String,
-    val tvItemWhereThird: String,
-    val tvItemTimeThird: String
 
-)
+sealed class HomeData{
+    data class Item(
+        var post_id : Int,
+        var title : String,
+        var url : String,
+        var delivery_tips : Int,
+        var minimum : Int,
+        var order_time : String,
+        var num_of_recruits : Int,
+        var recruited_num : Int,
+        var status : String,
+        var created_at : String,
+        var updated_at : String? = null,
+        var user_id : Int,
+        var Latitude : Double,
+        var longitude : Double
+
+    ):HomeData()
+
+    data class Header(
+        val category: String
+    ): HomeData()
+}
+

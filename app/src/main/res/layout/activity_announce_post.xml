@@ -7,7 +7,7 @@
 
 
     <TextView
-        android:id="@+id/post_title"
+        android:id="@+id/announce_post"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/notosanskr_black"
@@ -36,7 +36,7 @@
             android:layout_gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/post_title">
+            app:layout_constraintTop_toBottomOf="@+id/announce_post">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -51,6 +51,7 @@
                     android:textColor="@color/black" />
 
                 <EditText
+                    android:id="@+id/ann_et_title"
                     android:layout_width="370dp"
                     android:layout_height="40dp"
                     android:background="@drawable/button_round_11"
@@ -69,6 +70,7 @@
                     android:textColor="@color/black" />
 
                 <EditText
+                    android:id="@+id/ann_et_store"
                     android:layout_width="370dp"
                     android:layout_height="40dp"
                     android:background="@drawable/button_round_11"
@@ -87,6 +89,7 @@
                     android:textColor="@color/black" />
 
                 <EditText
+                    android:id="@+id/ann_et_tip"
                     android:layout_width="370dp"
                     android:layout_height="40dp"
                     android:background="@drawable/button_round_11"
@@ -105,6 +108,7 @@
                     android:textColor="@color/black" />
 
                 <EditText
+                    android:id="@+id/ann_et_minimum"
                     android:layout_width="370dp"
                     android:layout_height="40dp"
                     android:background="@drawable/button_round_11"
@@ -124,6 +128,7 @@
                     android:textColor="@color/black" />
 
                 <EditText
+                    android:id="@+id/ann_et_place"
                     android:layout_width="370dp"
                     android:layout_height="40dp"
                     android:background="@drawable/button_round_11"
@@ -143,6 +148,7 @@
                     android:textColor="@color/black" />
 
                 <EditText
+                    android:id="@+id/ann_et_time"
                     android:layout_width="370dp"
                     android:layout_height="40dp"
                     android:background="@drawable/button_round_11"
@@ -161,6 +167,7 @@
                     android:textColor="@color/black" />
 
                 <EditText
+                    android:id="@+id/ann_et_person"
                     android:layout_width="370dp"
                     android:layout_height="40dp"
                     android:background="@drawable/button_round_11"
@@ -179,6 +186,7 @@
                     android:textColor="@color/black" />
 
                 <EditText
+                    android:id="@+id/ann_et_img"
                     android:layout_width="370dp"
                     android:layout_height="40dp"
                     android:background="@drawable/button_round_11"
@@ -202,7 +210,6 @@
             android:background="@drawable/button_round_13"
             android:backgroundTint="@color/grey_3"
             android:fontFamily="@font/notosanskr_bold"
-            android:layout_gravity="center"
             android:includeFontPadding="false"
             android:layout_marginTop="20dp"
             android:text="등록하기"

@@ -1,15 +1,19 @@
 package umc.mobile.project
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import umc.mobile.project.chat.ChatRoom
+import umc.mobile.project.chat.ChattingActivity
 import umc.mobile.project.databinding.FragmentRestaurantBinding
 import umc.mobile.project.restaurant.RestaurantData
 import umc.mobile.project.restaurant.RestaurantRVAdapter
 import umc.mobile.project.restaurant.RestaurantRVAdapterDecoration
+import umc.mobile.project.restaurant.blog.RestaurantPageActivity
 
 class RestaurantFragment : Fragment() {
     private lateinit var binding: FragmentRestaurantBinding
@@ -22,6 +26,7 @@ class RestaurantFragment : Fragment() {
     ): View {
         binding = FragmentRestaurantBinding.inflate(inflater, container, false)
         initRecyclerView()
+
         return binding.root
     }
 
@@ -38,5 +43,6 @@ class RestaurantFragment : Fragment() {
         binding.rvRes.adapter = restaurantRVAdapter //리사이클러뷰에 어댑터 연결
         binding.rvRes.layoutManager= LinearLayoutManager(requireContext()) //레이아웃 매니저 연결
         binding.rvRes.addItemDecoration(RestaurantRVAdapterDecoration(20))
+
     }
 }

@@ -39,7 +39,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/appbar_page_name_center_tv"
+            android:id="@+id/appbar_com_sign_up"
             android:layout_width="96dp"
             android:layout_height="34dp"
             android:text="광고 신청"

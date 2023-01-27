@@ -1,10 +1,9 @@
 package umc.mobile.project.restaurant
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import umc.mobile.project.commercial.CommercialData
-import umc.mobile.project.commercial.CommercialRVAdapter
 import umc.mobile.project.databinding.RestaurantRecyclerviewItemBinding
 
 class RestaurantRVAdapter (private val restaurantData:  ArrayList<RestaurantData>): RecyclerView.Adapter<RestaurantRVAdapter.MyViewHolder>() {
@@ -26,7 +25,11 @@ class RestaurantRVAdapter (private val restaurantData:  ArrayList<RestaurantData
             binding.resPlace.text = restaurantData.place
             binding.resPhone.text = restaurantData.phone
             binding.resScore.text = restaurantData.score
+
+
         }
     }
+
+
 
 }

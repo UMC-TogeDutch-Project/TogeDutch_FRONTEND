@@ -53,6 +53,7 @@
                     android:textColor="@color/black" />
 
                 <EditText
+                    android:id="@+id/com_et_title"
                     android:layout_width="370dp"
                     android:layout_height="40dp"
                     android:background="@drawable/button_round_11"
@@ -71,6 +72,7 @@
                     android:textColor="@color/black" />
 
                 <EditText
+                    android:id="@+id/com_et_inform"
                     android:layout_width="370dp"
                     android:layout_height="40dp"
                     android:background="@drawable/button_round_11"
@@ -89,6 +91,7 @@
                     android:textColor="@color/black" />
 
                 <EditText
+                    android:id="@+id/com_et_menu"
                     android:layout_width="370dp"
                     android:layout_height="40dp"
                     android:background="@drawable/button_round_11"
@@ -107,6 +110,7 @@
                     android:textColor="@color/black" />
 
                 <EditText
+                    android:id="@+id/com_et_tip"
                     android:layout_width="370dp"
                     android:layout_height="40dp"
                     android:background="@drawable/button_round_11"
@@ -125,6 +129,7 @@
                     android:textColor="@color/black" />
 
                 <EditText
+                    android:id="@+id/com_et_place"
                     android:layout_width="370dp"
                     android:layout_height="40dp"
                     android:background="@drawable/button_round_11"
@@ -144,6 +149,7 @@
                     android:textColor="@color/black" />
 
                 <EditText
+                    android:id="@+id/com_et_request"
                     android:layout_width="370dp"
                     android:layout_height="40dp"
                     android:background="@drawable/button_round_11"
@@ -162,6 +168,7 @@
                     android:textColor="@color/black" />
 
                 <EditText
+                    android:id="@+id/com_et_img"
                     android:layout_width="370dp"
                     android:layout_height="40dp"
                     android:background="@drawable/button_round_11"

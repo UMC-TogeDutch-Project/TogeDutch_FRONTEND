@@ -1,10 +1,12 @@
 package umc.mobile.project.commercial
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import umc.mobile.project.announcement.AnnounceRVAdapterDecoration
 import umc.mobile.project.databinding.ActivityCommercialListBinding
+
 
 class CommercialListActivity: AppCompatActivity() {
     private lateinit var binding: ActivityCommercialListBinding
@@ -15,7 +17,9 @@ class CommercialListActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCommercialListBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         initRecyclerView()
+        initActionBar()
 
     }
 
@@ -30,4 +34,16 @@ class CommercialListActivity: AppCompatActivity() {
         binding.recyclerView.layoutManager= LinearLayoutManager(this) //레이아웃 매니저 연결
         binding.recyclerView.addItemDecoration(AnnounceRVAdapterDecoration(20))
     }
+
+    private fun initActionBar(){
+        binding.comActionBar.appbarComSignUp.setOnClickListener{
+            val intent = Intent(this, CommercialSignUpActivity::class.java)
+            startActivity(intent)
+        }
+        binding.comActionBar.appbarBackBtn.setOnClickListener{
+            finish()
+        }
+    }
+
+
 }

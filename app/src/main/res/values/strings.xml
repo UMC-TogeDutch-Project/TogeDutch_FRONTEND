@@ -9,6 +9,13 @@
         <item>업로드</item>
         <item>참여</item>
     </string-array>
+
+    <string-array name="spinner_txt2">
+        <item>최신순</item>
+        <item>마감임박</item>
+    </string-array>
+
+
     <string-array name="category_spinner">
         <item>일반사용자</item>
         <item>a</item>

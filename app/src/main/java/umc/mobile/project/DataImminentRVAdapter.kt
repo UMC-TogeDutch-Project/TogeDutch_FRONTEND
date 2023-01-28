@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import umc.mobile.project.databinding.ItemDataBinding
 
 
-class DataRVAdapter2(private val homeDataList: ArrayList<HomeData>) : RecyclerView.Adapter<DataRVAdapter2.ImminentViewHolder>() {
+class DataImminentRVAdapter(private val homeDataList: ArrayList<HomeData>) : RecyclerView.Adapter<DataImminentRVAdapter.ImminentViewHolder>() {
 
     private val checkboxStatus = SparseBooleanArray()
 
@@ -30,7 +30,7 @@ class DataRVAdapter2(private val homeDataList: ArrayList<HomeData>) : RecyclerVi
 
 
     //ViewHolder 만들어질 때 실행할 동작
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): DataRVAdapter2.ImminentViewHolder {
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): DataImminentRVAdapter.ImminentViewHolder {
 
         val viewBinding: ItemDataBinding = ItemDataBinding.inflate(
             LayoutInflater.from(viewGroup.context),
@@ -42,7 +42,7 @@ class DataRVAdapter2(private val homeDataList: ArrayList<HomeData>) : RecyclerVi
     }
 
     //ViewHolder가 실제로 데이터를 표시해야 할 때 호출되는 함수
-    override fun onBindViewHolder(holder: DataRVAdapter2.ImminentViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: DataImminentRVAdapter.ImminentViewHolder, position: Int) {
 
         holder.bind(homeDataList[position])
         holder.itemView.setOnClickListener {

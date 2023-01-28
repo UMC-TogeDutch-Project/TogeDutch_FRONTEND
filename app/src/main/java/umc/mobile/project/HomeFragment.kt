@@ -7,17 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewbinding.ViewBinding
 import umc.mobile.project.announcement.AnnounceDetailActivity
 import umc.mobile.project.announcement.AnnounceListActivity
-import umc.mobile.project.announcement.AnnounceListDetailDialog
 import umc.mobile.project.announcement.AnnounceRVAdapterDecoration
 import umc.mobile.project.databinding.FragmentHomeBinding
 import umc.mobile.project.news.NewsActivity
 
 class HomeFragment: Fragment() {
-    lateinit var dataRVAdapter: DataRVAdapter
-    lateinit var dataRVAdapter2: DataRVAdapter2
+    lateinit var dataRecentRVAdapter: DataRecentRVAdapter
+    lateinit var dataImminentRVAdapter: DataImminentRVAdapter
     private var _viewBinding: FragmentHomeBinding? = null
     private val viewBinding get() = _viewBinding!!
 
@@ -82,15 +80,15 @@ class HomeFragment: Fragment() {
         }
 
 
-        dataRVAdapter = DataRVAdapter(dummyHomeDataRecent)
+        dataRecentRVAdapter = DataRecentRVAdapter(dummyHomeDataRecent)
 
 
-        viewBinding.rvRecent.adapter = dataRVAdapter //리사이클러뷰에 어댑터 연결
+        viewBinding.rvRecent.adapter = dataRecentRVAdapter //리사이클러뷰에 어댑터 연결
         viewBinding.rvRecent.layoutManager= LinearLayoutManager(context) //레이아웃 매니저 연결
         viewBinding.rvRecent.addItemDecoration(AnnounceRVAdapterDecoration(20))
 
 
-        dataRVAdapter.setItemClickListener(object: DataRVAdapter.OnItemClickListener{
+        dataRecentRVAdapter.setItemClickListener(object: DataRecentRVAdapter.OnItemClickListener{
             override fun onItemClick(announceData: HomeData) {
 //                    val dlg = AnnounceListDetailDialog(this@AnnounceListActivity)
 //                    dlg.start()
@@ -100,7 +98,7 @@ class HomeFragment: Fragment() {
         })
 
 
-        dataRVAdapter.notifyDataSetChanged()
+        dataRecentRVAdapter.notifyDataSetChanged()
 
 
     }
@@ -130,21 +128,21 @@ class HomeFragment: Fragment() {
 
         }
 
-        dataRVAdapter2 = DataRVAdapter2(dummyHomeDataImminent)
+        dataImminentRVAdapter = DataImminentRVAdapter(dummyHomeDataImminent)
 
-        viewBinding.rvImminent.adapter = dataRVAdapter2 //리사이클러뷰에 어댑터 연결
+        viewBinding.rvImminent.adapter = dataImminentRVAdapter //리사이클러뷰에 어댑터 연결
         viewBinding.rvImminent.layoutManager= LinearLayoutManager(context) //레이아웃 매니저 연결
         viewBinding.rvImminent.addItemDecoration(AnnounceRVAdapterDecoration(20))
 
 
-        dataRVAdapter2.setItemClickListener(object: DataRVAdapter2.OnItemClickListener{
+        dataImminentRVAdapter.setItemClickListener(object: DataImminentRVAdapter.OnItemClickListener{
             override fun onItemClick(announceData: HomeData) {
 //                val dlg = AnnounceListDetailDialog(context)
 //                dlg.start()
             }
         })
 
-        dataRVAdapter2.notifyDataSetChanged()
+        dataImminentRVAdapter.notifyDataSetChanged()
 
     }
     override fun onDestroyView() {

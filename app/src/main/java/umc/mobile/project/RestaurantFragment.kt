@@ -9,10 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import umc.mobile.project.databinding.FragmentRestaurantBinding
 import umc.mobile.project.restaurant.RestaurantData
+import umc.mobile.project.restaurant.RestaurantPageDialog
 import umc.mobile.project.restaurant.RestaurantRVAdapter
 import umc.mobile.project.restaurant.RestaurantRVAdapterDecoration
-import umc.mobile.project.restaurant.blog.RestaurantPageActivity
-
 class RestaurantFragment : Fragment() {
     private lateinit var binding: FragmentRestaurantBinding
     private lateinit var restaurantRVAdapter: RestaurantRVAdapter
@@ -45,10 +44,10 @@ class RestaurantFragment : Fragment() {
 
         restaurantRVAdapter.setItemClickListener(object: RestaurantRVAdapter.OnItemClickListener{
             override fun onItemClick(restaurantData: RestaurantData) {
-//                    val dlg = AnnounceListDetailDialog(this@AnnounceListActivity)
-//                    dlg.start()
-                val intent = Intent(context, RestaurantPageActivity::class.java)
-                startActivity(intent)
+                val dlg = activity?.let { RestaurantPageDialog(it) }
+                dlg?.start()
+//                val intent = Intent(context, RestaurantPageActivity::class.java)
+//                startActivity(intent)
             }
         })
     }

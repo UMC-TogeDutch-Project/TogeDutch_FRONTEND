@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import umc.mobile.project.announcement.AnnounceDetailActivity
 import umc.mobile.project.announcement.AnnounceListActivity
-import umc.mobile.project.announcement.AnnounceListDetailDialog
+
 import umc.mobile.project.announcement.AnnounceRVAdapterDecoration
 import umc.mobile.project.databinding.ActivityAnnounceListBinding
 import umc.mobile.project.databinding.FragmentHomeBinding
@@ -103,8 +103,8 @@ class HomeFragment: Fragment() {
 
         dataRecentRVAdapter.setItemClickListener(object: DataRecentRVAdapter.OnItemClickListener{
             override fun onItemClick(announceData: HomeData) {
-                    val dlg = activity?.let { AnnounceListDetailDialog(it) }
-                dlg?.start()
+                val intent = Intent(context, AnnounceDetailActivity::class.java)
+                startActivity(intent)
             }
         })
 
@@ -148,8 +148,8 @@ class HomeFragment: Fragment() {
 
         dataImminentRVAdapter.setItemClickListener(object: DataImminentRVAdapter.OnItemClickListener{
             override fun onItemClick(announceData: HomeData) {
-                val dlg = activity?.let { AnnounceListDetailDialog(it) }
-                dlg?.start()
+                val intent = Intent(context, AnnounceDetailActivity::class.java)
+                startActivity(intent)
             }
         })
 

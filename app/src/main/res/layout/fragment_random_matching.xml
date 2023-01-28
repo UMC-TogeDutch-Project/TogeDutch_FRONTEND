@@ -6,17 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_participate"
-            android:layout_width="match_parent"
-            android:layout_height="85dp"
-            android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/item_my_post" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/random_matching"
         android:layout_width="match_parent"

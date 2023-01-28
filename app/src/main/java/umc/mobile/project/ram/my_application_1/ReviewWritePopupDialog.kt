@@ -19,7 +19,7 @@ class ReviewWritePopupDialog(context : Context) {
         dlg.setCanceledOnTouchOutside(true)       //다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히게 설정
         dlg.setCancelable(true)    // 취소가 가능하도록 하는 코드
 
-        btn_close = dlg.findViewById(R.id.btnClose)
+        btn_close = dlg.findViewById(R.id.close_btn)
         btn_close.setOnClickListener {
             dlg.dismiss()
         }

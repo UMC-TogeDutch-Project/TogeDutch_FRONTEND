@@ -24,6 +24,9 @@ class AnnounceDetailActivity:AppCompatActivity() {
         viewBinding.imageBtnMap.setOnClickListener {
             val dlg = PlaceSearchDialog(this@AnnounceDetailActivity)
             dlg.start()
+//            PlaceSearchDialogFragment().show(
+//                supportFragmentManager, "PlaceSearchDialog"
+//            )
         }
     }
 

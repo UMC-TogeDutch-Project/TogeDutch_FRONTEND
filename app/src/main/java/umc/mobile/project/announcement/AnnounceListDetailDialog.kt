@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.Window
 import android.widget.Button
 import android.widget.ImageButton
+import androidx.fragment.app.DialogFragment
 import umc.mobile.project.R
 
 class AnnounceListDetailDialog(context: Context) {
@@ -26,7 +27,10 @@ class AnnounceListDetailDialog(context: Context) {
                 dlg.dismiss()
             }
             image_btn_map.setOnClickListener {
-                dlg2.start()
+               dlg2.start()
+//                PlaceSearchDialogFragment().show(
+//                    parentFragmentManager, "PlaceSearchDialog"
+//                )
             }
 
             dlg.show()

@@ -34,6 +34,7 @@ class AnnouncePostActivity : AppCompatActivity() {
         viewBinding.backBtn.setOnClickListener{
             finish()
         }
+
         editText1 = viewBinding.annEtTitle
         editText2 = viewBinding.annEtStore
         editText3 = viewBinding.annEtTip
@@ -41,7 +42,7 @@ class AnnouncePostActivity : AppCompatActivity() {
         editText5 = viewBinding.annEtPlace
         editText6 = viewBinding.annEtTime
         editText7 = viewBinding.annEtPerson
-        button = viewBinding.btnSeeNow
+        button = viewBinding.btnPost
 
         editText1!!.addTextChangedListener(textWatcher)
         editText2!!.addTextChangedListener(textWatcher)

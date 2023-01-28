@@ -2,16 +2,26 @@ package umc.mobile.project.ram.my_application_1
 
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.view.Window
 import android.widget.Button
 import android.widget.ImageView
+import com.google.android.material.internal.ContextUtils.getActivity
 import umc.mobile.project.R
+import umc.mobile.project.ram.my_application_1.current_application.CurrentApplicationActivity
 
 class ReviewWritePopupDialog(context : Context) {
     private val dlg = Dialog(context)
     private lateinit var btn_close : Button
     private lateinit var btn_sendReview : Button
 
+    private lateinit var badImage : ImageView
+    private lateinit var goodImage : ImageView
+    private lateinit var bestImage : ImageView
+
+    private var isSelected_bad : Boolean = false
+    private var isSelected_happy : Boolean = false
+    private var isSelected_empty : Boolean = false
 
     fun start(){
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -25,7 +35,7 @@ class ReviewWritePopupDialog(context : Context) {
         }
 
         // BAD
-        val badImage = dlg.findViewById<ImageView>(R.id.sad)
+        badImage = dlg.findViewById<ImageView>(R.id.sad)
         badImage.setOnClickListener {
             // 색 바꾸고
 //            badImage.isSelected = !badImage.isSelected
@@ -35,21 +45,48 @@ class ReviewWritePopupDialog(context : Context) {
 //            } else {
 //
 //            }
+            
+            isSelected_bad = !isSelected_bad
+            badImage.isSelected = isSelected_bad
 
+
+            if(badImage.isSelected){
+                // 선택했을 때 처리
+            }
+            //////// 다른거 선택 취소!!!!!
+            goodImage.isSelected = false
+            bestImage.isSelected = false
             // 값 저장
 
         }
 
 
         // GOOD
-        val goodImage = dlg.findViewById<ImageView>(R.id.good)
+        goodImage = dlg.findViewById<ImageView>(R.id.good)
         goodImage.setOnClickListener {
 
+            isSelected_empty = !isSelected_empty
+            goodImage.isSelected = isSelected_empty
+            if(goodImage.isSelected){
+                // 선택했을 때 처리
+            }
+
+            badImage.isSelected = false
+            bestImage.isSelected = false
         }
 
         // BEST
-        val bestImage = dlg.findViewById<ImageView>(R.id.best)
+        bestImage = dlg.findViewById<ImageView>(R.id.best)
         bestImage.setOnClickListener {
+
+            isSelected_happy = !isSelected_happy
+            bestImage.isSelected = isSelected_happy
+            if(bestImage.isSelected){
+                // 선택했을 때 처리
+            }
+
+            goodImage.isSelected = false
+            badImage.isSelected = false
 
         }
 
@@ -60,6 +97,7 @@ class ReviewWritePopupDialog(context : Context) {
             // edittext 내용 받고
 
             // 저장된 값과 edittext 전달
+
 
         }
 

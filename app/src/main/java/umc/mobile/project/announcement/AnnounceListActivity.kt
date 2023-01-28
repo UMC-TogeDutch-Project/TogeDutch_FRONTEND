@@ -1,5 +1,6 @@
 package umc.mobile.project.announcement
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -24,7 +25,6 @@ class AnnounceListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAnnounceListBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         initRecyclerViewRecent()
 
 
@@ -32,6 +32,7 @@ class AnnounceListActivity : AppCompatActivity() {
 
         setupSpinnerText()
         setupSpinnerHandler()
+
     }
 
     private fun setupSpinnerText() {
@@ -102,8 +103,8 @@ class AnnounceListActivity : AppCompatActivity() {
 
         dataRecentRVAdapter.setItemClickListener(object: DataRecentRVAdapter.OnItemClickListener{
                 override fun onItemClick(announceData: HomeData) {
-                    val dlg = AnnounceListDetailDialog(this@AnnounceListActivity)
-                    dlg.start()
+                    val intent = Intent(this@AnnounceListActivity, AnnounceDetailActivity::class.java)
+                    startActivity(intent)
 
                 }
             })
@@ -148,8 +149,8 @@ class AnnounceListActivity : AppCompatActivity() {
 
         dataImminentRVAdapter.setItemClickListener(object: DataImminentRVAdapter.OnItemClickListener{
             override fun onItemClick(announceData: HomeData) {
-                val dlg = AnnounceListDetailDialog(this@AnnounceListActivity)
-                dlg.start()
+                val intent = Intent(this@AnnounceListActivity, AnnounceDetailActivity::class.java)
+                startActivity(intent)
             }
         })
 
@@ -166,6 +167,20 @@ class AnnounceListActivity : AppCompatActivity() {
         }
 
     }
+//    private fun initSelected(){
+//        val data = intent.getIntExtra("rereturnValue",0)
+//        if (data == 0)
+//        {
+//            binding.recent.visibility = View.VISIBLE // 최신순 화면 visible
+//            binding.imminent.visibility = View.INVISIBLE // 마감임박 화면 invisible
+//
+//        }
+//        else{
+//            binding.recent.visibility = View.INVISIBLE // 최신순 화면 invisible
+//            binding.imminent.visibility = View.VISIBLE // 마감임박 화면 visible
+//
+//        }
+//    }
 
 
 //    fun sortCreated():Comparator<HomeData.Item> = object :Comparator<HomeData.Item>{

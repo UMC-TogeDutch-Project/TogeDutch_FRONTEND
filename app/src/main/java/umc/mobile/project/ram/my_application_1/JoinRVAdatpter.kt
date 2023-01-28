@@ -38,11 +38,12 @@ class JoinRVAdatpter(private val joinList: ArrayList<Post>) : RecyclerView.Adapt
             val title : String = post.title
 //            val item_pic : String = currentApplicatoin.nickname
             val location : String = "동덕여대 앞" // 위도경도 계산,,?
-            val time : String = post.order_time
+//            val time : String = post.order_time
+            var txt_time = Timestamp_to_SDF().convert(post.order_time)
 
             binding.orderListTitle.text = title
             binding.orderListLocation.text = location
-            binding.orderListTime.text = time
+            binding.orderListTime.text = txt_time
 
             binding.listItemReview.setOnClickListener {
                 val dlg = ReviewWritePopupDialog(context)

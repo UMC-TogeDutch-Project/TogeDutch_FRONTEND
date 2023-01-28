@@ -43,12 +43,17 @@ class HomeFragment: Fragment() {
 
 
         viewBinding.btnMoreRcent.setOnClickListener() {
+            val intent = Intent(context, AnnounceListActivity::class.java)
+            startActivity(intent)
+
 //            num1
-//            val intent = Intent(context, AnnounceListActivity::class.java)
 //            startActivity(intent)
         }
 
         viewBinding.btnMoreImminent.setOnClickListener {
+//            val intent = Intent(context, AnnounceListActivity::class.java)
+//            intent.putExtra("returnValue",num2)
+
             val intent = Intent(context, AnnounceListActivity::class.java)
             startActivity(intent)
         }

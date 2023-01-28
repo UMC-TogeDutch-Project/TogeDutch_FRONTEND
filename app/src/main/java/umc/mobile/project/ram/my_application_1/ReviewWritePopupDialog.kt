@@ -28,7 +28,13 @@ class ReviewWritePopupDialog(context : Context) {
         val badImage = dlg.findViewById<ImageView>(R.id.sad)
         badImage.setOnClickListener {
             // 색 바꾸고
+//            badImage.isSelected = !badImage.isSelected
 
+//            if(badImage.isSelected) {
+//
+//            } else {
+//
+//            }
 
             // 값 저장
 

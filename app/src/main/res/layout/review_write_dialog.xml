@@ -60,7 +60,7 @@
         android:layout_marginTop="13dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/reviewQuestion"
-        app:srcCompat="@drawable/tabler_icon_mood_sad" />
+        app:srcCompat="@drawable/onclick_sad_selector" />
 
     <ImageView
         android:id="@+id/good"

@@ -21,13 +21,8 @@
         tools:ignore="TouchTargetSizeCheck" />
 
     <EditText
-<<<<<<< HEAD
         android:id="@+id/gps_editText"
         android:layout_width="260dp"
-=======
-        android:id="@+id/editText"
-        android:layout_width="match_parent"
->>>>>>> 4dd44293dacf30637e4d620ea80be751d620a86e
         android:layout_height="37dp"
         android:background="@drawable/button_round_11"
         android:backgroundTint="#1F767680"
@@ -42,16 +37,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-<<<<<<< HEAD
     <com.google.android.gms.maps.MapView
         android:id="@+id/gps_map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="267dp"
-=======
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="match_parent"
->>>>>>> 4dd44293dacf30637e4d620ea80be751d620a86e
         android:layout_height="298dp"
         app:cameraTargetLat="37.606537"
         app:cameraTargetLng="127.041758"

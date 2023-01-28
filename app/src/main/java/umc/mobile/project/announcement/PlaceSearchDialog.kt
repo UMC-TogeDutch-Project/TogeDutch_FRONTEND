@@ -5,14 +5,13 @@ import android.content.Context
 import android.view.Window
 import android.widget.Button
 import android.widget.ImageButton
+import com.google.android.gms.maps.GoogleMap
 import umc.mobile.project.R
 
 class PlaceSearchDialog(context: Context) {
 
         private val dlg = Dialog(context)
         private lateinit var btn_back : ImageButton
-
-
 
         fun start(){
             dlg.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -30,6 +29,5 @@ class PlaceSearchDialog(context: Context) {
 
             dlg.show()
         }
-
 
     }

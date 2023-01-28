@@ -7,8 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewbinding.ViewBinding
 import umc.mobile.project.announcement.AnnounceDetailActivity
 import umc.mobile.project.announcement.AnnounceListActivity
+import umc.mobile.project.announcement.AnnounceListDetailDialog
+import umc.mobile.project.announcement.AnnounceRVAdapterDecoration
 import umc.mobile.project.databinding.FragmentHomeBinding
 import umc.mobile.project.news.NewsActivity
 
@@ -18,7 +21,8 @@ class HomeFragment: Fragment() {
     private var _viewBinding: FragmentHomeBinding? = null
     private val viewBinding get() = _viewBinding!!
 
-    private var dummyHomeData = ArrayList<HomeData>()
+    private var dummyHomeDataRecent = ArrayList<HomeData>()
+    private var dummyHomeDataImminent = ArrayList<HomeData>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,7 +47,8 @@ class HomeFragment: Fragment() {
             startActivity(intent)
         }
 
-        initRecycler()
+        initRecyclerViewRecent()
+        initRecyclerViewImminent()
 
         return viewBinding.root
 
@@ -51,68 +56,95 @@ class HomeFragment: Fragment() {
 
     }
 
-    private fun initRecycler(){
-        //데이터
-        dummyHomeData.apply {
+    private fun initRecyclerViewRecent(){
+        dummyHomeDataRecent.apply {
             add(HomeData(7, "오매떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
                 2, 1, "모집중", "2023-01-15T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
             )
             add(HomeData(7, "오매떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
-                2, 1, "모집중", "2023-01-15T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
+                2, 1, "모집중", "2023-01-16T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
             )
             add(HomeData(7, "오매떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
-                2, 1, "모집중", "2023-01-15T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
+                2, 1, "모집중", "2023-01-17T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
             )
 
-            add(HomeData(7, "오매떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
-                2, 1, "모집중", "2023-01-15T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
+            add(HomeData(7, "버거킹 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
+                2, 1, "모집중", "2023-01-18T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
             )
-            add(HomeData(7, "오매떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
-                2, 1, "모집중", "2023-01-15T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
+            add(HomeData(7, "버거킹 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
+                2, 1, "모집중", "2023-01-19T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
             )
-            add(HomeData(7, "오매떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
-                2, 1, "모집중", "2023-01-15T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
+            add(HomeData(7, "버거킹 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
+                2, 1, "모집중", "2023-01-20T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
             )
 
 
         }
 
-        //더미데이터와 리사이클러뷰 연결
-        dataRVAdapter = DataRVAdapter(dummyHomeData)
-        dataRVAdapter2 = DataRVAdapter2(dummyHomeData)
 
-        //리사이클러뷰를 어댑터에 연결
-        viewBinding.rvRecent.adapter = dataRVAdapter
-        viewBinding.rvImminent.adapter = dataRVAdapter
+        dataRVAdapter = DataRVAdapter(dummyHomeDataRecent)
 
-        viewBinding.rvRecent.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        viewBinding.rvImminent.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-        dataRVAdapter2.setItemClickListener(object : DataRVAdapter2.OnItemClickListener{
-            override fun onItemClick(homeData: HomeData) {
-                activity?.let {
-                    dataRVAdapter.notifyDataSetChanged()
-                    val intent = Intent(context, AnnounceDetailActivity::class.java)
-                    startActivity(intent)
-                }
+        viewBinding.rvRecent.adapter = dataRVAdapter //리사이클러뷰에 어댑터 연결
+        viewBinding.rvRecent.layoutManager= LinearLayoutManager(context) //레이아웃 매니저 연결
+        viewBinding.rvRecent.addItemDecoration(AnnounceRVAdapterDecoration(20))
 
+
+        dataRVAdapter.setItemClickListener(object: DataRVAdapter.OnItemClickListener{
+            override fun onItemClick(announceData: HomeData) {
+//                    val dlg = AnnounceListDetailDialog(this@AnnounceListActivity)
+//                    dlg.start()
+                val intent = Intent(context, AnnounceDetailActivity::class.java)
+                startActivity(intent)
             }
-
         })
+
+
         dataRVAdapter.notifyDataSetChanged()
 
-        dataRVAdapter.setItemClickListener(object : DataRVAdapter.OnItemClickListener{
-            override fun onItemClick(homeData: HomeData) {
-                activity?.let {
-                    dataRVAdapter.notifyDataSetChanged()
-                    val intent = Intent(context, AnnounceDetailActivity::class.java)
-                    startActivity(intent)
-                }
 
+    }
+    private fun initRecyclerViewImminent(){
+        dummyHomeDataImminent.apply {
+            add(HomeData(7, "버거킹 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
+                2, 1, "모집중", "2023-01-18T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
+            )
+            add(HomeData(7, "버거킹 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
+                2, 1, "모집중", "2023-01-19T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
+            )
+            add(HomeData(7, "버거킹 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
+                2, 1, "모집중", "2023-01-20T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
+            )
+            add(HomeData(7, "오매떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
+                2, 1, "모집중", "2023-01-15T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
+            )
+            add(HomeData(7, "오매떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
+                2, 1, "모집중", "2023-01-16T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
+            )
+            add(HomeData(7, "오매떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
+                2, 1, "모집중", "2023-01-17T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
+            )
+
+
+
+
+        }
+
+        dataRVAdapter2 = DataRVAdapter2(dummyHomeDataImminent)
+
+        viewBinding.rvImminent.adapter = dataRVAdapter2 //리사이클러뷰에 어댑터 연결
+        viewBinding.rvImminent.layoutManager= LinearLayoutManager(context) //레이아웃 매니저 연결
+        viewBinding.rvImminent.addItemDecoration(AnnounceRVAdapterDecoration(20))
+
+
+        dataRVAdapter2.setItemClickListener(object: DataRVAdapter2.OnItemClickListener{
+            override fun onItemClick(announceData: HomeData) {
+//                val dlg = AnnounceListDetailDialog(context)
+//                dlg.start()
             }
-
         })
-        dataRVAdapter.notifyDataSetChanged()
+
+        dataRVAdapter2.notifyDataSetChanged()
 
     }
     override fun onDestroyView() {

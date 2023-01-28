@@ -105,11 +105,12 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_recent"
             android:layout_width="wrap_content"
-            android:layout_height="250dp"
+            android:layout_height="270dp"
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/category_recent"
+            android:nestedScrollingEnabled="false"
             tools:listitem="@layout/item_data" />
         <TextView
             android:id="@+id/category_imminent"
@@ -138,11 +139,12 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_imminent"
             android:layout_width="wrap_content"
-            android:layout_height="250dp"
+            android:layout_height="270dp"
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/category_imminent"
+            android:nestedScrollingEnabled="false"
             tools:listitem="@layout/item_data" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

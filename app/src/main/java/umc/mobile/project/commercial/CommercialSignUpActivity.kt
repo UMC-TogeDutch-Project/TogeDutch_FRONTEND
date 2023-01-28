@@ -2,7 +2,6 @@ package umc.mobile.project.commercial
 
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Button
@@ -11,7 +10,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import umc.mobile.project.R
-import umc.mobile.project.databinding.ActivityCommercialListBinding
 import umc.mobile.project.databinding.ActivityCommercialSignUpBinding
 
 class CommercialSignUpActivity: AppCompatActivity() {
@@ -74,7 +72,7 @@ class CommercialSignUpActivity: AppCompatActivity() {
             val color = getColor(R.color.main_color)
             val color2 = getColor(R.color.grey_3)
             val builder = AlertDialog.Builder(this@CommercialSignUpActivity)
-            val dialogView = layoutInflater.inflate(R.layout.activity_failure_alert_dialog, null)
+            val dialogView = layoutInflater.inflate(R.layout.announce_failure_alert_dialog, null)
 
 
             if (editText1?.text.toString().isNotEmpty() && editText2?.text.toString().isNotEmpty() && editText3?.text.toString().isNotEmpty()

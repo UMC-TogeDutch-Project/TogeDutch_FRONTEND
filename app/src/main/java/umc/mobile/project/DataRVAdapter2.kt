@@ -35,6 +35,9 @@ class DataRVAdapter2(private val homeDataList: ArrayList<HomeData>) : RecyclerVi
         val viewBinding: ItemDataBinding = ItemDataBinding.inflate(
             LayoutInflater.from(viewGroup.context),
             viewGroup, false)
+        homeDataList.sortByDescending {
+            it.created_at
+        }
         return ImminentViewHolder(viewBinding)
     }
 

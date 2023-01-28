@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import umc.mobile.project.HomeData
 import umc.mobile.project.announcement.AnnounceDetailActivity
-import umc.mobile.project.announcement.AnnounceRVAdapter
 import umc.mobile.project.announcement.AnnounceRVAdapterDecoration
 import umc.mobile.project.databinding.ActivityCommercialListBinding
 

@@ -80,6 +80,24 @@
                     android:hint="UPL 링크"
                     android:paddingLeft="7dp"
                     android:paddingRight="7dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/notosanskr_black"
+                    android:text="카테고리"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:id="@+id/ann_et_category"
+                    android:layout_width="370dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/button_round_11"
+                    android:backgroundTint="#1F767680"
+                    android:fontFamily="@font/notosanskr_regular"
+                    android:gravity="center"
+                    android:hint="카테고리"
+                    android:paddingLeft="7dp"
+                    android:paddingRight="7dp" />
 
                 <TextView
                     android:layout_width="wrap_content"

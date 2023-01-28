@@ -57,7 +57,7 @@ class DataRVAdapter(private val homeDataList: ArrayList<HomeData>) : RecyclerVie
 
     //2
     interface OnItemClickListener {
-        fun onItemClick(header: HomeData)
+        fun onItemClick(homeData: HomeData)
 
     }
     fun setItemClickListener(onItemClickListener: OnItemClickListener) {

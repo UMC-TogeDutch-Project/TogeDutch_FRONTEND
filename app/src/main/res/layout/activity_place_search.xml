@@ -20,7 +20,7 @@
 
     <EditText
         android:id="@+id/editText"
-        android:layout_width="260dp"
+        android:layout_width="match_parent"
         android:layout_height="37dp"
         android:background="@drawable/button_round_11"
         android:backgroundTint="#1F767680"
@@ -29,17 +29,21 @@
         android:drawablePadding="9dp"
         android:hint="검색"
         android:layout_marginTop="45dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginLeft="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="267dp"
+        android:layout_width="match_parent"
         android:layout_height="298dp"
         android:background="@drawable/button_round_13"
         android:backgroundTint="@color/grey_2"
         android:layout_marginTop="11dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginLeft="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText" />
@@ -63,8 +67,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/notosanskr_regular"
-        android:text="00시 00구 00로 0000"
         android:includeFontPadding="false"
+        android:text="00시 00구 00로 0000"
         android:textColor="@color/black"
         android:textSize="11dp"
         app:layout_constraintBottom_toBottomOf="parent"

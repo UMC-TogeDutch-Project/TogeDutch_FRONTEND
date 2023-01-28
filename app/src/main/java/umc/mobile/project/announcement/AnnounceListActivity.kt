@@ -7,28 +7,37 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import umc.mobile.project.DataRVAdapter
+import umc.mobile.project.DataRVAdapter2
 import umc.mobile.project.HomeData
 import umc.mobile.project.R
 import umc.mobile.project.databinding.ActivityAnnounceListBinding
+import umc.mobile.project.ram.my_application_1.JoinRVAdatpter
 import java.util.*
 import kotlin.Comparator
 import kotlin.collections.ArrayList
 
 class AnnounceListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAnnounceListBinding
-    private lateinit var announceRvAdapter: AnnounceRVAdapter
-    var mAnnounceData = ArrayList<HomeData>()
+    private lateinit var dataRVAdapter: DataRVAdapter
+    private lateinit var dataRVAdapter2: DataRVAdapter2
+    var recentAnnounceData = ArrayList<HomeData>()
+    var imminentAnnounceData = ArrayList<HomeData>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAnnounceListBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        initRecyclerView()
+
+        initRecyclerViewRecent()
+
+
         initActionBar()
 
         setupSpinnerText()
         setupSpinnerHandler()
     }
+
     private fun setupSpinnerText() {
         val txt = resources.getStringArray(R.array.spinner_txt2)
         val adapter = ArrayAdapter(this, R.layout.spinner_item_custom, txt)
@@ -45,11 +54,10 @@ class AnnounceListActivity : AppCompatActivity() {
                 }
 
                 else{ // 마감임박 순일 때
+                    initRecyclerViewImminent()
                     binding.recent.visibility = View.INVISIBLE // 최신순 화면 invisible
                     binding.imminent.visibility = View.VISIBLE // 마감임박 화면 visible
-                    mAnnounceData.sortByDescending {
-                        it.created_at
-                    }
+
                 }
 
             }
@@ -62,8 +70,8 @@ class AnnounceListActivity : AppCompatActivity() {
     }
 
 
-    private fun initRecyclerView(){
-        mAnnounceData.apply {
+    private fun initRecyclerViewRecent(){
+        recentAnnounceData.apply {
             add(HomeData(7, "오매떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
                 2, 1, "모집중", "2023-01-15T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
             )
@@ -88,25 +96,72 @@ class AnnounceListActivity : AppCompatActivity() {
         }
 
 
-            announceRvAdapter = AnnounceRVAdapter(mAnnounceData)
-            binding.rvMainRecent.adapter=announceRvAdapter //리사이클러뷰에 어댑터 연결
+            dataRVAdapter = DataRVAdapter(recentAnnounceData)
+
+
+            binding.rvMainRecent.adapter = dataRVAdapter //리사이클러뷰에 어댑터 연결
             binding.rvMainRecent.layoutManager= LinearLayoutManager(this@AnnounceListActivity) //레이아웃 매니저 연결
             binding.rvMainRecent.addItemDecoration(AnnounceRVAdapterDecoration(20))
 
-            binding.rvMainImminent.adapter=announceRvAdapter //리사이클러뷰에 어댑터 연결
-            binding.rvMainImminent.layoutManager= LinearLayoutManager(this@AnnounceListActivity) //레이아웃 매니저 연결
-            binding.rvMainImminent.addItemDecoration(AnnounceRVAdapterDecoration(20))
 
-
-            announceRvAdapter.setItemClickListener(object: AnnounceRVAdapter.OnItemClickListener{
+        dataRVAdapter.setItemClickListener(object: DataRVAdapter.OnItemClickListener{
                 override fun onItemClick(announceData: HomeData) {
-                    val intent = Intent(this@AnnounceListActivity, AnnounceDetailActivity::class.java)
-                    startActivity(intent)
+                    val dlg = AnnounceListDetailDialog(this@AnnounceListActivity)
+                    dlg.start()
+
                 }
             })
-            announceRvAdapter.notifyDataSetChanged()
+
+
+            dataRVAdapter.notifyDataSetChanged()
+
 
     }
+    private fun initRecyclerViewImminent(){
+        imminentAnnounceData.apply {
+            add(HomeData(7, "버거킹 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
+                2, 1, "모집중", "2023-01-18T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
+            )
+            add(HomeData(7, "버거킹 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
+                2, 1, "모집중", "2023-01-19T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
+            )
+            add(HomeData(7, "버거킹 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
+                2, 1, "모집중", "2023-01-20T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
+            )
+            add(HomeData(7, "오매떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
+                2, 1, "모집중", "2023-01-15T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
+            )
+            add(HomeData(7, "오매떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
+                2, 1, "모집중", "2023-01-16T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
+            )
+            add(HomeData(7, "오매떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
+                2, 1, "모집중", "2023-01-17T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
+            )
+
+
+
+
+        }
+
+        dataRVAdapter2 = DataRVAdapter2(imminentAnnounceData)
+
+        binding.rvMainImminent.adapter = dataRVAdapter2 //리사이클러뷰에 어댑터 연결
+        binding.rvMainImminent.layoutManager= LinearLayoutManager(this@AnnounceListActivity) //레이아웃 매니저 연결
+        binding.rvMainImminent.addItemDecoration(AnnounceRVAdapterDecoration(20))
+
+
+        dataRVAdapter2.setItemClickListener(object: DataRVAdapter2.OnItemClickListener{
+            override fun onItemClick(announceData: HomeData) {
+                val dlg = AnnounceListDetailDialog(this@AnnounceListActivity)
+                dlg.start()
+            }
+        })
+
+        dataRVAdapter2.notifyDataSetChanged()
+
+    }
+
+
     private fun initActionBar() {
 
 

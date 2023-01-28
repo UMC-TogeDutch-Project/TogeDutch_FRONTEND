@@ -4,6 +4,8 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import umc.mobile.project.DataRVAdapter
+import umc.mobile.project.HomeData
 import umc.mobile.project.databinding.RestaurantRecyclerviewItemBinding
 
 class RestaurantRVAdapter (private val restaurantData:  ArrayList<RestaurantData>): RecyclerView.Adapter<RestaurantRVAdapter.MyViewHolder>() {
@@ -17,6 +19,10 @@ class RestaurantRVAdapter (private val restaurantData:  ArrayList<RestaurantData
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.bind(restaurantData[position])
+        holder.itemView.setOnClickListener {
+            itemClickListener.onItemClick(restaurantData[position])
+            notifyItemChanged(position)
+        }
     }
 
     inner class MyViewHolder(private val binding: RestaurantRecyclerviewItemBinding): RecyclerView.ViewHolder(binding.root){
@@ -30,6 +36,14 @@ class RestaurantRVAdapter (private val restaurantData:  ArrayList<RestaurantData
         }
     }
 
+    interface OnItemClickListener {
+        fun onItemClick(restaurantData: RestaurantData)
 
+    }
+    fun setItemClickListener(onItemClickListener:OnItemClickListener) {
+        this.itemClickListener = onItemClickListener
+    }
+
+    private lateinit var itemClickListener : OnItemClickListener
 
 }

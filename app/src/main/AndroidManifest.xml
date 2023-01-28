@@ -36,9 +36,13 @@
 
         <activity android:name=".announcement.AnnounceRecyclerviewItem"></activity>
         <activity android:name=".announcement.AnnounceListActivity"></activity>
+        <activity android:name=".announcement.AnnounceDetailActivity"></activity>
+        <activity android:name=".AnnouncePostActivity"></activity>
+        <activity android:name=".restaurant.blog.RestaurantPageActivity"></activity>
         <activity android:name=".profile.MyProfileActivity"></activity>
         <activity android:name=".ram.my_application_1.MyPostActivity"></activity>
         <activity android:name=".commercial.CommercialListActivity"></activity>
+        <activity android:name=".commercial.CommercialSignUpActivity"></activity>
         <activity android:name=".ram.my_application_1.MyPostDetailActivity"></activity>
         <activity android:name=".ram.my_application_1.current_application.CurrentApplicationActivity"></activity>
         <activity android:name=".ram.chat.ChattingActivity"></activity>
@@ -51,6 +55,7 @@
         <activity android:name=".withdrawal.WithdrawalActivity"></activity>
         <activity android:name=".wishlist.WishListActivity"></activity>
         <activity android:name=".notice.NoticeActivity"></activity>
+        <activity android:name=".announcement.PlaceSearchActivity"></activity>
 
         <activity
             android:name=".login.LoginActivity"

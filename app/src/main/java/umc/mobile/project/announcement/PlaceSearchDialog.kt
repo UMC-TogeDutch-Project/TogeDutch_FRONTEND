@@ -20,7 +20,7 @@ class PlaceSearchDialog(context: Context) {
             dlg.setCanceledOnTouchOutside(false)       //다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히게 설정
             dlg.setCancelable(true)    // 취소가 가능하도록 하는 코드
 
-            btn_back = dlg.findViewById(R.id.back_btn)
+            btn_back = dlg.findViewById(R.id.gps_back_btn)
 
             btn_back.setOnClickListener {
                 dlg.dismiss()

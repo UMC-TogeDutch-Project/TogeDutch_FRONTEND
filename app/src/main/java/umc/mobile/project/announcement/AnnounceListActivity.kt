@@ -1,26 +1,22 @@
 package umc.mobile.project.announcement
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import umc.mobile.project.DataRVAdapter
-import umc.mobile.project.DataRVAdapter2
+import umc.mobile.project.DataRecentRVAdapter
+import umc.mobile.project.DataImminentRVAdapter
 import umc.mobile.project.HomeData
 import umc.mobile.project.R
 import umc.mobile.project.databinding.ActivityAnnounceListBinding
-import umc.mobile.project.ram.my_application_1.JoinRVAdatpter
-import java.util.*
-import kotlin.Comparator
 import kotlin.collections.ArrayList
 
 class AnnounceListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAnnounceListBinding
-    private lateinit var dataRVAdapter: DataRVAdapter
-    private lateinit var dataRVAdapter2: DataRVAdapter2
+    private lateinit var dataRecentRVAdapter: DataRecentRVAdapter
+    private lateinit var dataImminentRVAdapter: DataImminentRVAdapter
     var recentAnnounceData = ArrayList<HomeData>()
     var imminentAnnounceData = ArrayList<HomeData>()
 
@@ -96,15 +92,15 @@ class AnnounceListActivity : AppCompatActivity() {
         }
 
 
-            dataRVAdapter = DataRVAdapter(recentAnnounceData)
+            dataRecentRVAdapter = DataRecentRVAdapter(recentAnnounceData)
 
 
-            binding.rvMainRecent.adapter = dataRVAdapter //리사이클러뷰에 어댑터 연결
+            binding.rvMainRecent.adapter = dataRecentRVAdapter //리사이클러뷰에 어댑터 연결
             binding.rvMainRecent.layoutManager= LinearLayoutManager(this@AnnounceListActivity) //레이아웃 매니저 연결
             binding.rvMainRecent.addItemDecoration(AnnounceRVAdapterDecoration(20))
 
 
-        dataRVAdapter.setItemClickListener(object: DataRVAdapter.OnItemClickListener{
+        dataRecentRVAdapter.setItemClickListener(object: DataRecentRVAdapter.OnItemClickListener{
                 override fun onItemClick(announceData: HomeData) {
                     val dlg = AnnounceListDetailDialog(this@AnnounceListActivity)
                     dlg.start()
@@ -113,7 +109,7 @@ class AnnounceListActivity : AppCompatActivity() {
             })
 
 
-            dataRVAdapter.notifyDataSetChanged()
+            dataRecentRVAdapter.notifyDataSetChanged()
 
 
     }
@@ -143,21 +139,21 @@ class AnnounceListActivity : AppCompatActivity() {
 
         }
 
-        dataRVAdapter2 = DataRVAdapter2(imminentAnnounceData)
+        dataImminentRVAdapter = DataImminentRVAdapter(imminentAnnounceData)
 
-        binding.rvMainImminent.adapter = dataRVAdapter2 //리사이클러뷰에 어댑터 연결
+        binding.rvMainImminent.adapter = dataImminentRVAdapter //리사이클러뷰에 어댑터 연결
         binding.rvMainImminent.layoutManager= LinearLayoutManager(this@AnnounceListActivity) //레이아웃 매니저 연결
         binding.rvMainImminent.addItemDecoration(AnnounceRVAdapterDecoration(20))
 
 
-        dataRVAdapter2.setItemClickListener(object: DataRVAdapter2.OnItemClickListener{
+        dataImminentRVAdapter.setItemClickListener(object: DataImminentRVAdapter.OnItemClickListener{
             override fun onItemClick(announceData: HomeData) {
                 val dlg = AnnounceListDetailDialog(this@AnnounceListActivity)
                 dlg.start()
             }
         })
 
-        dataRVAdapter2.notifyDataSetChanged()
+        dataImminentRVAdapter.notifyDataSetChanged()
 
     }
 

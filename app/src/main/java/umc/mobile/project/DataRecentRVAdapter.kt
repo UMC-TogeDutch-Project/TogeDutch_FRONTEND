@@ -4,12 +4,11 @@ package umc.mobile.project
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import umc.mobile.project.databinding.ItemDataBinding
 
 
-class DataRVAdapter(private val homeDataList: ArrayList<HomeData>) : RecyclerView.Adapter<DataRVAdapter.RecentViewHolder>() {
+class DataRecentRVAdapter(private val homeDataList: ArrayList<HomeData>) : RecyclerView.Adapter<DataRecentRVAdapter.RecentViewHolder>() {
 
     private val checkboxStatus = SparseBooleanArray()
 
@@ -29,7 +28,7 @@ class DataRVAdapter(private val homeDataList: ArrayList<HomeData>) : RecyclerVie
     }
 
     //ViewHolder 만들어질 때 실행할 동작
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): DataRVAdapter.RecentViewHolder {
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): DataRecentRVAdapter.RecentViewHolder {
 
         val viewBinding: ItemDataBinding = ItemDataBinding.inflate(
             LayoutInflater.from(viewGroup.context),
@@ -39,7 +38,7 @@ class DataRVAdapter(private val homeDataList: ArrayList<HomeData>) : RecyclerVie
     }
 
     //ViewHolder가 실제로 데이터를 표시해야 할 때 호출되는 함수
-    override fun onBindViewHolder(holder: DataRVAdapter.RecentViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: DataRecentRVAdapter.RecentViewHolder, position: Int) {
 
         holder.bind(homeDataList[position])
 

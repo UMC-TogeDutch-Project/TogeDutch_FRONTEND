@@ -34,18 +34,6 @@ class AnnouncePostActivity : AppCompatActivity() {
         viewBinding.backBtn.setOnClickListener{
             finish()
         }
-//        viewBinding.btnPost.setOnClickListener {
-//            val intent = intent
-//            intent.putExtra("title",viewBinding.annEtTitle.text.toString())
-//            intent.putExtra("store", viewBinding.annEtStore.text.toString())
-////            intent.putExtra("category", viewBinding.annEtCategory.toString())
-//            intent.putExtra("tip", viewBinding.annEtTip.text)
-//            intent.putExtra("minimum", viewBinding.annEtMinimum.text)
-//            intent.putExtra("place", viewBinding.annEtTip.text.toString())
-//            intent.putExtra("time", viewBinding.annEtTime.text)
-//            intent.putExtra("person", viewBinding.annEtTime.text)
-//
-//        }
 
         editText1 = viewBinding.annEtTitle
         editText2 = viewBinding.annEtStore

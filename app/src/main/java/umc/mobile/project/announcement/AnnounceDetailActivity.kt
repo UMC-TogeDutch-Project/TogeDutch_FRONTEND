@@ -22,11 +22,9 @@ class AnnounceDetailActivity:AppCompatActivity() {
             finish()
         }
         viewBinding.imageBtnMap.setOnClickListener {
-            val dlg = PlaceSearchDialog(this@AnnounceDetailActivity)
-            dlg.start()
-//            PlaceSearchDialogFragment().show(
-//                supportFragmentManager, "PlaceSearchDialog"
-//            )
+            val intent = Intent(this@AnnounceDetailActivity, PlaceSearchActivity::class.java)
+            startActivity(intent)
+
         }
     }
 

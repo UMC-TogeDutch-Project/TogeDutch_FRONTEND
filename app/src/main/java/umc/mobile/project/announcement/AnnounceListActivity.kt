@@ -1,5 +1,6 @@
 package umc.mobile.project.announcement
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -24,7 +25,6 @@ class AnnounceListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAnnounceListBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         initRecyclerViewRecent()
 
 
@@ -103,8 +103,8 @@ class AnnounceListActivity : AppCompatActivity() {
 
         dataRecentRVAdapter.setItemClickListener(object: DataRecentRVAdapter.OnItemClickListener{
                 override fun onItemClick(announceData: HomeData) {
-                    val dlg = AnnounceListDetailDialog(this@AnnounceListActivity)
-                    dlg.start()
+                    val intent = Intent(this@AnnounceListActivity, AnnounceDetailActivity::class.java)
+                    startActivity(intent)
 
                 }
             })
@@ -149,8 +149,8 @@ class AnnounceListActivity : AppCompatActivity() {
 
         dataImminentRVAdapter.setItemClickListener(object: DataImminentRVAdapter.OnItemClickListener{
             override fun onItemClick(announceData: HomeData) {
-                val dlg = AnnounceListDetailDialog(this@AnnounceListActivity)
-                dlg.start()
+                val intent = Intent(this@AnnounceListActivity, AnnounceDetailActivity::class.java)
+                startActivity(intent)
             }
         })
 

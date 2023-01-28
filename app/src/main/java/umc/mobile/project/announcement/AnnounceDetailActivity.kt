@@ -1,5 +1,6 @@
 package umc.mobile.project.announcement
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
@@ -19,6 +20,10 @@ class AnnounceDetailActivity:AppCompatActivity() {
         }
         viewBinding.backBtn.setOnClickListener{
             finish()
+        }
+        viewBinding.imageBtnMap.setOnClickListener {
+            val dlg = PlaceSearchDialog(this@AnnounceDetailActivity)
+            dlg.start()
         }
     }
 

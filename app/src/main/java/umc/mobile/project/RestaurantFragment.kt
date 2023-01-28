@@ -42,5 +42,14 @@ class RestaurantFragment : Fragment() {
         binding.rvRes.layoutManager= LinearLayoutManager(requireContext()) //레이아웃 매니저 연결
         binding.rvRes.addItemDecoration(RestaurantRVAdapterDecoration(20))
 
+
+        restaurantRVAdapter.setItemClickListener(object: RestaurantRVAdapter.OnItemClickListener{
+            override fun onItemClick(restaurantData: RestaurantData) {
+//                    val dlg = AnnounceListDetailDialog(this@AnnounceListActivity)
+//                    dlg.start()
+                val intent = Intent(context, RestaurantPageActivity::class.java)
+                startActivity(intent)
+            }
+        })
     }
 }

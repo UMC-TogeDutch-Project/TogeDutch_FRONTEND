@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import umc.mobile.project.HomeData
+import umc.mobile.project.announcement.AnnounceDetailActivity
 import umc.mobile.project.announcement.AnnounceRVAdapterDecoration
 import umc.mobile.project.databinding.ActivityCommercialListBinding
 
@@ -33,6 +35,13 @@ class CommercialListActivity: AppCompatActivity() {
         binding.recyclerView.adapter=commercialRVAdapter //리사이클러뷰에 어댑터 연결
         binding.recyclerView.layoutManager= LinearLayoutManager(this) //레이아웃 매니저 연결
         binding.recyclerView.addItemDecoration(AnnounceRVAdapterDecoration(20))
+
+        commercialRVAdapter.setItemClickListener(object: CommercialRVAdapter.OnItemClickListener{
+            override fun onItemClick(commercialData: CommercialData) {
+                val intent = Intent(this@CommercialListActivity, CommercialSignUpActivity::class.java)
+                startActivity(intent)
+            }
+        })
     }
 
     private fun initActionBar(){

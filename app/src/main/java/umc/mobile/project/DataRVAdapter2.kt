@@ -4,17 +4,16 @@ package umc.mobile.project
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import umc.mobile.project.databinding.ItemDataBinding
 
 
-class DataRVAdapter(private val homeDataList: ArrayList<HomeData>) : RecyclerView.Adapter<DataRVAdapter.RecentViewHolder>() {
+class DataRVAdapter2(private val homeDataList: ArrayList<HomeData>) : RecyclerView.Adapter<DataRVAdapter2.ImminentViewHolder>() {
 
     private val checkboxStatus = SparseBooleanArray()
 
     //ViewHolder 객체
-    inner class RecentViewHolder(val viewBinding: ItemDataBinding) :
+   inner class ImminentViewHolder(private val viewBinding: ItemDataBinding) :
         RecyclerView.ViewHolder(viewBinding.root) {
 
         fun bind(homeData: HomeData) {
@@ -28,26 +27,28 @@ class DataRVAdapter(private val homeDataList: ArrayList<HomeData>) : RecyclerVie
 
     }
 
+
+
     //ViewHolder 만들어질 때 실행할 동작
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): DataRVAdapter.RecentViewHolder {
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): DataRVAdapter2.ImminentViewHolder {
 
         val viewBinding: ItemDataBinding = ItemDataBinding.inflate(
             LayoutInflater.from(viewGroup.context),
             viewGroup, false)
-        return RecentViewHolder(viewBinding)
-
+        homeDataList.sortByDescending {
+            it.created_at
+        }
+        return ImminentViewHolder(viewBinding)
     }
 
     //ViewHolder가 실제로 데이터를 표시해야 할 때 호출되는 함수
-    override fun onBindViewHolder(holder: DataRVAdapter.RecentViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: DataRVAdapter2.ImminentViewHolder, position: Int) {
 
         holder.bind(homeDataList[position])
-
         holder.itemView.setOnClickListener {
             itemClickListener.onItemClick(homeDataList[position])
             notifyItemChanged(position)
         }
-
 
     }
 
@@ -55,16 +56,19 @@ class DataRVAdapter(private val homeDataList: ArrayList<HomeData>) : RecyclerVie
     override fun getItemCount(): Int = homeDataList.size
 
 
-    //2
+
+    //1
     interface OnItemClickListener {
         fun onItemClick(homeData: HomeData)
 
     }
-    fun setItemClickListener(onItemClickListener: OnItemClickListener) {
-        this.itemClickListener = onItemClickListener
+
+    fun setItemClickListener(onItemClickListener1: OnItemClickListener) {
+        this.itemClickListener = onItemClickListener1
     }
 
     private lateinit var itemClickListener : OnItemClickListener
+
 
 
 }

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import umc.mobile.project.databinding.FragmentMyprofileBinding
+import umc.mobile.project.ram.my_application_1.ParticipatePopupDialog
 
 
 class MyProfileFragment : Fragment() {
@@ -33,13 +34,13 @@ class MyProfileFragment : Fragment() {
         initRecyclerView()
         initReview()
 
-        viewBinding.profileRevise.setOnClickListener {
-            myProfileActivity!!.replaceFragment(1)
-        }
-
-        viewBinding.phoneNumRevise.setOnClickListener {
-            myProfileActivity!!.replaceFragment(2)
-        }
+//        viewBinding.profileRevise.setOnClickListener {
+//            myProfileActivity!!.replaceFragment(1)
+//        }
+//
+//        viewBinding.phoneNumRevise.setOnClickListener {
+//            myProfileActivity!!.replaceFragment(2)
+//        }
 
         // 뒤로 가기
         viewBinding.myprofileActionbar.appbarBackBtn.setOnClickListener {
@@ -61,8 +62,11 @@ class MyProfileFragment : Fragment() {
         orderRVAdapter.setItemClickListener(object: OrderRVAdapter.OnItemClickListener{
             override fun onItemClick(order: OrderData) {
                 // 공고 상세 페이지 이동
+                val dialog = ParticipatePopupDialog(requireContext())
+                dialog.start()
             }
         })
+
 
 
 

@@ -1,7 +1,10 @@
 package umc.mobile.project.wishlist
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import umc.mobile.project.databinding.ActivityWishlistBinding
 
@@ -17,6 +20,8 @@ class WishListActivity: AppCompatActivity() {
 
         initActionBar()
         initRecyclerView()
+
+        //viewBinding.searchMyWish.setOnQueryTextListener(searchViewTextListener)
     }
 
     private fun initActionBar() {
@@ -48,4 +53,20 @@ class WishListActivity: AppCompatActivity() {
 
         wishListRVAdapter.notifyDataSetChanged()
     }
+
+    // 검색 기능
+//    var searchViewTextListener: SearchView.OnQueryTextListener =
+//        object : SearchView.OnQueryTextListener {
+//            //검색버튼 입력시 호출, 검색버튼이 없으므로 사용하지 않음
+//            override fun onQueryTextSubmit(s: String): Boolean {
+//                return false
+//            }
+//
+//            //텍스트 입력/수정시에 호출
+//            override fun onQueryTextChange(s: String): Boolean {
+//                WishListRVAdapter.getFilter().filter(s)
+//                Log.d(TAG, "SearchVies Text is changed : $s")
+//                return false
+//            }
+//        }
 }

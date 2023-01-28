@@ -2,7 +2,9 @@ package umc.mobile.project.ram.my_application_1
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
@@ -10,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import umc.mobile.project.databinding.ItemMyPostBinding
 import java.util.*
 import kotlin.collections.ArrayList
+
+
 
 class MyPostRVAdapter (
     private val applicationList: ArrayList<Post>
@@ -39,6 +43,8 @@ class MyPostRVAdapter (
     // 레이아웃 내 view 연결
     inner class ViewHolder(val binding: ItemMyPostBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(post: Post) {
+            var selected_random_btn : Int = 0
+            var isSelected = false
 
             val txt_title : String = post.title
             val txt_location : String = "종로" // 아마 위도경도 계산하는 듯,,,,?
@@ -60,6 +66,19 @@ class MyPostRVAdapter (
             // 삭제 버튼
             binding.deleteBtn.setOnClickListener {
 
+            }
+
+            //랜덤 버튼
+            binding.btnRandom.setOnClickListener {
+                isSelected = !isSelected
+                if(isSelected){
+                    selected_random_btn++
+                    binding.randomFramelayout.visibility = View.VISIBLE
+                }
+                else{
+                    selected_random_btn--
+                    binding.randomFramelayout.visibility = View.GONE
+                }
             }
         }
     }

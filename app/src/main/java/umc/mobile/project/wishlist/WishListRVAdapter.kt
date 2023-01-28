@@ -2,10 +2,13 @@ package umc.mobile.project.wishlist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import umc.mobile.project.databinding.WishlistAdapterBinding
 
-class WishListRVAdapter (private val wishApplicationList: ArrayList<WishApplication>) : RecyclerView.Adapter<WishListRVAdapter.ViewHolder>() {
+class WishListRVAdapter (private val wishApplicationList: ArrayList<WishApplication>) : RecyclerView.Adapter<WishListRVAdapter.ViewHolder>(),
+    Filterable {
 
     // 보여줄 아이템 개수만큼 View를 생성 (RecyclerView가 초기화 될 때 호출)
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): WishListRVAdapter.ViewHolder {
@@ -36,6 +39,10 @@ class WishListRVAdapter (private val wishApplicationList: ArrayList<WishApplicat
 
 
         }
+    }
+
+    override fun getFilter(): Filter {
+        TODO("Not yet implemented")
     }
 
 }

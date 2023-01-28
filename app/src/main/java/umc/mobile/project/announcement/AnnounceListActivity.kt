@@ -17,7 +17,7 @@ import kotlin.collections.ArrayList
 class AnnounceListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAnnounceListBinding
     private lateinit var announceRvAdapter: AnnounceRVAdapter
-    var mAnnounceData = ArrayList<HomeData.Item>()
+    var mAnnounceData = ArrayList<HomeData>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,29 +64,29 @@ class AnnounceListActivity : AppCompatActivity() {
 
     private fun initRecyclerView(){
         mAnnounceData.apply {
-            add(HomeData.Item(7, "오매떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
+            add(HomeData(7, "오매떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
                 2, 1, "모집중", "2023-01-15T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
             )
-            add(HomeData.Item(7, "오매떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
+            add(HomeData(7, "오매떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
                 2, 1, "모집중", "2023-01-16T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
             )
-            add(HomeData.Item(7, "오매떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
+            add(HomeData(7, "오매떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
                 2, 1, "모집중", "2023-01-17T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
             )
 
-            add(HomeData.Item(7, "버거킹 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
+            add(HomeData(7, "버거킹 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
                 2, 1, "모집중", "2023-01-18T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
             )
-            add(HomeData.Item(7, "버거킹 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
+            add(HomeData(7, "버거킹 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
                 2, 1, "모집중", "2023-01-19T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
             )
-            add(HomeData.Item(7, "버거킹 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
+            add(HomeData(7, "버거킹 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
                 2, 1, "모집중", "2023-01-20T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
             )
 
 
         }
-//        Collections.sort(mAnnounceData, HomeData.Item.sortCreated())
+
 
             announceRvAdapter = AnnounceRVAdapter(mAnnounceData)
             binding.rvMainRecent.adapter=announceRvAdapter //리사이클러뷰에 어댑터 연결
@@ -99,7 +99,7 @@ class AnnounceListActivity : AppCompatActivity() {
 
 
             announceRvAdapter.setItemClickListener(object: AnnounceRVAdapter.OnItemClickListener{
-                override fun onItemClick(announceData: HomeData.Item) {
+                override fun onItemClick(announceData: HomeData) {
                     val intent = Intent(this@AnnounceListActivity, AnnounceDetailActivity::class.java)
                     startActivity(intent)
                 }

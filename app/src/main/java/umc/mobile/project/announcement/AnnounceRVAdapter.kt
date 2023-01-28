@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import umc.mobile.project.HomeData
 import umc.mobile.project.databinding.ItemDataBinding
 
-class AnnounceRVAdapter(private val announceData: ArrayList<HomeData.Item>): RecyclerView.Adapter<AnnounceRVAdapter.MyViewHolder>(){
+class AnnounceRVAdapter(private val announceData: ArrayList<HomeData>): RecyclerView.Adapter<AnnounceRVAdapter.MyViewHolder>(){
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): MyViewHolder {
         val binding: ItemDataBinding = ItemDataBinding.inflate(
@@ -25,7 +25,7 @@ class AnnounceRVAdapter(private val announceData: ArrayList<HomeData.Item>): Rec
     }
 
         inner class MyViewHolder(private val binding: ItemDataBinding): RecyclerView.ViewHolder(binding.root){
-            fun bind(announceData: HomeData.Item){
+            fun bind(announceData: HomeData){
                 binding.tvItemTitle.text = announceData.title //제목
                 binding.tvItemWhere.text = "주소" // 주소
                 binding.tvItemTime.text = announceData.order_time // 주문한 시간
@@ -35,7 +35,7 @@ class AnnounceRVAdapter(private val announceData: ArrayList<HomeData.Item>): Rec
         }
 
     interface OnItemClickListener {
-        fun onItemClick(announceData: HomeData.Item)
+        fun onItemClick(announceData: HomeData)
     }
 
     fun setItemClickListener(onItemClickListener: OnItemClickListener) {

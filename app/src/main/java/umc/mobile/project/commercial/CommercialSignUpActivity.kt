@@ -8,6 +8,7 @@ import android.text.TextWatcher
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import umc.mobile.project.R
 import umc.mobile.project.databinding.ActivityCommercialListBinding
@@ -31,6 +32,7 @@ class CommercialSignUpActivity: AppCompatActivity() {
 
         viewBinding.backBtn.setOnClickListener{
             finish()
+
         }
 
         editText1 = viewBinding.comEtTitle
@@ -71,6 +73,9 @@ class CommercialSignUpActivity: AppCompatActivity() {
 
             val color = getColor(R.color.main_color)
             val color2 = getColor(R.color.grey_3)
+            val builder = AlertDialog.Builder(this@CommercialSignUpActivity)
+            val dialogView = layoutInflater.inflate(R.layout.activity_failure_alert_dialog, null)
+
 
             if (editText1?.text.toString().isNotEmpty() && editText2?.text.toString().isNotEmpty() && editText3?.text.toString().isNotEmpty()
                 && editText4?.text.toString().isNotEmpty() && editText5?.text.toString().isNotEmpty() && editText6?.text.toString().isNotEmpty())

@@ -1,5 +1,6 @@
 package umc.mobile.project.ram.my_application_1
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -8,11 +9,13 @@ import umc.mobile.project.databinding.ItemParticipateBinding
 
 class JoinRVAdatpter(private val joinList: ArrayList<Post>) : RecyclerView.Adapter<JoinRVAdatpter.ViewHolder>(){
 
+    lateinit var context : Context
     // 아이템 레이아웃 결합
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val binding: ItemParticipateBinding = ItemParticipateBinding.inflate(
             LayoutInflater.from(viewGroup.context),
             viewGroup, false)
+        context = viewGroup.context
         return ViewHolder(binding)
     }
 
@@ -40,6 +43,11 @@ class JoinRVAdatpter(private val joinList: ArrayList<Post>) : RecyclerView.Adapt
             binding.orderListTitle.text = title
             binding.orderListLocation.text = location
             binding.orderListTime.text = time
+
+            binding.listItemReview.setOnClickListener {
+                val dlg = ReviewWritePopupDialog(context)
+                dlg.start()
+            }
 
         }
     }

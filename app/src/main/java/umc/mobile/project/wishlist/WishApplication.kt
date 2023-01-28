@@ -17,5 +17,6 @@ data class WishApplication(
     var Latitude : Double,
     var longitude : Double,
     var chatRoom_id : Int,
-    var category : String
+    var category : String,
+    var heart_isSelected : Boolean // wishListRVAdapter 에서 색 바뀌는 것 때문에 임의로 설정한 거! 나중에 이거만 Serialized 제외하기
 )

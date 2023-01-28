@@ -70,7 +70,7 @@
         android:layout_marginTop="13dp"
         app:layout_constraintStart_toEndOf="@+id/sad"
         app:layout_constraintTop_toBottomOf="@+id/reviewQuestion"
-        app:srcCompat="@drawable/tabler_icon_mood_empty" />
+        app:srcCompat="@drawable/onclick_empty_selector" />
 
     <ImageView
         android:id="@+id/best"
@@ -80,7 +80,7 @@
         android:layout_marginTop="13dp"
         app:layout_constraintStart_toEndOf="@+id/good"
         app:layout_constraintTop_toBottomOf="@+id/reviewQuestion"
-        app:srcCompat="@drawable/tabler_icon_mood_happy" />
+        app:srcCompat="@drawable/onclick_happy_selector" />
 
     <TextView
         android:id="@+id/badText"

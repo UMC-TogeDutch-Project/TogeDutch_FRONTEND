@@ -35,9 +35,11 @@ class DataImminentRVAdapter(private val homeDataList: ArrayList<HomeData>) : Rec
         val viewBinding: ItemDataBinding = ItemDataBinding.inflate(
             LayoutInflater.from(viewGroup.context),
             viewGroup, false)
+
         homeDataList.sortByDescending {
             it.created_at
         }
+
         return ImminentViewHolder(viewBinding)
     }
 

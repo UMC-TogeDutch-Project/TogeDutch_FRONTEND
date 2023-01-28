@@ -5,11 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import umc.mobile.project.announcement.AnnounceDetailActivity
 import umc.mobile.project.announcement.AnnounceListActivity
+import umc.mobile.project.announcement.AnnounceListDetailDialog
 import umc.mobile.project.announcement.AnnounceRVAdapterDecoration
+import umc.mobile.project.databinding.ActivityAnnounceListBinding
 import umc.mobile.project.databinding.FragmentHomeBinding
 import umc.mobile.project.news.NewsActivity
 
@@ -18,6 +21,7 @@ class HomeFragment: Fragment() {
     lateinit var dataImminentRVAdapter: DataImminentRVAdapter
     private var _viewBinding: FragmentHomeBinding? = null
     private val viewBinding get() = _viewBinding!!
+    private lateinit var binding: ActivityAnnounceListBinding
 
     private var dummyHomeDataRecent = ArrayList<HomeData>()
     private var dummyHomeDataImminent = ArrayList<HomeData>()
@@ -28,6 +32,7 @@ class HomeFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _viewBinding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding = ActivityAnnounceListBinding.inflate(inflater, container, false)
 
 
         viewBinding.btnNews.setOnClickListener {
@@ -35,9 +40,12 @@ class HomeFragment: Fragment() {
             startActivity(intent)
 
         }
-        viewBinding.btnMoreRcent.setOnClickListener {
-            val intent = Intent(context, AnnounceListActivity::class.java)
-            startActivity(intent)
+
+
+        viewBinding.btnMoreRcent.setOnClickListener() {
+//            num1
+//            val intent = Intent(context, AnnounceListActivity::class.java)
+//            startActivity(intent)
         }
 
         viewBinding.btnMoreImminent.setOnClickListener {
@@ -90,10 +98,8 @@ class HomeFragment: Fragment() {
 
         dataRecentRVAdapter.setItemClickListener(object: DataRecentRVAdapter.OnItemClickListener{
             override fun onItemClick(announceData: HomeData) {
-//                    val dlg = AnnounceListDetailDialog(this@AnnounceListActivity)
-//                    dlg.start()
-                val intent = Intent(context, AnnounceDetailActivity::class.java)
-                startActivity(intent)
+                    val dlg = activity?.let { AnnounceListDetailDialog(it) }
+                dlg?.start()
             }
         })
 
@@ -137,19 +143,27 @@ class HomeFragment: Fragment() {
 
         dataImminentRVAdapter.setItemClickListener(object: DataImminentRVAdapter.OnItemClickListener{
             override fun onItemClick(announceData: HomeData) {
-//                val dlg = AnnounceListDetailDialog(context)
-//                dlg.start()
+                val dlg = activity?.let { AnnounceListDetailDialog(it) }
+                dlg?.start()
             }
         })
 
         dataImminentRVAdapter.notifyDataSetChanged()
 
     }
+
+
+
+
+
     override fun onDestroyView() {
         super.onDestroyView()
         _viewBinding = null
     }
-
+    companion object{
+        val num1 = 0
+        val num2 = 1
+    }
 
 
 }

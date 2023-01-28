@@ -34,13 +34,13 @@ class MyProfileFragment : Fragment() {
         initRecyclerView()
         initReview()
 
-        viewBinding.profileRevise.setOnClickListener {
-            myProfileActivity!!.replaceFragment(1)
-        }
-
-        viewBinding.phoneNumRevise.setOnClickListener {
-            myProfileActivity!!.replaceFragment(2)
-        }
+//        viewBinding.profileRevise.setOnClickListener {
+//            myProfileActivity!!.replaceFragment(1)
+//        }
+//
+//        viewBinding.phoneNumRevise.setOnClickListener {
+//            myProfileActivity!!.replaceFragment(2)
+//        }
 
         // 뒤로 가기
         viewBinding.myprofileActionbar.appbarBackBtn.setOnClickListener {

@@ -31,8 +31,6 @@ class MyPostActivity:AppCompatActivity() {
         initRecycler()
 
 
-
-
         // 스피너
         setupSpinnerText()
         setupSpinnerHandler()
@@ -106,6 +104,8 @@ class MyPostActivity:AppCompatActivity() {
                 override fun onItemClick(application: Post) {
                     val intent = Intent(this@MyPostActivity, MyPostDetailActivity::class.java)
                     startActivity(intent)
+
+
                 }
             })
 
@@ -136,6 +136,8 @@ class MyPostActivity:AppCompatActivity() {
                 override fun onItemClick(application: Post) {
                     val dlg = ParticipatePopupDialog(this@MyPostActivity)
                     dlg.start()
+
+
                 }
             })
 

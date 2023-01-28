@@ -19,6 +19,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import umc.mobile.project.MainActivity
 import umc.mobile.project.R
 import umc.mobile.project.databinding.ActivityChattingBinding
+import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -181,19 +182,24 @@ class ChattingActivity: AppCompatActivity() {
         }
     } */
 
-    /*
+
     //메시지 보낸 시각 정보 반환
     fun getDateTimeString(): String {
         try {
-            var localDateTime = LocalDateTime.now()
-            localDateTime.atZone(TimeZone.getDefault().toZoneId())
-            var dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
-            return localDateTime.format(dateTimeFormatter).toString()
+//            var localDateTime = LocalDateTime.now()
+            var localDateTime = System.currentTimeMillis()
+            val dateFormat = SimpleDateFormat("hh시 mm분")
+            val curTime = dateFormat.format(Date(localDateTime)).toString()
+
+            return curTime
+//            localDateTime.atZone(TimeZone.getDefault().toZoneId())
+//            var dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
+//            return localDateTime.format(dateTimeFormatter).toString()
         } catch (e: Exception) {
             e.printStackTrace()
             throw Exception("getTimeError")
         }
-    } */
+    }
 
     fun setupRecycler() {            //목록 초기화 및 업데이트
         recycler_talks.layoutManager = LinearLayoutManager(this)

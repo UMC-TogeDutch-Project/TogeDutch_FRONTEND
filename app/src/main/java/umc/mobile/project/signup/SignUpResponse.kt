@@ -3,7 +3,7 @@ package umc.mobile.project.signup
 import java.sql.Timestamp
 
 
-data class Response(
+data class SignUpResponse(
     var userIdx: Int,
     var keywordIdx: Int,
     var name: String,

@@ -27,7 +27,7 @@ class SignUpRegionActivity : AppCompatActivity() {
         var phoneNum = intent.getStringExtra("phoneNum")
         var keyWord = intent.getStringExtra("keyWord")
 
-        Log.d(TAG, "onCreate: ${name}, ${email}, ${password}, ${phoneNum}, ${keyWord}")
+//        Log.d(TAG, "onCreate: ${name}, ${email}, ${password}, ${phoneNum}, ${keyWord}")
 
         viewBinding.btnNext.setOnClickListener {
             val intent = Intent(this, SignUpUserCategoryActivity::class.java)

@@ -1,9 +1,8 @@
 package umc.mobile.project.signup
 
 import com.google.gson.annotations.SerializedName
-import java.sql.Timestamp
 
-data class Request(
+data class SignUpRequest(
 
     @SerializedName("KeywordIdx")
     val keywordIdx: Int,

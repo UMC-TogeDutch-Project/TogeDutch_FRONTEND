@@ -2,6 +2,7 @@ package umc.mobile.project.news
 
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import umc.mobile.project.databinding.ItemNewsUploadDataBinding
@@ -33,6 +34,7 @@ class UpLoadDataRVAdapter(private val UpLoadDataList: ArrayList<UpLoadData>) : R
     //ViewHolder가 실제로 데이터를 표시해야 할 때 호출되는 함수
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
         holder.bind(UpLoadDataList[position])
+
 
     }
 

@@ -15,14 +15,17 @@ class SignUpUserPersonalInfoActivity : AppCompatActivity() {
         viewBinding =ActivitySignUpUserPersonalInfoBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-        val retrofit = Retrofit.Builder()
-            .baseUrl("http://localhost:9000/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        val apiService = retrofit.create(ApiService::class.java)
+//        val retrofit = Retrofit.Builder()
+//            .baseUrl("http://ec2-3-34-255-129.ap-northeast-2.compute.amazonaws.com:9000/")
+//            .addConverterFactory(GsonConverterFactory.create())
+//            .build()
+//
+//        val apiService = retrofit.create(ApiService::class.java)
 
         viewBinding.btnNext.setOnClickListener {
+
+//            apiService.createNewUser()
+
             var intent = Intent(this, LoginActivity::class.java)
             finishAffinity()
             startActivity(intent)

@@ -74,13 +74,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etInputAlarmKeyword" />
 
-    <TableLayout
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tableLayoutEdit"
         android:layout_width="match_parent"
-        android:layout_height="363dp">
+        android:layout_height="363dp"
+        android:stretchColumns="*"
+        >
 
 
-    </TableLayout>
+
+    </androidx.recyclerview.widget.RecyclerView>
 
     <ImageView
         android:layout_width="60dp"

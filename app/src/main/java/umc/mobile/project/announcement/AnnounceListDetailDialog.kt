@@ -2,16 +2,19 @@ package umc.mobile.project.announcement
 
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.view.Window
 import android.widget.Button
 import android.widget.ImageButton
 import androidx.fragment.app.DialogFragment
+import umc.mobile.project.AnnouncePostActivity
 import umc.mobile.project.R
+import java.security.AccessController.getContext
 
 class AnnounceListDetailDialog(context: Context) {
 
         private val dlg = Dialog(context)
-        private val dlg2 = PlaceSearchDialog(context)
+        //private val dlg2 = PlaceSearchDialog(context)
         private lateinit var btn_back : ImageButton
         private lateinit var image_btn_map : ImageButton
 
@@ -26,11 +29,14 @@ class AnnounceListDetailDialog(context: Context) {
             btn_back.setOnClickListener {
                 dlg.dismiss()
             }
+
             image_btn_map.setOnClickListener {
-               dlg2.start()
+//               dlg2.start()
 //                PlaceSearchDialogFragment().show(
 //                    parentFragmentManager, "PlaceSearchDialog"
 //                )
+//                val intent = Intent(getContext(), PlaceSearchActivity::class.java)
+//                getApplicationContext().startActivity(intent)
             }
 
             dlg.show()

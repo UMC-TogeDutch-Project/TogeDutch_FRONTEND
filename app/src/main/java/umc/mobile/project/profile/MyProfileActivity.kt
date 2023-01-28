@@ -26,20 +26,20 @@ class MyProfileActivity : AppCompatActivity() {
             .replace(viewBinding.containerFragment.id, MyProfileFragment())
             .commitAllowingStateLoss()
 
-        fun replaceFragment(int: Int) {
-            val transaction = supportFragmentManager.beginTransaction()
-            when (int) {
-                1 -> transaction.replace(
-                    viewBinding.containerFragment.id,
-                    MyProfileReviseFragment()
-                )
-                2 -> transaction.replace(
-                    viewBinding.containerFragment.id,
-                    MyPhoneNumReviseFragment()
-                )
-            }
-            transaction.addToBackStack(null).commitAllowingStateLoss()
-        }
+    }
 
+    fun replaceFragment(int: Int) {
+        val transaction = supportFragmentManager.beginTransaction()
+        when (int) {
+            1 -> transaction.replace(
+                viewBinding.containerFragment.id,
+                MyProfileReviseFragment()
+            )
+            2 -> transaction.replace(
+                viewBinding.containerFragment.id,
+                MyPhoneNumReviseFragment()
+            )
+        }
+        transaction.addToBackStack(null).commitAllowingStateLoss()
     }
 }

@@ -145,18 +145,34 @@
                     android:text="위치"
                     android:textColor="@color/black" />
 
-                <EditText
-                    android:id="@+id/ann_et_place"
-                    android:layout_width="370dp"
-                    android:layout_height="40dp"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/button_round_11"
                     android:backgroundTint="#1F767680"
-                    android:drawableEnd="@drawable/ic_map"
-                    android:fontFamily="@font/notosanskr_regular"
-                    android:gravity="center"
-                    android:hint="위치를 설정해주세요"
-                    android:paddingLeft="7dp"
-                    android:paddingRight="7dp" />
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/ann_et_place"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:hint="위치를 설정해주세요"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageButton
+                        android:id="@+id/image_btn_map"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_map"
+                        android:layout_marginRight="5dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -222,7 +238,7 @@
         </ScrollView>
 
         <Button
-            android:id="@+id/btn_see_now"
+            android:id="@+id/btn_post"
             android:layout_width="260dp"
             android:layout_height="wrap_content"
             android:background="@drawable/button_round_13"

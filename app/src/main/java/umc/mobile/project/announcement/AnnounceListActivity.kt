@@ -32,6 +32,7 @@ class AnnounceListActivity : AppCompatActivity() {
 
         setupSpinnerText()
         setupSpinnerHandler()
+
     }
 
     private fun setupSpinnerText() {
@@ -166,6 +167,20 @@ class AnnounceListActivity : AppCompatActivity() {
         }
 
     }
+//    private fun initSelected(){
+//        val data = intent.getIntExtra("rereturnValue",0)
+//        if (data == 0)
+//        {
+//            binding.recent.visibility = View.VISIBLE // 최신순 화면 visible
+//            binding.imminent.visibility = View.INVISIBLE // 마감임박 화면 invisible
+//
+//        }
+//        else{
+//            binding.recent.visibility = View.INVISIBLE // 최신순 화면 invisible
+//            binding.imminent.visibility = View.VISIBLE // 마감임박 화면 visible
+//
+//        }
+//    }
 
 
 //    fun sortCreated():Comparator<HomeData.Item> = object :Comparator<HomeData.Item>{

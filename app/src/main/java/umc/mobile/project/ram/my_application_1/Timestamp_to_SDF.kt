@@ -6,11 +6,15 @@ import java.util.*
 
 class Timestamp_to_SDF {
     fun convert(timestamp: Timestamp) : String{
+        var hour = timestamp.hours
+        var minute = timestamp.minutes
 
-        var sdf = SimpleDateFormat("HH시 mm분", Locale.KOREA)
+        var date : String = hour.toString() + "시 " + minute + "분"
 
-        var date = sdf.parse(timestamp.toString())
+//        var sdf = SimpleDateFormat("HH시 mm분", Locale.KOREA)
+//
+//        var date = sdf.parse(timestamp.toString())
 
-        return date.toString()
+        return date
     }
 }

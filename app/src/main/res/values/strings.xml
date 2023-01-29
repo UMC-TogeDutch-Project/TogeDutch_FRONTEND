@@ -26,6 +26,6 @@
 
     </string-array>
 
-
+    <string name="google_maps_key" translatable="false" templateMergeStrategy="preserve">AIzaSyCC4KrkEvk1cYehJPuA1hliUc8hPqxE-aQ</string>
 
 </resources>

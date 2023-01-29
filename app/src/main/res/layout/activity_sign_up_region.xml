@@ -39,7 +39,7 @@
         >
 
         <EditText
-            android:id="@+id/etInputAlarmKeyword"
+            android:id="@+id/etInputRegion"
             android:layout_width="370dp"
             android:layout_height="41dp"
             android:hint="시/ 구/ 동"

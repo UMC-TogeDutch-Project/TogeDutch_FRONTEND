@@ -250,12 +250,12 @@
         android:text="확인"
         android:textStyle="bold"
         android:textColor="#FFFFFF"
-        android:background="@drawable/sign_up_btn_background_blue_color"
+        android:background="@drawable/sign_up_btn_background_grey_color"
         app:layout_constraintTop_toBottomOf="@id/etInputCertificationNumber"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="25dp"
-
+        android:enabled="false"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

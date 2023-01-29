@@ -1,5 +1,5 @@
-//package umc.mobile.project.announcement
-//
+package umc.mobile.project.announcement
+
 //import android.view.LayoutInflater
 //import android.view.ViewGroup
 //import androidx.recyclerview.widget.RecyclerView

@@ -5,6 +5,7 @@
     android:id="@+id/rv_all"
     android:layout_width="370dp"
     android:layout_height="75dp"
+    android:layout_marginBottom="12dp"
     android:background="@drawable/sign_up_alram__edit_text_box"
 >
 

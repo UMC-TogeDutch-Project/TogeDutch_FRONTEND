@@ -35,5 +35,6 @@ class AnnounceListDetailDialog(context: Context) {
 //
 //        dlg.show()
 //    }
+
 }
 

@@ -105,7 +105,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_recent"
             android:layout_width="wrap_content"
-            android:layout_height="270dp"
+            android:layout_height="260dp"
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

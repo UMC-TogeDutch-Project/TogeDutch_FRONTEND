@@ -4,7 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -15,9 +17,13 @@ import umc.mobile.project.signup.Auth.ApiService
 import umc.mobile.project.signup.Auth.KeywordRequest
 import umc.mobile.project.signup.Auth.KeywordResponse
 
+
 class SignUpAlarmKeywordActivity : AppCompatActivity() {
     val TAG: String = "로그"
     private lateinit var viewBinding: ActivitySignUpAlarmKeywordBinding
+
+    var keywordList = arrayListOf<DataVo>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -28,9 +34,6 @@ class SignUpAlarmKeywordActivity : AppCompatActivity() {
         var key5 : String? = "word5"
         var key6 : String? = "word6"
 
-
-
-        var arrayList = arrayListOf<String>()
 
         var name = intent.getStringExtra("name")
         var email = intent.getStringExtra("email")
@@ -44,8 +47,6 @@ class SignUpAlarmKeywordActivity : AppCompatActivity() {
 
         val apiService = retrofit.create(ApiService::class.java)
 
-
-
         viewBinding = ActivitySignUpAlarmKeywordBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
@@ -53,15 +54,19 @@ class SignUpAlarmKeywordActivity : AppCompatActivity() {
 
         Log.d(TAG, "onCreate: ${name}, ${email}, ${password}, ${phoneNum}")
 
+        //////////////////////////////////////////////////////
+        val mAdapter = CustomAdapter(this, keywordList)
+        viewBinding.tableRecycleEdit.adapter = mAdapter
+        val layout = LinearLayoutManager(this)
+        viewBinding.tableRecycleEdit.layoutManager = layout
+        viewBinding.tableRecycleEdit.setHasFixedSize(true)
 
 
         viewBinding.btnInputAlarm.setOnClickListener {
-
-            var keyWord: String = viewBinding.etInputAlarmKeyword.text.toString()
-
-            arrayList.add(keyWord)
-//            Log.d(TAG, "onCreate: ${keyWord},     ${arrayList}")
+            mAdapter.addItem(DataVo(viewBinding.etInputAlarmKeyword.text.toString()))
         }
+
+
         viewBinding.btnNext.setOnClickListener {
             val intent = Intent(this, SignUpRegionActivity::class.java)
 //            intent.putExtra("name", name)

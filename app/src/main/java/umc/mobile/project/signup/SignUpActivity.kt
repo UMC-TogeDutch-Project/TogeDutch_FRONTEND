@@ -41,6 +41,7 @@ class SignUpActivity : AppCompatActivity() {
 
 
 
+
         viewBinding.btnNext.setOnClickListener {
             val intent = Intent(this, SignUpAlarmKeywordActivity::class.java)
             intent.putExtra("name", viewBinding.etInputName.text.toString())

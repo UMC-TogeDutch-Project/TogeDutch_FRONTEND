@@ -2,6 +2,7 @@ package umc.mobile.project.announcement
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import umc.mobile.project.DataRecentRVAdapter
 import umc.mobile.project.DataImminentRVAdapter
 import umc.mobile.project.HomeData
+import umc.mobile.project.HomeFragment.Companion.num1
 import umc.mobile.project.R
 import umc.mobile.project.databinding.ActivityAnnounceListBinding
 import kotlin.collections.ArrayList
@@ -25,13 +27,24 @@ class AnnounceListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAnnounceListBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        initRecyclerViewRecent()
 
 
         initActionBar()
 
         setupSpinnerText()
         setupSpinnerHandler()
+
+        if(num1 == 0){
+            initRecyclerViewRecent()
+
+        }
+
+        if(num1 == 1){
+            initRecyclerViewImminent()
+            binding.recent.visibility = View.INVISIBLE // 최신순 화면 invisible
+            binding.imminent.visibility = View.VISIBLE
+
+        }
 
     }
 
@@ -44,9 +57,16 @@ class AnnounceListActivity : AppCompatActivity() {
         binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 if(position == 0) { // 최신순 일 때
+                    if(num1 == 1){
+                        initRecyclerViewImminent()
+                        binding.recent.visibility = View.INVISIBLE // 최신순 화면 invisible
+                        binding.imminent.visibility = View.VISIBLE
 
-                    binding.recent.visibility = View.VISIBLE // 최신순 화면 visible
-                    binding.imminent.visibility = View.INVISIBLE // 마감임박 화면 invisible
+                    }
+                    else {
+                        binding.recent.visibility = View.VISIBLE // 최신순 화면 visible
+                        binding.imminent.visibility = View.INVISIBLE // 마감임박 화면 invisible
+                    }
 
                 }
 
@@ -140,6 +160,7 @@ class AnnounceListActivity : AppCompatActivity() {
 
         }
 
+
         dataImminentRVAdapter = DataImminentRVAdapter(imminentAnnounceData)
 
         binding.rvMainImminent.adapter = dataImminentRVAdapter //리사이클러뷰에 어댑터 연결
@@ -155,6 +176,8 @@ class AnnounceListActivity : AppCompatActivity() {
         })
 
         dataImminentRVAdapter.notifyDataSetChanged()
+
+        Log.d("imminentAnnounceData 안 데이터 : ", imminentAnnounceData[0].title + " " +imminentAnnounceData[1].title)
 
     }
 

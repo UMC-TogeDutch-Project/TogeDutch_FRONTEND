@@ -1,5 +1,5 @@
-//package umc.mobile.project.announcement
-//
+package umc.mobile.project.announcement
+
 //import android.graphics.Color
 //import android.graphics.drawable.ColorDrawable
 //import android.os.Bundle

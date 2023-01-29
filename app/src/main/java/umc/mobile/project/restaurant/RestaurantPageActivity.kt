@@ -1,5 +1,5 @@
-//package umc.mobile.project.restaurant
-//
+package umc.mobile.project.restaurant
+
 //import android.os.Bundle
 //import androidx.appcompat.app.AppCompatActivity
 //import umc.mobile.project.databinding.ActivityRestaurantPageBinding

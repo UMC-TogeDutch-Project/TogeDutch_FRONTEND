@@ -28,6 +28,12 @@ class AnnounceListActivity : AppCompatActivity() {
         binding = ActivityAnnounceListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+        initActionBar()
+
+        setupSpinnerText()
+        setupSpinnerHandler()
+
         if(num1 == 0){
             initRecyclerViewRecent()
 
@@ -40,14 +46,6 @@ class AnnounceListActivity : AppCompatActivity() {
 
         }
 
-
-
-
-        initActionBar()
-
-        setupSpinnerText()
-        setupSpinnerHandler()
-
     }
 
     private fun setupSpinnerText() {
@@ -59,9 +57,16 @@ class AnnounceListActivity : AppCompatActivity() {
         binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 if(position == 0) { // 최신순 일 때
+                    if(num1 == 1){
+                        initRecyclerViewImminent()
+                        binding.recent.visibility = View.INVISIBLE // 최신순 화면 invisible
+                        binding.imminent.visibility = View.VISIBLE
 
-                    binding.recent.visibility = View.VISIBLE // 최신순 화면 visible
-                    binding.imminent.visibility = View.INVISIBLE // 마감임박 화면 invisible
+                    }
+                    else {
+                        binding.recent.visibility = View.VISIBLE // 최신순 화면 visible
+                        binding.imminent.visibility = View.INVISIBLE // 마감임박 화면 invisible
+                    }
 
                 }
 
@@ -154,6 +159,7 @@ class AnnounceListActivity : AppCompatActivity() {
 
 
         }
+
 
         dataImminentRVAdapter = DataImminentRVAdapter(imminentAnnounceData)
 

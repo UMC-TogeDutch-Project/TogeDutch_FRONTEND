@@ -26,7 +26,7 @@ class LoginActivity : AppCompatActivity(), MyCustomDialogInterface {
             myCustomDialog.show()
         }
 
-        viewBinding.tbSginUp.setOnClickListener {
+        viewBinding.tbSignUp.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
         }

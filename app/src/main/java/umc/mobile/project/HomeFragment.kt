@@ -95,7 +95,7 @@ class HomeFragment: Fragment() {
 
         viewBinding.rvRecent.adapter = dataRecentRVAdapter //리사이클러뷰에 어댑터 연결
         viewBinding.rvRecent.layoutManager= LinearLayoutManager(context) //레이아웃 매니저 연결
-        viewBinding.rvRecent.addItemDecoration(AnnounceRVAdapterDecoration(20))
+
 
 
         dataRecentRVAdapter.setItemClickListener(object: DataRecentRVAdapter.OnItemClickListener{
@@ -140,7 +140,6 @@ class HomeFragment: Fragment() {
 
         viewBinding.rvImminent.adapter = dataImminentRVAdapter //리사이클러뷰에 어댑터 연결
         viewBinding.rvImminent.layoutManager= LinearLayoutManager(context) //레이아웃 매니저 연결
-        viewBinding.rvImminent.addItemDecoration(AnnounceRVAdapterDecoration(20))
 
 
         dataImminentRVAdapter.setItemClickListener(object: DataImminentRVAdapter.OnItemClickListener{

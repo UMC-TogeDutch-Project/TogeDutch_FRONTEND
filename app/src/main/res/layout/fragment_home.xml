@@ -78,15 +78,73 @@
             android:layout_marginTop="15dp"
             />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvMain"
+        <TextView
+            android:id="@+id/category_recent"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:text="최신순"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/adsMain" />
+
+
+        <Button
+            android:id="@+id/btn_more_rcent"
+            android:layout_width="14dp"
+            android:layout_height="12dp"
+            android:background="@drawable/main_more_btn"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="33dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/adsMain" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_recent"
+            android:layout_width="wrap_content"
+            android:layout_height="270dp"
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/adsMain"
+            app:layout_constraintTop_toBottomOf="@+id/category_recent"
+            android:nestedScrollingEnabled="false"
             tools:listitem="@layout/item_data" />
+        <TextView
+            android:id="@+id/category_imminent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="마감 임박"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rv_recent" />
 
+
+        <Button
+            android:id="@+id/btn_more_imminent"
+            android:layout_width="14dp"
+            android:layout_height="12dp"
+            android:background="@drawable/main_more_btn"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="33dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rv_recent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_imminent"
+            android:layout_width="wrap_content"
+            android:layout_height="270dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/category_imminent"
+            android:nestedScrollingEnabled="false"
+            tools:listitem="@layout/item_data" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

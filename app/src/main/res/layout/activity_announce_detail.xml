@@ -2,23 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="330dp"
     android:layout_height="match_parent"
-    android:layout_marginRight="25dp"
-    android:layout_marginLeft="25dp">
+    android:background="@drawable/button_round_13"
+    android:backgroundTint="@color/white"
+>
 
 
-    <TextView
-        android:id="@+id/announce_post"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/notosanskr_black"
-        android:text="새 공고 등록"
-        android:textColor="@color/black"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/back_btn"
@@ -36,9 +26,10 @@
         android:layout_width="match_parent"
         android:layout_height="550dp"
         android:layout_gravity="center"
+        android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/announce_post">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -131,18 +122,35 @@
                 android:text="위치"
                 android:textColor="@color/black" />
 
-            <EditText
-                android:id="@+id/ann_et_place"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/button_round_11"
                 android:backgroundTint="#1F767680"
-                android:drawableEnd="@drawable/ic_map"
-                android:fontFamily="@font/notosanskr_regular"
-                android:gravity="center"
-                android:hint="위치를 설정해주세요"
-                android:paddingLeft="7dp"
-                android:paddingRight="7dp" />
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/ann_et_place"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:hint="위치를 설정해주세요"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/image_btn_map"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_map"
+                    android:layout_marginRight="5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -202,27 +210,26 @@
                 android:paddingLeft="7dp"
                 android:paddingRight="7dp" />
 
-
+            <Button
+                android:id="@+id/btn_see_now"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_round_13"
+                android:backgroundTint="@color/main_color"
+                android:fontFamily="@font/notosanskr_bold"
+                android:includeFontPadding="false"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="25dp"
+                android:layout_gravity="center"
+                android:text="신청하기"
+                android:textSize="18dp"
+                android:textColor="@color/white"
+             />
         </LinearLayout>
 
     </ScrollView>
 
-    <Button
-        android:id="@+id/btn_see_now"
-        android:layout_width="260dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_round_13"
-        android:backgroundTint="@color/main_color"
-        android:fontFamily="@font/notosanskr_bold"
-        android:includeFontPadding="false"
-        android:layout_marginTop="20dp"
-        android:text="신청하기"
-        android:textSize="18dp"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView" />
+
 
 
 

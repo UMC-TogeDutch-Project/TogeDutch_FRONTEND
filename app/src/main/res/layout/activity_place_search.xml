@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="316dp"
     android:layout_height="484dp"
     android:orientation="vertical"
@@ -9,17 +10,18 @@
 
 
     <ImageButton
-        android:id="@+id/back_btn"
+        android:id="@+id/gps_back_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="19dp"
         android:layout_marginRight="15dp"
         android:background="@drawable/ic_baseline_close_24"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/gps_editText"
         android:layout_width="260dp"
         android:layout_height="37dp"
         android:background="@drawable/button_round_11"
@@ -29,23 +31,31 @@
         android:drawablePadding="9dp"
         android:hint="검색"
         android:layout_marginTop="45dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginLeft="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView2"
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/gps_map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="267dp"
         android:layout_height="298dp"
+        app:cameraTargetLat="37.606537"
+        app:cameraTargetLng="127.041758"
+        app:cameraZoom="17"
         android:background="@drawable/button_round_13"
         android:backgroundTint="@color/grey_2"
         android:layout_marginTop="11dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginLeft="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/gps_editText" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/gps_textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/notosanskr_bold"
@@ -56,21 +66,23 @@
         android:paddingTop="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/gps_map" />
+
+
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/gps_textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/notosanskr_regular"
-        android:text="00시 00구 00로 0000"
         android:includeFontPadding="false"
+        android:text="00시 00구 00로 0000"
         android:textColor="@color/black"
         android:textSize="11dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+        app:layout_constraintTop_toBottomOf="@+id/gps_textView11" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

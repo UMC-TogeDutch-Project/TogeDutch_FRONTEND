@@ -14,6 +14,11 @@ import androidx.appcompat.app.AppCompatActivity
 import umc.mobile.project.R
 import umc.mobile.project.databinding.ActivityMypostBinding
 import umc.mobile.project.ram.chat.DeclarationPopupDialog
+import umc.mobile.project.ram.my_application_1.current_application.CurrentApplicationActivity
+import java.sql.Timestamp
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MyPostActivity:AppCompatActivity() {
     lateinit var binding: ActivityMypostBinding
@@ -31,8 +36,6 @@ class MyPostActivity:AppCompatActivity() {
         initRecycler()
 
 
-
-
         // 스피너
         setupSpinnerText()
         setupSpinnerHandler()
@@ -45,9 +48,15 @@ class MyPostActivity:AppCompatActivity() {
         binding.spinnerBtn.adapter = adapter
     }
 
+
+
     private fun setupSpinnerHandler() {
+
+
         binding.spinnerBtn.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
+
                 if(position == 0) { // 업로드 기준일 때
                     initActionBar()
                     binding.searchView.queryHint = "나의 공고를 검색해보세요"
@@ -87,14 +96,15 @@ class MyPostActivity:AppCompatActivity() {
     }
 
     private fun initRecycler() {
+        var string = "2023-01-15T01:43:39.000+00:00"
         applicationList.apply {
             add(
-                Post(7, "오매떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
-                2, 1, "모집중", "2023-01-15T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
+                Post(7, "오매떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, string,
+                2, 1, "모집중", string, null, 2, 67.1234567, 127.3012345)
             )
             add(
-                Post(8, "엽떡 2인으로 같이 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 1000, 130000, "2023-01-15T03:04:56.000+00:00",
-                2, 1, "모집중", "2023-01-15T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
+                Post(8, "엽떡 2인으로 같이 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 1000, 130000, string,
+                2, 1, "모집중", string, null, 2, 67.1234567, 127.3012345)
             )
 
 
@@ -106,6 +116,8 @@ class MyPostActivity:AppCompatActivity() {
                 override fun onItemClick(application: Post) {
                     val intent = Intent(this@MyPostActivity, MyPostDetailActivity::class.java)
                     startActivity(intent)
+
+
                 }
             })
 
@@ -117,14 +129,16 @@ class MyPostActivity:AppCompatActivity() {
     }
 
     private fun initRecycler_join(){
+        SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(Date())
+        var string = "2023-01-15T01:43:39.000+00:00"
         joinList.apply {
             add(
-                Post(7, "엽떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
-                    2, 1, "모집중", "2023-01-15T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
+                Post(7, "엽떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, string,
+                    2, 1, "모집중", string, null, 2, 67.1234567, 127.3012345)
             )
             add(
-                Post(8, "베라 2인으로 같이 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 1000, 130000, "2023-01-15T03:04:56.000+00:00",
-                    2, 1, "모집중", "2023-01-15T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
+                Post(8, "베라 2인으로 같이 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 1000, 130000, string,
+                    2, 1, "모집중", string, null, 2, 67.1234567, 127.3012345)
             )
 
 
@@ -134,8 +148,12 @@ class MyPostActivity:AppCompatActivity() {
             joinRVAdatpter.setItemClickListener(object:
                 JoinRVAdatpter.OnItemClickListener {
                 override fun onItemClick(application: Post) {
-                    val dlg = ParticipatePopupDialog(this@MyPostActivity)
+                    val dlg = ReviewWritePopupDialog(this@MyPostActivity)
                     dlg.start()
+                    fun open_activity(){
+                        val intent = Intent(this@MyPostActivity,CurrentApplicationActivity::class.java)
+                        startActivity(intent)
+                    }
                 }
             })
 

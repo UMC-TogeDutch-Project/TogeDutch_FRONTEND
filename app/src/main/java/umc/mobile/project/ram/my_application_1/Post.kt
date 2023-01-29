@@ -1,5 +1,8 @@
 package umc.mobile.project.ram.my_application_1
 
+import java.sql.Timestamp
+import java.text.SimpleDateFormat
+
 
 data class Post(
     var post_id : Int,
@@ -12,7 +15,7 @@ data class Post(
     var recruited_num : Int,
     var status : String,
     var created_at : String,
-    var updated_at : String? = null,
+    var updated_at : String?,
     var user_id : Int,
     var Latitude : Double,
     var longitude : Double

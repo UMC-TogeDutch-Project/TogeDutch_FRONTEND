@@ -4,6 +4,12 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:usesCleartextTraffic="true"
         android:allowBackup="true"
@@ -14,6 +20,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Project"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
             android:name=".MainActivity"
@@ -37,9 +44,13 @@
 
         <activity android:name=".announcement.AnnounceRecyclerviewItem"></activity>
         <activity android:name=".announcement.AnnounceListActivity"></activity>
+        <activity android:name=".announcement.AnnounceDetailActivity"></activity>
+        <activity android:name=".AnnouncePostActivity"></activity>
+        <activity android:name=".restaurant.blog.RestaurantPageActivity"></activity>
         <activity android:name=".profile.MyProfileActivity"></activity>
         <activity android:name=".ram.my_application_1.MyPostActivity"></activity>
         <activity android:name=".commercial.CommercialListActivity"></activity>
+        <activity android:name=".commercial.CommercialSignUpActivity"></activity>
         <activity android:name=".ram.my_application_1.MyPostDetailActivity"></activity>
         <activity android:name=".ram.my_application_1.current_application.CurrentApplicationActivity"></activity>
         <activity android:name=".ram.chat.ChattingActivity"></activity>
@@ -52,11 +63,16 @@
         <activity android:name=".withdrawal.WithdrawalActivity"></activity>
         <activity android:name=".wishlist.WishListActivity"></activity>
         <activity android:name=".notice.NoticeActivity"></activity>
+        <activity android:name=".announcement.PlaceSearchActivity"></activity>
 
         <activity
             android:name=".login.LoginActivity"
             android:exported="false">
         </activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCC4KrkEvk1cYehJPuA1hliUc8hPqxE-aQ" />
 
     </application>
 

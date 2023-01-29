@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/random_matching"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <View
+            android:id="@+id/random_recommend"
+            android:layout_width="382dp"
+            android:layout_height="384dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_round_13"
+            android:backgroundTint="#66D9D9D9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="랜덤 추천 사용자"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/random_recommend"
+            app:layout_constraintStart_toStartOf="@+id/random_recommend"
+            app:layout_constraintTop_toTopOf="@+id/random_recommend" />
+
+        <ImageView
+            android:id="@+id/profileImage"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_marginTop="26dp"
+            app:layout_constraintEnd_toEndOf="@+id/random_recommend"
+            app:layout_constraintStart_toStartOf="@+id/random_recommend"
+            app:layout_constraintTop_toBottomOf="@+id/textView14"
+            app:srcCompat="@drawable/profile" />
+
+        <TextView
+            android:id="@+id/nickName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="160dp"
+            android:layout_marginTop="8dp"
+            android:text="aeeazip"
+            android:textColor="#000000"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/random_recommend"
+            app:layout_constraintTop_toBottomOf="@+id/profileImage" />
+
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="165dp"
+            android:text="님"
+            android:textColor="#000000"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/random_recommend"
+            app:layout_constraintStart_toEndOf="@+id/nickName"
+            app:layout_constraintTop_toBottomOf="@+id/profileImage" />
+
+        <Button
+            android:id="@+id/btn_matching_application"
+            android:layout_width="321dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/btn_big_blue_background"
+            android:onClick="onClick"
+            android:text="메이트 매칭 신청"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/random_recommend"
+            app:layout_constraintStart_toStartOf="@+id/random_recommend"
+            app:layout_constraintTop_toBottomOf="@+id/nickName" />
+
+        <Button
+            android:id="@+id/btn_recommend"
+            android:layout_width="321dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/btn_big_blue_background"
+            android:backgroundTint="#C854FF"
+            android:onClick="onClick"
+            android:text="재추천 받기"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/random_recommend"
+            app:layout_constraintStart_toStartOf="@+id/random_recommend"
+            app:layout_constraintTop_toBottomOf="@+id/btn_matching_application" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

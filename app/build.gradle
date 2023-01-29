@@ -48,4 +48,10 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+
+    //    구글 지도 및 장소 관련
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
+    implementation 'com.google.android.libraries.places:places:2.7.0'
+
+    implementation 'com.google.android.gms:play-services-location:18.0.0' // 위치정보 라이브러리
 }

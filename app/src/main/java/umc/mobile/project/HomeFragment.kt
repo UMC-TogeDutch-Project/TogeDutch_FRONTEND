@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-//import umc.mobile.project.announcement.AnnounceDetailActivity
+import umc.mobile.project.announcement.AnnounceDetailActivity
 import umc.mobile.project.announcement.AnnounceListActivity
 
 import umc.mobile.project.announcement.AnnounceRVAdapterDecoration

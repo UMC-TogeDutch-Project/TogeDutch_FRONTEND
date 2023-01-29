@@ -2,6 +2,7 @@ package umc.mobile.project.announcement
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import umc.mobile.project.DataRecentRVAdapter
 import umc.mobile.project.DataImminentRVAdapter
 import umc.mobile.project.HomeData
+import umc.mobile.project.HomeFragment.Companion.num1
 import umc.mobile.project.R
 import umc.mobile.project.databinding.ActivityAnnounceListBinding
 import kotlin.collections.ArrayList
@@ -25,7 +27,20 @@ class AnnounceListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAnnounceListBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        initRecyclerViewRecent()
+
+        if(num1 == 0){
+            initRecyclerViewRecent()
+
+        }
+
+        if(num1 == 1){
+            initRecyclerViewImminent()
+            binding.recent.visibility = View.INVISIBLE // 최신순 화면 invisible
+            binding.imminent.visibility = View.VISIBLE
+
+        }
+
+
 
 
         initActionBar()
@@ -155,6 +170,8 @@ class AnnounceListActivity : AppCompatActivity() {
         })
 
         dataImminentRVAdapter.notifyDataSetChanged()
+
+        Log.d("imminentAnnounceData 안 데이터 : ", imminentAnnounceData[0].title + " " +imminentAnnounceData[1].title)
 
     }
 

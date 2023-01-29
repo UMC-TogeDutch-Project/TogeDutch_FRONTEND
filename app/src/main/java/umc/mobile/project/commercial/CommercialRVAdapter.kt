@@ -18,10 +18,10 @@ class CommercialRVAdapter (private val commercialData: ArrayList<CommercialData>
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.bind(commercialData[position])
 
-        holder.itemView.setOnClickListener {
-            itemClickListener.onItemClick(commercialData[position])
-            notifyItemChanged(position)
-        }
+//        holder.itemView.setOnClickListener {
+//            itemClickListener.onItemClick(commercialData[position])
+//            notifyItemChanged(position)
+//        }
     }
 
     inner class MyViewHolder(private val binding: CommercialRecyclerviewItemBinding): RecyclerView.ViewHolder(binding.root){
@@ -33,15 +33,15 @@ class CommercialRVAdapter (private val commercialData: ArrayList<CommercialData>
         }
     }
 
-    interface OnItemClickListener {
-        fun onItemClick(announceData: CommercialData)
-    }
-
-    fun setItemClickListener(onItemClickListener: OnItemClickListener) {
-        this.itemClickListener = onItemClickListener
-    }
-
-    private lateinit var itemClickListener : OnItemClickListener
+//    interface OnItemClickListener {
+//        fun onItemClick(announceData: CommercialData)
+//    }
+//
+//    fun setItemClickListener(onItemClickListener: OnItemClickListener) {
+//        this.itemClickListener = onItemClickListener
+//    }
+//
+//    private lateinit var itemClickListener : OnItemClickListener
 
 
 }

@@ -5,10 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-//import umc.mobile.project.announcement.AnnounceDetailActivity
+import umc.mobile.project.announcement.AnnounceDetailActivity
 import umc.mobile.project.announcement.AnnounceListActivity
 
 import umc.mobile.project.announcement.AnnounceRVAdapterDecoration
@@ -45,17 +44,15 @@ class HomeFragment: Fragment() {
         viewBinding.btnMoreRcent.setOnClickListener() {
             val intent = Intent(context, AnnounceListActivity::class.java)
             startActivity(intent)
+            num1 = 0
 
-//            num1
-//            startActivity(intent)
         }
 
         viewBinding.btnMoreImminent.setOnClickListener {
-//            val intent = Intent(context, AnnounceListActivity::class.java)
-//            intent.putExtra("returnValue",num2)
 
             val intent = Intent(context, AnnounceListActivity::class.java)
             startActivity(intent)
+            num1 =1
         }
 
         initRecyclerViewRecent()
@@ -166,8 +163,7 @@ class HomeFragment: Fragment() {
         _viewBinding = null
     }
     companion object{
-        val num1 = 0
-        val num2 = 1
+        var num1 = 0
     }
 
 

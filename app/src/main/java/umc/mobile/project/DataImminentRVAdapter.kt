@@ -36,9 +36,9 @@ class DataImminentRVAdapter(private val homeDataList: ArrayList<HomeData>) : Rec
             LayoutInflater.from(viewGroup.context),
             viewGroup, false)
 
-        homeDataList.sortByDescending {
-            it.created_at
-        }
+//        homeDataList.sortByDescending {
+//            it.created_at
+//        }
 
         return ImminentViewHolder(viewBinding)
     }

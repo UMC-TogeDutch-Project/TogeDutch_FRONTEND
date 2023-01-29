@@ -36,12 +36,12 @@ class CommercialListActivity: AppCompatActivity() {
         binding.recyclerView.layoutManager= LinearLayoutManager(this) //레이아웃 매니저 연결
         binding.recyclerView.addItemDecoration(AnnounceRVAdapterDecoration(20))
 
-        commercialRVAdapter.setItemClickListener(object: CommercialRVAdapter.OnItemClickListener{
-            override fun onItemClick(commercialData: CommercialData) {
-                val intent = Intent(this@CommercialListActivity, CommercialSignUpActivity::class.java)
-                startActivity(intent)
-            }
-        })
+//        commercialRVAdapter.setItemClickListener(object: CommercialRVAdapter.OnItemClickListener{
+//            override fun onItemClick(commercialData: CommercialData) {
+//                val intent = Intent(this@CommercialListActivity, CommercialSignUpActivity::class.java)
+//                startActivity(intent)
+//            }
+//        })
     }
 
     private fun initActionBar(){

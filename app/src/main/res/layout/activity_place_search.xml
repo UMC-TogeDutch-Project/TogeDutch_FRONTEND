@@ -18,7 +18,7 @@
         android:background="@drawable/ic_baseline_close_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="TouchTargetSizeCheck" />
+         />
 
     <EditText
         android:id="@+id/gps_editText"
@@ -26,8 +26,7 @@
         android:layout_height="37dp"
         android:background="@drawable/button_round_11"
         android:backgroundTint="#1F767680"
-        android:drawableLeft="@drawable/ic_search"
-        android:paddingLeft="10dp"
+        android:paddingLeft="43dp"
         android:drawablePadding="9dp"
         android:hint="검색"
         android:layout_marginTop="45dp"
@@ -37,7 +36,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.gms.maps.MapView
+
+        <androidx.fragment.app.FragmentContainerView
         android:id="@+id/gps_map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="267dp"
@@ -53,6 +53,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/gps_editText" />
+
+    <ImageButton
+        android:id="@+id/btn_search"
+        android:layout_width="21dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/main_search_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/gps_editText"
+        app:layout_constraintStart_toStartOf="@+id/gps_editText"
+        app:layout_constraintTop_toTopOf="@+id/gps_editText" />
 
     <TextView
         android:id="@+id/gps_textView11"

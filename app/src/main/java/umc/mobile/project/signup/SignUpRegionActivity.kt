@@ -25,9 +25,9 @@ class SignUpRegionActivity : AppCompatActivity() {
         var email = intent.getStringExtra("email")
         var password = intent.getStringExtra("password")
         var phoneNum = intent.getStringExtra("phoneNum")
-        var keyWord = intent.getStringExtra("keyWord")
+        var keyWordIdx: Int = intent.getIntExtra("keyWordIdx", 100)
 
-//        Log.d(TAG, "onCreate: ${name}, ${email}, ${password}, ${phoneNum}, ${keyWord}")
+        Log.d(TAG, "onCreate: ${name}, ${email}, ${password}, ${phoneNum}, ${keyWordIdx}")
 
         viewBinding.btnNext.setOnClickListener {
             val intent = Intent(this, SignUpUserCategoryActivity::class.java)
@@ -35,7 +35,7 @@ class SignUpRegionActivity : AppCompatActivity() {
             intent.putExtra("email", email)
             intent.putExtra("password", password)
             intent.putExtra("phoneNum", phoneNum)
-            intent.putExtra("keyWord", keyWord)
+            intent.putExtra("keyWordIdx", keyWordIdx)
             intent.putExtra("region", viewBinding.etInputRegion.text.toString())
             startActivity(intent)
             overridePendingTransition(0, 0)

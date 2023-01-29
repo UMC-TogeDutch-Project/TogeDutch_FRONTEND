@@ -7,13 +7,23 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.widget.Toast
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import umc.mobile.project.R
 import umc.mobile.project.databinding.ActivitySignUpBinding
+import umc.mobile.project.signup.Auth.ApiService
+import umc.mobile.project.signup.Auth.SmsRequest
+import umc.mobile.project.signup.Auth.SmsResponse
 import java.util.regex.Pattern
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivitySignUpBinding
 
+    val TAG: String = "로그"
     val emailValidation = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,10 +31,13 @@ class SignUpActivity : AppCompatActivity() {
         viewBinding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
+        //Retrofit2 선언
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://ec2-3-34-255-129.ap-northeast-2.compute.amazonaws.com:9000/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
 
-
-
-
+        val apiService = retrofit.create(ApiService::class.java)
 
 
 
@@ -37,6 +50,37 @@ class SignUpActivity : AppCompatActivity() {
 
             startActivity(intent)
             overridePendingTransition(0, 0)
+        }
+
+        viewBinding.btnSendToCheckMsg.setOnClickListener {
+            apiService.sendCheckNum(SmsRequest(viewBinding.etInputPhoneNumber.text.toString())).enqueue(object : Callback<SmsResponse>{
+                override fun onResponse(
+                    call: Call<SmsResponse>,
+                    response: Response<SmsResponse>) {
+                    Log.d(TAG, "onResponse:응답")
+                    if(response.isSuccessful){
+                        val smsResponseData = response.body()
+                        if (smsResponseData != null){
+                            when(smsResponseData.code){
+                                1000 -> Toast.makeText(this@SignUpActivity, "성공! ${smsResponseData.result.requestId}", Toast.LENGTH_SHORT).show()
+                            }
+
+                        }
+                        else{
+                            Log.d(TAG, "onResponse: null임")
+                        }
+                    }
+                    else{
+                        Log.d(TAG, "onResponse:성공 실패")
+                    }
+
+                }
+
+                override fun onFailure(call: Call<SmsResponse>, t: Throwable) {
+                    Log.d(TAG, "onFailure: 요청 실패")
+                }
+
+            })
         }
 
         // addTextChangedListener의 경우 익명클래스이니 필수 함수들을 import 해줘야 함

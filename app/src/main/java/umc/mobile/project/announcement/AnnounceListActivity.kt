@@ -40,6 +40,7 @@ class AnnounceListActivity : AppCompatActivity() {
         }
 
         if(num1 == 1){
+            binding.spinner.setSelection(1)
             initRecyclerViewImminent()
             binding.recent.visibility = View.INVISIBLE // 최신순 화면 invisible
             binding.imminent.visibility = View.VISIBLE
@@ -56,22 +57,26 @@ class AnnounceListActivity : AppCompatActivity() {
     private fun setupSpinnerHandler() {
         binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if(position == 0) { // 최신순 일 때
-                    if(num1 == 1){
-                        initRecyclerViewImminent()
-                        binding.recent.visibility = View.INVISIBLE // 최신순 화면 invisible
-                        binding.imminent.visibility = View.VISIBLE
+                if( num1 == 0 && position == 0) { // 최신순 일 때
 
-                    }
-                    else {
-                        binding.recent.visibility = View.VISIBLE // 최신순 화면 visible
-                        binding.imminent.visibility = View.INVISIBLE // 마감임박 화면 invisible
-                    }
+                        binding.recent.visibility = View.VISIBLE // 최신순 화면 invisible
+                        binding.imminent.visibility = View.INVISIBLE
+
 
                 }
-
-                else{ // 마감임박 순일 때
+                else if (num1 == 0 && position == 1){
                     initRecyclerViewImminent()
+                    binding.recent.visibility = View.INVISIBLE // 최신순 화면 invisible
+                    binding.imminent.visibility = View.VISIBLE
+                }
+
+                else if(num1 == 1 && position == 0){
+                    binding.recent.visibility = View.VISIBLE // 최신순 화면 invisible
+                    binding.imminent.visibility = View.INVISIBLE // 마감임박 화면 visible
+
+                }
+                else if(num1 == 1 && position == 1){
+                    initRecyclerViewRecent()
                     binding.recent.visibility = View.INVISIBLE // 최신순 화면 invisible
                     binding.imminent.visibility = View.VISIBLE // 마감임박 화면 visible
 
@@ -118,7 +123,7 @@ class AnnounceListActivity : AppCompatActivity() {
 
             binding.rvMainRecent.adapter = dataRecentRVAdapter //리사이클러뷰에 어댑터 연결
             binding.rvMainRecent.layoutManager= LinearLayoutManager(this@AnnounceListActivity) //레이아웃 매니저 연결
-            binding.rvMainRecent.addItemDecoration(AnnounceRVAdapterDecoration(20))
+
 
 
         dataRecentRVAdapter.setItemClickListener(object: DataRecentRVAdapter.OnItemClickListener{
@@ -165,7 +170,6 @@ class AnnounceListActivity : AppCompatActivity() {
 
         binding.rvMainImminent.adapter = dataImminentRVAdapter //리사이클러뷰에 어댑터 연결
         binding.rvMainImminent.layoutManager= LinearLayoutManager(this@AnnounceListActivity) //레이아웃 매니저 연결
-        binding.rvMainImminent.addItemDecoration(AnnounceRVAdapterDecoration(20))
 
 
         dataImminentRVAdapter.setItemClickListener(object: DataImminentRVAdapter.OnItemClickListener{

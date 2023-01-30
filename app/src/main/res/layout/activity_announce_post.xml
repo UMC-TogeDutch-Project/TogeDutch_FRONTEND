@@ -79,7 +79,7 @@
                     android:backgroundTint="#1F767680"
                     android:fontFamily="@font/notosanskr_regular"
                     android:gravity="center"
-                    android:hint="UPL 링크"
+                    android:hint="URL 링크"
                     android:paddingLeft="7dp"
                     android:paddingRight="7dp" />
                 <TextView
@@ -230,6 +230,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+
                         android:id="@+id/camera_btn_txt"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"

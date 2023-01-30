@@ -69,11 +69,11 @@ class SignUpAlarmKeywordActivity : AppCompatActivity() {
 
         viewBinding.btnNext.setOnClickListener {
             val intent = Intent(this, SignUpRegionActivity::class.java)
-//            intent.putExtra("name", name)
-//            intent.putExtra("email", email)
-//            intent.putExtra("password", password)
-//            intent.putExtra("phoneNum", phoneNum)
-//            intent.putExtra("keyWord", viewBinding.etInputAlarmKeyword.text.toString())
+            intent.putExtra("name", name)
+            intent.putExtra("email", email)
+            intent.putExtra("password", password)
+            intent.putExtra("phoneNum", phoneNum)
+            intent.putExtra("keyWord", viewBinding.etInputAlarmKeyword.text.toString())
 
             apiService.getUserKeywordId(KeywordRequest("${key1}", "${key2}", "${key3}", "${key4}","${key5}","${key6}"))
                 .enqueue(object : Callback<KeywordResponse>{

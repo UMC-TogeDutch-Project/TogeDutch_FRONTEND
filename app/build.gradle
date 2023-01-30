@@ -55,5 +55,5 @@ dependencies {
 
     implementation 'com.google.android.gms:play-services-location:18.0.0' // 위치정보 라이브러리
 
-
+    implementation "com.kakao.sdk:v2-user:2.12.1" // 카카오 로그인
 }

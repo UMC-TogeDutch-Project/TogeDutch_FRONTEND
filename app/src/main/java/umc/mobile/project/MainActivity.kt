@@ -2,7 +2,9 @@ package umc.mobile.project
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.kakao.sdk.common.util.Utility
 import umc.mobile.project.databinding.ActivityMainBinding
 
 
@@ -14,6 +16,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(viewBinding.root)
+
+        val keyHash = Utility.getKeyHash(this)
+        Log.d("Hash", keyHash)
+
 
         supportFragmentManager
             .beginTransaction()

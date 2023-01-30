@@ -66,7 +66,7 @@ class PlaceSearchActivity : AppCompatActivity(), OnMapReadyCallback,
         binding = ActivityPlaceSearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        editTextadress = binding.gpsEditText.toString()
+        editTextadress = binding.gpsEditText.text.toString()
 
         mContext = this@PlaceSearchActivity
 
@@ -88,56 +88,76 @@ class PlaceSearchActivity : AppCompatActivity(), OnMapReadyCallback,
         binding.btnSearch.setOnClickListener {
             geocoder = Geocoder(this)
 
-            var list: List<Address>? = null
-            address = editTextadress
+            var locationNameList: List<Address>? = null
+            var locationList : List<Address>? = null
+
+            address = binding.gpsEditText.text.toString()
+
+            Log.d("editTextaddress: ", binding.gpsEditText.text.toString())
+            Log.d("address: ", address)
 
             try {                                   //지역  , 읽을 개수
-                list = geocoder.getFromLocationName(address, 10)
+                locationNameList = geocoder.getFromLocationName(address, 10)
             } catch (e: IOException) {
                 e.printStackTrace()
                 Log.e("test", "입출력 오류 - 서버에서 주소변환시 에러발생")
             }
-            if (list != null) {
-                if (list!!.isEmpty()) {
+            if (locationNameList != null) {
+                if (locationNameList.isEmpty()) {
                     address = ""
                     Toast.makeText(this, "해당되는 주소 정보는 없습니다", Toast.LENGTH_LONG).show()
                 } else {
-                    latitude = list!![0].latitude
-                    longitude = list!![0].longitude
+                    latitude = locationNameList!![0].latitude
+                    longitude = locationNameList!![0].longitude
 
                     // 위도,경도 입력 후 지도
                     //MasFragment.kt에서 불러온 함수
                     setLocation(latitude, longitude)
 
-                    // 지명
                     binding.gpsTextView11.text = address
-                    binding.gpsTextView12.text = address
 
-                    Log.d("위치정보", "주소: $address 위도: $latitude  경도: $longitude")
+                    try {
+                        // 위도, 경도로 상세 주소 뽑기
+                        locationList =
+                            geocoder.getFromLocation(latitude, longitude, 1) //1개의 데이터를 얻어오겠다.
+                    } catch (e: IOException) {
+                        Log.d("위도/경도", "입출력 오류")
+                    }
+
+                    if (locationList != null) {
+                        if (locationList.isEmpty()) {
+                            binding.gpsTextView12.text = "해당되는 주소는 없습니다."
+                        } else { //정상적으로 산출된 주소
+                            binding.gpsTextView12.text = locationList[0].getAddressLine(0)
+
+                        }
+                    }
+
+                    Log.d("위치정보", "주소: $address 상세 주소: ${binding.gpsTextView12.text} 위도: $latitude  경도: $longitude")
                 }
 
             }
         }
 
-            binding.gpsBackBtn.setOnClickListener {
-                // 값 저장 및 반환
-                val addressIntent = Intent()
+        binding.gpsBackBtn.setOnClickListener {
+            // 값 저장 및 반환
+            val addressIntent = Intent()
 
-                if(address == ""){
-                    Log.d("1: 위치정보",  "주소: $currentAddress 위도: $latitude  경도: $longitude")
-                    addressIntent.putExtra("address", currentAddress)
-                } else {
-                    Log.d("2: 위치정보",  "주소: $address 위도: $latitude  경도: $longitude")
-                    addressIntent.putExtra("address", address)
-                }
-                addressIntent.putExtra("latitude", latitude)
-                addressIntent.putExtra("longitude", longitude)
-
-                Log.d("3: 위치정보",  "주소: $currentAddress 위도: $latitude  경도: $longitude")
-
-                setResult(Activity.RESULT_OK, addressIntent)
-                finish()
+            if(address == ""){
+                Log.d("1: 위치정보",  "주소: $currentAddress 위도: $latitude  경도: $longitude")
+                addressIntent.putExtra("address", currentAddress)
+            } else {
+                Log.d("2: 위치정보",  "주소: $address 위도: $latitude  경도: $longitude")
+                addressIntent.putExtra("address", address)
             }
+            addressIntent.putExtra("latitude", latitude)
+            addressIntent.putExtra("longitude", longitude)
+
+            Log.d("3: 위치정보",  "주소: $currentAddress 위도: $latitude  경도: $longitude")
+
+            setResult(Activity.RESULT_OK, addressIntent)
+            finish()
+        }
 
 
     }

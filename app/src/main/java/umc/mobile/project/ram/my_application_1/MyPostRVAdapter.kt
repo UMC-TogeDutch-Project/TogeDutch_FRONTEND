@@ -52,20 +52,20 @@ class MyPostRVAdapter (
             val txt_title : String = post.title
             var txt_location : String = "종로" // 아마 위도경도 계산하는 듯,,,,?
 //            var txt_time : String = post.order_time
-            var txt_time : String = "3시 3분"
+//            var txt_time : String = "3시 3분"
             val txt_recruited : Int = post.recruited_num
             val txt_recruits : Int = post.num_of_recruits
 
             var latLong_to_address : String = Geocoder_location().calculate_location(context, post.Latitude, post.longitude)
             txt_location = latLong_to_address
 
-//            var txt_time = Timestamp_to_SDF().convert(post.order_time)
+            var txt_time = Timestamp_to_SDF().convert(post.order_time)
 
 
 
             binding.orderListTitle.text = txt_title // 제목
             binding.orderListLocation.text = txt_location// 위치
-            binding.orderListTime.text = txt_time // 주문시간
+            binding.orderListTime.text = txt_time + "주문" // 주문시간
             binding.numRecruited.text = txt_recruited.toString() // 현재 사람
             binding.numRecruits.text = txt_recruits.toString() // 필요 인원
 

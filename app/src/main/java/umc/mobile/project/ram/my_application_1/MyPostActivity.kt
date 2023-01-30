@@ -55,8 +55,6 @@ class MyPostActivity:AppCompatActivity() {
 
         binding.spinnerBtn.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-
-
                 if(position == 0) { // 업로드 기준일 때
                     initActionBar()
                     binding.searchView.queryHint = "나의 공고를 검색해보세요"
@@ -97,13 +95,14 @@ class MyPostActivity:AppCompatActivity() {
 
     private fun initRecycler() {
         var string = "2023-01-15T01:43:39.000+00:00"
+        var timestamp = Timestamp(java.util.Date().time)
         applicationList.apply {
             add(
-                Post(7, "오매떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, string,
+                Post(7, "오매떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, timestamp,
                 2, 1, "모집중", string, null, 2, 67.1234567, 127.3012345)
             )
             add(
-                Post(8, "엽떡 2인으로 같이 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 1000, 130000, string,
+                Post(8, "엽떡 2인으로 같이 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 1000, 130000, timestamp,
                 2, 1, "모집중", string, null, 2, 67.1234567, 127.3012345)
             )
 
@@ -129,15 +128,19 @@ class MyPostActivity:AppCompatActivity() {
     }
 
     private fun initRecycler_join(){
-        SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(Date())
+
+        val curTime = Date().time
+        val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+        var timestamp = Timestamp(java.util.Date().time)
+
         var string = "2023-01-15T01:43:39.000+00:00"
         joinList.apply {
             add(
-                Post(7, "엽떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, string,
+                Post(7, "엽떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, timestamp,
                     2, 1, "모집중", string, null, 2, 67.1234567, 127.3012345)
             )
             add(
-                Post(8, "베라 2인으로 같이 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 1000, 130000, string,
+                Post(8, "베라 2인으로 같이 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 1000, 130000, timestamp,
                     2, 1, "모집중", string, null, 2, 67.1234567, 127.3012345)
             )
 

@@ -52,6 +52,7 @@ class SignUpUserPersonalInfoActivity : AppCompatActivity() {
                   ) {
                       Log.d(TAG, "onResponse: 요청성공 ${response.code()}, response.body: ${response.body()}, response.isSuccessful: ${response.isSuccessful}")
                       if(response.isSuccessful){
+                          Log.d(TAG, "onResponse: ")
                           val signUpResponseData = response.body()
                           if(signUpResponseData != null){
                               when(signUpResponseData.code){

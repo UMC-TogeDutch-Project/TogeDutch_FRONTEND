@@ -8,12 +8,11 @@ import umc.mobile.project.signup.SignUpResponse
 
 interface ApiService {
 
-    @Headers("Content-Type: multipart/form-data")
+    @Multipart
     @POST("user/signup")
     fun createNewUser(
-        @Header("Content-Type: application/json")
-        @Body body: SignUpRequest
-//        @Part file: MultipartBody.Part? = null
+        @Part ("user") user : SignUpRequest,
+        @Part file: MultipartBody.Part? = null
     ): Call<SignUpResponse>
 
 

@@ -59,10 +59,10 @@ data class SignUpResult(
     var updated_at: Timestamp,
 
     @SerializedName("latitude")
-    var latitude: Int,
+    var latitude: Double,
 
     @SerializedName("longitude")
-    var longitude: Int,
+    var longitude: Double,
 
     @SerializedName("jwt")
     var jwt: String

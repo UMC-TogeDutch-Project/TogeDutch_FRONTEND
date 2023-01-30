@@ -10,6 +10,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
@@ -19,6 +20,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -34,6 +36,7 @@ import umc.mobile.project.announcement.PlaceSearchActivity
 import umc.mobile.project.databinding.ActivityAnnouncePostBinding
 import java.io.File
 import java.sql.Timestamp
+import java.time.Instant
 import java.util.*
 
 
@@ -165,7 +168,15 @@ class AnnouncePostActivity : AppCompatActivity(), PostRecordResult {
         val url = editText2?.text.toString()
         val delivery_tips = editText3?.text.toString().toInt()
         val minimum = editText4?.text.toString().toInt()
-        var timestamp = Timestamp(Date().time)
+
+//        var timestamp = Timestamp(Date().time).toInstant()
+        var time = System.currentTimeMillis()
+        var timestamp = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Instant.now()
+        } else {
+            TODO("VERSION.SDK_INT < O")
+        }
+
         val order_time = timestamp
         val num_of_recruits = editText7?.text.toString().toInt()
         val recruited_num = 0
@@ -173,15 +184,17 @@ class AnnouncePostActivity : AppCompatActivity(), PostRecordResult {
         val latitude : Double = 67.1234567
         val longitude = 127.3012345
         val category : String = "떡볶이"
-        val image =  picture
+//        val image =  picture
 
-        return PostRecord(title, url, delivery_tips, minimum,order_time, num_of_recruits, recruited_num, status, latitude, longitude, category, picture)
+        Log.d("timestamp 값 ==========================", timestamp.toString())
+
+        return PostRecord(title, url, delivery_tips, minimum, order_time, num_of_recruits, recruited_num, status, latitude, longitude, category)
     }
 
     private fun save(){
         val postRecordService = PostRecordService()
         postRecordService.setRecordResult(this)
-        postRecordService.sendPost(19, getPostRecord())
+        postRecordService.sendPost(19, getPostRecord(), picture)
     }
 
     override fun recordSuccess(result: Result) {

@@ -5,6 +5,7 @@ import okhttp3.MultipartBody
 import retrofit2.http.*
 
 interface PostRecordRetrofitInterfaces {
-    @POST("post?user={user_id}")
-    fun sendPost(@Query("user_id") user_id: Int, @Body postRecord: PostRecord) : Call<PostRecordResponse>
+    @Multipart
+    @POST("post")
+    fun sendPost(@Query("user_id") user_id: Int, @Part("post") postRecord: PostRecord, @Part file: MultipartBody.Part? = null) : Call<PostRecordResponse>
 }

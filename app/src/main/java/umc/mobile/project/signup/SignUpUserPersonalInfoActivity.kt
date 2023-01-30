@@ -43,18 +43,19 @@ class SignUpUserPersonalInfoActivity : AppCompatActivity() {
 
         viewBinding.btnNext.setOnClickListener {
 
-          apiService.createNewUser(SignUpRequest(keyWordIdx, "${name}", "${role}", "${email}","${password}","${phoneNum}","${status}", latitude, longitude))
+          apiService.createNewUser(SignUpRequest(
+              keyWordIdx, "${name}", "${role}", "${email}","${password}","${phoneNum}","${status}", latitude, longitude))
               .enqueue(object : Callback<SignUpResponse>{
                   override fun onResponse(
                       call: Call<SignUpResponse>,
                       response: Response<SignUpResponse>
                   ) {
-                      Log.d(TAG, "onResponse: 요청성공 ${response.code()}, response.body: ${response.body()}")
+                      Log.d(TAG, "onResponse: 요청성공 ${response.code()}, response.body: ${response.body()}, response.isSuccessful: ${response.isSuccessful}")
                       if(response.isSuccessful){
                           val signUpResponseData = response.body()
                           if(signUpResponseData != null){
                               when(signUpResponseData.code){
-                                  1000 -> Log.d(TAG, "onResponse:응답 성공 userIdx: ${signUpResponseData.result.userIdx}")
+                                  1000 -> Log.d(TAG, "onResponse:응답 성공 userIdx: ${signUpResponseData.result?.userIdx}")
                               }
                           }
                           else{

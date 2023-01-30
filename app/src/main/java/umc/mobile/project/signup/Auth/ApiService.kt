@@ -1,18 +1,19 @@
 package umc.mobile.project.signup.Auth
 
+import okhttp3.MultipartBody
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.Header
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 import umc.mobile.project.signup.SignUpRequest
 import umc.mobile.project.signup.SignUpResponse
 
 interface ApiService {
 
+    @Headers("Content-Type: multipart/form-data")
     @POST("user/signup")
     fun createNewUser(
+        @Header("Content-Type: application/json")
         @Body body: SignUpRequest
+//        @Part file: MultipartBody.Part? = null
     ): Call<SignUpResponse>
 
 

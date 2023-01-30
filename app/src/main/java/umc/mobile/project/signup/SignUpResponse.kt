@@ -21,22 +21,50 @@ data class SignUpResponse
     val message: String,
 
     @SerializedName("result")
-    val result: SignUpResult
+    val result: SignUpResult?
 )
 
 data class SignUpResult(
+    @SerializedName("userIdx")
     var userIdx: Int,
+
+    @SerializedName("keywordIdx")
     var keywordIdx: Int,
+
+    @SerializedName("name")
     var name: String,
+
+    @SerializedName("role")
     var role: String,
+
+    @SerializedName("email")
     var email: String,
+
+    @SerializedName("password")
     var password: String,
+
+    @SerializedName("phone")
     var phone: String,
+
+    @SerializedName("image")
     var image: String,
+
+    @SerializedName("status")
     var status: String,
+
+    @SerializedName("created_at")
     var created_at: Timestamp,
+
+    @SerializedName("updated_at")
     var updated_at: Timestamp,
+
+    @SerializedName("latitude")
     var latitude: Int,
+
+    @SerializedName("longitude")
     var longitude: Int,
+
+    @SerializedName("jwt")
     var jwt: String
+
 )

@@ -17,8 +17,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(viewBinding.root)
 
-        val keyHash = Utility.getKeyHash(this)
-        Log.d("Hash", keyHash)
+        // 해시 키 구하기
+//        val keyHash = Utility.getKeyHash(this)
+//        Log.d("Hash", keyHash)
 
 
         supportFragmentManager

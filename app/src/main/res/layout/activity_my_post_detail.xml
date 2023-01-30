@@ -215,7 +215,7 @@
             android:layout_width="260dp"
             android:layout_height="wrap_content"
             android:background="@drawable/button_round_13"
-            android:backgroundTint="@color/grey_3"
+            android:backgroundTint="#557AFF"
             android:fontFamily="@font/notosanskr_bold"
             android:layout_gravity="center"
             android:includeFontPadding="false"

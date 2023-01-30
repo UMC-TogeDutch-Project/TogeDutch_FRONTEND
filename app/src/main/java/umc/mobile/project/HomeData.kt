@@ -15,7 +15,8 @@ data class HomeData(
     var updated_at: String? = null,
     var user_id: Int,
     var Latitude: Double,
-    var longitude: Double
+    var longitude: Double,
+    var category: String
 
 )
 

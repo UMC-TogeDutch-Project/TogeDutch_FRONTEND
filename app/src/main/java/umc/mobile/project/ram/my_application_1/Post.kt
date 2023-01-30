@@ -10,7 +10,7 @@ data class Post(
     var url : String,
     var delivery_tips : Int,
     var minimum : Int,
-    var order_time : String,
+    var order_time : Timestamp,
     var num_of_recruits : Int,
     var recruited_num : Int,
     var status : String,

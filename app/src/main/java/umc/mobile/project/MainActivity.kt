@@ -2,9 +2,7 @@ package umc.mobile.project
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.kakao.sdk.common.util.Utility
 import umc.mobile.project.databinding.ActivityMainBinding
 
 
@@ -16,11 +14,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(viewBinding.root)
-
-        // 해시 키 구하기
-//        val keyHash = Utility.getKeyHash(this)
-//        Log.d("Hash", keyHash)
-
 
         supportFragmentManager
             .beginTransaction()

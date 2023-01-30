@@ -26,7 +26,7 @@ data class Result(
     @SerializedName(value =  "updated_at") val updated_at : Timestamp,
 
     @SerializedName(value =  "user_id") val user_id : Int,
-    @Part @SerializedName(value =  "image") val image : MultipartBody.Part,
+    @Part @SerializedName(value =  "image") val image : MultipartBody.Part?,
 
     @SerializedName(value =  "latitude") val latitude : Long,
     @SerializedName(value =  "longitude") val longitude : Long,

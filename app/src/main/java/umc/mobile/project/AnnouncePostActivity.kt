@@ -22,15 +22,22 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.gson.annotations.SerializedName
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import umc.mobile.project.announcement.Auth.PostPost.PostRecord
+import umc.mobile.project.announcement.Auth.PostPost.PostRecordResult
+import umc.mobile.project.announcement.Auth.PostPost.PostRecordService
+import umc.mobile.project.announcement.Auth.PostPost.Result
 import umc.mobile.project.announcement.PlaceSearchActivity
 import umc.mobile.project.databinding.ActivityAnnouncePostBinding
 import java.io.File
+import java.sql.Timestamp
+import java.util.*
 
 
-class AnnouncePostActivity : AppCompatActivity() {
+class AnnouncePostActivity : AppCompatActivity(), PostRecordResult {
     private var editText1: EditText? = null
     private var editText2: EditText? = null
     private var editText3: EditText? = null
@@ -46,6 +53,7 @@ class AnnouncePostActivity : AppCompatActivity() {
     var latitude: Double = 0.0
     var longitude: Double = 0.0
     val SUBACTIITY_REQUEST_CODE = 100
+    var picture : MultipartBody.Part? = null
 
     private val viewBinding: ActivityAnnouncePostBinding by lazy {
         ActivityAnnouncePostBinding.inflate(layoutInflater)
@@ -107,6 +115,10 @@ class AnnouncePostActivity : AppCompatActivity() {
             }
         }
 
+        viewBinding.btnPost.setOnClickListener {
+            save()
+        }
+
     }
 
 
@@ -130,21 +142,60 @@ class AnnouncePostActivity : AppCompatActivity() {
             val color = getColor(R.color.main_color)
             val color2 = getColor(R.color.grey_3)
 
-            if (editText1?.text.toString().isNotEmpty() && editText2?.text.toString().isNotEmpty() && editText3?.text.toString().isNotEmpty()
-                && editText4?.text.toString().isNotEmpty() && editText5?.text.toString().isNotEmpty() && editText6?.text.toString().isNotEmpty() && editText7?.text.toString().isNotEmpty()
-                 ) {
-                button?.isClickable =  true
-                button?.backgroundTintList = ColorStateList.valueOf(color)
-                Toast.makeText(applicationContext, "활성화", Toast.LENGTH_SHORT)
-                    .show()
-            } else  {
-                button?.isClickable = false
-                button?.backgroundTintList = ColorStateList.valueOf(color2)
-
-
-            }
+//            if (editText1?.text.toString().isNotEmpty() && editText2?.text.toString().isNotEmpty() && editText3?.text.toString().isNotEmpty()
+//                && editText4?.text.toString().isNotEmpty() && editText5?.text.toString().isNotEmpty() && editText6?.text.toString().isNotEmpty() && editText7?.text.toString().isNotEmpty()
+//                 ) {
+//                button?.isClickable =  true
+//                button?.backgroundTintList = ColorStateList.valueOf(color)
+//                Toast.makeText(applicationContext, "활성화", Toast.LENGTH_SHORT)
+//                    .show()
+//            } else  {
+//                button?.isClickable = false
+//                button?.backgroundTintList = ColorStateList.valueOf(color2)
+//
+//
+//            }
         }
     }
+
+    ////// 전송부분 ////////////////
+    // 데이터 담아주기
+    private fun getPostRecord() : PostRecord{
+        val title : String = editText1?.text.toString()
+        val url = editText2?.text.toString()
+        val delivery_tips = editText3?.text.toString().toInt()
+        val minimum = editText4?.text.toString().toInt()
+        var timestamp = Timestamp(Date().time)
+        val order_time = timestamp
+        val num_of_recruits = editText7?.text.toString().toInt()
+        val recruited_num = 0
+        val status = "모집중"
+        val latitude : Double = 67.1234567
+        val longitude = 127.3012345
+        val category : String = "떡볶이"
+        val image =  picture
+
+        return PostRecord(title, url, delivery_tips, minimum,order_time, num_of_recruits, recruited_num, status, latitude, longitude, category, picture)
+    }
+
+    private fun save(){
+        val postRecordService = PostRecordService()
+        postRecordService.setRecordResult(this)
+        postRecordService.sendPost(19, getPostRecord())
+    }
+
+    override fun recordSuccess(result: Result) {
+        Log.d("post_id 변환 값 ==========================", result.post_id.toString())
+        Toast.makeText(this, "공고 등록 성공.", Toast.LENGTH_SHORT).show()
+        finish()
+
+    }
+
+    override fun recordFailure() {
+        Toast.makeText(this, "공고 등록 실패.", Toast.LENGTH_SHORT).show()
+    }
+
+    /////////////////////////////////////////////////
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -171,6 +222,7 @@ class AnnouncePostActivity : AppCompatActivity() {
 //                pictureNameList.addAll(listOf(file.name)) // 데이터 넣는 부분
 
                 Log.d("파일 생성!! ======== ", file.name)
+                picture = body
 
                 setAdjImgUri(imagePath!!)
 
@@ -235,6 +287,8 @@ class AnnouncePostActivity : AppCompatActivity() {
             }
         }
     }
+
+
 
 
 }

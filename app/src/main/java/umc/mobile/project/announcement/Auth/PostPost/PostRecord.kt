@@ -1,6 +1,8 @@
 package umc.mobile.project.announcement.Auth.PostPost
 
 import com.google.gson.annotations.SerializedName
+import okhttp3.MultipartBody
+import retrofit2.http.Part
 import java.sql.Timestamp
 
 data class PostRecord(
@@ -12,10 +14,8 @@ data class PostRecord(
     @SerializedName(value =  "num_of_recruits") val num_of_recruits : Int,
     @SerializedName(value =  "recruited_num") val recruited_num : Int,
     @SerializedName(value =  "status") val status : String,
-    @SerializedName(value =  "created_at") val created_at : Timestamp,
-    @SerializedName(value =  "updated_at") val updated_at : Timestamp,
-    @SerializedName(value =  "latitude") val latitude : Long,
-    @SerializedName(value =  "longitude") val longitude : Long,
-    @SerializedName(value =  "chatRoom_id") val chatRoom_id : Int,
+    @SerializedName(value =  "latitude") val latitude : Double,
+    @SerializedName(value =  "longitude") val longitude : Double,
     @SerializedName(value =  "category") val category : String,
+    @Part @SerializedName(value =  "image") val image : MultipartBody.Part?
 )

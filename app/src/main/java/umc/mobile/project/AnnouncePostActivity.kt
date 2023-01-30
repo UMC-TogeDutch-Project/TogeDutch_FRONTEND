@@ -169,13 +169,13 @@ class AnnouncePostActivity : AppCompatActivity(), PostRecordResult {
         val delivery_tips = editText3?.text.toString().toInt()
         val minimum = editText4?.text.toString().toInt()
 
-//        var timestamp = Timestamp(Date().time).toInstant()
-        var time = System.currentTimeMillis()
-        var timestamp = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            Instant.now()
-        } else {
-            TODO("VERSION.SDK_INT < O")
-        }
+        var timestamp = Timestamp(Date().time)
+//        var time = System.currentTimeMillis()
+//        var timestamp = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            Instant.now()
+//        } else {
+//            TODO("VERSION.SDK_INT < O")
+//        }
 
         val order_time = timestamp
         val num_of_recruits = editText7?.text.toString().toInt()

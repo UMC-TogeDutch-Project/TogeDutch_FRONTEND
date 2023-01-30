@@ -20,4 +20,3 @@ data class HomeData(
 
 )
 
-

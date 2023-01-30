@@ -231,6 +231,7 @@
 
                     <TextView
 
+                        android:id="@+id/camera_btn_txt"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="선택된 이미지 없음"
@@ -238,7 +239,8 @@
                         app:layout_constraintBottom_toBottomOf="@+id/ann_et_img"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:visibility="visible"/>
                     <ImageView
                         android:id="@+id/ann_et_img"
                         android:layout_width="match_parent"

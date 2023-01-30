@@ -222,18 +222,47 @@
                     android:text="공고 이미지"
                     android:textColor="@color/black" />
 
-                <EditText
-                    android:id="@+id/ann_et_img"
-                    android:layout_width="370dp"
-                    android:layout_height="40dp"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/button_round_11"
                     android:backgroundTint="#1F767680"
-                    android:drawableEnd="@drawable/ic_photo_camera"
-                    android:fontFamily="@font/notosanskr_regular"
-                    android:gravity="center"
-                    android:hint="선택된 이미지 없음"
-                    android:paddingLeft="7dp"
-                    android:paddingRight="7dp" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="선택된 이미지 없음"
+                        android:gravity="center"
+                        app:layout_constraintBottom_toBottomOf="@+id/ann_et_img"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <ImageView
+                        android:id="@+id/ann_et_img"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:background="@null"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <ImageButton
+                        android:id="@+id/image_btn_camera"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_photo_camera"
+                        android:layout_marginRight="5dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 
 
             </LinearLayout>

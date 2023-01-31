@@ -13,14 +13,10 @@ import java.util.*
 
 class PostRecordService {
     var timestamp = Timestamp(Date().time)
-//var timestamp = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//    Instant.now()
-//} else {
-//    TODO("VERSION.SDK_INT < O")
-//}
-    private var result : Result = Result(post_id = 1, title = "", url =  "", delivery_tips = 1, minimum = 1, order_time = timestamp,
+//var timestamp = Date(System.currentTimeMillis())
+    private var result : Result = Result(post_id = 1, title = "", url =  "", delivery_tips = 1, minimum = 1, order_time = "timestamp",
         num_of_recruits =1 , recruited_num = 1, status =  "", created_at = timestamp,
-    updated_at = timestamp, user_id = 1, image = "", latitude = 1, longitude = 1, chatRoom_id = 1, category = "")
+    updated_at = timestamp, user_id = 1, image = "", latitude = 1.0, longitude = 1.0, chatRoom_id = 1, category = "")
 
     private lateinit var postRecordResult : PostRecordResult
 
@@ -29,6 +25,7 @@ class PostRecordService {
     }
 
     fun sendPost(user_id : Int, record: PostRecord, file : MultipartBody.Part?){
+        Log.d("timestamp 값 ==========================", file.toString())
         val authService = getRetrofit().create(PostRecordRetrofitInterfaces::class.java)
         authService.sendPost(19, record, file).enqueue(object: Callback<PostRecordResponse> {
             override fun onResponse(call: Call<PostRecordResponse>, response: Response<PostRecordResponse>) {

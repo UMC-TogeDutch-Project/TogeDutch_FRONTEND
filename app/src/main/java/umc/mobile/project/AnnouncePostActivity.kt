@@ -24,6 +24,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.gson.GsonBuilder
 import com.google.gson.annotations.SerializedName
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -37,6 +38,10 @@ import umc.mobile.project.databinding.ActivityAnnouncePostBinding
 import java.io.File
 import java.sql.Timestamp
 import java.time.Instant
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 
@@ -170,14 +175,18 @@ class AnnouncePostActivity : AppCompatActivity(), PostRecordResult {
         val minimum = editText4?.text.toString().toInt()
 
         var timestamp = Timestamp(Date().time)
-//        var time = System.currentTimeMillis()
-//        var timestamp = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            Instant.now()
-//        } else {
-//            TODO("VERSION.SDK_INT < O")
-//        }
+//        var timestamp = Date(System.currentTimeMillis())
 
-        val order_time = timestamp
+//        val builder = GsonBuilder()
+//        builder.
+        val order_time = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            LocalDateTime.now()
+        } else {
+            TODO("VERSION.SDK_INT < O")
+        }
+//        val order_time = Timestamp.valueOf(l)
+
+//        val order_time = timestamp
         val num_of_recruits = editText7?.text.toString().toInt()
         val recruited_num = 0
         val status = "모집중"
@@ -188,7 +197,7 @@ class AnnouncePostActivity : AppCompatActivity(), PostRecordResult {
 
         Log.d("timestamp 값 ==========================", timestamp.toString())
 
-        return PostRecord(title, url, delivery_tips, minimum, order_time, num_of_recruits, recruited_num, status, latitude, longitude, category)
+        return PostRecord(title, url, delivery_tips, minimum, "2022-01-23T03:34:56.000+00:00", num_of_recruits, recruited_num, status, latitude, longitude, category)
     }
 
     private fun save(){

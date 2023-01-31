@@ -57,4 +57,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:18.0.0' // 위치정보 라이브러리
 
 
+    // 글라이드
+    implementation 'com.github.bumptech.glide:glide:4.14.2'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
 }

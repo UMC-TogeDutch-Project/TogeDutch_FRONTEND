@@ -17,7 +17,7 @@ import kotlin.collections.ArrayList
 
 
 class MyPostRVAdapter (
-    private val applicationList: ArrayList<Post>
+    private val applicationList: ArrayList<umc.mobile.project.Post>
     ) :
     RecyclerView.Adapter<MyPostRVAdapter.ViewHolder>(), Filterable{
 
@@ -38,6 +38,7 @@ class MyPostRVAdapter (
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(applicationList[position])
         holder.itemView.setOnClickListener {
+            post_id_to_detail = applicationList[position].post_id
             itemClickListener.onItemClick(applicationList[position])
             notifyItemChanged(position)
         }
@@ -45,27 +46,29 @@ class MyPostRVAdapter (
 
     // 레이아웃 내 view 연결
     inner class ViewHolder(val binding: ItemMyPostBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(post: Post) {
+        fun bind(post: umc.mobile.project.Post) {
             var selected_random_btn : Int = 0
             var isSelected = false
 
             val txt_title : String = post.title
-            var txt_location : String = "종로" // 아마 위도경도 계산하는 듯,,,,?
-//            var txt_time : String = post.order_time
-//            var txt_time : String = "3시 3분"
+
+            var latLong_to_address : String = Geocoder_location().calculate_location(context, post.latitude, post.longitude)
+            var txt_location = latLong_to_address
+
+            val txt_time = post.order_time
+//            2022-01-23T03:34:56.000+00:00
+            var txt_hour = txt_time.substring(11 until 13)
+            var txt_minute = txt_time.substring(14 until 17)
+            var txt_time_substring = txt_hour+"시" + txt_minute + "분 주문"
+
             val txt_recruited : Int = post.recruited_num
             val txt_recruits : Int = post.num_of_recruits
-
-            var latLong_to_address : String = Geocoder_location().calculate_location(context, post.Latitude, post.longitude)
-            txt_location = latLong_to_address
-
-            var txt_time = Timestamp_to_SDF().convert(post.order_time)
 
 
 
             binding.orderListTitle.text = txt_title // 제목
             binding.orderListLocation.text = txt_location// 위치
-            binding.orderListTime.text = txt_time + "주문" // 주문시간
+            binding.orderListTime.text = txt_time_substring
             binding.numRecruited.text = txt_recruited.toString() // 현재 사람
             binding.numRecruits.text = txt_recruits.toString() // 필요 인원
 
@@ -95,7 +98,7 @@ class MyPostRVAdapter (
     }
 
     interface OnItemClickListener {
-        fun onItemClick(post: Post)
+        fun onItemClick(post: umc.mobile.project.Post)
     }
 
     fun setItemClickListener(onItemClickListener: OnItemClickListener) {
@@ -106,15 +109,15 @@ class MyPostRVAdapter (
 
 
     // 검색
-    val mDataListAll = ArrayList<Post>(applicationList)
-    var mAccounts:MutableList<Post> = applicationList as MutableList<Post>
+    val mDataListAll = ArrayList<umc.mobile.project.Post>(applicationList)
+    var mAccounts:MutableList<umc.mobile.project.Post> = applicationList as MutableList<umc.mobile.project.Post>
     override fun getFilter(): Filter {
         return exampleFilter
     }
     private val exampleFilter: Filter = object : Filter() {
         // Automatic on background thread
         override fun performFiltering(constraint: CharSequence?): FilterResults {
-            val filteredList: MutableList<Post> = java.util.ArrayList<Post>()
+            val filteredList: MutableList<umc.mobile.project.Post> = java.util.ArrayList<umc.mobile.project.Post>()
             if(constraint!!.isEmpty()){
                 filteredList.addAll(mDataListAll)
             }
@@ -137,7 +140,7 @@ class MyPostRVAdapter (
         @SuppressLint("NotifyDataSetChanged")
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
             mAccounts.clear()
-            mAccounts.addAll(results?.values as Collection<Post>)
+            mAccounts.addAll(results?.values as Collection<umc.mobile.project.Post>)
             notifyDataSetChanged()
         }
 

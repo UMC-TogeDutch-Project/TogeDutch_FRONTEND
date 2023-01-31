@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class SignUpRequest(
 
-    @SerializedName("KeywordIdx")
+    @SerializedName("keywordIdx")
     val keywordIdx: Int,
 
     @SerializedName("name")
@@ -22,8 +22,8 @@ data class SignUpRequest(
     @SerializedName("phone")
     val phone: String,
 
-    @SerializedName("image")
-    val image: String,
+//    @SerializedName("image")
+//    val image: String,
 
     @SerializedName("status")
     val status: String,
@@ -33,9 +33,5 @@ data class SignUpRequest(
 
     @SerializedName("longitude")
     val longitude: Double,
-
-
-
-
 
     )

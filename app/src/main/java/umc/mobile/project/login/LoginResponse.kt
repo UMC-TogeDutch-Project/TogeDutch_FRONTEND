@@ -1,16 +1,9 @@
-package umc.mobile.project.signup
+package umc.mobile.project.login
 
 import com.google.gson.annotations.SerializedName
 import java.sql.Timestamp
 
-
-data class SignUpResponse
-
-
-
-
-
- (
+data class LoginResponse(
     @SerializedName("isSuccess")
     val isSuccess: Boolean,
 

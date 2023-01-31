@@ -25,13 +25,23 @@ class SignUpUserCategoryActivity : AppCompatActivity() {
         var email = intent.getStringExtra("email")
         var password = intent.getStringExtra("password")
         var phoneNum = intent.getStringExtra("phoneNum")
-        var keyWord = intent.getStringExtra("keyWord")
+        var keyWordIdx: Int = intent.getIntExtra("keyWordIdx", 1)
         var region = intent.getStringExtra("region")
+        var role : String = "user"
+        var status : String = "active"
 
-        Log.d(TAG, "onCreate: ${name}, ${email}, ${password}, ${phoneNum}, ${keyWord}, ${region}")
+        Log.d(TAG, "onCreate: ${name}, ${email}, ${password}, ${phoneNum}, ${keyWordIdx}, ${status}")
 
         viewBinding.btnNext.setOnClickListener {
             val intent = Intent(this, SignUpUserPersonalInfoActivity::class.java)
+            intent.putExtra("name", name)
+            intent.putExtra("email", email)
+            intent.putExtra("password", password)
+            intent.putExtra("phoneNum", phoneNum)
+            intent.putExtra("keyWordIdx", keyWordIdx)
+            intent.putExtra("role", role)
+            intent.putExtra("status", status)
+
             startActivity(intent)
             overridePendingTransition(0, 0)
         }

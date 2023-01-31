@@ -24,6 +24,8 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import umc.mobile.project.R
 import umc.mobile.project.databinding.ActivityPlaceSearchBinding
+import umc.mobile.project.latitude_var
+import umc.mobile.project.longtitude_var
 import java.io.IOException
 import java.util.*
 
@@ -154,6 +156,10 @@ class PlaceSearchActivity : AppCompatActivity(), OnMapReadyCallback,
             addressIntent.putExtra("longitude", longitude)
 
             Log.d("3: 위치정보",  "주소: $currentAddress 위도: $latitude  경도: $longitude")
+
+            //// 여기에서 announcePostActivity에 있는 latitude_var, longtitude_var 전역변수에 담아주기!
+            latitude_var = latitude
+            longtitude_var = longitude
 
             setResult(Activity.RESULT_OK, addressIntent)
             finish()

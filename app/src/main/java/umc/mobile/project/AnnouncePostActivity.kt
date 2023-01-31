@@ -58,6 +58,7 @@ class AnnouncePostActivity : AppCompatActivity(), PostRecordResult {
     private var editText10: EditText? = null
     private var editText11: EditText? = null
     private var editText12: EditText? = null
+    private var editText13: EditText? = null
     private var button: Button? = null
 
     private var PICK_IMAGE = 1
@@ -89,6 +90,7 @@ class AnnouncePostActivity : AppCompatActivity(), PostRecordResult {
         editText10 = viewBinding.annEtHour
         editText11 = viewBinding.annEtMinute
         editText12 = viewBinding.annEtPerson
+        editText13 = viewBinding.annEtCategory
         button = viewBinding.btnPost
 
         editText1!!.addTextChangedListener(textWatcher)
@@ -103,6 +105,7 @@ class AnnouncePostActivity : AppCompatActivity(), PostRecordResult {
         editText10!!.addTextChangedListener(textWatcher)
         editText11!!.addTextChangedListener(textWatcher)
         editText12!!.addTextChangedListener(textWatcher)
+        editText13!!.addTextChangedListener(textWatcher)
 
 
         editTextAnnEtPlace = viewBinding.annEtPlace.toString()
@@ -196,7 +199,7 @@ class AnnouncePostActivity : AppCompatActivity(), PostRecordResult {
         val status = "모집중"
         val latitude : Double = 67.1234567
         val longitude = 127.3012345
-        val category : String = "떡볶이"
+        val category : String = editText13?.text.toString()
 
         Log.d("order_time 값 ==========================", order_time)
 

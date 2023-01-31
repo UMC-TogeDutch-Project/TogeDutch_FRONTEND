@@ -7,7 +7,12 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
+import umc.mobile.project.Post
 import umc.mobile.project.databinding.ActivityAnnounceDetailBinding
+import umc.mobile.project.ram.Auth.Post.GetPostDetail.PostDetailGetResult
+import umc.mobile.project.ram.Auth.Post.GetPostDetail.PostDetailGetService
+import umc.mobile.project.ram.Auth.Post.GetPostUpload.PostUploadGetService
+import umc.mobile.project.ram.my_application_1.post_id_to_detail
 
 
 class AnnounceDetailActivity:AppCompatActivity() {
@@ -34,6 +39,7 @@ class AnnounceDetailActivity:AppCompatActivity() {
             val intent = Intent(this@AnnounceDetailActivity, PlaceSearchActivity::class.java)
             startActivityForResult(intent, SUBACTIITY_REQUEST_CODE)
         }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -52,5 +58,7 @@ class AnnounceDetailActivity:AppCompatActivity() {
         }
         Log.d("4: 위치정보",  "주소: ${editTextAnnEtPlace.toString()} 위도: $latitude  경도: $longitude")
     }
+
+
 
 }

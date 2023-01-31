@@ -1,6 +1,7 @@
 package umc.mobile.project
 
 
+import Post
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import umc.mobile.project.databinding.ItemDataBinding
 
 
-class DataImminentRVAdapter(private val homeDataList: ArrayList<HomeData>) : RecyclerView.Adapter<DataImminentRVAdapter.ImminentViewHolder>() {
+class DataImminentRVAdapter(private val homeDataList: ArrayList<Post>) : RecyclerView.Adapter<DataImminentRVAdapter.ImminentViewHolder>() {
 
     private val checkboxStatus = SparseBooleanArray()
 
@@ -16,7 +17,7 @@ class DataImminentRVAdapter(private val homeDataList: ArrayList<HomeData>) : Rec
    inner class ImminentViewHolder(private val viewBinding: ItemDataBinding) :
         RecyclerView.ViewHolder(viewBinding.root) {
 
-        fun bind(homeData: HomeData) {
+        fun bind(homeData: Post) {
             viewBinding.tvItemTitle.text = homeData.title //제목
             viewBinding.tvItemWhere.text = "주소" // 주소
             viewBinding.tvItemTime.text = homeData.order_time // 주문한 시간
@@ -61,7 +62,7 @@ class DataImminentRVAdapter(private val homeDataList: ArrayList<HomeData>) : Rec
 
     //1
     interface OnItemClickListener {
-        fun onItemClick(homeData: HomeData)
+        fun onItemClick(homeData: Post)
 
     }
 

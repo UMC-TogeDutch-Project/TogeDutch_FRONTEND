@@ -189,30 +189,18 @@ class AnnouncePostActivity : AppCompatActivity(), PostRecordResult {
         val delivery_tips = editText3?.text.toString().toInt()
         val minimum = editText4?.text.toString().toInt()
 
-        var timestamp = Timestamp(Date().time)
-//        var timestamp = Date(System.currentTimeMillis())
-
-//        val builder = GsonBuilder()
-//        builder.
-        val order_time = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            LocalDateTime.now()
-        } else {
-            TODO("VERSION.SDK_INT < O")
-        }
-//        val order_time = Timestamp.valueOf(l)
-
-//        val order_time = timestamp
+        var order_time = string_to_timestamp(editText6!!.text.toString(),editText7!!.text.toString(), editText8!!.text.toString(), editText9!!.text.toString()
+                                            ,editText10!!.text.toString(), editText11!!.text.toString())
         val num_of_recruits = editText7?.text.toString().toInt()
         val recruited_num = 0
         val status = "모집중"
         val latitude : Double = 67.1234567
         val longitude = 127.3012345
         val category : String = "떡볶이"
-//        val image =  picture
 
-        Log.d("timestamp 값 ==========================", timestamp.toString())
+        Log.d("order_time 값 ==========================", order_time)
 
-        return PostRecord(title, url, delivery_tips, minimum, "2022-01-23T03:34:56.000+00:00", num_of_recruits, recruited_num, status, latitude, longitude, category)
+        return PostRecord(title, url, delivery_tips, minimum, order_time, num_of_recruits, recruited_num, status, latitude, longitude, category)
     }
 
     private fun save(){
@@ -325,13 +313,16 @@ class AnnouncePostActivity : AppCompatActivity(), PostRecordResult {
         }
     }
 
-    private fun string_to_timestamp(year :String, month: String, day : String, am_pm : String, hour : String, minute : String){
-        var hour_int : Int = 0
+    private fun string_to_timestamp(year :String, month: String, day : String, am_pm : String, hour : String, minute : String) : String{
+        var hour_int = 0
         if(am_pm.equals("오후"))
             hour_int = hour.toInt() + 12
 
 
+        var set = "2022-01-23T03:34:56.000+00:00"
+        var order_time = year + "-" + month + "-" + day + "T" + hour_int + ":" + minute + ":" + "00.000+00:00"
 
+        return order_time
     }
 
 

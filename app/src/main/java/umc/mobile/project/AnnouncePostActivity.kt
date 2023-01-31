@@ -44,6 +44,8 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.*
 
+var latitude_var : Double = 1.0
+var longtitude_var : Double = 1.0
 
 class AnnouncePostActivity : AppCompatActivity(), PostRecordResult {
     private var editText1: EditText? = null
@@ -62,6 +64,7 @@ class AnnouncePostActivity : AppCompatActivity(), PostRecordResult {
     private var button: Button? = null
 
     private var PICK_IMAGE = 1
+    private var PICK_ADDRESS = 2
 
     lateinit var editTextAnnEtPlace : String
     var latitude: Double = 0.0
@@ -197,8 +200,8 @@ class AnnouncePostActivity : AppCompatActivity(), PostRecordResult {
         val num_of_recruits = editText7?.text.toString().toInt()
         val recruited_num = 0
         val status = "모집중"
-        val latitude : Double = 67.1234567
-        val longitude = 127.3012345
+        val latitude = latitude_var
+        val longitude = longtitude_var
         val category : String = editText13?.text.toString()
 
         Log.d("order_time 값 ==========================", order_time)
@@ -230,17 +233,20 @@ class AnnouncePostActivity : AppCompatActivity(), PostRecordResult {
 
         // 돌려받은 resultCode가 정상인지 체크
         if(resultCode == Activity.RESULT_OK){
-            Log.d("log: ", "log 찍힘")
-            if (data != null) {
-                editTextAnnEtPlace = data.getStringExtra("address").toString()
-                viewBinding.annEtPlace.setText(data.getStringExtra("address"))
-                latitude = data.getDoubleExtra("latitude", 0.0)
-                longitude = data.getDoubleExtra("longitude", 0.0)
+
+            if(requestCode == SUBACTIITY_REQUEST_CODE) {
+                Log.d("log: ", "log 찍힘")
+                if (data != null) {
+                    editTextAnnEtPlace = data.getStringExtra("address").toString()
+                    viewBinding.annEtPlace.setText(data.getStringExtra("address"))
+                    latitude = data.getDoubleExtra("latitude", 0.0)
+                    longitude = data.getDoubleExtra("longitude", 0.0)
+                }
             }
 
 
             // 사진 가져오는 부분
-            if (requestCode == PICK_IMAGE) {
+            else if (requestCode == PICK_IMAGE) {
                 val imagePath = data!!.data
 
                 val file = File(absolutelyPath(imagePath, this))

@@ -1,5 +1,3 @@
-package umc.mobile.project
-
 import com.google.gson.annotations.SerializedName
 import java.sql.Timestamp
 
@@ -22,4 +20,4 @@ data class Post(
     @SerializedName(value =  "longitude") val longitude : Double,
     @SerializedName(value =  "ChatRoom_chatRoom_id") val ChatRoom_chatRoom_id : Int,
     @SerializedName(value =  "category") val category : String
-    )
+)

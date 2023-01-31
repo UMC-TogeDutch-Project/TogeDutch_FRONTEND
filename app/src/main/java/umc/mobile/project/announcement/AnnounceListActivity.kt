@@ -1,28 +1,30 @@
 package umc.mobile.project.announcement
 
+import Post
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import umc.mobile.project.DataRecentRVAdapter
-import umc.mobile.project.DataImminentRVAdapter
-import umc.mobile.project.HomeData
+import umc.mobile.project.*
 import umc.mobile.project.HomeFragment.Companion.num1
-import umc.mobile.project.R
+import umc.mobile.project.announcement.Auth.PostImminentGet.PostImminentGetResult
+import umc.mobile.project.announcement.Auth.PostImminentGet.PostImminentGetService
+import umc.mobile.project.announcement.Auth.PostRecentGet.PostRecentGetResult
+import umc.mobile.project.announcement.Auth.PostRecentGet.PostRecentGetService
 import umc.mobile.project.databinding.ActivityAnnounceListBinding
 import kotlin.collections.ArrayList
 
-class AnnounceListActivity : AppCompatActivity() {
+class AnnounceListActivity : AppCompatActivity(), PostRecentGetResult, PostImminentGetResult {
     private lateinit var binding: ActivityAnnounceListBinding
     private lateinit var dataRecentRVAdapter: DataRecentRVAdapter
     private lateinit var dataImminentRVAdapter: DataImminentRVAdapter
-    var recentAnnounceData = ArrayList<HomeData>()
-    var imminentAnnounceData = ArrayList<HomeData>()
-
+//    var recentAnnounceData = ArrayList<Post>()
+//    var imminentAnnounceData = ArrayList<Post>()
+    private var postList = ArrayList<Post>()
+    private var postList1 = ArrayList<Post>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAnnounceListBinding.inflate(layoutInflater)
@@ -93,95 +95,96 @@ class AnnounceListActivity : AppCompatActivity() {
 
 
     private fun initRecyclerViewRecent(){
-        recentAnnounceData.apply {
-            add(HomeData(7, "오매떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
-                2, 1, "모집중", "2023-01-15T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
-            )
-            add(HomeData(7, "오매떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
-                2, 1, "모집중", "2023-01-16T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
-            )
-            add(HomeData(7, "오매떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
-                2, 1, "모집중", "2023-01-17T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
-            )
-
-            add(HomeData(7, "버거킹 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
-                2, 1, "모집중", "2023-01-18T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
-            )
-            add(HomeData(7, "버거킹 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
-                2, 1, "모집중", "2023-01-19T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
-            )
-            add(HomeData(7, "버거킹 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
-                2, 1, "모집중", "2023-01-20T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
-            )
-
-
-        }
-
-
-            dataRecentRVAdapter = DataRecentRVAdapter(recentAnnounceData)
+        getPostLatest()
+//        recentAnnounceData.apply {
+//            add(HomeData(7, "오매떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
+//                2, 1, "모집중", "2023-01-15T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
+//            )
+//            add(HomeData(7, "오매떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
+//                2, 1, "모집중", "2023-01-16T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
+//            )
+//            add(HomeData(7, "오매떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
+//                2, 1, "모집중", "2023-01-17T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
+//            )
+//
+//            add(HomeData(7, "버거킹 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
+//                2, 1, "모집중", "2023-01-18T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
+//            )
+//            add(HomeData(7, "버거킹 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
+//                2, 1, "모집중", "2023-01-19T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
+//            )
+//            add(HomeData(7, "버거킹 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
+//                2, 1, "모집중", "2023-01-20T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
+//            )
+//
+//
+//        }
 
 
-            binding.rvMainRecent.adapter = dataRecentRVAdapter //리사이클러뷰에 어댑터 연결
-            binding.rvMainRecent.layoutManager= LinearLayoutManager(this@AnnounceListActivity) //레이아웃 매니저 연결
-
-
-
-        dataRecentRVAdapter.setItemClickListener(object: DataRecentRVAdapter.OnItemClickListener{
-                override fun onItemClick(announceData: HomeData) {
-                    val intent = Intent(this@AnnounceListActivity, AnnounceDetailActivity::class.java)
-                    startActivity(intent)
-
-                }
-            })
-
-
-            dataRecentRVAdapter.notifyDataSetChanged()
+//            dataRecentRVAdapter = DataRecentRVAdapter(recentAnnounceData)
+//
+//
+//            binding.rvMainRecent.adapter = dataRecentRVAdapter //리사이클러뷰에 어댑터 연결
+//            binding.rvMainRecent.layoutManager= LinearLayoutManager(this@AnnounceListActivity) //레이아웃 매니저 연결
+//
+//
+//
+//        dataRecentRVAdapter.setItemClickListener(object: DataRecentRVAdapter.OnItemClickListener{
+//                override fun onItemClick(announceData: Post) {
+//                    val intent = Intent(this@AnnounceListActivity, AnnounceDetailActivity::class.java)
+//                    startActivity(intent)
+//
+//                }
+//            })
+//
+//
+//            dataRecentRVAdapter.notifyDataSetChanged()
 
 
     }
     private fun initRecyclerViewImminent(){
-        imminentAnnounceData.apply {
-            add(HomeData(7, "버거킹 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
-                2, 1, "모집중", "2023-01-18T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
-            )
-            add(HomeData(7, "버거킹 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
-                2, 1, "모집중", "2023-01-19T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
-            )
-            add(HomeData(7, "버거킹 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
-                2, 1, "모집중", "2023-01-20T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
-            )
-            add(HomeData(7, "오매떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
-                2, 1, "모집중", "2023-01-15T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
-            )
-            add(HomeData(7, "오매떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
-                2, 1, "모집중", "2023-01-16T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
-            )
-            add(HomeData(7, "오매떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
-                2, 1, "모집중", "2023-01-17T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
-            )
+        getPostImminent()
+//        imminentAnnounceData.apply {
+//            add(HomeData(7, "버거킹 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
+//                2, 1, "모집중", "2023-01-18T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
+//            )
+//            add(HomeData(7, "버거킹 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
+//                2, 1, "모집중", "2023-01-19T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
+//            )
+//            add(HomeData(7, "버거킹 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
+//                2, 1, "모집중", "2023-01-20T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
+//            )
+//            add(HomeData(7, "오매떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
+//                2, 1, "모집중", "2023-01-15T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
+//            )
+//            add(HomeData(7, "오매떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
+//                2, 1, "모집중", "2023-01-16T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
+//            )
+//            add(HomeData(7, "오매떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
+//                2, 1, "모집중", "2023-01-17T01:43:39.000+00:00", null, 2, 67.1234567, 127.3012345)
+//            )
+//
+//
+//
+//
+//        }
 
+//
+//        dataImminentRVAdapter = DataImminentRVAdapter(imminentAnnounceData)
+//
+//        binding.rvMainImminent.adapter = dataImminentRVAdapter //리사이클러뷰에 어댑터 연결
+//        binding.rvMainImminent.layoutManager= LinearLayoutManager(this@AnnounceListActivity) //레이아웃 매니저 연결
+//
+//
+//        dataImminentRVAdapter.setItemClickListener(object: DataImminentRVAdapter.OnItemClickListener{
+//            override fun onItemClick(announceData: HomeData) {
+//                val intent = Intent(this@AnnounceListActivity, AnnounceDetailActivity::class.java)
+//                startActivity(intent)
+//            }
+//        })
+//
+//        dataImminentRVAdapter.notifyDataSetChanged()
 
-
-
-        }
-
-
-        dataImminentRVAdapter = DataImminentRVAdapter(imminentAnnounceData)
-
-        binding.rvMainImminent.adapter = dataImminentRVAdapter //리사이클러뷰에 어댑터 연결
-        binding.rvMainImminent.layoutManager= LinearLayoutManager(this@AnnounceListActivity) //레이아웃 매니저 연결
-
-
-        dataImminentRVAdapter.setItemClickListener(object: DataImminentRVAdapter.OnItemClickListener{
-            override fun onItemClick(announceData: HomeData) {
-                val intent = Intent(this@AnnounceListActivity, AnnounceDetailActivity::class.java)
-                startActivity(intent)
-            }
-        })
-
-        dataImminentRVAdapter.notifyDataSetChanged()
-
-        Log.d("imminentAnnounceData 안 데이터 : ", imminentAnnounceData[0].title + " " +imminentAnnounceData[1].title)
 
     }
 
@@ -217,6 +220,51 @@ class AnnounceListActivity : AppCompatActivity() {
 //        }
 //
 //    }
+private fun getPostLatest(){
+    val postRecentGetService = PostRecentGetService()
+    postRecentGetService.setPostGetResult(this)
+    postRecentGetService.getPost( )
 
+}
+    private fun getPostImminent(){
+        val postImminentGetService = PostImminentGetService()
+        postImminentGetService.setPostGetResult(this)
+        postImminentGetService.getPost( )
 
     }
+    override fun recordSuccess(result: ArrayList<Post>) {
+//        Toast.makeText(this, "공고 등록 성공.", Toast.LENGTH_SHORT).show()
+//        finish()
+        postList.addAll(result)
+        dataRecentRVAdapter = DataRecentRVAdapter(postList)
+        binding.rvMainRecent.adapter = dataRecentRVAdapter //리사이클러뷰에 어댑터 연결
+        binding.rvMainRecent.layoutManager= LinearLayoutManager(this) //레이아웃 매니저 연결
+
+
+
+        dataRecentRVAdapter.setItemClickListener(object: DataRecentRVAdapter.OnItemClickListener{
+            override fun onItemClick(announceData: Post) {
+                val intent = Intent(this@AnnounceListActivity, AnnounceDetailActivity::class.java)
+                startActivity(intent)
+            }
+        })
+
+
+        dataRecentRVAdapter.notifyDataSetChanged()
+    }
+    override fun recordFailure() {
+        TODO("Not yet implemented")
+    }
+
+    override fun recordSuccess1(result: ArrayList<Post>) {
+        postList1.addAll(result)
+        dataImminentRVAdapter = DataImminentRVAdapter(postList1)
+        binding.rvMainImminent.adapter = dataImminentRVAdapter
+        binding.rvMainImminent.layoutManager= LinearLayoutManager(this) //레이아웃 매니저 연결
+
+    }
+
+    override fun recordFailure1() {
+        TODO("Not yet implemented")
+    }
+}

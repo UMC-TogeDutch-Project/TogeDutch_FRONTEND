@@ -4,7 +4,7 @@ import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
 
-class Timestamp_to_SDF {
+class  Timestamp_to_SDF {
     fun convert(timestamp: Timestamp) : String{
         var hour = timestamp.hours
         var minute = timestamp.minutes

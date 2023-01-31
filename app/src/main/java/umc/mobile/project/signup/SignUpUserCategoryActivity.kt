@@ -26,7 +26,6 @@ class SignUpUserCategoryActivity : AppCompatActivity() {
         var password = intent.getStringExtra("password")
         var phoneNum = intent.getStringExtra("phoneNum")
         var keyWordIdx: Int = intent.getIntExtra("keyWordIdx", 1)
-        var region = intent.getStringExtra("region")
         var role : String = "user"
         var status : String = "active"
 

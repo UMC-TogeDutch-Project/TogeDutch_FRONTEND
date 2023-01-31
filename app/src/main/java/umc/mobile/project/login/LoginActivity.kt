@@ -86,6 +86,9 @@ class LoginActivity : AppCompatActivity(), MyCustomDialogInterface {
         viewBinding.btnKakaoLogin.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://kauth.kakao.com/oauth/authorize?client_id=8525a5ca4d8aa3d945c288e381163d5c&redirect_uri=http://ec2-3-34-255-129.ap-northeast-2.compute.amazonaws.com:9000/oauth/kakao&response_type=code"))
             startActivity(intent)
+
+
+
         }
 
         viewBinding.tbSignUp.setOnClickListener {

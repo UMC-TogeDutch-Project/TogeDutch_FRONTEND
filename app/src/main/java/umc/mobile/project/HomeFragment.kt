@@ -14,25 +14,30 @@ import umc.mobile.project.announcement.Auth.PostImminentGet.PostImminentGetServi
 import umc.mobile.project.announcement.Auth.PostRecentGet.PostRecentGetResult
 import umc.mobile.project.announcement.Auth.PostRecentGet.PostRecentGetService
 import umc.mobile.project.databinding.FragmentHomeBinding
+import umc.mobile.project.databinding.FragmentMypageBinding
 import umc.mobile.project.news.NewsActivity
 
 class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
     lateinit var dataRecentRVAdapter: DataRecentRVAdapter
     lateinit var dataImminentRVAdapter: DataImminentRVAdapter
-    private var _viewBinding: FragmentHomeBinding? = null
-    private val viewBinding get() = _viewBinding!!
+    private lateinit var viewBinding: FragmentHomeBinding
+
+//    private var _viewBinding: FragmentHomeBinding? = null
+//    private val viewBinding get() = _viewBinding!!
 //
 //    private var dummyHomeDataRecent = ArrayList<HomeData>()
 //    private var dummyHomeDataImminent = ArrayList<HomeData>()
 
     private var postList = ArrayList<Post>()
-
+    private var postList1 = ArrayList<Post>()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _viewBinding = FragmentHomeBinding.inflate(inflater, container, false)
+        viewBinding = FragmentHomeBinding.inflate(inflater, container, false)
+
+//        _viewBinding = FragmentHomeBinding.inflate(inflater, container, false)
 //        binding = ActivityAnnounceListBinding.inflate(inflater, container, false)
 
 
@@ -160,13 +165,13 @@ class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
     private fun getPostLatest(){
         val postRecentGetService = PostRecentGetService()
         postRecentGetService.setPostGetResult(this)
-        postRecentGetService.getPost("latest" )
+        postRecentGetService.getPost( )
 
     }
     private fun getPostImminent(){
         val postImminentGetService = PostImminentGetService()
         postImminentGetService.setPostGetResult(this)
-        postImminentGetService.getPost("imminent" )
+        postImminentGetService.getPost( )
 
     }
 
@@ -178,14 +183,10 @@ class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
 //        finish()
         postList.addAll(result)
         dataRecentRVAdapter = DataRecentRVAdapter(postList)
-        dataImminentRVAdapter = DataImminentRVAdapter(postList)
-
 
         viewBinding.rvRecent.adapter = dataRecentRVAdapter //리사이클러뷰에 어댑터 연결
         viewBinding.rvRecent.layoutManager= LinearLayoutManager(context) //레이아웃 매니저 연결
 
-        viewBinding.rvImminent.adapter = dataImminentRVAdapter //리사이클러뷰에 어댑터 연결
-        viewBinding.rvImminent.layoutManager= LinearLayoutManager(context) //레이아웃 매니저 연결
 
 
 
@@ -205,12 +206,24 @@ class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
     }
 
 
+
+
+    override fun recordSuccess1(result: ArrayList<Post>) {
+        postList1.addAll(result)
+        dataImminentRVAdapter = DataImminentRVAdapter(postList1)
+        viewBinding.rvImminent.adapter = dataImminentRVAdapter //리사이클러뷰에 어댑터 연결
+        viewBinding.rvImminent.layoutManager= LinearLayoutManager(context) //레이아웃 매니저 연결
+
+    }
+
+    override fun recordFailure1() {
+        TODO("Not yet implemented")
+    }
     companion object{
         var num1 = 0
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _viewBinding = null
-    }
+//    override fun onDestroyView() {
+//        super.onDestroyView()
+//        _viewBinding = null
+//    }
 }

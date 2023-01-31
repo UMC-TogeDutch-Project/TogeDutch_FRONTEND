@@ -5,6 +5,6 @@ import retrofit2.http.*
 
 
 interface PostImminentGetRetrofitInterfaces {
-    @GET("post")
-    fun getPost(@Query("sort") type: String) : Call<PostImminentResponse>
+    @GET("post/?sort=imminent")
+    fun getPost() : Call<PostImminentResponse>
 }

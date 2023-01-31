@@ -14,15 +14,15 @@ class PostImminentGetService {
         this.postImminentGetResult = postImminentGetResult
     }
 
-    fun getPost(type : String){
+    fun getPost(){
         val authService = getRetrofit().create(PostImminentGetRetrofitInterfaces::class.java)
-        authService.getPost(type).enqueue(object: Callback<PostImminentResponse> {
+        authService.getPost().enqueue(object: Callback<PostImminentResponse> {
             override fun onResponse(call: Call<PostImminentResponse>, response: Response<PostImminentResponse>) {
                 Log.d("RECORD/SUCCESS",response.toString())
                 val resp: PostImminentResponse = response.body()!!
                 when(resp.code){
-                    1000 -> postImminentGetResult.recordSuccess(resp.result)
-                    else -> postImminentGetResult.recordFailure()
+                    1000 -> postImminentGetResult.recordSuccess1(resp.result)
+                    else -> postImminentGetResult.recordFailure1()
                 }
             }
 

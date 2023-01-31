@@ -5,6 +5,6 @@ import retrofit2.http.*
 
 
 interface PostRecentGetRetrofitInterfaces {
-    @GET("post")
-    fun getPost(@Query("sort") type: String) : Call<PostRecentGetResponse>
+    @GET("post/?sort=latest")
+    fun getPost() : Call<PostRecentGetResponse>
 }

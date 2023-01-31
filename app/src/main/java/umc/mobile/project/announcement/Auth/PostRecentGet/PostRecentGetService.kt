@@ -14,9 +14,9 @@ class PostRecentGetService {
         this.postRecentGetResult = postRecentGetResult
     }
 
-    fun getPost(type : String){
+    fun getPost(){
         val authService = getRetrofit().create(PostRecentGetRetrofitInterfaces::class.java)
-        authService.getPost(type).enqueue(object: Callback<PostRecentGetResponse> {
+        authService.getPost().enqueue(object: Callback<PostRecentGetResponse> {
             override fun onResponse(call: Call<PostRecentGetResponse>, response: Response<PostRecentGetResponse>) {
                 Log.d("RECORD/SUCCESS",response.toString())
                 val resp: PostRecentGetResponse = response.body()!!

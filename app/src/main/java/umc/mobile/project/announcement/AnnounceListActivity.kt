@@ -24,6 +24,7 @@ class AnnounceListActivity : AppCompatActivity(), PostRecentGetResult, PostImmin
 //    var recentAnnounceData = ArrayList<Post>()
 //    var imminentAnnounceData = ArrayList<Post>()
     private var postList = ArrayList<Post>()
+    private var postList1 = ArrayList<Post>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAnnounceListBinding.inflate(layoutInflater)
@@ -222,13 +223,13 @@ class AnnounceListActivity : AppCompatActivity(), PostRecentGetResult, PostImmin
 private fun getPostLatest(){
     val postRecentGetService = PostRecentGetService()
     postRecentGetService.setPostGetResult(this)
-    postRecentGetService.getPost("latest" )
+    postRecentGetService.getPost( )
 
 }
     private fun getPostImminent(){
         val postImminentGetService = PostImminentGetService()
         postImminentGetService.setPostGetResult(this)
-        postImminentGetService.getPost("imminent" )
+        postImminentGetService.getPost( )
 
     }
     override fun recordSuccess(result: ArrayList<Post>) {
@@ -236,14 +237,8 @@ private fun getPostLatest(){
 //        finish()
         postList.addAll(result)
         dataRecentRVAdapter = DataRecentRVAdapter(postList)
-        dataImminentRVAdapter = DataImminentRVAdapter(postList)
-
-
         binding.rvMainRecent.adapter = dataRecentRVAdapter //리사이클러뷰에 어댑터 연결
-        binding.rvMainImminent.adapter = dataImminentRVAdapter
-
         binding.rvMainRecent.layoutManager= LinearLayoutManager(this) //레이아웃 매니저 연결
-        binding.rvMainImminent.layoutManager= LinearLayoutManager(this) //레이아웃 매니저 연결
 
 
 
@@ -258,6 +253,18 @@ private fun getPostLatest(){
         dataRecentRVAdapter.notifyDataSetChanged()
     }
     override fun recordFailure() {
+        TODO("Not yet implemented")
+    }
+
+    override fun recordSuccess1(result: ArrayList<Post>) {
+        postList1.addAll(result)
+        dataImminentRVAdapter = DataImminentRVAdapter(postList1)
+        binding.rvMainImminent.adapter = dataImminentRVAdapter
+        binding.rvMainImminent.layoutManager= LinearLayoutManager(this) //레이아웃 매니저 연결
+
+    }
+
+    override fun recordFailure1() {
         TODO("Not yet implemented")
     }
 }

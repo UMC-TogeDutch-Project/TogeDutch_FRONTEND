@@ -9,12 +9,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import umc.mobile.project.announcement.AnnounceListActivity
-import umc.mobile.project.announcement.Auth.PostGet.PostGetResult
-import umc.mobile.project.announcement.Auth.PostGet.PostGetService
+import umc.mobile.project.announcement.Auth.PostImminentGet.PostImminentGetResult
+import umc.mobile.project.announcement.Auth.PostImminentGet.PostImminentGetService
+import umc.mobile.project.announcement.Auth.PostRecentGet.PostRecentGetResult
+import umc.mobile.project.announcement.Auth.PostRecentGet.PostRecentGetService
 import umc.mobile.project.databinding.FragmentHomeBinding
 import umc.mobile.project.news.NewsActivity
 
-class HomeFragment: Fragment(), PostGetResult {
+class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
     lateinit var dataRecentRVAdapter: DataRecentRVAdapter
     lateinit var dataImminentRVAdapter: DataImminentRVAdapter
     private var _viewBinding: FragmentHomeBinding? = null
@@ -156,15 +158,15 @@ class HomeFragment: Fragment(), PostGetResult {
     }
 
     private fun getPostLatest(){
-        val postGetService = PostGetService()
-        postGetService.setPostGetResult(this)
-        postGetService.getPost("latest" )
+        val postRecentGetService = PostRecentGetService()
+        postRecentGetService.setPostGetResult(this)
+        postRecentGetService.getPost("latest" )
 
     }
     private fun getPostImminent(){
-        val postGetService = PostGetService()
-        postGetService.setPostGetResult(this)
-        postGetService.getPost("imminent" )
+        val postImminentGetService = PostImminentGetService()
+        postImminentGetService.setPostGetResult(this)
+        postImminentGetService.getPost("imminent" )
 
     }
 

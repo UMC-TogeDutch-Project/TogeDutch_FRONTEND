@@ -10,12 +10,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import umc.mobile.project.*
 import umc.mobile.project.HomeFragment.Companion.num1
-import umc.mobile.project.announcement.Auth.PostGet.PostGetResult
-import umc.mobile.project.announcement.Auth.PostGet.PostGetService
+import umc.mobile.project.announcement.Auth.PostImminentGet.PostImminentGetResult
+import umc.mobile.project.announcement.Auth.PostImminentGet.PostImminentGetService
+import umc.mobile.project.announcement.Auth.PostRecentGet.PostRecentGetResult
+import umc.mobile.project.announcement.Auth.PostRecentGet.PostRecentGetService
 import umc.mobile.project.databinding.ActivityAnnounceListBinding
 import kotlin.collections.ArrayList
 
-class AnnounceListActivity : AppCompatActivity(), PostGetResult {
+class AnnounceListActivity : AppCompatActivity(), PostRecentGetResult, PostImminentGetResult {
     private lateinit var binding: ActivityAnnounceListBinding
     private lateinit var dataRecentRVAdapter: DataRecentRVAdapter
     private lateinit var dataImminentRVAdapter: DataImminentRVAdapter
@@ -218,15 +220,15 @@ class AnnounceListActivity : AppCompatActivity(), PostGetResult {
 //
 //    }
 private fun getPostLatest(){
-    val postGetService = PostGetService()
-    postGetService.setPostGetResult(this)
-    postGetService.getPost("latest" )
+    val postRecentGetService = PostRecentGetService()
+    postRecentGetService.setPostGetResult(this)
+    postRecentGetService.getPost("latest" )
 
 }
     private fun getPostImminent(){
-        val postGetService = PostGetService()
-        postGetService.setPostGetResult(this)
-        postGetService.getPost("imminent" )
+        val postImminentGetService = PostImminentGetService()
+        postImminentGetService.setPostGetResult(this)
+        postImminentGetService.getPost("imminent" )
 
     }
     override fun recordSuccess(result: ArrayList<Post>) {

@@ -45,6 +45,11 @@ class AnnouncePostActivity : AppCompatActivity(), PostRecordResult {
     private var editText5: EditText? = null
     private var editText6: EditText? = null
     private var editText7: EditText? = null
+    private var editText8: EditText? = null
+    private var editText9: EditText? = null
+    private var editText10: EditText? = null
+    private var editText11: EditText? = null
+    private var editText12: EditText? = null
     private var button: Button? = null
 
     private var PICK_IMAGE = 1
@@ -69,8 +74,13 @@ class AnnouncePostActivity : AppCompatActivity(), PostRecordResult {
         editText3 = viewBinding.annEtTip
         editText4 = viewBinding.annEtMinimum
         editText5 = viewBinding.annEtPlace
-        editText6 = viewBinding.annEtTime
-        editText7 = viewBinding.annEtPerson
+        editText6 = viewBinding.annEtYear
+        editText7 = viewBinding.annEtMonth
+        editText8 = viewBinding.annEtDay
+        editText9 = viewBinding.annEtTime
+        editText10 = viewBinding.annEtHour
+        editText11 = viewBinding.annEtMinute
+        editText12 = viewBinding.annEtPerson
         button = viewBinding.btnPost
 
         editText1!!.addTextChangedListener(textWatcher)
@@ -80,6 +90,11 @@ class AnnouncePostActivity : AppCompatActivity(), PostRecordResult {
         editText5!!.addTextChangedListener(textWatcher)
         editText6!!.addTextChangedListener(textWatcher)
         editText7!!.addTextChangedListener(textWatcher)
+        editText8!!.addTextChangedListener(textWatcher)
+        editText9!!.addTextChangedListener(textWatcher)
+        editText10!!.addTextChangedListener(textWatcher)
+        editText11!!.addTextChangedListener(textWatcher)
+        editText12!!.addTextChangedListener(textWatcher)
 
 
         editTextAnnEtPlace = viewBinding.annEtPlace.toString()
@@ -288,6 +303,14 @@ class AnnouncePostActivity : AppCompatActivity(), PostRecordResult {
         }
     }
 
+    private fun string_to_timestamp(year :String, month: String, day : String, am_pm : String, hour : String, minute : String){
+        var hour_int : Int = 0
+        if(am_pm.equals("오후"))
+            hour_int = hour.toInt() + 12
+
+
+
+    }
 
 
 

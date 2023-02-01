@@ -1,5 +1,6 @@
 package umc.mobile.project.ram.my_application_1
 
+import Post
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log

@@ -7,5 +7,5 @@ import retrofit2.http.*
 interface PostRecordRetrofitInterfaces {
     @Multipart
     @POST("post")
-    fun sendPost(@Query("user") user_id: Int, @Part("post") postRecord: PostRecord, @Part file: MultipartBody.Part? = null) : Call<PostRecordResponse>
+    fun sendPost(@Query("user") user_id: Int, @Part("post") postRecord: PostRecord, @Part file: MultipartBody.Part?) : Call<PostRecordResponse>
 }

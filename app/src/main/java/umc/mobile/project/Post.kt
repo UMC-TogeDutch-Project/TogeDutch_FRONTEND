@@ -14,6 +14,7 @@ data class Post(
 
     @SerializedName(value =  "created_at") val created_at : Timestamp,
     @SerializedName(value =  "updated_at") val updated_at : Timestamp?,
+    @SerializedName(value =  "user_id") val user_id : Int,
     @SerializedName(value =  "image") val image : String?,
 
     @SerializedName(value =  "latitude") val latitude : Double,

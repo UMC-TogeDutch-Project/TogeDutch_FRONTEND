@@ -62,11 +62,12 @@ class MyProfileFragment : Fragment() {
         orderRVAdapter.setItemClickListener(object: OrderRVAdapter.OnItemClickListener{
             override fun onItemClick(order: OrderData) {
                 // 공고 상세 페이지 이동
-                val dialog = ParticipatePopupDialog(requireContext())
-                dialog.start()
+                //val dialog = ParticipatePopupDialog(requireContext())
+                //dialog.start()
             }
         })
 
+        // 후기 버튼 누르면 텍스트 후기 모음 다이얼로그 띄우기
 
 
 

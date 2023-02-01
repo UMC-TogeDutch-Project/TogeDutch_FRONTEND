@@ -17,7 +17,6 @@ import umc.mobile.project.MainActivity
 import umc.mobile.project.R
 import umc.mobile.project.signup.SignUpActivity
 import umc.mobile.project.databinding.ActivityLoginBinding
-import umc.mobile.project.signup.Auth.ApiService
 import java.util.regex.Pattern
 
 class LoginActivity : AppCompatActivity(), MyCustomDialogInterface {
@@ -49,12 +48,12 @@ class LoginActivity : AppCompatActivity(), MyCustomDialogInterface {
                         call: Call<LoginResponse>,
                         response: Response<LoginResponse>
                     ) {
-                        Log.d(TAG, "onResponse:통신 성공")
+                        Log.d(TAG, "onResponse:login통신 성공")
                         val loginResponseData = response.body()
                         Log.d(TAG, "onResponse:${loginResponseData}, ${response.isSuccessful}")
 
                         when(loginResponseData?.code){
-                            1000 -> {Log.d(TAG, "onResponse:응답 성공 userIdx: ${loginResponseData.result!!.userIdx}, 상태: ${loginResponseData.result!!.status}")
+                            1000 -> {Log.d(TAG, "onResponse:login응답 성공 userIdx: ${loginResponseData.result!!.userIdx}, 상태: ${loginResponseData.result!!.status}")
                                 myCustomDialog.show()
                             }
                             2010 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
@@ -70,13 +69,14 @@ class LoginActivity : AppCompatActivity(), MyCustomDialogInterface {
                             3013 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
                             3014 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
                             3015 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
+                            null -> Toast.makeText(this@LoginActivity, "잘못된 이메일입니다.", Toast.LENGTH_SHORT).show()
                         }
 
 
                     }
 
                     override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                        Log.d(TAG, "onFailure:통신 실패")
+                        Log.d(TAG, "onFailure:login통신 실패")
                     }
 
                 })

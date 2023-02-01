@@ -91,7 +91,7 @@ class SignUpAlarmKeywordActivity : AppCompatActivity() {
                         val keywordResponseData = response.body()
                         if(keywordResponseData != null){
                             when(keywordResponseData.code){
-                                1000 -> {Toast.makeText(this@SignUpAlarmKeywordActivity, "성공! ${keywordResponseData.message}", Toast.LENGTH_SHORT).show()
+                                1000 -> {//Toast.makeText(this@SignUpAlarmKeywordActivity, "성공! ${keywordResponseData.message}", Toast.LENGTH_SHORT).show()
                                     var keywordIdx :Int = keywordResponseData.result.keyword_Id
                                     intent.putExtra("name", name)
                                     intent.putExtra("email", email)

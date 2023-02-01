@@ -2,6 +2,7 @@ package umc.mobile.project
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,12 +17,17 @@ class ChatFragment: Fragment() {
     var chatRoomList = ArrayList<ChatRoom>()
     lateinit var chatRoomRVAdapter: ChatRoomRVAdapter
     lateinit var binding: FragmentChatBinding
+
+    val TAG: String = "로그"
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentChatBinding.inflate(inflater, container, false)
+
+        Log.d(TAG, "onCreateView: ChatTest Log")
 
         initActionBar()
         initRecycler()

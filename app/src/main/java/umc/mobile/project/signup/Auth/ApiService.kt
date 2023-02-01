@@ -28,9 +28,4 @@ interface ApiService {
         @Body body: KeywordRequest
     ):Call<KeywordResponse>
 
-
-    @GET("ad/random")
-    fun adsRandom():Call<AdsRandomResponse>
-
-
 }

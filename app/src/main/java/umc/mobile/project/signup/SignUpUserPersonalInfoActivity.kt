@@ -29,10 +29,10 @@ class SignUpUserPersonalInfoActivity : AppCompatActivity() {
         var keyWordIdx: Int = 1
         var role = intent.getStringExtra("role")
         var status= intent.getStringExtra("status")
-        Log.d(TAG, "onCreate: ${name}, ${email}, ${password}, ${phoneNum}, ${keyWordIdx}, ${status}, ${role}")
+        var latitude = intent.getDoubleExtra("latitude", 50.02)
+        var longitude = intent.getDoubleExtra("longitude", 60.02)
 
-        var latitude : Double = 50.02
-        var longitude : Double = 60.02
+        Log.d(TAG, "onCreate: ${name}, ${email}, ${password}, ${phoneNum}, ${keyWordIdx}, ${status}, ${role}, ${latitude}, ${longitude}")
 
         val retrofit = Retrofit.Builder()
             .baseUrl("http://ec2-3-34-255-129.ap-northeast-2.compute.amazonaws.com:9000/")

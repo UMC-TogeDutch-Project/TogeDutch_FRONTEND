@@ -4,13 +4,11 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.ColorStateList
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
@@ -20,12 +18,9 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.google.gson.GsonBuilder
-import com.google.gson.annotations.SerializedName
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -35,6 +30,8 @@ import umc.mobile.project.announcement.Auth.PostPost.PostRecordService
 import umc.mobile.project.announcement.Auth.PostPost.Result
 import umc.mobile.project.announcement.PlaceSearchActivity
 import umc.mobile.project.databinding.ActivityAnnouncePostBinding
+import umc.mobile.project.ram.my_application_1.user_id_logined
+import umc.mobile.project.ram.my_application_1.user_id_var
 import java.io.File
 import java.sql.Timestamp
 import java.time.Instant
@@ -64,7 +61,6 @@ class AnnouncePostActivity : AppCompatActivity(), PostRecordResult {
     private var button: Button? = null
 
     private var PICK_IMAGE = 1
-    private var PICK_ADDRESS = 2
 
     lateinit var editTextAnnEtPlace : String
     var latitude: Double = 0.0
@@ -212,7 +208,8 @@ class AnnouncePostActivity : AppCompatActivity(), PostRecordResult {
     private fun save(){
         val postRecordService = PostRecordService()
         postRecordService.setRecordResult(this)
-        postRecordService.sendPost(19, getPostRecord(), picture)
+        Log.d("picture 들어간 값 ==========================", picture.toString())
+        postRecordService.sendPost(user_id_logined, getPostRecord(), picture)
     }
 
     override fun recordSuccess(result: Result) {
@@ -324,7 +321,7 @@ class AnnouncePostActivity : AppCompatActivity(), PostRecordResult {
 
     private fun string_to_timestamp(year :String, month: String, day : String, am_pm : String, hour : String, minute : String) : String{
         var hour_int = 0
-        if(am_pm.equals("오후"))
+        if(am_pm.equals("오후") && hour.toInt() != 12)
             hour_int = hour.toInt() + 12
 
 

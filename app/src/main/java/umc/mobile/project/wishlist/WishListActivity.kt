@@ -1,16 +1,8 @@
 package umc.mobile.project.wishlist
 
-import android.annotation.SuppressLint
-import android.content.ContentValues.TAG
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import umc.mobile.project.databinding.ActivityWishlistBinding
-import umc.mobile.project.ram.my_application_1.JoinRVAdatpter
-import umc.mobile.project.ram.my_application_1.Post
-import umc.mobile.project.ram.my_application_1.ReviewWritePopupDialog
 
 class WishListActivity: AppCompatActivity() {
     lateinit var viewBinding: ActivityWishlistBinding

@@ -7,6 +7,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import umc.mobile.project.getRetrofit
+import umc.mobile.project.ram.my_application_1.user_id_var
 import java.sql.Timestamp
 import java.time.Instant
 import java.util.*
@@ -26,8 +27,10 @@ class PostRecordService {
 
     fun sendPost(user_id : Int, record: PostRecord, file : MultipartBody.Part?){
         Log.d("timestamp 값 ==========================", file.toString())
+        if(file == null)
+            Log.d("null 입니다 ==========================", user_id.toString())
         val authService = getRetrofit().create(PostRecordRetrofitInterfaces::class.java)
-        authService.sendPost(19, record, file).enqueue(object: Callback<PostRecordResponse> {
+        authService.sendPost(user_id, record, file).enqueue(object: Callback<PostRecordResponse> {
             override fun onResponse(call: Call<PostRecordResponse>, response: Response<PostRecordResponse>) {
                 Log.d("RECORD/SUCCESS",response.toString())
                 val resp: PostRecordResponse = response.body()!!

@@ -96,11 +96,11 @@ class MyPostActivity:AppCompatActivity(), PostUploadGetResult {
 
     private fun initActionBar() {
 
-        binding.mainActionbar.appbarPageNameLeftTv.text = "나의 공고"
-
-        binding.mainActionbar.appbarBackBtn.setOnClickListener {
-            finish()
-        }
+//        binding.mainActionbar.appbarPageNameLeftTv.text = "나의 공고"
+//
+//        binding.mainActionbar.appbarBackBtn.setOnClickListener {
+//            finish()
+//        }
 
     }
 

@@ -7,6 +7,7 @@ import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import umc.mobile.project.databinding.ItemDataBinding
 import umc.mobile.project.ram.Geocoder_location
 import umc.mobile.project.ram.my_application_1.post_id_to_detail
@@ -23,6 +24,9 @@ class DataRecentRVAdapter(private val homeDataList: ArrayList<Post>) : RecyclerV
         RecyclerView.ViewHolder(viewBinding.root) {
 
         fun bind(homeData: Post) {
+
+            Glide.with(context).load(homeData.image).centerCrop().into(viewBinding.ivItemImageThird)
+
             viewBinding.tvItemTitle.text = homeData.title //제목
 
             var latLong_to_address : String = Geocoder_location().calculate_location(context, homeData.latitude, homeData.longitude)

@@ -70,14 +70,56 @@
 
         <ImageView
             android:id="@+id/adsMain"
-            android:layout_width="350dp"
-            android:layout_height="85dp"
+            android:layout_width="370dp"
+            android:layout_height="120dp"
             app:layout_constraintTop_toBottomOf="@id/frameLayoutEdit"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:src="@drawable/main_ads_main"
-            android:layout_marginTop="15dp"
+            android:background="@drawable/main_ads_background"
+            android:layout_marginTop="15dp"/>
+
+
+        <TextView
+            android:id="@+id/tvAdsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/adsMain"
+            android:text="버거킹 월곡점"
+            android:fontFamily="@font/notosanskr_black"
+            android:textColor="#000000"
+            android:textSize="25dp"
+            app:layout_constraintBottom_toBottomOf="@id/adsMain"
+            app:layout_constraintEnd_toStartOf="@id/imgAds"
+            app:layout_constraintStart_toStartOf="@id/adsMain"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="20dp"
             />
+
+        <TextView
+            android:id="@+id/tvAdsMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="200분의 기다림, 더 깊어진 풍미"
+            android:textColor="@color/black"
+            android:textSize="13dp"
+            app:layout_constraintStart_toStartOf="@id/tvAdsTitle"
+            app:layout_constraintBottom_toBottomOf="@id/tvAdsTitle"
+            />
+
+        <ImageView
+            android:id="@+id/imgAds"
+            android:layout_width="80dp"
+            android:layout_height="65dp"
+            app:layout_constraintTop_toTopOf="@id/adsMain"
+            app:layout_constraintBottom_toBottomOf="@id/adsMain"
+            app:layout_constraintEnd_toEndOf="@id/adsMain"
+            app:layout_constraintStart_toEndOf="@id/tvAdsTitle"
+            android:src="@drawable/hamburger2"
+            android:layout_marginStart="25dp"
+            />
+
+
+
 
         <TextView
             android:id="@+id/category_recent"

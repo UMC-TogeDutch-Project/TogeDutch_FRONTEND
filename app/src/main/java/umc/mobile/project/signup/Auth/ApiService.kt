@@ -3,6 +3,7 @@ package umc.mobile.project.signup.Auth
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
+import umc.mobile.project.AdsRandomResponse
 import umc.mobile.project.signup.SignUpRequest
 import umc.mobile.project.signup.SignUpResponse
 
@@ -26,6 +27,5 @@ interface ApiService {
     fun getUserKeywordId(
         @Body body: KeywordRequest
     ):Call<KeywordResponse>
-
 
 }

@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,8 +22,6 @@ import umc.mobile.project.signup.Auth.KeywordResponse
 class SignUpAlarmKeywordActivity : AppCompatActivity() {
     val TAG: String = "로그"
     private lateinit var viewBinding: ActivitySignUpAlarmKeywordBinding
-
-    var keywordList = arrayListOf<DataVo>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,20 +49,27 @@ class SignUpAlarmKeywordActivity : AppCompatActivity() {
         viewBinding = ActivitySignUpAlarmKeywordBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-
+        val keywordList : ArrayList<DataVo> = arrayListOf()
 
         Log.d(TAG, "onCreate: ${name}, ${email}, ${password}, ${phoneNum}")
 
         //////////////////////////////////////////////////////
-        val mAdapter = CustomAdapter(this, keywordList)
-        viewBinding.tableRecycleEdit.adapter = mAdapter
-        val layout = LinearLayoutManager(this)
-        viewBinding.tableRecycleEdit.layoutManager = layout
-        viewBinding.tableRecycleEdit.setHasFixedSize(true)
+
+        val customAdapter = CustomAdapter(keywordList)
+
+        viewBinding.tableRecycleEdit.adapter = customAdapter
+        val staggeredGridLayoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
+        viewBinding.tableRecycleEdit.layoutManager = staggeredGridLayoutManager
 
 
-        viewBinding.btnInputAlarm.setOnClickListener {
-            mAdapter.addItem(DataVo(viewBinding.etInputAlarmKeyword.text.toString()))
+
+
+        viewBinding.btnInputAlarm.setOnClickListener{
+            val keyword = viewBinding.etInputAlarmKeyword.text.toString()
+            keywordList.apply { add(DataVo(keyword)) }
+            customAdapter.notifyDataSetChanged()
+            Log.d(TAG, "onCreate:${keywordList}")
+
         }
 
 
@@ -85,13 +91,14 @@ class SignUpAlarmKeywordActivity : AppCompatActivity() {
                         val keywordResponseData = response.body()
                         if(keywordResponseData != null){
                             when(keywordResponseData.code){
-                                1000 -> {Toast.makeText(this@SignUpAlarmKeywordActivity, "성공! ${keywordResponseData.message}", Toast.LENGTH_SHORT).show()
+                                1000 -> {//Toast.makeText(this@SignUpAlarmKeywordActivity, "성공! ${keywordResponseData.message}", Toast.LENGTH_SHORT).show()
                                     var keywordIdx :Int = keywordResponseData.result.keyword_Id
                                     intent.putExtra("name", name)
                                     intent.putExtra("email", email)
                                     intent.putExtra("password", password)
                                     intent.putExtra("phoneNum", phoneNum)
                                     intent.putExtra("keyWordIdx", keywordIdx)
+                                    Log.d(TAG, "onResponse: ${key1}, ${key2}, ${key3} ${key4}, ${key5}, ${key6}")
 
                                     startActivity(intent)
                                     overridePendingTransition(0, 0)

@@ -26,7 +26,8 @@ class SignUpUserCategoryActivity : AppCompatActivity() {
         var password = intent.getStringExtra("password")
         var phoneNum = intent.getStringExtra("phoneNum")
         var keyWordIdx: Int = intent.getIntExtra("keyWordIdx", 1)
-        var region = intent.getStringExtra("region")
+        var latitude = intent.getDoubleExtra("latitude", 50.02)
+        var longitude = intent.getDoubleExtra("longitude", 60.02)
         var role : String = "user"
         var status : String = "active"
 
@@ -41,6 +42,8 @@ class SignUpUserCategoryActivity : AppCompatActivity() {
             intent.putExtra("keyWordIdx", keyWordIdx)
             intent.putExtra("role", role)
             intent.putExtra("status", status)
+            intent.putExtra("latitude", latitude)
+            intent.putExtra("longitude", longitude)
 
             startActivity(intent)
             overridePendingTransition(0, 0)

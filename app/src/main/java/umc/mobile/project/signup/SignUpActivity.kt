@@ -181,7 +181,7 @@ class SignUpActivity : AppCompatActivity() {
     fun checkAgreeNum():Boolean{
 
         var checkPhoneNum = viewBinding.etInputCertificationNumber.text.toString()
-        var checkSum : String = "1111"
+        var checkSum : String = "16844"
         var password = viewBinding.etInputPasswordCheck.text.toString().trim() //공백제거
         var passwordValidation = viewBinding.etInputPassword.text.toString().trim()
 

@@ -179,11 +179,13 @@ class MyPostActivity:AppCompatActivity(), PostUploadGetResult {
         postUploadGetService.setPostUploadGetResult(this)
         postUploadGetService.getPostUpload(user_id_logined) // 임의로 지정
         user_id_var = user_id_logined // 상세목록 볼 때 현재 로그인된 유저를 보여줄 수 있게 덮어씌워주기
+
     }
 
     override fun getPostUploadSuccess(
         code: Int,
         result: ArrayList<Post>
+
     ) {
 
         postUploadList.addAll(result)
@@ -192,6 +194,7 @@ class MyPostActivity:AppCompatActivity(), PostUploadGetResult {
 
             myPostRVAdapter.setItemClickListener(object:
                 MyPostRVAdapter.OnItemClickListener {
+
                 override fun onItemClick(application: Post) {
                     val intent = Intent(this@MyPostActivity, MyPostDetailActivity::class.java)
                     startActivity(intent)

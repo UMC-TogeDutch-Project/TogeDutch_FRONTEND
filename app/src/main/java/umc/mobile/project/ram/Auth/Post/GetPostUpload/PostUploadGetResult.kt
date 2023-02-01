@@ -1,5 +1,6 @@
 package umc.mobile.project.ram.Auth.Post.GetPostUpload
 
+
 import Post
 
 interface PostUploadGetResult {

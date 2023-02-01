@@ -68,4 +68,3 @@ class MyPostDetailActivity : AppCompatActivity(), PostDetailGetResult {
         TODO("Not yet implemented")
     }
 }
-

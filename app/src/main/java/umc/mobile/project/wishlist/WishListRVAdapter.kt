@@ -1,13 +1,11 @@
 package umc.mobile.project.wishlist
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import umc.mobile.project.databinding.WishlistAdapterBinding
-import umc.mobile.project.ram.my_application_1.Post
 
 class WishListRVAdapter (private val wishApplicationList: ArrayList<WishApplication>) : RecyclerView.Adapter<WishListRVAdapter.ViewHolder>(),
     Filterable {

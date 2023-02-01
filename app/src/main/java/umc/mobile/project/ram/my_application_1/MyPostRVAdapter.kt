@@ -1,5 +1,6 @@
 package umc.mobile.project.ram.my_application_1
 
+import Post
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
@@ -38,6 +39,7 @@ class MyPostRVAdapter (
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(applicationList[position])
         holder.itemView.setOnClickListener {
+            post_id_to_detail = applicationList[position].post_id
             itemClickListener.onItemClick(applicationList[position])
             notifyItemChanged(position)
         }
@@ -50,22 +52,24 @@ class MyPostRVAdapter (
             var isSelected = false
 
             val txt_title : String = post.title
-            var txt_location : String = "종로" // 아마 위도경도 계산하는 듯,,,,?
-//            var txt_time : String = post.order_time
-//            var txt_time : String = "3시 3분"
+
+            var latLong_to_address : String = Geocoder_location().calculate_location(context, post.latitude, post.longitude)
+            var txt_location = latLong_to_address
+
+            val txt_time = post.order_time
+//            2022-01-23T03:34:56.000+00:00
+            var txt_hour = txt_time.substring(11 until 13)
+            var txt_minute = txt_time.substring(14 until 17)
+            var txt_time_substring = txt_hour+"시" + txt_minute + "분 주문"
+
             val txt_recruited : Int = post.recruited_num
             val txt_recruits : Int = post.num_of_recruits
-
-            var latLong_to_address : String = Geocoder_location().calculate_location(context, post.Latitude, post.longitude)
-            txt_location = latLong_to_address
-
-            var txt_time = Timestamp_to_SDF().convert(post.order_time)
 
 
 
             binding.orderListTitle.text = txt_title // 제목
             binding.orderListLocation.text = txt_location// 위치
-            binding.orderListTime.text = txt_time + "주문" // 주문시간
+            binding.orderListTime.text = txt_time_substring
             binding.numRecruited.text = txt_recruited.toString() // 현재 사람
             binding.numRecruits.text = txt_recruits.toString() // 필요 인원
 

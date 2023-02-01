@@ -18,5 +18,6 @@ data class HomeData(
     var longitude: Double,
     //var category: String
 
+
 )
 

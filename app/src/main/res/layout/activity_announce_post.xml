@@ -183,19 +183,128 @@
                     android:fontFamily="@font/notosanskr_black"
                     android:text="주문 시간"
                     android:textColor="@color/black" />
-
-                <EditText
-                    android:id="@+id/ann_et_time"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="370dp"
                     android:layout_height="40dp"
                     android:background="@drawable/button_round_11"
-                    android:backgroundTint="#1F767680"
-                    android:fontFamily="@font/notosanskr_regular"
-                    android:gravity="center"
-                    android:hint="00 : 00"
-                    android:paddingLeft="7dp"
-                    android:paddingRight="7dp" />
+                    android:backgroundTint="#1F767680">
 
+                    <EditText
+                        android:layout_marginLeft="50dp"
+                        android:id="@+id/ann_et_year"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:hint="0000"
+                        android:paddingLeft="7dp"
+                        android:paddingRight="7dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/year"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="년"
+                        android:fontFamily="@font/notosanskr_regular"
+                        android:textColor="@color/black"
+                        android:gravity="center"
+
+                        app:layout_constraintStart_toEndOf="@+id/ann_et_year"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <EditText
+                        android:id="@+id/ann_et_month"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:hint="00"
+                        android:paddingLeft="7dp"
+                        android:paddingRight="7dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/year"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/month"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/notosanskr_regular"
+                        android:textColor="@color/black"
+                        android:text="월"
+                        app:layout_constraintStart_toEndOf="@+id/ann_et_month"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <EditText
+                        android:id="@+id/ann_et_day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:hint="00"
+                        android:paddingLeft="7dp"
+                        android:paddingRight="7dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/month"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/notosanskr_regular"
+                        android:textColor="@color/black"
+                        android:text="일"
+                        app:layout_constraintStart_toEndOf="@+id/ann_et_day"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <EditText
+                        android:id="@+id/ann_et_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:hint="오전"
+                        android:paddingLeft="7dp"
+                        android:paddingRight="7dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/day"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <EditText
+                        android:id="@+id/ann_et_hour"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:hint="00"
+                        android:paddingLeft="7dp"
+                        android:paddingRight="7dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/ann_et_time"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":"
+                        android:fontFamily="@font/notosanskr_regular"
+                        android:textColor="@color/black"
+                        app:layout_constraintStart_toEndOf="@+id/ann_et_hour"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <EditText
+                        android:id="@+id/ann_et_minute"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:hint="00"
+                        android:paddingLeft="7dp"
+                        android:paddingRight="7dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/time"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

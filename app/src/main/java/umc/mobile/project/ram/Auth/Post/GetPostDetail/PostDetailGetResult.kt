@@ -1,6 +1,6 @@
 package umc.mobile.project.ram.Auth.Post.GetPostDetail
 
-import umc.mobile.project.Post
+import Post
 
 
 interface PostDetailGetResult {

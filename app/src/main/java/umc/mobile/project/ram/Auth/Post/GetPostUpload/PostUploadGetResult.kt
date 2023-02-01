@@ -1,6 +1,6 @@
 package umc.mobile.project.ram.Auth.Post.GetPostUpload
 
-import umc.mobile.project.Post
+import Post
 
 interface PostUploadGetResult {
     fun getPostUploadSuccess(code: Int, result: ArrayList<Post>)

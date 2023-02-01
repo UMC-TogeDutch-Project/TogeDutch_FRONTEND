@@ -1,5 +1,6 @@
 package umc.mobile.project.ram.my_application_1
 
+import Post
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
@@ -17,7 +18,7 @@ import kotlin.collections.ArrayList
 
 
 class MyPostRVAdapter (
-    private val applicationList: ArrayList<umc.mobile.project.Post>
+    private val applicationList: ArrayList<Post>
     ) :
     RecyclerView.Adapter<MyPostRVAdapter.ViewHolder>(), Filterable{
 
@@ -46,7 +47,7 @@ class MyPostRVAdapter (
 
     // 레이아웃 내 view 연결
     inner class ViewHolder(val binding: ItemMyPostBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(post: umc.mobile.project.Post) {
+        fun bind(post: Post) {
             var selected_random_btn : Int = 0
             var isSelected = false
 
@@ -98,7 +99,7 @@ class MyPostRVAdapter (
     }
 
     interface OnItemClickListener {
-        fun onItemClick(post: umc.mobile.project.Post)
+        fun onItemClick(post: Post)
     }
 
     fun setItemClickListener(onItemClickListener: OnItemClickListener) {
@@ -109,15 +110,15 @@ class MyPostRVAdapter (
 
 
     // 검색
-    val mDataListAll = ArrayList<umc.mobile.project.Post>(applicationList)
-    var mAccounts:MutableList<umc.mobile.project.Post> = applicationList as MutableList<umc.mobile.project.Post>
+    val mDataListAll = ArrayList<Post>(applicationList)
+    var mAccounts:MutableList<Post> = applicationList as MutableList<Post>
     override fun getFilter(): Filter {
         return exampleFilter
     }
     private val exampleFilter: Filter = object : Filter() {
         // Automatic on background thread
         override fun performFiltering(constraint: CharSequence?): FilterResults {
-            val filteredList: MutableList<umc.mobile.project.Post> = java.util.ArrayList<umc.mobile.project.Post>()
+            val filteredList: MutableList<Post> = java.util.ArrayList<Post>()
             if(constraint!!.isEmpty()){
                 filteredList.addAll(mDataListAll)
             }
@@ -140,7 +141,7 @@ class MyPostRVAdapter (
         @SuppressLint("NotifyDataSetChanged")
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
             mAccounts.clear()
-            mAccounts.addAll(results?.values as Collection<umc.mobile.project.Post>)
+            mAccounts.addAll(results?.values as Collection<Post>)
             notifyDataSetChanged()
         }
 

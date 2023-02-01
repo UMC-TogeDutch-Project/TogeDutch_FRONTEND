@@ -7,7 +7,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
-import umc.mobile.project.Post
+import Post
 import umc.mobile.project.databinding.ActivityAnnounceDetailBinding
 import umc.mobile.project.ram.Auth.Post.GetPostDetail.PostDetailGetResult
 import umc.mobile.project.ram.Auth.Post.GetPostDetail.PostDetailGetService

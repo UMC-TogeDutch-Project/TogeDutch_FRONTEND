@@ -1,5 +1,6 @@
 package umc.mobile.project.ram.my_application_1
 
+import Post
 import android.app.SearchManager
 import android.content.ContentValues.TAG
 import android.content.Context
@@ -23,7 +24,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-var postUploadList = ArrayList<umc.mobile.project.Post>()
+var postUploadList = ArrayList<Post>()
+
+var user_id_var = 32
+var user_id_logined = 32
 
 var post_id_to_detail = 0
 
@@ -69,13 +73,13 @@ class MyPostActivity:AppCompatActivity(), PostUploadGetResult {
                     binding.frameLayoutDefault.visibility = View.VISIBLE // 업로드 화면 보이기
                 }
 
-                else{ // 참여 일 때
-                    initRecycler_join()
-                    binding.mainActionbar.appbarPageNameLeftTv.text = "참여"
-                    binding.searchView.queryHint = "나의 참여내역을 검색해보세요"
-                    binding.frameLayoutParticipate.visibility = View.VISIBLE // 참여 화면 없애기
-                    binding.frameLayoutDefault.visibility = View.INVISIBLE // 업로드 화면 보이기
-                }
+//                else{ // 참여 일 때
+//                    initRecycler_join()
+//                    binding.mainActionbar.appbarPageNameLeftTv.text = "참여"
+//                    binding.searchView.queryHint = "나의 참여내역을 검색해보세요"
+//                    binding.frameLayoutParticipate.visibility = View.VISIBLE // 참여 화면 없애기
+//                    binding.frameLayoutDefault.visibility = View.INVISIBLE // 업로드 화면 보이기
+//                }
 
             }
 
@@ -105,45 +109,45 @@ class MyPostActivity:AppCompatActivity(), PostUploadGetResult {
 
     }
 
-    private fun initRecycler_join(){
-
-        val curTime = Date().time
-        val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-        var timestamp = Timestamp(java.util.Date().time)
-
-        var string = "2023-01-15T01:43:39.000+00:00"
-        joinList.apply {
-            add(
-                Post(7, "엽떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, timestamp,
-                    2, 1, "모집중", string, null, 2, 67.1234567, 127.3012345)
-            )
-            add(
-                Post(8, "베라 2인으로 같이 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 1000, 130000, timestamp,
-                    2, 1, "모집중", string, null, 2, 67.1234567, 127.3012345)
-            )
-
-
-            joinRVAdatpter = JoinRVAdatpter(joinList)
-            binding.rvParticipate.adapter = joinRVAdatpter
-
-            joinRVAdatpter.setItemClickListener(object:
-                JoinRVAdatpter.OnItemClickListener {
-                override fun onItemClick(application: Post) {
-                    val dlg = ReviewWritePopupDialog(this@MyPostActivity)
-                    dlg.start()
-                    fun open_activity(){
-                        val intent = Intent(this@MyPostActivity,CurrentApplicationActivity::class.java)
-                        startActivity(intent)
-                    }
-                }
-            })
-
-            joinRVAdatpter.notifyDataSetChanged()
-
-//            initSearchView(joinRVAdatpter)
-
-        }
-    }
+//    private fun initRecycler_join(){
+//
+//        val curTime = Date().time
+//        val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+//        var timestamp = Timestamp(java.util.Date().time)
+//
+//        var string = "2023-01-15T01:43:39.000+00:00"
+//        joinList.apply {
+//            add(
+//                Post(7, "엽떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, timestamp,
+//                    2, 1, "모집중", string, null, 2, 67.1234567, 127.3012345)
+//            )
+//            add(
+//                Post(8, "베라 2인으로 같이 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 1000, 130000, timestamp,
+//                    2, 1, "모집중", string, null, 2, 67.1234567, 127.3012345)
+//            )
+//
+//
+//            joinRVAdatpter = JoinRVAdatpter(joinList)
+//            binding.rvParticipate.adapter = joinRVAdatpter
+//
+//            joinRVAdatpter.setItemClickListener(object:
+//                JoinRVAdatpter.OnItemClickListener {
+//                override fun onItemClick(application: Post) {
+//                    val dlg = ReviewWritePopupDialog(this@MyPostActivity)
+//                    dlg.start()
+//                    fun open_activity(){
+//                        val intent = Intent(this@MyPostActivity,CurrentApplicationActivity::class.java)
+//                        startActivity(intent)
+//                    }
+//                }
+//            })
+//
+//            joinRVAdatpter.notifyDataSetChanged()
+//
+////            initSearchView(joinRVAdatpter)
+//
+//        }
+//    }
 
     private fun initSearchView(myPostRVAdapter: MyPostRVAdapter){
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
@@ -173,12 +177,13 @@ class MyPostActivity:AppCompatActivity(), PostUploadGetResult {
     private fun getPostUpload(){
         val postUploadGetService = PostUploadGetService()
         postUploadGetService.setPostUploadGetResult(this)
-        postUploadGetService.getPostUpload(user_id = 2) // 임의로 지정
+        postUploadGetService.getPostUpload(user_id_logined) // 임의로 지정
+        user_id_var = user_id_logined // 상세목록 볼 때 현재 로그인된 유저를 보여줄 수 있게 덮어씌워주기
     }
 
     override fun getPostUploadSuccess(
         code: Int,
-        result: ArrayList<umc.mobile.project.Post>
+        result: ArrayList<Post>
     ) {
 
         postUploadList.addAll(result)
@@ -187,7 +192,7 @@ class MyPostActivity:AppCompatActivity(), PostUploadGetResult {
 
             myPostRVAdapter.setItemClickListener(object:
                 MyPostRVAdapter.OnItemClickListener {
-                override fun onItemClick(application: umc.mobile.project.Post) {
+                override fun onItemClick(application: Post) {
                     val intent = Intent(this@MyPostActivity, MyPostDetailActivity::class.java)
                     startActivity(intent)
 

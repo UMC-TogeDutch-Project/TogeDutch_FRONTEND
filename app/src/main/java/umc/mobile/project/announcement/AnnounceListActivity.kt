@@ -251,6 +251,7 @@ private fun getPostLatest(){
         })
 
 
+
         dataRecentRVAdapter.notifyDataSetChanged()
     }
     override fun recordFailure() {
@@ -263,6 +264,13 @@ private fun getPostLatest(){
         binding.rvMainImminent.adapter = dataImminentRVAdapter
         binding.rvMainImminent.layoutManager= LinearLayoutManager(this) //레이아웃 매니저 연결
 
+
+        dataImminentRVAdapter.setItemClickListener(object: DataImminentRVAdapter.OnItemClickListener{
+            override fun onItemClick(announceData: Post) {
+                val intent = Intent(this@AnnounceListActivity, MyPostDetailActivity::class.java)
+                startActivity(intent)
+            }
+        })
     }
 
     override fun recordFailure1() {

@@ -59,7 +59,7 @@ class MyPostRVAdapter (
             val txt_time = post.order_time
 //            2022-01-23T03:34:56.000+00:00
             var txt_hour = txt_time.substring(11 until 13)
-            var txt_minute = txt_time.substring(14 until 17)
+            var txt_minute = txt_time.substring(14 until 16)
             var txt_time_substring = txt_hour+"시" + txt_minute + "분 주문"
 
             val txt_recruited : Int = post.recruited_num

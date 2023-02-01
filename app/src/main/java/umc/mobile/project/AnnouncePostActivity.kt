@@ -248,7 +248,7 @@ class AnnouncePostActivity : AppCompatActivity(), PostRecordResult {
 
                 val file = File(absolutelyPath(imagePath, this))
                 val requestFile = RequestBody.create(MediaType.parse("image/*"), file)
-                val body = MultipartBody.Part.createFormData("picture", file.name, requestFile)
+                val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
 
 //                pictureNameList.addAll(listOf(file.name)) // 데이터 넣는 부분
 

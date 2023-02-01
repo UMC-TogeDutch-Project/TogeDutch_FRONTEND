@@ -1,8 +1,10 @@
 package umc.mobile.project
 
 import Post
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +18,7 @@ import umc.mobile.project.announcement.Auth.PostRecentGet.PostRecentGetService
 import umc.mobile.project.databinding.FragmentHomeBinding
 import umc.mobile.project.databinding.FragmentMypageBinding
 import umc.mobile.project.news.NewsActivity
+import umc.mobile.project.ram.my_application_1.MyPostDetailActivity
 
 class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
     lateinit var dataRecentRVAdapter: DataRecentRVAdapter
@@ -40,6 +43,7 @@ class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
 //        _viewBinding = FragmentHomeBinding.inflate(inflater, container, false)
 //        binding = ActivityAnnounceListBinding.inflate(inflater, container, false)
 
+        Log.d(TAG, "onCreateView: TestLog")
 
         viewBinding.btnNews.setOnClickListener {
             val intent = Intent(getActivity(), NewsActivity::class.java)
@@ -187,7 +191,12 @@ class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
         viewBinding.rvRecent.adapter = dataRecentRVAdapter //리사이클러뷰에 어댑터 연결
         viewBinding.rvRecent.layoutManager= LinearLayoutManager(context) //레이아웃 매니저 연결
 
-
+        dataRecentRVAdapter.setItemClickListener(object: DataRecentRVAdapter.OnItemClickListener{
+            override fun onItemClick(announceData: Post) {
+                val intent = Intent(context, MyPostDetailActivity::class.java)
+                startActivity(intent)
+            }
+        })
 
 
 //        dataRecentRVAdapter.setItemClickListener(object: DataRecentRVAdapter.OnItemClickListener{
@@ -214,6 +223,13 @@ class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
         viewBinding.rvImminent.adapter = dataImminentRVAdapter //리사이클러뷰에 어댑터 연결
         viewBinding.rvImminent.layoutManager= LinearLayoutManager(context) //레이아웃 매니저 연결
 
+
+        dataImminentRVAdapter.setItemClickListener(object: DataImminentRVAdapter.OnItemClickListener{
+            override fun onItemClick(announceData: Post) {
+                val intent = Intent(context, MyPostDetailActivity::class.java)
+                startActivity(intent)
+            }
+        })
     }
 
     override fun recordFailure1() {

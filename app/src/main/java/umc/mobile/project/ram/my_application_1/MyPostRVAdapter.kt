@@ -10,7 +10,9 @@ import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import umc.mobile.project.databinding.ItemMyPostBinding
+
 import umc.mobile.project.ram.Geocoder_location
 import java.util.*
 import kotlin.collections.ArrayList
@@ -66,6 +68,8 @@ class MyPostRVAdapter (
             val txt_recruits : Int = post.num_of_recruits
 
 
+
+            Glide.with(context).load(post.image).centerCrop().into(binding.listItemPicture)
 
             binding.orderListTitle.text = txt_title // 제목
             binding.orderListLocation.text = txt_location// 위치

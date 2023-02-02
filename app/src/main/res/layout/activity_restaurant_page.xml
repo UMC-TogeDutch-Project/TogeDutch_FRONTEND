@@ -8,122 +8,141 @@
     android:backgroundTint="@color/white">
 
 
-    <ImageButton
-        android:id="@+id/back_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/ic_baseline_close_24"
-        android:layout_marginTop="17dp"
-        android:layout_marginRight="17dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/res_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/notosanskr_bold"
-        android:includeFontPadding="false"
-        android:layout_marginTop="30dp"
-        android:text="가게이름"
-        android:textColor="@color/black"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
 
-    <ImageView
-        android:id="@+id/res_img"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:background="@drawable/button_round_13"
-        android:backgroundTint="@color/grey_2"
-        android:layout_marginTop="17dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/res_title" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/res_address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_map_2"
-        android:drawablePadding="10dp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/notosanskr_bold"
-        android:includeFontPadding="false"
-        android:text="00000 00구 00로 00길 000 "
-        android:textColor="@color/black"
-        android:layout_marginLeft="27dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/res_img" />
-
-    <TextView
-        android:id="@+id/res_menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_star_2"
-        android:drawablePadding="10dp"
-        android:layout_marginTop="5dp"
-        android:fontFamily="@font/notosanskr_bold"
-        android:includeFontPadding="false"
-        android:text=" 메뉴 이름"
-        android:textColor="@color/black"
-        android:layout_marginLeft="27dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/res_address" />
-
-    <TextView
-        android:id="@+id/res_phone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_phone"
-        android:includeFontPadding="false"
-        android:drawablePadding="10dp"
-        android:layout_marginTop="5dp"
-        android:fontFamily="@font/notosanskr_bold"
-        android:text="전화 번호"
-        android:textColor="@color/black"
-        android:layout_marginLeft="27dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/res_menu" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/res_blog"
-        android:layout_width="match_parent"
-        android:layout_height="217dp"
-        android:background="@drawable/button_round_18"
-        android:backgroundTint="#0D000000"
-        android:layout_marginTop="20dp"
-        android:orientation="vertical"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/res_phone">
-
-        <TextView
-            android:id="@+id/res_blog_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/notosanskr_bold"
-            android:text="BLOG 검색결과"
-            android:textColor="@color/purple"
-            android:textSize="13dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_blog"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/res_blog_search"
-            app:layout_constraintStart_toStartOf="parent"
+            android:orientation="vertical">
 
-            tools:listitem="@layout/item_restaurant_blog"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageButton
+                android:id="@+id/back_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_baseline_close_24"
+                android:layout_gravity="right"
+                android:layout_marginTop="17dp"
+                android:layout_marginRight="17dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/res_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+
+                android:fontFamily="@font/notosanskr_bold"
+                android:includeFontPadding="false"
+                android:text="가게이름"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/res_img"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="17dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/button_round_13"
+                android:backgroundTint="@color/grey_2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/res_title" />
+
+            <TextView
+                android:id="@+id/res_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="27dp"
+                android:layout_marginTop="10dp"
+                android:drawableLeft="@drawable/ic_map_2"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/notosanskr_bold"
+                android:includeFontPadding="false"
+                android:text="00000 00구 00로 00길 000 "
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/res_img" />
+
+            <TextView
+                android:id="@+id/res_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="27dp"
+                android:layout_marginTop="5dp"
+                android:drawableLeft="@drawable/ic_star_2"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/notosanskr_bold"
+                android:includeFontPadding="false"
+                android:text=" 메뉴 이름"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/res_address" />
+
+            <TextView
+                android:id="@+id/res_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="27dp"
+                android:layout_marginTop="5dp"
+                android:drawableLeft="@drawable/ic_phone"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/notosanskr_bold"
+                android:includeFontPadding="false"
+                android:text="전화 번호"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/res_menu" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/res_blog"
+                android:layout_width="match_parent"
+                android:layout_height="217dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/button_round_18"
+                android:backgroundTint="#0D000000"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/res_phone">
+
+                <TextView
+                    android:id="@+id/res_blog_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/notosanskr_bold"
+                    android:text="BLOG 검색결과"
+                    android:textColor="@color/purple"
+                    android:textSize="13dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_blog"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/res_blog_search"
+                    tools:listitem="@layout/item_restaurant_blog" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

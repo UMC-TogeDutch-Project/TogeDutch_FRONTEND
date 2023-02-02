@@ -96,11 +96,11 @@ class MyPostActivity:AppCompatActivity(), PostUploadGetResult {
 
     private fun initActionBar() {
 
-        binding.mainActionbar.appbarPageNameLeftTv.text = "나의 공고"
-
-        binding.mainActionbar.appbarBackBtn.setOnClickListener {
-            finish()
-        }
+//        binding.mainActionbar.appbarPageNameLeftTv.text = "나의 공고"
+//
+//        binding.mainActionbar.appbarBackBtn.setOnClickListener {
+//            finish()
+//        }
 
     }
 
@@ -190,22 +190,22 @@ class MyPostActivity:AppCompatActivity(), PostUploadGetResult {
 
         postUploadList.addAll(result)
         myPostRVAdapter = MyPostRVAdapter(postUploadList)
-            binding.rvApplication.adapter = myPostRVAdapter
+        binding.rvApplication.adapter = myPostRVAdapter
 
-            myPostRVAdapter.setItemClickListener(object:
-                MyPostRVAdapter.OnItemClickListener {
+        myPostRVAdapter.setItemClickListener(object:
+            MyPostRVAdapter.OnItemClickListener {
 
-                override fun onItemClick(application: Post) {
-                    val intent = Intent(this@MyPostActivity, MyPostDetailActivity::class.java)
-                    startActivity(intent)
+            override fun onItemClick(application: Post) {
+                val intent = Intent(this@MyPostActivity, MyPostDetailActivity::class.java)
+                startActivity(intent)
 
 
-                }
-            })
+            }
+        })
 
-            myPostRVAdapter.notifyDataSetChanged()
+        myPostRVAdapter.notifyDataSetChanged()
 
-            initSearchView(myPostRVAdapter)
+        initSearchView(myPostRVAdapter)
 
         Toast.makeText(this, "업로드 불러오기 성공", Toast.LENGTH_SHORT).show()
     }

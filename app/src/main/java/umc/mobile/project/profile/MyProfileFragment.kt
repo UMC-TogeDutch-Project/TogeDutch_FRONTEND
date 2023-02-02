@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import umc.mobile.project.databinding.FragmentMyprofileBinding
+import umc.mobile.project.ram.my_application_1.MyPostDetailActivity
 import umc.mobile.project.ram.my_application_1.ParticipatePopupDialog
 
 
@@ -62,12 +63,12 @@ class MyProfileFragment : Fragment() {
         orderRVAdapter.setItemClickListener(object: OrderRVAdapter.OnItemClickListener{
             override fun onItemClick(order: OrderData) {
                 // 공고 상세 페이지 이동
-                val dialog = ParticipatePopupDialog(requireContext())
-                dialog.start()
+//                val dialog = activity?.let { ParticipatePopupDialog(it) }
+//                dialog?.start()
+                val intent = Intent(context, MyPostDetailActivity::class.java)
+                startActivity(intent)
             }
         })
-
-
 
 
         orderRVAdapter.notifyDataSetChanged()

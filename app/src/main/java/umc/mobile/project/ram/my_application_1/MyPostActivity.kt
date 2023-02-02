@@ -31,6 +31,7 @@ var user_id_logined = 32
 
 var post_id_to_detail = 0
 
+
 class MyPostActivity:AppCompatActivity(), PostUploadGetResult {
     lateinit var binding: ActivityMypostBinding
     lateinit var myPostRVAdapter: MyPostRVAdapter

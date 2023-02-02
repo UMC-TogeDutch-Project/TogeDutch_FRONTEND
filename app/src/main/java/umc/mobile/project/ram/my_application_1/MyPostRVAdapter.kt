@@ -93,6 +93,7 @@ class MyPostRVAdapter (
                 if(isSelected){
                     selected_random_btn++
                     binding.randomFramelayout.visibility = View.VISIBLE
+                    binding.randomFramelayout.
                 }
                 else{
                     selected_random_btn--

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.ColorStateList
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -167,19 +168,22 @@ class AnnouncePostActivity : AppCompatActivity(), PostRecordResult {
             val color = getColor(R.color.main_color)
             val color2 = getColor(R.color.grey_3)
 
-//            if (editText1?.text.toString().isNotEmpty() && editText2?.text.toString().isNotEmpty() && editText3?.text.toString().isNotEmpty()
-//                && editText4?.text.toString().isNotEmpty() && editText5?.text.toString().isNotEmpty() && editText6?.text.toString().isNotEmpty() && editText7?.text.toString().isNotEmpty()
-//                 ) {
-//                button?.isClickable =  true
-//                button?.backgroundTintList = ColorStateList.valueOf(color)
-//                Toast.makeText(applicationContext, "활성화", Toast.LENGTH_SHORT)
-//                    .show()
-//            } else  {
-//                button?.isClickable = false
-//                button?.backgroundTintList = ColorStateList.valueOf(color2)
-//
-//
-//            }
+            if (editText1?.text.toString().isNotEmpty() && editText2?.text.toString().isNotEmpty() && editText3?.text.toString().isNotEmpty()
+                && editText4?.text.toString().isNotEmpty() && editText5?.text.toString().isNotEmpty() && editText6?.text.toString().isNotEmpty()
+                && editText7?.text.toString().isNotEmpty()&& editText8?.text.toString().isNotEmpty()&& editText9?.text.toString().isNotEmpty()
+                && editText10?.text.toString().isNotEmpty()&& editText11?.text.toString().isNotEmpty()&& editText12?.text.toString().isNotEmpty()
+                && editText13?.text.toString().isNotEmpty())
+            {
+                button?.isClickable =  true
+                button?.backgroundTintList = ColorStateList.valueOf(color)
+                Toast.makeText(applicationContext, "활성화", Toast.LENGTH_SHORT)
+                    .show()
+            } else  {
+                button?.isClickable = false
+                button?.backgroundTintList = ColorStateList.valueOf(color2)
+
+
+            }
         }
     }
 

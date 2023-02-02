@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 //import umc.mobile.project.chat.ChatRoom
 //import umc.mobile.project.chat.ChattingActivity
 import umc.mobile.project.databinding.FragmentRestaurantBinding
+import umc.mobile.project.ram.my_application_1.MyPostDetailActivity
 import umc.mobile.project.restaurant.RestaurantData
+import umc.mobile.project.restaurant.RestaurantPageDialog
 import umc.mobile.project.restaurant.RestaurantRVAdapter
 import umc.mobile.project.restaurant.RestaurantRVAdapterDecoration
 import umc.mobile.project.restaurant.blog.RestaurantPageActivity
@@ -44,5 +46,14 @@ class RestaurantFragment : Fragment() {
         binding.rvRes.layoutManager= LinearLayoutManager(requireContext()) //레이아웃 매니저 연결
         binding.rvRes.addItemDecoration(RestaurantRVAdapterDecoration(20))
 
+
+        restaurantRVAdapter.setItemClickListener(object: RestaurantRVAdapter.OnItemClickListener{
+            override fun onItemClick(restaurantData: RestaurantData) {
+                val dlg = context?.let { RestaurantPageDialog(it) }
+                if (dlg != null) {
+                    dlg.start()
+                }
+            }
+        })
     }
 }

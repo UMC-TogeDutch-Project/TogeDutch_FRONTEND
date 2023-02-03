@@ -20,16 +20,18 @@ class ApplyRecordService {
         this.applyRecordResult = applyRecordResult
     }
 
-    fun sendApply(postIdx : Int){
+    fun sendApply(x_access_token: String, postIdx : Int){
         val authService = getRetrofit().create(ApplyRecordRetrofitInterfaces::class.java)
-        authService.sendPost(postIdx).enqueue(object: Callback<ApplyRecordResponse> {
+        authService.sendPost(x_access_token,postIdx).enqueue(object: Callback<ApplyRecordResponse> {
             override fun onResponse(call: Call<ApplyRecordResponse>, response: Response<ApplyRecordResponse>) {
                 Log.d("RECORD/SUCCESS",response.toString())
                 val resp: ApplyRecordResponse = response.body()!!
-                result = resp.result!!
+
                 when(resp.code){
                     1000 -> applyRecordResult.applyRecordSuccess(result)
-                    else -> applyRecordResult.applyRecordFailure()
+                    2035 -> applyRecordResult.applyRecordFailureMyAnnounce()
+                    2036 -> applyRecordResult.applyRecordFailureEnded()
+                    2037 -> applyRecordResult.applyRecordFailure()
                 }
             }
 

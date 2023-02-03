@@ -1,30 +1,28 @@
 package umc.mobile.project.announcement
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.viewbinding.ViewBinding
 import Post
 import android.content.ContentValues
+import android.content.Intent
+import android.view.View
 import com.bumptech.glide.Glide
+import umc.mobile.project.MainActivity
 import umc.mobile.project.announcement.Auth.ApplyPost.ApplyRecordResult
 import umc.mobile.project.announcement.Auth.ApplyPost.ApplyRecordService
 import umc.mobile.project.announcement.Auth.ApplyPost.Result
-import umc.mobile.project.databinding.ActivityAnnounceDetailBinding
 import umc.mobile.project.databinding.ActivityMyPostDetailBinding
 import umc.mobile.project.ram.Auth.Post.GetPostDetail.PostDetailGetResult
 import umc.mobile.project.ram.Auth.Post.GetPostDetail.PostDetailGetService
-import umc.mobile.project.ram.Auth.Post.GetPostUpload.PostUploadGetService
 import umc.mobile.project.ram.Geocoder_location
-import umc.mobile.project.ram.my_application_1.current_application.CurrentApplicationActivity
 import umc.mobile.project.ram.my_application_1.post_id_to_detail
 import umc.mobile.project.ram.my_application_1.user_id_var
+import umc.mobile.project.restaurant.RestaurantPageDialog
 
+var access_token = ""
 
-class AnnounceDetailActivity:AppCompatActivity() , PostDetailGetResult, ApplyRecordResult{
+class AnnounceDetailActivity:AppCompatActivity() , PostDetailGetResult, ApplyRecordResult, AnnounceAlertDialogInterface{
     lateinit var viewBinding: ActivityMyPostDetailBinding
     lateinit var editTextAnnEtPlace : String
     var latitude: Double = 0.0
@@ -40,6 +38,7 @@ class AnnounceDetailActivity:AppCompatActivity() , PostDetailGetResult, ApplyRec
             postApply()
         }
         viewBinding.btnSeeCurrent.text = "신청하기"
+        viewBinding.myAnnunce.visibility = View.INVISIBLE
 
         viewBinding.backBtn.setOnClickListener {
             finish()
@@ -52,7 +51,7 @@ class AnnounceDetailActivity:AppCompatActivity() , PostDetailGetResult, ApplyRec
     private fun postApply(){
         val applyRecordService = ApplyRecordService()
         applyRecordService.setApplyRecordResult(this)
-        applyRecordService.sendApply(post_id_to_detail)
+        applyRecordService.sendApply(access_token, post_id_to_detail)
 
     }
 
@@ -94,13 +93,31 @@ class AnnounceDetailActivity:AppCompatActivity() , PostDetailGetResult, ApplyRec
         TODO("Not yet implemented")
     }
 
+
+
+
     override fun applyRecordSuccess(result: Result) {
         Log.d(ContentValues.TAG, "성공")
-        finish()
+        val dlg = AnnounceAlertDialog(this, this)
+        dlg.start()
     }
-
+    // 내공고를 신청했을떄
+    override fun applyRecordFailureMyAnnounce() {
+        val dlg = AnnounceAlertDialog(this, this)
+        dlg.start3()
+    }
+    // 이미 신청한 공고 일때
+    override fun applyRecordFailureEnded() {
+        val dlg = AnnounceAlertDialog(this, this)
+        dlg.start2()
+    }
+    //”모집완료” or “공고사용불가한 공고”일때
     override fun applyRecordFailure() {
-        TODO("Not yet implemented")
+        val dlg = AnnounceAlertDialog(this, this)
+        dlg.start4()
+    }
+    override fun btnFinish() {
+        finish()
     }
 
 

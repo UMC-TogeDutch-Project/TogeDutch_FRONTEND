@@ -3,7 +3,7 @@ package umc.mobile.project.commercial.Auth.CommercialPost
 import com.google.gson.annotations.SerializedName
 import java.sql.Timestamp
 
-data class PostRecordResponse (
+data class CommercialRecordResponse (
     @SerializedName(value = "isSuccess") val isSuccess: Boolean,
     @SerializedName(value = "code") val code : Int,
     @SerializedName(value = "message") val message : String,

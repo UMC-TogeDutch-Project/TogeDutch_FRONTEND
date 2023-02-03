@@ -3,9 +3,7 @@ package umc.mobile.project.restaurant
 import android.app.Dialog
 import android.content.Context
 import android.view.Window
-import android.widget.Button
 import android.widget.ImageButton
-import com.google.android.gms.maps.GoogleMap
 import umc.mobile.project.R
 
 class RestaurantPageDialog(context: Context) {

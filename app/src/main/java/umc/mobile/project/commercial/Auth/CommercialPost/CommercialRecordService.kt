@@ -21,18 +21,18 @@ class CommercialRecordService {
     fun sendPost(user_id : Int, record: CommercialRecord, file : MultipartBody.Part?){
 
         val authService = getRetrofit().create(CommercialRecordRetrofitInterfaces::class.java)
-        authService.sendPost(user_id, record, file).enqueue(object: Callback<PostRecordResponse> {
-            override fun onResponse(call: Call<PostRecordResponse>, response: Response<PostRecordResponse>) {
+        authService.sendPost(user_id, record, file).enqueue(object: Callback<CommercialRecordResponse> {
+            override fun onResponse(call: Call<CommercialRecordResponse>, response: Response<CommercialRecordResponse>) {
                 Log.d("RECORD/SUCCESS",response.toString())
-                val resp: PostRecordResponse = response.body()!!
+                val resp: CommercialRecordResponse = response.body()!!
                 result = resp.result!!
                 when(resp.code){
-                    1000 -> commercialRecordResult.recordSuccess(result)
-                    else -> commercialRecordResult.recordFailure()
+                    1000 -> commercialRecordResult.CommercialRecordSuccess(result)
+                    else -> commercialRecordResult.CommercialRecordFailure()
                 }
             }
 
-            override fun onFailure(call: Call<PostRecordResponse>, t: Throwable) {
+            override fun onFailure(call: Call<CommercialRecordResponse>, t: Throwable) {
                 Log.d("RECORD/FAILURE",t.message.toString())
             }
         })

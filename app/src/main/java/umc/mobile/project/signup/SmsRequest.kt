@@ -1,4 +1,4 @@
-package umc.mobile.project.signup.Auth
+package umc.mobile.project.signup
 
 import com.google.gson.annotations.SerializedName
 

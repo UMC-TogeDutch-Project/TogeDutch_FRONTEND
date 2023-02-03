@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.ColorStateList
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -167,19 +168,23 @@ class AnnouncePostActivity : AppCompatActivity(), PostRecordResult {
             val color = getColor(R.color.main_color)
             val color2 = getColor(R.color.grey_3)
 
-//            if (editText1?.text.toString().isNotEmpty() && editText2?.text.toString().isNotEmpty() && editText3?.text.toString().isNotEmpty()
-//                && editText4?.text.toString().isNotEmpty() && editText5?.text.toString().isNotEmpty() && editText6?.text.toString().isNotEmpty() && editText7?.text.toString().isNotEmpty()
-//                 ) {
-//                button?.isClickable =  true
-//                button?.backgroundTintList = ColorStateList.valueOf(color)
-//                Toast.makeText(applicationContext, "활성화", Toast.LENGTH_SHORT)
-//                    .show()
-//            } else  {
-//                button?.isClickable = false
-//                button?.backgroundTintList = ColorStateList.valueOf(color2)
-//
-//
-//            }
+            if (editText1?.text.toString().isNotEmpty() && editText2?.text.toString().isNotEmpty() && editText3?.text.toString().isNotEmpty()
+                && editText4?.text.toString().isNotEmpty() && editText5?.text.toString().isNotEmpty() && editText6?.text.toString().isNotEmpty()
+                && editText7?.text.toString().isNotEmpty()&& editText8?.text.toString().isNotEmpty()&& editText9?.text.toString().isNotEmpty()
+                && editText10?.text.toString().isNotEmpty()&& editText11?.text.toString().isNotEmpty()&& editText12?.text.toString().isNotEmpty()
+                && editText13?.text.toString().isNotEmpty())
+            {
+                button?.isClickable =  true
+                button?.backgroundTintList = ColorStateList.valueOf(color)
+                Toast.makeText(applicationContext, "활성화", Toast.LENGTH_SHORT)
+                    .show()
+
+            } else  {
+                button?.isClickable = false
+                button?.backgroundTintList = ColorStateList.valueOf(color2)
+
+
+            }
         }
     }
 
@@ -248,7 +253,7 @@ class AnnouncePostActivity : AppCompatActivity(), PostRecordResult {
 
                 val file = File(absolutelyPath(imagePath, this))
                 val requestFile = RequestBody.create(MediaType.parse("image/*"), file)
-                val body = MultipartBody.Part.createFormData("picture", file.name, requestFile)
+                val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
 
 //                pictureNameList.addAll(listOf(file.name)) // 데이터 넣는 부분
 
@@ -321,9 +326,25 @@ class AnnouncePostActivity : AppCompatActivity(), PostRecordResult {
 
     private fun string_to_timestamp(year :String, month: String, day : String, am_pm : String, hour : String, minute : String) : String{
         var hour_int = 0
-        if(am_pm.equals("오후") && hour.toInt() != 12)
-            hour_int = hour.toInt() + 12
 
+        // 01, 02 이런 식으로 들어왔을 때
+        if(hour.substring(0).equals("0")){
+            // 1의 자리만 substring
+            hour_int = hour.substring(1).toInt()
+            if(am_pm.equals("오후") && hour.toInt() != 12){
+                hour_int = hour.toInt() + 12
+            }
+            else{
+                hour_int = hour.toInt()
+            }
+        }else{
+            if(am_pm.equals("오후") && hour.toInt() != 12){
+                hour_int = hour.toInt() + 12
+            }
+            else{
+                hour_int = hour.toInt()
+            }
+        }
 
         var set = "2022-01-23T03:34:56.000+00:00"
         var order_time = year + "-" + month + "-" + day + "T" + hour_int + ":" + minute + ":" + "00.000+00:00"

@@ -1,40 +1,42 @@
 package umc.mobile.project.ram.my_application_1.current_application
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import umc.mobile.project.databinding.ActivityCurrentapplicationBinding
+import umc.mobile.project.ram.Auth.Application.ViewUpload.ApplicationGet
+import umc.mobile.project.ram.Auth.Application.ViewUpload.ViewUploadGetResult
+import umc.mobile.project.ram.Auth.Application.ViewUpload.ViewUploadGetService
+import umc.mobile.project.ram.Auth.Post.GetPostDetail.PostDetailGetService
+import umc.mobile.project.ram.my_application_1.*
 
-class CurrentApplicationActivity : AppCompatActivity() {
+class CurrentApplicationActivity : AppCompatActivity(), ViewUploadGetResult {
     lateinit var binding: ActivityCurrentapplicationBinding
     lateinit var currentRVAdapter: CurrentRVAdapter
-    val currentList = ArrayList<CurrentApplicatoin>()
+    val currentList = ArrayList<ApplicationGet>()
+    var post_id_get = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCurrentapplicationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        post_id_get = intent.getIntExtra("post_id", 0)
+
         initActionBar()
         initRecycler()
     }
     private fun initRecycler() {
-        currentList.apply {
-            add(CurrentApplicatoin("2022년 12월 29일 오후 6시 35분", "버거킹 같이 시키실 분 구합니다~", "홈런볼", "님이 메이트를 신청하셨습니다."))
-            add(CurrentApplicatoin("2022년 12월 29일 오후 6시 40분", "피자헛 같이 시키실 분 구합니다~", "쿠키", "님이 메이트를 신청하셨습니다."))
-            add(CurrentApplicatoin("2022년 12월 29일 오후 6시 40분", "베라 같이 시키실 분 구합니다~", "우왕", "님이 메이트를 신청하셨습니다."))
+        geApplicationUploadView()
+    }
 
-            currentRVAdapter = CurrentRVAdapter(currentList)
-            binding.rvApplication.adapter = currentRVAdapter
+    private fun geApplicationUploadView(){
+        val viewUploadGetService = ViewUploadGetService()
+        viewUploadGetService.setViewUploadGetResult(this)
+        viewUploadGetService.getViewUpload(user_id_logined) // 임의로 지정
 
-//            currentRVAdapter.setItemClickListener(object: CurrentRVAdapter.OnItemClickListener{
-//                override fun onItemClick(chatRoom: ChatRoom) {
-//
-//                }
-//            })
+        Log.d("받은 post_id ================= ", post_id_get.toString())
 
-            currentRVAdapter.notifyDataSetChanged()
-
-        }
     }
 
     private fun initActionBar() {
@@ -45,6 +47,25 @@ class CurrentApplicationActivity : AppCompatActivity() {
              finish()
         }
 
+    }
+
+    override fun getPostUploadSuccess(code: Int, result: ArrayList<ApplicationGet>) {
+        Log.d("받은 공고 : ========================= " , result[0].post_id.toString())
+            currentList.addAll(result)
+            currentRVAdapter = CurrentRVAdapter(currentList)
+            binding.rvApplication.adapter = currentRVAdapter
+
+            currentRVAdapter.setItemClickListener(object: CurrentRVAdapter.OnItemClickListener{
+                override fun onItemClick(applicationGet: ApplicationGet) {
+
+                }
+            })
+
+            currentRVAdapter.notifyDataSetChanged()
+    }
+
+    override fun getPostUploadFailure(code: Int, message: String) {
+        TODO("Not yet implemented")
     }
 
 }

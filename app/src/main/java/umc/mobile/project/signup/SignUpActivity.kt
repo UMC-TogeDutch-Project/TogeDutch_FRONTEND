@@ -16,8 +16,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import umc.mobile.project.R
 import umc.mobile.project.databinding.ActivitySignUpBinding
 import umc.mobile.project.signup.Auth.ApiService
-import umc.mobile.project.signup.Auth.SmsRequest
-import umc.mobile.project.signup.Auth.SmsResponse
 import java.util.regex.Pattern
 
 class SignUpActivity : AppCompatActivity() {
@@ -38,6 +36,7 @@ class SignUpActivity : AppCompatActivity() {
             .build()
 
         val apiService = retrofit.create(ApiService::class.java)
+        val smsApiService = retrofit.create(SmsApiService::class.java)
 
 
 
@@ -54,16 +53,21 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         viewBinding.btnSendToCheckMsg.setOnClickListener {
-            apiService.sendCheckNum(SmsRequest(viewBinding.etInputPhoneNumber.text.toString())).enqueue(object : Callback<SmsResponse>{
+            val to = viewBinding.etInputPhoneNumber.text.toString()
+            Log.d(TAG, "onCreate: ${to}")
+
+            smsApiService.sendCheckNum(SmsRequest(to)).enqueue(object : Callback<SmsResponse>{
                 override fun onResponse(
                     call: Call<SmsResponse>,
                     response: Response<SmsResponse>) {
-                    Log.d(TAG, "onResponse:응답")
+                    Log.d(TAG, "onResponse:응답, ${response.code()}")
                     if(response.isSuccessful){
                         val smsResponseData = response.body()
+                        Log.d(TAG, "onResponse: ${smsResponseData}")
                         if (smsResponseData != null){
-                            when(smsResponseData.code){
-                                1000 -> Toast.makeText(this@SignUpActivity, "성공! ${smsResponseData.result.requestId}", Toast.LENGTH_SHORT).show()
+                            when(smsResponseData.statusCode){
+                                "202" -> Toast.makeText(this@SignUpActivity, "성공! ${smsResponseData.statusName}, ${smsResponseData.smsConfirmNum}", Toast.LENGTH_SHORT).show()
+
                             }
 
                         }
@@ -78,7 +82,6 @@ class SignUpActivity : AppCompatActivity() {
                 }
 
                 override fun onFailure(call: Call<SmsResponse>, t: Throwable) {
-                    Log.d(TAG, "onFailure: 요청 실패")
                 }
 
             })

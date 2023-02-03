@@ -17,12 +17,6 @@ interface ApiService {
     ): Call<SignUpResponse>
 
 
-    @POST("sms/send")
-    fun sendCheckNum(
-        @Body body: SmsRequest
-    ): Call<SmsResponse>
-
-
     @POST("user/keyword")
     fun getUserKeywordId(
         @Body body: KeywordRequest

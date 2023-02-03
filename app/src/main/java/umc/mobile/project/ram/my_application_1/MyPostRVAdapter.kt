@@ -114,7 +114,6 @@ class MyPostRVAdapter (
                     viewBinding.btnRecommend.setOnClickListener {
                         getMatching()
                     }
-
                 }
                 else{
                     selected_random_btn--

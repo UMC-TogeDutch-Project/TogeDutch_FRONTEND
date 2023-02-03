@@ -5,7 +5,9 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import umc.mobile.project.databinding.ItemParticipateBinding
+import umc.mobile.project.ram.Geocoder_location
 
 
 class JoinRVAdatpter(private val joinList: ArrayList<Post>) : RecyclerView.Adapter<JoinRVAdatpter.ViewHolder>(){
@@ -36,21 +38,29 @@ class JoinRVAdatpter(private val joinList: ArrayList<Post>) : RecyclerView.Adapt
     inner class ViewHolder(val binding: ItemParticipateBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(post: Post) {
 
-            val title : String = post.title
-//            val item_pic : String = currentApplicatoin.nickname
-            val location : String = "동덕여대 앞" // 위도경도 계산,,?
-//            val time : String = post.order_time
-//            var txt_time : String = "4시 50분"
-//            var txt_time = Timestamp_to_SDF().convert(post.order_time)
+            val txt_title : String = post.title
 
-            binding.orderListTitle.text = title
-            binding.orderListLocation.text = location
-            binding.orderListTime.text = "주문" // 주문시간
+            var latLong_to_address : String = Geocoder_location().calculate_location(context, post.latitude, post.longitude)
+            var txt_location = latLong_to_address
+
+            val txt_time = post.order_time
+//            2022-01-23T03:34:56.000+00:00
+            var txt_hour = txt_time.substring(11 until 13)
+            var txt_minute = txt_time.substring(14 until 16)
+            var txt_time_substring = txt_hour+"시" + txt_minute + "분 주문"
+
+
+            Glide.with(context).load(post.image).centerCrop().into(binding.listItemPicture)
+            binding.orderListTitle.text = txt_title
+            binding.orderListLocation.text = txt_location
+            binding.orderListTime.text = txt_time_substring // 주문시간
 
             binding.listItemReview.setOnClickListener {
                 val dlg = ReviewWritePopupDialog(context)
                 dlg.start()
             }
+
+
 
         }
     }

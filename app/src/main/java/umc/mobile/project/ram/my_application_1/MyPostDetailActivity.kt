@@ -21,6 +21,7 @@ class MyPostDetailActivity : AppCompatActivity(), PostDetailGetResult {
 
         binding.btnSeeCurrent.setOnClickListener {
             val intent = Intent(this, CurrentApplicationActivity::class.java)
+            intent.putExtra("post_id", post_id_to_detail)
             startActivity(intent)
         }
 

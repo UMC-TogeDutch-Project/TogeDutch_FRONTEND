@@ -245,7 +245,7 @@ private fun getPostLatest(){
 
         dataRecentRVAdapter.setItemClickListener(object: DataRecentRVAdapter.OnItemClickListener{
             override fun onItemClick(announceData: Post) {
-                val intent = Intent(this@AnnounceListActivity, MyPostDetailActivity::class.java)
+                val intent = Intent(this@AnnounceListActivity, AnnounceDetailActivity::class.java)
                 startActivity(intent)
             }
         })
@@ -267,7 +267,7 @@ private fun getPostLatest(){
 
         dataImminentRVAdapter.setItemClickListener(object: DataImminentRVAdapter.OnItemClickListener{
             override fun onItemClick(announceData: Post) {
-                val intent = Intent(this@AnnounceListActivity, MyPostDetailActivity::class.java)
+                val intent = Intent(this@AnnounceListActivity, AnnounceListActivity::class.java)
                 startActivity(intent)
             }
         })

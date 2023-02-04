@@ -2,11 +2,13 @@ package umc.mobile.project.ram.my_application_1.current_application
 
 import android.content.Context
 import Post
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import umc.mobile.project.databinding.ItemApplyCurrentBinding
+
 import umc.mobile.project.ram.Auth.Application.Accept.PostAcceptResult
 import umc.mobile.project.ram.Auth.Application.Accept.PostAcceptService
 import umc.mobile.project.ram.Auth.Application.Deny.PostDenyResult
@@ -17,6 +19,8 @@ import umc.mobile.project.ram.Auth.Application.GetUser.UserGetResult
 import umc.mobile.project.ram.Auth.Application.GetUser.UserGetService
 import umc.mobile.project.ram.Auth.Application.ViewUpload.ApplicationGet
 import umc.mobile.project.ram.Auth.Application.ViewUpload.ViewUploadGetService
+import umc.mobile.project.ram.Auth.Post.GetPost.PostGetResult
+import umc.mobile.project.ram.Auth.Post.GetPost.PostGetService
 import umc.mobile.project.ram.Auth.Post.GetPostDetail.PostDetailGetResult
 import umc.mobile.project.ram.Auth.Post.GetPostDetail.PostDetailGetService
 import umc.mobile.project.ram.my_application_1.Timestamp_to_SDF
@@ -25,6 +29,7 @@ import java.sql.Timestamp
 class CurrentRVAdapter(private val currentList: ArrayList<ApplicationGet>) : RecyclerView.Adapter<CurrentRVAdapter.ViewHolder>(){
 
     lateinit var context : Context
+    var application_id = 0
 
     // 아이템 레이아웃 결합
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
@@ -48,16 +53,17 @@ class CurrentRVAdapter(private val currentList: ArrayList<ApplicationGet>) : Rec
     }
 
     // 레이아웃 내 view 연결
-    inner class ViewHolder(val binding: ItemApplyCurrentBinding) : RecyclerView.ViewHolder(binding.root), UserGetResult, PostDetailGetResult, PostDenyResult, PostAcceptResult {
+    inner class ViewHolder(val binding: ItemApplyCurrentBinding) : RecyclerView.ViewHolder(binding.root), UserGetResult,PostDenyResult, PostAcceptResult,
+        PostGetResult {
         fun bind(currentApplicatoin: ApplicationGet) {
 
             val userGetService = UserGetService()
             userGetService.setUserGetResult(this)
             userGetService.getUser(currentApplicatoin.user_id)
 
-            val postDetailGetService = PostDetailGetService()
-            postDetailGetService.setPostDetailGetResult(this)
-            postDetailGetService.getPostDetail(currentApplicatoin.user_id, currentApplicatoin.post_id)
+            val postGetService = PostGetService()
+            postGetService.setPostGetResult(this)
+            postGetService.getPost(currentApplicatoin.post_id)
 
 
             binding.itemAcceptBtn.setOnClickListener {
@@ -82,7 +88,8 @@ class CurrentRVAdapter(private val currentList: ArrayList<ApplicationGet>) : Rec
             TODO("Not yet implemented")
         }
 
-        override fun getPostUploadSuccess(code: Int, result: Post) {
+        override fun getPostSuccess(code: Int, result: Post) {
+            Log.d("============================================= 성공 !!!!!! ===================", "result.title")
             val txtSubject : String = result.title // 제목 가져오기
             binding.itemSubjectTxt.text = txtSubject
 
@@ -91,12 +98,12 @@ class CurrentRVAdapter(private val currentList: ArrayList<ApplicationGet>) : Rec
             val timestampToSdf = Timestamp_to_SDF()
             var txtDate : String = timestampToSdf.convert(result.created_at) // 시간 가져오기
             binding.itemDateTxt.text = txtDate
-
         }
 
-        override fun getPostUploadFailure(code: Int, message: String) {
+        override fun getPostFailure(code: Int, message: String) {
             TODO("Not yet implemented")
         }
+
 
         override fun DenySuccess(result: Result) {
             binding.itemAlarmTxt.text = "님의 요청이 거절되었습니다."
@@ -113,8 +120,6 @@ class CurrentRVAdapter(private val currentList: ArrayList<ApplicationGet>) : Rec
         override fun AcceptFailure() {
             TODO("Not yet implemented")
         }
-
-
     }
 
     interface OnItemClickListener {

@@ -13,8 +13,8 @@ class PostAcceptService {
 
     private lateinit var postAcceptResult: PostAcceptResult
 
-    fun setAcceptResult(postDenyResult: PostAcceptResult){
-        this.postAcceptResult = postDenyResult
+    fun setAcceptResult(postAcceptResult: PostAcceptResult){
+        this.postAcceptResult = postAcceptResult
     }
 
     fun sendAccept(applicationIdx : Int){

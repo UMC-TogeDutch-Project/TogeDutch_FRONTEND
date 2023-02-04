@@ -41,11 +41,11 @@ class CurrentApplicationActivity : AppCompatActivity(), ViewUploadGetResult {
 
     private fun initActionBar() {
 
-        binding.mainActionbar.appbarPageNameLeftTv.text = "공고 신청 현황"
-
-        binding.mainActionbar.appbarBackBtn.setOnClickListener {
-             finish()
-        }
+//        binding.mainActionbar.appbarPageNameLeftTv.text = "공고 신청 현황"
+//
+//        binding.mainActionbar.appbarBackBtn.setOnClickListener {
+//             finish()
+//        }
 
     }
 

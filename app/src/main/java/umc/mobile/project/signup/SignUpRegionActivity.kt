@@ -85,7 +85,7 @@ class SignUpRegionActivity : AppCompatActivity() {
                     viewBinding.tvRegionCheck.text = "오류 메세지"
                     viewBinding.etInputRegion.setTextColor(Color.parseColor("#C854FF"))
 
-                    Toast.makeText(this, "해당되는 주소 정보는 없습니다", Toast.LENGTH_LONG).show()
+//                    Toast.makeText(this, "해당되는 주소 정보는 없습니다", Toast.LENGTH_LONG).show()
                 } else {
                     latitude = locationNameList!![0].latitude
                     longitude = locationNameList!![0].longitude

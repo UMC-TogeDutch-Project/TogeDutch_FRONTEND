@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="122dp"
             android:layout_marginTop="29dp"
-            android:text="aeeazip님"
+            android:text="aeeazip"
             android:textColor="#000000"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -72,6 +72,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/profile" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="님"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/tvName"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

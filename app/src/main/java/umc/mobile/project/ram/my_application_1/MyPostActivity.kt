@@ -31,7 +31,7 @@ var postUploadList = ArrayList<Post>()
 var user_id_var = 32
 var user_id_logined = 32
 
-var post_id_to_detail = 0
+var post_id_to_detail = 10
 
 
 class MyPostActivity : AppCompatActivity(), PostUploadGetResult, PostJoinGetResult {

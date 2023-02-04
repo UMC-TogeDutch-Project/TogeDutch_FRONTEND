@@ -15,6 +15,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import umc.mobile.project.MainActivity
 import umc.mobile.project.R
+import umc.mobile.project.announcement.access_token
 import umc.mobile.project.signup.SignUpActivity
 import umc.mobile.project.databinding.ActivityLoginBinding
 import umc.mobile.project.ram.my_application_1.user_id_logined
@@ -56,6 +57,7 @@ class LoginActivity : AppCompatActivity(), MyCustomDialogInterface {
                         when(loginResponseData?.code){
                             1000 -> {Log.d(TAG, "onResponse:login응답 성공 userIdx: ${loginResponseData.result!!.userIdx}, 상태: ${loginResponseData.result!!.status}")
                                 user_id_logined = loginResponseData.result!!.userIdx
+                                access_token = loginResponseData.result.jwt
                                 myCustomDialog.show()
                             }
                             2010 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
@@ -91,6 +93,34 @@ class LoginActivity : AppCompatActivity(), MyCustomDialogInterface {
 
 
 
+        }
+
+        viewBinding.tbFindPassword.setOnClickListener {
+            val email = viewBinding.etEmailId.text.toString()
+            apiLoginService.findPwd(email).enqueue(object: Callback<FindPwdResponse>{
+                override fun onResponse(
+                    call: Call<FindPwdResponse>,
+                    response: Response<FindPwdResponse>
+                ) {
+                    if(response.isSuccessful){
+                        val findPwdResponseData = response.body()
+                        if(findPwdResponseData?.result != null){
+                            Log.d(TAG, "onResponse:응답 성공 ${findPwdResponseData?.result}")
+                            Toast.makeText(this@LoginActivity, "회원님의 이메일로 비밀번호가 전송되었습니다.", Toast.LENGTH_SHORT).show()
+                        }
+                        else{
+                            Toast.makeText(this@LoginActivity, "잘못된 이메일을 입력하였습니다.", Toast.LENGTH_SHORT).show()
+                        }
+                    }else{
+
+                    }
+                }
+
+                override fun onFailure(call: Call<FindPwdResponse>, t: Throwable) {
+                    Log.d(TAG, "onFailure:비밀번호 찾기 통신 실패")
+                }
+
+            })
         }
 
         viewBinding.tbSignUp.setOnClickListener {

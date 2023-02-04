@@ -66,9 +66,19 @@ class SignUpAlarmKeywordActivity : AppCompatActivity() {
 
         viewBinding.btnInputAlarm.setOnClickListener{
             val keyword = viewBinding.etInputAlarmKeyword.text.toString()
-            keywordList.apply { add(DataVo(keyword)) }
-            customAdapter.notifyDataSetChanged()
-            Log.d(TAG, "onCreate:${keywordList}")
+//            if(keywordList.size < 6){
+            Log.d(TAG, "onCreate:${keywordList.size}")
+                keywordList.apply { add(DataVo(keyword)) }
+                customAdapter.notifyDataSetChanged()
+                Log.d(TAG, "onCreate:${keywordList}")
+                key1 = keywordList?.get(0).toString()
+
+                Log.d(TAG, "onCreate: key1: ${key1}")
+                viewBinding.etInputAlarmKeyword.setText(null)
+//            }
+//            else{
+//                Toast.makeText(this@SignUpAlarmKeywordActivity, "최대 키워드 갯수를 초과했습니다.", Toast.LENGTH_SHORT).show()
+//            }
 
         }
 
@@ -93,6 +103,7 @@ class SignUpAlarmKeywordActivity : AppCompatActivity() {
                             when(keywordResponseData.code){
                                 1000 -> {//Toast.makeText(this@SignUpAlarmKeywordActivity, "성공! ${keywordResponseData.message}", Toast.LENGTH_SHORT).show()
                                     var keywordIdx :Int = keywordResponseData.result.keyword_Id
+                                    Log.d(TAG, "onResponse: ${keywordResponseData}")
                                     intent.putExtra("name", name)
                                     intent.putExtra("email", email)
                                     intent.putExtra("password", password)

@@ -10,11 +10,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+
+import umc.mobile.project.announcement.AnnounceDetailActivity
+
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+
 import umc.mobile.project.announcement.AnnounceListActivity
 import umc.mobile.project.announcement.Auth.PostImminentGet.PostImminentGetResult
 import umc.mobile.project.announcement.Auth.PostImminentGet.PostImminentGetService
@@ -120,9 +124,9 @@ class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
             startActivity(intent)
             num1 =1
         }
-
         initRecyclerViewRecent()
         initRecyclerViewImminent()
+
 
         return viewBinding.root
 
@@ -130,6 +134,10 @@ class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+
+    }
     private fun initRecyclerViewRecent(){
         getPostLatest()
 //        dummyHomeDataRecent.apply {
@@ -248,7 +256,7 @@ class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
 
         dataRecentRVAdapter.setItemClickListener(object: DataRecentRVAdapter.OnItemClickListener{
             override fun onItemClick(announceData: Post) {
-                val intent = Intent(context, MyPostDetailActivity::class.java)
+                val intent = Intent(context, AnnounceDetailActivity::class.java)
                 startActivity(intent)
             }
         })
@@ -281,7 +289,7 @@ class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
 
         dataImminentRVAdapter.setItemClickListener(object: DataImminentRVAdapter.OnItemClickListener{
             override fun onItemClick(announceData: Post) {
-                val intent = Intent(context, MyPostDetailActivity::class.java)
+                val intent = Intent(context, AnnounceDetailActivity::class.java)
                 startActivity(intent)
             }
         })

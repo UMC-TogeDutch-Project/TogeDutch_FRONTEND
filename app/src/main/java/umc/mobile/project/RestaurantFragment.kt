@@ -1,6 +1,5 @@
 package umc.mobile.project
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,12 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 //import umc.mobile.project.chat.ChatRoom
 //import umc.mobile.project.chat.ChattingActivity
 import umc.mobile.project.databinding.FragmentRestaurantBinding
-import umc.mobile.project.ram.my_application_1.MyPostDetailActivity
 import umc.mobile.project.restaurant.RestaurantData
 import umc.mobile.project.restaurant.RestaurantPageDialog
 import umc.mobile.project.restaurant.RestaurantRVAdapter
 import umc.mobile.project.restaurant.RestaurantRVAdapterDecoration
-import umc.mobile.project.restaurant.blog.RestaurantPageActivity
 
 class RestaurantFragment : Fragment() {
     private lateinit var binding: FragmentRestaurantBinding

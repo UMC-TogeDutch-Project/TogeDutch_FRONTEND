@@ -1,9 +1,9 @@
 package umc.mobile.project.ram.my_application_1
 
+import MemberData
 import Post
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import umc.mobile.project.databinding.FragmentRandomMatchingBinding
 import umc.mobile.project.databinding.ItemMyPostBinding
+import umc.mobile.project.ram.Auth.Matching.GetMatching.MatchingGetResult
+import umc.mobile.project.ram.Auth.Matching.GetMatching.MatchingGetService
 
 import umc.mobile.project.ram.Geocoder_location
 import java.util.*
@@ -23,7 +25,7 @@ import kotlin.collections.ArrayList
 class MyPostRVAdapter (
     private val applicationList: ArrayList<Post>
     ) :
-    RecyclerView.Adapter<MyPostRVAdapter.ViewHolder>(), Filterable{
+    RecyclerView.Adapter<MyPostRVAdapter.ViewHolder>(), Filterable, MatchingGetResult {
 
     lateinit var context : Context
 
@@ -100,14 +102,17 @@ class MyPostRVAdapter (
                     selected_random_btn++
                     binding.randomFramelayout.visibility = View.VISIBLE
 
-                    // 메이트 매칭 신청
+                    // 첫 랜덤 매칭
+                    getMatching()
+
+                    // 메이트 매칭 신청 (알람 가게 설정)
                     viewBinding.btnMatchingApplication.setOnClickListener {
 
                     }
 
                     // 재추천 받기
                     viewBinding.btnRecommend.setOnClickListener {
-
+                        getMatching()
                     }
                 }
                 else{
@@ -167,5 +172,22 @@ class MyPostRVAdapter (
 
     }
 
+    // 랜덤 매칭
+    private fun getMatching(){
+        val matchingGetService = MatchingGetService()
+        matchingGetService.setMatchingGetResult(this)
+        matchingGetService.getRandomMatching(post_id_to_detail) // 임의로 지정
+
+    }
+
+    override fun getMatchingSuccess(code: Int, result: MemberData) {
+        viewBinding.nickName.text = result.name
+
+        Glide.with(context).load(result.image).into(viewBinding.profileImage)
+    }
+
+    override fun getMatchingFailure(code: Int, message: String) {
+        TODO("Not yet implemented")
+    }
 
 }

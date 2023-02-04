@@ -3,10 +3,12 @@ package umc.mobile.project.profile
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import umc.mobile.project.databinding.FragmentMyprofileBinding
 import umc.mobile.project.ram.my_application_1.MyPostDetailActivity
 import umc.mobile.project.ram.my_application_1.ParticipatePopupDialog
@@ -20,6 +22,9 @@ class MyProfileFragment : Fragment() {
 
     var myProfileActivity:MyProfileActivity? = null
 
+    var name : String = ""
+    var image : String = ""
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         myProfileActivity = context as MyProfileActivity
@@ -32,9 +37,30 @@ class MyProfileFragment : Fragment() {
     ): View {
         viewBinding = FragmentMyprofileBinding.inflate(layoutInflater)
 
+        Log.d("name: ", arguments?.getString("name").toString())
+        Log.d("image: ", arguments?.getString("image").toString())
+
+        name = arguments?.getString("name").toString()
+        image = arguments?.getString("image").toString()
+
+        viewBinding.nickname.text = name
+
+        Log.d("name: ", name)
+        Log.d("image: ", image)
+
+        if(image != "null"){
+            Glide.with(this).load(arguments?.getString("image")).into(viewBinding.profileImage)
+        }
+
         initRecyclerView()
         initReview()
 
+        // 프로필 사진 변경
+        viewBinding.changeProfile.setOnClickListener {
+
+        }
+
+        // 변경된 사진있으면 사진 보내고 페이지 변경
         viewBinding.profileRevise.setOnClickListener {
             myProfileActivity!!.replaceFragment(1)
         }
@@ -45,6 +71,7 @@ class MyProfileFragment : Fragment() {
 
         // 뒤로 가기
         viewBinding.myprofileActionbar.appbarBackBtn.setOnClickListener {
+
             (context as MyProfileActivity).finish()
         }
 

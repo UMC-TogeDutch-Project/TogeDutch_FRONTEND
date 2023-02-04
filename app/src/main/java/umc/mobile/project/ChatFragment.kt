@@ -1,5 +1,6 @@
 package umc.mobile.project
 
+import Post
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -12,9 +13,17 @@ import umc.mobile.project.ram.chat.ChatRoom
 import umc.mobile.project.ram.chat.ChatRoomRVAdapter
 import umc.mobile.project.ram.chat.ChattingActivity
 import umc.mobile.project.databinding.FragmentChatBinding
+import umc.mobile.project.ram.Auth.Application.GetUser.UserGetService
+import umc.mobile.project.ram.Auth.ChatRoom.ChatRoomGetList.ChatRoomList
+import umc.mobile.project.ram.Auth.ChatRoom.ChatRoomGetList.ChatRoomListGetResult
+import umc.mobile.project.ram.Auth.ChatRoom.ChatRoomGetList.ChatRoomListGetService
+import umc.mobile.project.ram.Auth.Post.GetPostJoin.PostJoinGetResult
+import umc.mobile.project.ram.Auth.Post.GetPostJoin.PostJoinGetService
+import umc.mobile.project.ram.chat.post_id_chatroom
+import umc.mobile.project.ram.my_application_1.user_id_logined
 
-class ChatFragment: Fragment() {
-    var chatRoomList = ArrayList<ChatRoom>()
+class ChatFragment : Fragment(), ChatRoomListGetResult {
+    var chatRoomList = ArrayList<ChatRoomList>()
     lateinit var chatRoomRVAdapter: ChatRoomRVAdapter
     lateinit var binding: FragmentChatBinding
 
@@ -37,28 +46,9 @@ class ChatFragment: Fragment() {
     }
 
     private fun initRecycler() {
-        chatRoomList.apply {
-            add(ChatRoom("버거킹 같이 시키실 분 구합니다~", "aeezip", "알겠습니다~", "오후 10시 30분"))
-            add(ChatRoom("피자헛 같이 시키실 분 구합니다~", "limbo", "네~", "오후 9시 30분"))
-            add(ChatRoom("롯데리아 같이 시키실 분!", "fsdff", "알겠습니다~", "오전 10시 30분"))
-
-            chatRoomRVAdapter = ChatRoomRVAdapter(chatRoomList)
-            binding.rvChatroom.adapter = chatRoomRVAdapter
-            binding.rvChatroom.layoutManager = LinearLayoutManager(requireContext())
-
-            chatRoomRVAdapter.setItemClickListener(object: ChatRoomRVAdapter.OnItemClickListener{
-                override fun onItemClick(chatRoom: ChatRoom) {
-                    activity?.let {
-                        chatRoomRVAdapter.notifyDataSetChanged()
-                        val intent = Intent(context, ChattingActivity::class.java)
-                        startActivity(intent)
-                    }
-                }
-            })
-
-            chatRoomRVAdapter.notifyDataSetChanged()
-
-        }
+        val chatRoomListGetService = ChatRoomListGetService()
+        chatRoomListGetService.setChatRoomListGetResult(this)
+        chatRoomListGetService.getChatRoomUpload(user_id_logined)
     }
 
     private fun initActionBar() {
@@ -75,4 +65,29 @@ class ChatFragment: Fragment() {
     override fun onDestroy() {
         super.onDestroy()
     }
+
+    override fun getChatRoomListSuccess(code: Int, result: ArrayList<ChatRoomList>) {
+        chatRoomList.addAll(result)
+        chatRoomRVAdapter = ChatRoomRVAdapter(chatRoomList)
+        binding.rvChatroom.adapter = chatRoomRVAdapter
+        binding.rvChatroom.layoutManager = LinearLayoutManager(requireContext())
+
+        chatRoomRVAdapter.setItemClickListener(object : ChatRoomRVAdapter.OnItemClickListener {
+            override fun onItemClick(chatRoom: ChatRoomList) {
+                activity?.let {
+                    val intent = Intent(context, ChattingActivity::class.java)
+                    intent.putExtra("chatRoom_id", chatRoom.chatRoomIdx!!)
+                    startActivity(intent)
+                }
+            }
+        })
+
+        chatRoomRVAdapter.notifyDataSetChanged()
+    }
+
+    override fun getChatRoomListFailure(code: Int, message: String) {
+        TODO("Not yet implemented")
+    }
+
+
 }

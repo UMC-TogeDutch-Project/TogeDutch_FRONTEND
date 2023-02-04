@@ -60,6 +60,8 @@ class MyPostRVAdapter (
     // 레이아웃 내 view 연결
     inner class ViewHolder(val binding: ItemMyPostBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(post: Post) {
+            Log.d("현재 유저 아이디 =============", post.user_id.toString())
+
             var selected_random_btn : Int = 0
             var isSelected = false
 

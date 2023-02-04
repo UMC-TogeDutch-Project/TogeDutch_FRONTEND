@@ -19,6 +19,6 @@ data class Post(
 
     @SerializedName(value =  "latitude") val latitude : Double,
     @SerializedName(value =  "longitude") val longitude : Double,
-    @SerializedName(value =  "ChatRoom_chatRoom_id") val ChatRoom_chatRoom_id : Int,
+    @SerializedName(value =  "chatRoom_id") val chatRoom_id : Int,
     @SerializedName(value =  "category") val category : String
 )

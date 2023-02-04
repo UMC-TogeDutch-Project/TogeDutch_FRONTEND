@@ -8,7 +8,7 @@ interface SmsApiService {
 
     @POST("sms/send")
     fun sendCheckNum(
-        @Body to : SmsRequest?
+        @Body to : SmsRequest
     ): Call<SmsResponse>
 
 }

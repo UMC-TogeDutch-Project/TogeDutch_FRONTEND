@@ -95,6 +95,34 @@ class LoginActivity : AppCompatActivity(), MyCustomDialogInterface {
 
         }
 
+        viewBinding.tbFindPassword.setOnClickListener {
+            val email = viewBinding.etEmailId.text.toString()
+            apiLoginService.findPwd(email).enqueue(object: Callback<FindPwdResponse>{
+                override fun onResponse(
+                    call: Call<FindPwdResponse>,
+                    response: Response<FindPwdResponse>
+                ) {
+                    if(response.isSuccessful){
+                        val findPwdResponseData = response.body()
+                        if(findPwdResponseData?.result != null){
+                            Log.d(TAG, "onResponse:응답 성공 ${findPwdResponseData?.result}")
+                            Toast.makeText(this@LoginActivity, "회원님의 이메일로 비밀번호가 전송되었습니다.", Toast.LENGTH_SHORT).show()
+                        }
+                        else{
+                            Toast.makeText(this@LoginActivity, "잘못된 이메일을 입력하였습니다.", Toast.LENGTH_SHORT).show()
+                        }
+                    }else{
+
+                    }
+                }
+
+                override fun onFailure(call: Call<FindPwdResponse>, t: Throwable) {
+                    Log.d(TAG, "onFailure:비밀번호 찾기 통신 실패")
+                }
+
+            })
+        }
+
         viewBinding.tbSignUp.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)

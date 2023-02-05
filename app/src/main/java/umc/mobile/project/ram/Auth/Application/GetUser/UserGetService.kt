@@ -18,7 +18,7 @@ class UserGetService {
 
         postUploadDetailGetService.getUser(user_id).enqueue(object : Callback<UserGetResponse> {
             override fun onResponse(call: Call<UserGetResponse>, response: Response<UserGetResponse>,) {
-                Log.d("POSTUPLOAD-GET SUCCESS",response.toString())
+                Log.d("USER-GET SUCCESS",response.toString())
                 val resp : UserGetResponse = response.body()!!
                 when(resp.code) {
 //                    1000 ->
@@ -28,7 +28,7 @@ class UserGetService {
             }
 
             override fun onFailure(call: Call<UserGetResponse>, t: Throwable) {
-                Log.d("POSTUPLOAD-GET FAILURE",t.message.toString())
+                Log.d("USER-GET FAILURE",t.message.toString())
             }
         })
     }

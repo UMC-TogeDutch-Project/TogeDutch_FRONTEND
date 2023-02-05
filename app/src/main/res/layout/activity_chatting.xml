@@ -84,7 +84,7 @@
         android:background="@drawable/tabler_icon_plus"
         app:layout_constraintStart_toStartOf="@id/edit_message"
         app:layout_constraintTop_toTopOf="@id/edit_message"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginBottom="6dp"/>
 
@@ -105,13 +105,19 @@
         <EditText
             android:id="@+id/edit_message"
             android:layout_width="273.94dp"
-            android:layout_height="38dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/square_background_gray_round"
             android:hint="메시지를 입력하세요"
             android:paddingLeft="37dp"
             android:paddingRight="20dp"
             android:textColor="@color/black"
             android:textSize="18dp"
+            android:fontFamily="@font/notosanskr_regular"
+            android:includeFontPadding="false"
+
+            android:paddingTop="8dp"
+            android:paddingBottom="10dp"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btn_submit"
             app:layout_constraintStart_toStartOf="parent"

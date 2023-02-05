@@ -21,7 +21,7 @@ class PostAcceptService {
         val authService = getRetrofit().create(PostAcceptRetrofitInterfaces::class.java)
         authService.sendAccept(applicationIdx).enqueue(object: Callback<PostAcceptResponse> {
             override fun onResponse(call: Call<PostAcceptResponse>, response: Response<PostAcceptResponse>) {
-                Log.d("RECORD/SUCCESS",response.toString())
+                Log.d("SNED-ACCEPT SUCCESS",response.toString())
                 val resp: PostAcceptResponse = response.body()!!
                 result = resp.result!!
                 when(resp.code){
@@ -31,7 +31,7 @@ class PostAcceptService {
             }
 
             override fun onFailure(call: Call<PostAcceptResponse>, t: Throwable) {
-                Log.d("RECORD/FAILURE",t.message.toString())
+                Log.d("SNED-ACCEPT FAILURE",t.message.toString())
             }
         })
     }

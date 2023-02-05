@@ -39,13 +39,19 @@ class ChatFragment : Fragment(), ChatRoomListGetResult {
         Log.d(TAG, "onCreateView: ChatTest Log")
 
         initActionBar()
-        initRecycler()
 
         return binding.root
 
     }
 
-    private fun initRecycler() {
+    override fun onResume() {
+        super.onResume()
+        getChatRoom()
+    }
+
+
+
+    private fun getChatRoom() {
         val chatRoomListGetService = ChatRoomListGetService()
         chatRoomListGetService.setChatRoomListGetResult(this)
         chatRoomListGetService.getChatRoomUpload(user_id_logined)
@@ -66,11 +72,10 @@ class ChatFragment : Fragment(), ChatRoomListGetResult {
         super.onDestroy()
     }
 
-    override fun getChatRoomListSuccess(code: Int, result: ArrayList<ChatRoomList>) {
-        chatRoomList.addAll(result)
-        chatRoomRVAdapter = ChatRoomRVAdapter(chatRoomList)
+    fun initRecyclerView(result : ArrayList<ChatRoomList>){
+        chatRoomRVAdapter = ChatRoomRVAdapter(result)
         binding.rvChatroom.adapter = chatRoomRVAdapter
-        binding.rvChatroom.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvChatroom.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
         chatRoomRVAdapter.setItemClickListener(object : ChatRoomRVAdapter.OnItemClickListener {
             override fun onItemClick(chatRoom: ChatRoomList) {
@@ -81,8 +86,11 @@ class ChatFragment : Fragment(), ChatRoomListGetResult {
                 }
             }
         })
+    }
 
-        chatRoomRVAdapter.notifyDataSetChanged()
+    override fun getChatRoomListSuccess(code: Int, result: ArrayList<ChatRoomList>) {
+        initRecyclerView(result)
+        chatRoomList = result
     }
 
     override fun getChatRoomListFailure(code: Int, message: String) {

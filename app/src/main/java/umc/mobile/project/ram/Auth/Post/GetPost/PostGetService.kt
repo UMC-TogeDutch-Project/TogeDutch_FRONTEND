@@ -18,7 +18,7 @@ class PostGetService {
 
         postUploadDetailGetService.getPost(post_id).enqueue(object : Callback<PostGetResponse> {
             override fun onResponse(call: Call<PostGetResponse>, response: Response<PostGetResponse>,) {
-                Log.d("POSTUPLOAD-GET SUCCESS",response.toString())
+                Log.d("POSTONE-GET SUCCESS",response.toString())
                 val resp : PostGetResponse = response.body()!!
                 when(resp.code) {
 //                    1000 ->
@@ -28,7 +28,7 @@ class PostGetService {
             }
 
             override fun onFailure(call: Call<PostGetResponse>, t: Throwable) {
-                Log.d("POSTUPLOAD-GET FAILURE",t.message.toString())
+                Log.d("POSTONE-GET FAILURE",t.message.toString())
             }
         })
     }

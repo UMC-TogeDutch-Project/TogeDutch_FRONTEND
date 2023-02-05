@@ -5,7 +5,6 @@ import okhttp3.MultipartBody
 import retrofit2.http.*
 
 interface PostDenyRetrofitInterfaces {
-    @Multipart
-    @POST("application/{applicationIdx}/deny}")
-    fun sendDeny(@Path("post") applicationIdx : Int) : Call<PostDenyResponse>
+    @POST("application/{applicationIdx}/deny")
+    fun sendDeny(@Path("applicationIdx") applicationIdx : Int) : Call<PostDenyResponse>
 }

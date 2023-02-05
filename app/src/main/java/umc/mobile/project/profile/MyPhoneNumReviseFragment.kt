@@ -1,14 +1,19 @@
 package umc.mobile.project.profile
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import umc.mobile.project.databinding.FragmentMypagePhonenumberReviseBinding
 
 class MyPhoneNumReviseFragment : Fragment() {
     private lateinit var viewBinding: FragmentMypagePhonenumberReviseBinding
+
+    var name : String = ""
+    var image : String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -18,6 +23,21 @@ class MyPhoneNumReviseFragment : Fragment() {
         viewBinding = FragmentMypagePhonenumberReviseBinding.inflate(layoutInflater)
 
         initActionBar()
+
+        Log.d("name: ", arguments?.getString("name").toString())
+        Log.d("image: ", arguments?.getString("image").toString())
+
+        name = arguments?.getString("name").toString()
+        image = arguments?.getString("image").toString()
+
+        viewBinding.nickname.text = name
+
+        Log.d("name: ", name)
+        Log.d("image: ", image)
+
+        if(image != "null"){
+            Glide.with(this).load(arguments?.getString("image")).into(viewBinding.profileImage)
+        }
 
         return viewBinding.root
     }

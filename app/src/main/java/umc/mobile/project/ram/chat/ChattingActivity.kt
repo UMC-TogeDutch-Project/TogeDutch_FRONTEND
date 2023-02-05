@@ -1,5 +1,7 @@
 package umc.mobile.project.ram.chat
 
+import Post
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
@@ -15,39 +17,82 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import org.json.JSONObject
+import ua.naiksoftware.stomp.Stomp
+import ua.naiksoftware.stomp.dto.LifecycleEvent
 import umc.mobile.project.MainActivity
 import umc.mobile.project.R
 import umc.mobile.project.databinding.ActivityChattingBinding
+import umc.mobile.project.ram.Auth.Application.GetUser.UserGet
+import umc.mobile.project.ram.Auth.Application.GetUser.UserGetResult
+import umc.mobile.project.ram.Auth.Application.GetUser.UserGetService
+import umc.mobile.project.ram.Auth.Post.GetPostAll.PostGetAllResult
+import umc.mobile.project.ram.Auth.Post.GetPostAll.PostGetAllService
+import umc.mobile.project.ram.Auth.Post.GetPostDetail.PostDetailGetResult
+import umc.mobile.project.ram.Auth.Post.GetPostDetail.PostDetailGetService
+import umc.mobile.project.ram.Auth.Post.GetPostJoin.PostJoinGetService
+import umc.mobile.project.ram.my_application_1.post_id_to_detail
+import umc.mobile.project.ram.my_application_1.user_id_logined
+import umc.mobile.project.ram.my_application_1.user_id_var
+import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
 
-class ChattingActivity: AppCompatActivity() {
+class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult, PostGetAllResult {
     lateinit var binding: ActivityChattingBinding
+    lateinit var chatRVAdapter: ChatRVAdapter
 
-//    lateinit var firebaseDatabase: DatabaseReference
-    lateinit var recycler_talks: RecyclerView
-    lateinit var chatRoom: ChatRoom
-//    lateinit var opponentUser: User
-    lateinit var chatRoomKey: String
-    lateinit var myUid: String
-
-    lateinit var content_txt : TextView
-    lateinit var profile_img : ImageView
-    lateinit var id_txt : TextView
     lateinit var edit_message : EditText
     lateinit var btn_submit : AppCompatButton
     lateinit var more_btn : AppCompatButton
+    var chatRoom_id_get : Int = 0
+
+
+    /// stomp 연결
+    private var url = "ws://ec2-3-34-255-129.ap-northeast-2.compute.amazonaws.com:9000/"
+    val stompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, url)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChattingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        chatRoom_id_get = intent.getIntExtra("chatRoom_id", 0)
+
+        val postGetAllService = PostGetAllService() // 공고 전체 불러오기
+        postGetAllService.setPostGetResult(this)
+        postGetAllService.getPostAll()
+
         initActionBar()
+
+        // 채팅 부분
+        var chatRoomId = intent.getIntExtra("chatRoom_id", -1)
+        Log.d("ChattinActivity 넘어온 chatRoom_id: $chatRoomId", "")
+
+        if(chatRoomId != -1){
+            try {
+                runStomp(chatRoomId, user_id_logined)
+            } catch (e:Exception){
+                Log.d("ERROR", "stomp 자체의 오류")
+                Log.d("ERROR", e.message.toString())
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+        /// 버튼 클릭
 
         binding.itemProfileImg.setOnClickListener{
             val dlg = PostDetailPopupDialog(this)
@@ -114,6 +159,71 @@ class ChattingActivity: AppCompatActivity() {
             dialog.show()
         }
 
+    }
+
+    @SuppressLint("CheckResult")
+    private fun runStomp(chatRoom_id : Int, user_id : Int){ // user_id는 현재 로그인한 유저 아이디!!!
+        stompClient.connect()
+
+        stompClient.topic("chatRoom/${chatRoom_id}/conversation").subscribe { topicMessage ->
+            Log.d("message Receive", topicMessage.payload)
+            val sender = JSONObject(topicMessage.payload).getString("userId").toInt()
+            if(sender != user_id){
+                val chat_id = JSONObject(topicMessage.payload).getInt("chat_id")
+                val chatRoom_id = JSONObject(topicMessage.payload).getInt("chatRoom_id")
+                val user_id = JSONObject(topicMessage.payload).getInt("user_id")
+
+                val created_at_before = JSONObject(topicMessage.payload).getString("created_at")
+//                var txt_hour = created_at_before.substring(11 until 13)
+//                var txt_minute = created_at_before.substring(14 until 16)
+                var created_at : Timestamp = Timestamp.valueOf(created_at_before)
+
+                val content = JSONObject(topicMessage.payload).getString("content")
+                val status = JSONObject(topicMessage.payload).getString("status")
+                val writer = JSONObject(topicMessage.payload).getString("writer")
+
+                chatRVAdapter.addItem(Chat(chat_id, chatRoom_id, user_id, created_at, content, status, writer, 1))
+
+                runOnUiThread{
+                    chatRVAdapter.notifyDataSetChanged()
+                }
+            }
+
+        }
+
+        stompClient.lifecycle().subscribe { lifecycleEvent ->
+            when(lifecycleEvent.type){
+                LifecycleEvent.Type.OPENED -> {
+                    Log.d("OPENED", "opened")
+                }
+                LifecycleEvent.Type.CLOSED -> {
+                    Log.d("CLOSED", "closed")
+                }
+                LifecycleEvent.Type.ERROR -> {
+                    Log.d("ERROR", "error")
+                    Log.i("CONNECT ERROR", lifecycleEvent.exception.toString())
+                }
+                else -> {
+                    Log.d("else", lifecycleEvent.message)
+                }
+            }
+        }
+
+        binding.btnSubmit.setOnClickListener {
+//            sendStomp
+        }
+    }
+
+    fun sendStomp(msg: String, chatRoom_id: Int, user_id: Int){
+        val data = JSONObject()
+        data.put("messageType","CHAT")
+        data.put("user_id", user_id.toString())
+        data.put("message",msg)
+
+        stompClient.send("pub/chat/message", data.toString()).subscribe()
+        Log.d("Message Send", "내가 보낸 메세지 : " + msg)
+
+//        chatRVAdapter.addItem(Chat(chat_id, chatRoom_id, user_id, created_at, content, status, writer, 1))
 
     }
 
@@ -127,83 +237,44 @@ class ChattingActivity: AppCompatActivity() {
 
     }
 
-    // 변수 초기화 함수
-    private fun initProperty(){
+    override fun getPostAllSuccess(code: Int, result: ArrayList<Post>) {
 
-//        myUid = FirebaseAuth.getInstance().currentUser?.uid!!              //현재 로그인한 유저 id
-//        firebaseDatabase = FirebaseDatabase.getInstance().reference!!
+        var id = result.find { it.chatRoom_id == chatRoom_id_get }
 
-        chatRoom = (intent.getSerializableExtra("ChatRoom")) as ChatRoom      //채팅방 정보
-        chatRoomKey = intent.getStringExtra("ChatRoomKey")!!            //채팅방 키
-//        opponentUser = (intent.getSerializableExtra("Opponent")) as User    //상대방 유저 정보
+        user_id_chatroom = id!!.user_id  // 그 post의 user_id 저장
+        post_id_chatroom = id!!.post_id
+
+
+        // 찾은 user_id, post_id로 화면 데이터 불러오기
+        val postDetailGetService = PostDetailGetService()
+        postDetailGetService.setPostDetailGetResult(this)
+        Log.d("post_id $post_id_chatroom, user_id $user_id_chatroom", "")
+        postDetailGetService.getPostDetail(post_id_chatroom , user_id_chatroom) // 임의로 지정
     }
 
-    //뷰 초기화
-    private fun initializeView() {
-//        content_txt =
-//        profile_img =
-//        id_txt =
-        edit_message = binding.editMessage
-        btn_submit = binding.btnSubmit
-        more_btn = binding.moreBtn
-
-//        txt_title.text = opponentUser!!.name ?: ""
+    override fun getPostAllFailure(code: Int, message: String) {
+        TODO("Not yet implemented")
     }
 
-    //버튼 클릭 시 리스너 초기화
-    fun initializeListener() {
-        btn_submit.setOnClickListener()
-        {
-            // putMessage()
-        }
+    override fun getPostUploadSuccess(code: Int, result: Post) {
+
+        binding.itemContentTxt.text = result.title
+        Glide.with(this).load(result.image).override(38,38).into(binding.itemProfileImg) // 이미지 가져오기
+
+        val userGetService = UserGetService()
+        userGetService.setUserGetResult(this)
+        userGetService.getUser(result.user_id)
     }
 
-    //채팅방 목록 초기화 및 표시
-
-    //chatRoomKey 없을 경우 초기화 후 목록 초기화
-
-    /*
-    //메시지 전송
-    fun putMessage() {
-        try {
-            var message = Message(myUid, getDateTimeString(), edt_message.text.toString())    //메시지 정보 초기화
-            Log.i("ChatRoomKey", chatRoomKey)
-            FirebaseDatabase.getInstance().getReference("ChatRoom").child("chatRooms")
-                .child(chatRoomKey).child("messages")                   //현재 채팅방에 메시지 추가
-                .push().setValue(message).addOnSuccessListener {
-                    Log.i("putMessage", "메시지 전송에 성공하였습니다.")
-                    edt_message.text.clear()
-                }.addOnCanceledListener {
-                    Log.i("putMessage", "메시지 전송에 실패하였습니다")
-                }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            Log.i("putMessage", "메시지 전송 중 오류가 발생하였습니다.")
-        }
-    } */
-
-
-    //메시지 보낸 시각 정보 반환
-    fun getDateTimeString(): String {
-        try {
-//            var localDateTime = LocalDateTime.now()
-            var localDateTime = System.currentTimeMillis()
-            val dateFormat = SimpleDateFormat("hh시 mm분")
-            val curTime = dateFormat.format(Date(localDateTime)).toString()
-
-            return curTime
-//            localDateTime.atZone(TimeZone.getDefault().toZoneId())
-//            var dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
-//            return localDateTime.format(dateTimeFormatter).toString()
-        } catch (e: Exception) {
-            e.printStackTrace()
-            throw Exception("getTimeError")
-        }
+    override fun getPostUploadFailure(code: Int, message: String) {
+        Log.d("실패 ===============================================", code.toString())
     }
 
-    fun setupRecycler() {            //목록 초기화 및 업데이트
-        recycler_talks.layoutManager = LinearLayoutManager(this)
-        // recycler_talks.adapter = RecyclerMessagesAdapter(this, chatRoomKey, opponentUser.uid)
+    override fun getUserSuccess(code: Int, result: UserGet) {
+        binding.itemIdTxt.text = result.name
     }
 
+    override fun getUserFailure(code: Int, message: String) {
+        TODO("Not yet implemented")
+    }
 }

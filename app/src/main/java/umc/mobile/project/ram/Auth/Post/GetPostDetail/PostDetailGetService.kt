@@ -20,6 +20,7 @@ class PostDetailGetService {
             override fun onResponse(call: Call<PostDetailGetResponse>, response: Response<PostDetailGetResponse>,) {
                 Log.d("POSTUPLOAD-GET SUCCESS",response.toString())
                 val resp : PostDetailGetResponse = response.body()!!
+                Log.d("success code: ", resp.code.toString())
                 when(resp.code) {
 //                    1000 ->
                     1000 -> postDetailGetResult.getPostUploadSuccess(resp.code, resp.result!!)

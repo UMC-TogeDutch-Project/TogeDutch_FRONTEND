@@ -20,7 +20,7 @@ import java.util.regex.Pattern
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivitySignUpBinding
-
+    var checkSum : String = ""
     val TAG: String = "로그"
     val emailValidation = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
 
@@ -57,32 +57,23 @@ class SignUpActivity : AppCompatActivity() {
             Log.d(TAG, "onCreate: ${to}")
 
             smsApiService.sendCheckNum(SmsRequest(to)).enqueue(object : Callback<SmsResponse>{
-                override fun onResponse(
-                    call: Call<SmsResponse>,
-                    response: Response<SmsResponse>) {
-                    Log.d(TAG, "onResponse:응답, ${response.code()}")
-                    if(response.isSuccessful){
-                        val smsResponseData = response.body()
-                        Log.d(TAG, "onResponse: ${smsResponseData}")
-                        if (smsResponseData != null){
-                            when(smsResponseData.statusCode){
-                                "202" -> Toast.makeText(this@SignUpActivity, "성공! ${smsResponseData.statusName}, ${smsResponseData.smsConfirmNum}", Toast.LENGTH_SHORT).show()
+                override fun onResponse(call: Call<SmsResponse>, response: Response<SmsResponse>) {
+                    val smsResponseData = response.body()
+                    if(smsResponseData?.result != null){
+                        Log.d(TAG, "onResponse: 응답 성공 ${smsResponseData.result.smsConfirmNum}")
+                        checkSum = smsResponseData.result.smsConfirmNum
 
-                            }
-
-                        }
-                        else{
-                            Log.d(TAG, "onResponse: null임")
-                        }
                     }
                     else{
-                        Log.d(TAG, "onResponse:성공 실패")
+                        Log.d(TAG, "onResponse: 응답실패")
                     }
-
                 }
 
                 override fun onFailure(call: Call<SmsResponse>, t: Throwable) {
+                    Log.d(TAG, "onFailure: 실패 ${t}")
+
                 }
+
 
             })
         }
@@ -184,7 +175,6 @@ class SignUpActivity : AppCompatActivity() {
     fun checkAgreeNum():Boolean{
 
         var checkPhoneNum = viewBinding.etInputCertificationNumber.text.toString()
-        var checkSum : String = "16844"
         var password = viewBinding.etInputPasswordCheck.text.toString().trim() //공백제거
         var passwordValidation = viewBinding.etInputPassword.text.toString().trim()
 

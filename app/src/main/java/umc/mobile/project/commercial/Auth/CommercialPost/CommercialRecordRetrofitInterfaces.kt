@@ -7,5 +7,5 @@ import retrofit2.http.*
 interface CommercialRecordRetrofitInterfaces {
     @Multipart
     @POST("ad")
-    fun sendPost(@Path("user_id") user_id: Int, @Part("ad")record: CommercialRecord, @Part file: MultipartBody.Part?) : Call<PostRecordResponse>
+    fun sendPost(@Path("user_id") user_id: Int, @Part("ad")record: CommercialRecord, @Part file: MultipartBody.Part?) : Call<CommercialRecordResponse>
 }

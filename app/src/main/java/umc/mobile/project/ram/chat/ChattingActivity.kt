@@ -3,11 +3,14 @@ package umc.mobile.project.ram.chat
 import Post
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import org.json.JSONObject
@@ -18,27 +21,39 @@ import umc.mobile.project.databinding.ActivityChattingBinding
 import umc.mobile.project.ram.Auth.Application.GetUser.UserGet
 import umc.mobile.project.ram.Auth.Application.GetUser.UserGetResult
 import umc.mobile.project.ram.Auth.Application.GetUser.UserGetService
+import umc.mobile.project.ram.Auth.Chat.ChatAllGet.ChatAllGetResult
+import umc.mobile.project.ram.Auth.Chat.ChatAllGet.ChatAllGetService
+import umc.mobile.project.ram.Auth.Chat.ChatPost.PostChatResult
+import umc.mobile.project.ram.Auth.Chat.ChatPost.PostChatService
+import umc.mobile.project.ram.Auth.Chat.ChatPost.Result
 import umc.mobile.project.ram.Auth.Post.GetPostAll.PostGetAllResult
 import umc.mobile.project.ram.Auth.Post.GetPostAll.PostGetAllService
 import umc.mobile.project.ram.Auth.Post.GetPostDetail.PostDetailGetResult
 import umc.mobile.project.ram.Auth.Post.GetPostDetail.PostDetailGetService
 import umc.mobile.project.ram.my_application_1.user_id_logined
+import umc.mobile.project.ram.Auth.Post.GetPostJoin.PostJoinGetService
+import umc.mobile.project.ram.my_application_1.*
 import java.sql.Timestamp
 import java.util.*
+import kotlin.collections.ArrayList
 
 
-class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult, PostGetAllResult {
+class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult, PostGetAllResult, PostChatResult, ChatAllGetResult {
     lateinit var binding: ActivityChattingBinding
     lateinit var chatRVAdapter: ChatRVAdapter
+    var chat_post_result = Chat(chat_id = 1, chatRoom_id = 1, user_id = 1, created_at = Timestamp(Date().time), content = "", writer = "", type = "", viewType = 1)
+    var chatList = ArrayList<Chat>()
 
     lateinit var edit_message : EditText
     lateinit var btn_submit : AppCompatButton
     lateinit var more_btn : AppCompatButton
+
     var chatRoom_id_get : Int = 0
 
 
     /// stomp 연결
     private var url = "ws://ec2-3-34-255-129.ap-northeast-2.compute.amazonaws.com:9000/"
+//    private var url = "ws://localhost:9000/stomp/chat"
     val stompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, url)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,6 +75,11 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
 
         if(chatRoomId != -1){
             try {
+                // 이전에 했던 채팅들 불러오기
+                val chatAllGetService = ChatAllGetService()
+                chatAllGetService.setChatAllGetResult(this)
+                chatAllGetService.getChatAll(chatRoomId)
+
                 runStomp(chatRoomId, user_id_logined)
             } catch (e:Exception){
                 Log.d("ERROR", "stomp 자체의 오류")
@@ -67,8 +87,12 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
             }
         }
 
+        edit_message = binding.editMessage
+        edit_message!!.addTextChangedListener(textWatcher)
 
-
+        binding.btnSubmit.setOnClickListener {
+            sendStomp(binding.editMessage.text.toString(), chatRoomId, user_id_logined)
+        }
 
 
 
@@ -149,9 +173,10 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
     private fun runStomp(chatRoom_id : Int, user_id : Int){ // user_id는 현재 로그인한 유저 아이디!!!
         stompClient.connect()
 
-        stompClient.topic("chatRoom/${chatRoom_id}/conversation").subscribe { topicMessage ->
+        stompClient.topic("sub/chat/room/{$chatRoom_id}").subscribe { topicMessage ->
             Log.d("message Receive", topicMessage.payload)
-            val sender = JSONObject(topicMessage.payload).getString("userId").toInt()
+            val sender = JSONObject(topicMessage.payload).getString("userId").toInt() // 메세지 보낸 user_id 가져오기
+
             if(sender != user_id){
                 val chat_id = JSONObject(topicMessage.payload).getInt("chat_id")
                 val chatRoom_id = JSONObject(topicMessage.payload).getInt("chatRoom_id")
@@ -198,17 +223,44 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
         }
     }
 
-    fun sendStomp(msg: String, chatRoom_id: Int, user_id: Int){
+    fun sendStomp(content: String, chatRoom_id: Int, user_id: Int){
+        // 서버에 post해서 데이터베이스에서 chat_id 값까지 생성된 chat 데이터 가져오기
+        val postChatService = PostChatService() // chat 보내놓기
+        postChatService.setChatResult(this)
+        postChatService.sendChat(chatRoom_id, user_id, content)
+
         val data = JSONObject()
-        data.put("messageType","CHAT")
-        data.put("user_id", user_id.toString())
-        data.put("message",msg)
+        data.put("chatId", chat_post_result.chat_id.toString())
+        data.put("chatRoomId", chat_post_result.chatRoom_id.toString())
+        data.put("userId", chat_post_result.user_id.toString())
+        data.put("createdAt", chat_post_result.created_at.toString())
+        data.put("content", chat_post_result.content)
+        data.put("writer", chat_post_result.writer)
+        data.put("type", chat_post_result.type)
 
         stompClient.send("pub/chat/message", data.toString()).subscribe()
-        Log.d("Message Send", "내가 보낸 메세지 : " + msg)
+        Log.d("Message Send", "내가 보낸 메세지 : " + content)
 
-//        chatRVAdapter.addItem(Chat(chat_id, chatRoom_id, user_id, created_at, content, status, writer, 1))
+        chatRVAdapter.addItem(Chat(chat_post_result.chat_id, chatRoom_id, user_id, chat_post_result.created_at, content, chat_post_result.writer, chat_post_result.type, 2))
+        runOnUiThread {
+            chatRVAdapter.notifyDataSetChanged()
+        }
+    }
 
+    override fun AcceptSuccess(result: Result) {
+        Log.d("=============================== Message Post 성공!!!!!!!!!!!!!!!!!!!!", "==================================================" )
+        chat_post_result.chat_id = result.chatId
+        chat_post_result.chatRoom_id = result.chatRoomId
+        chat_post_result.user_id = result.userId
+        chat_post_result.created_at = result.createdAt
+        chat_post_result.content = result.content
+        chat_post_result.writer = result.writer
+        chat_post_result.type = result.type
+
+    }
+
+    override fun AcceptFailure() {
+        Log.d("=============================== Message Post 실패!!!!!!!!!!!!!!!!!!!!", "==================================================" )
     }
 
     private fun initActionBar() {
@@ -237,7 +289,7 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
     }
 
     override fun getPostAllFailure(code: Int, message: String) {
-        TODO("Not yet implemented")
+        Log.d("getPostAllFailure ===============================================", code.toString())
     }
 
     override fun getPostUploadSuccess(code: Int, result: Post) {
@@ -259,6 +311,45 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
     }
 
     override fun getUserFailure(code: Int, message: String) {
-        TODO("Not yet implemented")
+        Log.d("getUserFailure ===============================================", code.toString())
     }
+
+    override fun getChatAllSuccess(code: Int, result: ArrayList<Chat>) {
+        Log.d("=============================== getChatAllSuccess!!!!!!!!!!!!!!!!!!!!", "==================================================" )
+        chatList.addAll(result)
+
+        chatRVAdapter = ChatRVAdapter(this, chatList)
+        binding.recyclerMessages.adapter = chatRVAdapter
+        binding.recyclerMessages.layoutManager = LinearLayoutManager(this)
+
+        chatRVAdapter.notifyDataSetChanged()
+    }
+
+    override fun getChatAllFailure(code: Int, message: String) {
+        Log.d("=============================== getChatAllFailure!!!!!!!!!!!!!!!!!!!!", "==================================================" )
+    }
+
+    val textWatcher = object : TextWatcher {
+
+        override
+        fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+
+        }
+
+        override
+        fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+
+        }
+
+        override fun afterTextChanged(p0: Editable?) {
+            TODO("Not yet implemented")
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        stompClient.disconnect()
+    }
+
+
 }

@@ -215,15 +215,8 @@ class MyPostActivity : AppCompatActivity(), PostUploadGetResult, PostJoinGetResu
         joinRVAdatpter.setItemClickListener(object :
             JoinRVAdatpter.OnItemClickListener {
             override fun onItemClick(application: Post) {
-
-                val dlg = ParticipatePopupDialog(this@MyPostActivity)
-                dlg.start()
-//                    val dlg = ReviewWritePopupDialog(this@MyPostActivity)
-//                    dlg.start()
-//                    fun open_activity(){
-//                        val intent = Intent(this@MyPostActivity,CurrentApplicationActivity::class.java)
-//                        startActivity(intent)
-//                    }
+                val intent = Intent(this@MyPostActivity, JoinPostDetailActivity::class.java)
+                startActivity(intent)
             }
         })
 

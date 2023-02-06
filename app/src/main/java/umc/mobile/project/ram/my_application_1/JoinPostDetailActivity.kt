@@ -1,30 +1,23 @@
 package umc.mobile.project.ram.my_application_1
 
+import Post
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import Post
-import android.util.Log
-import umc.mobile.project.databinding.ActivityMyPostDetailBinding
+import umc.mobile.project.databinding.ActivityJoinPostDetailActivityBinding
 import umc.mobile.project.ram.Auth.Post.GetPostDetail.PostDetailGetResult
 import umc.mobile.project.ram.Auth.Post.GetPostDetail.PostDetailGetService
 import umc.mobile.project.ram.Geocoder_location
-import umc.mobile.project.ram.my_application_1.current_application.CurrentApplicationActivity
 
-class MyCommercialDetailActivity : AppCompatActivity(), PostDetailGetResult {
-    lateinit var binding: ActivityMyPostDetailBinding
+class JoinPostDetailActivity : AppCompatActivity(), PostDetailGetResult {
+    lateinit var binding: ActivityJoinPostDetailActivityBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMyPostDetailBinding.inflate(layoutInflater)
+        binding = ActivityJoinPostDetailActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        binding.btnSeeCurrent.setOnClickListener {
-            val intent = Intent(this, CurrentApplicationActivity::class.java)
-            intent.putExtra("post_id", post_id_to_detail)
-            startActivity(intent)
-        }
 
         binding.backBtn.setOnClickListener {
             finish()

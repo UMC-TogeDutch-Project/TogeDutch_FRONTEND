@@ -20,6 +20,6 @@ interface ApiLoginService {
 
     @POST("oauth/kakao")
     fun kakaoLogin(
-            @Query("email") email : String
+            @Query("email") email: String?
     ): Call<LoginResponse>
 }

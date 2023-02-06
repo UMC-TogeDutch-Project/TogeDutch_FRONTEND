@@ -10,4 +10,16 @@ data class PutRetouchResponse (
     @SerializedName(value = "message") val message : String,
     @SerializedName(value = "result") val result : Post?
 )
+data class Request_put(
+    @SerializedName(value =  "title") val title : String,
+    @SerializedName(value =  "url") val url : String,
+    @SerializedName(value =  "delivery_tips") val delivery_tips : Int,
+    @SerializedName(value =  "minimum") val minimum : Int,
+    @SerializedName(value =  "order_time") val order_time : String,
+    @SerializedName(value =  "num_of_recruits") val num_of_recruits : Int,
+    @SerializedName(value =  "recruited_num") val recruited_num : Int,
+    @SerializedName(value =  "status") val status : String,
+    @SerializedName(value =  "latitude") val latitude : Double,
+    @SerializedName(value =  "longitude") val longitude : Double,
+)
 

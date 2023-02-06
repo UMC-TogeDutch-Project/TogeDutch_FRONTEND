@@ -29,6 +29,8 @@ class JoinRVAdatpter(private val joinList: ArrayList<Post>) : RecyclerView.Adapt
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(joinList[position])
         holder.itemView.setOnClickListener {
+            user_id_var = joinList[position].user_id
+            post_id_to_detail = joinList[position].post_id
             itemClickListener.onItemClick(joinList[position])
             notifyItemChanged(position)
         }

@@ -9,7 +9,7 @@ data class Chat(
     @SerializedName(value =  "user_id") var user_id : Int,
     @SerializedName(value =  "created_at") var created_at : Timestamp,
     @SerializedName(value =  "content") var content : String,
-    @SerializedName(value =  "status") var status : String,
     @SerializedName(value =  "writer") var writer : String,
+    @SerializedName(value = "type") var type : String,
     var viewType : Int
 )

@@ -145,6 +145,7 @@
         android:background="@drawable/pencil"
         app:layout_constraintTop_toTopOf="@id/list_item"
         app:layout_constraintEnd_toEndOf="@id/list_item"
+        android:clickable="true"
         android:layout_marginRight="35dp"
         android:layout_marginTop="11dp"/>
 
@@ -156,6 +157,7 @@
         app:layout_constraintTop_toTopOf="@id/list_item"
         app:layout_constraintLeft_toRightOf="@id/modify_btn"
         android:layout_marginRight="8dp"
+        android:clickable="true"
         android:layout_marginTop="10dp"/>
 
     <androidx.appcompat.widget.AppCompatButton

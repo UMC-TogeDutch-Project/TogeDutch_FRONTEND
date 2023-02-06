@@ -7,7 +7,6 @@ import umc.mobile.project.databinding.ActivityCurrentapplicationBinding
 import umc.mobile.project.ram.Auth.Application.ViewUpload.ApplicationGet
 import umc.mobile.project.ram.Auth.Application.ViewUpload.ViewUploadGetResult
 import umc.mobile.project.ram.Auth.Application.ViewUpload.ViewUploadGetService
-import umc.mobile.project.ram.Auth.Post.GetPostDetail.PostDetailGetService
 import umc.mobile.project.ram.my_application_1.*
 
 class CurrentApplicationActivity : AppCompatActivity(), ViewUploadGetResult {

@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
 //import umc.mobile.project.chat.ChatRoom
 //import umc.mobile.project.chat.ChattingActivity
 import umc.mobile.project.databinding.FragmentRestaurantBinding
@@ -14,7 +16,7 @@ import umc.mobile.project.restaurant.RestaurantPageDialog
 import umc.mobile.project.restaurant.RestaurantRVAdapter
 import umc.mobile.project.restaurant.RestaurantRVAdapterDecoration
 
-class RestaurantFragment : Fragment() {
+class RestaurantFragment : Fragment(){
     private lateinit var binding: FragmentRestaurantBinding
     private lateinit var restaurantRVAdapter: RestaurantRVAdapter
     var mRestaurnatData = ArrayList<RestaurantData>()
@@ -53,4 +55,9 @@ class RestaurantFragment : Fragment() {
             }
         })
     }
+
+//
+//    override fun onMapReady(p0: GoogleMap) {
+//        TODO("Not yet implemented")
+//    }
 }

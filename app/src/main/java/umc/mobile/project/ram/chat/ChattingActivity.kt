@@ -2,29 +2,20 @@ package umc.mobile.project.ram.chat
 
 import Post
 import android.annotation.SuppressLint
-import android.content.ContentValues
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.LayoutInflater
 import android.widget.EditText
-import android.widget.ImageView
-import android.widget.SearchView
-import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import org.json.JSONObject
 import ua.naiksoftware.stomp.Stomp
 import ua.naiksoftware.stomp.dto.LifecycleEvent
-import umc.mobile.project.MainActivity
 import umc.mobile.project.R
 import umc.mobile.project.databinding.ActivityChattingBinding
 import umc.mobile.project.ram.Auth.Application.GetUser.UserGet
@@ -39,12 +30,10 @@ import umc.mobile.project.ram.Auth.Post.GetPostAll.PostGetAllResult
 import umc.mobile.project.ram.Auth.Post.GetPostAll.PostGetAllService
 import umc.mobile.project.ram.Auth.Post.GetPostDetail.PostDetailGetResult
 import umc.mobile.project.ram.Auth.Post.GetPostDetail.PostDetailGetService
+import umc.mobile.project.ram.my_application_1.user_id_logined
 import umc.mobile.project.ram.Auth.Post.GetPostJoin.PostJoinGetService
 import umc.mobile.project.ram.my_application_1.*
 import java.sql.Timestamp
-import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 

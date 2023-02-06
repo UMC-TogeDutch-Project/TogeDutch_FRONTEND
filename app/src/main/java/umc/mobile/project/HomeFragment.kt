@@ -25,9 +25,7 @@ import umc.mobile.project.announcement.Auth.PostImminentGet.PostImminentGetServi
 import umc.mobile.project.announcement.Auth.PostRecentGet.PostRecentGetResult
 import umc.mobile.project.announcement.Auth.PostRecentGet.PostRecentGetService
 import umc.mobile.project.databinding.FragmentHomeBinding
-import umc.mobile.project.databinding.FragmentMypageBinding
 import umc.mobile.project.news.NewsActivity
-import umc.mobile.project.ram.my_application_1.MyPostDetailActivity
 
 class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
     lateinit var dataRecentRVAdapter: DataRecentRVAdapter

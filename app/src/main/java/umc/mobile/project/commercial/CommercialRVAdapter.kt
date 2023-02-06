@@ -16,6 +16,7 @@ class CommercialRVAdapter(private val commercialData: ArrayList<CommercialGet>):
         val binding: CommercialRecyclerviewItemBinding = CommercialRecyclerviewItemBinding.inflate(
             LayoutInflater.from(viewGroup.context),
             viewGroup, false)
+        context = viewGroup.context
         return MyViewHolder(binding)
     }
     override fun getItemCount(): Int = commercialData.size

@@ -7,7 +7,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import umc.mobile.project.databinding.CustomDialogBinding
 
-class MyCustomDialog(context: Context, myCustomDialogInterface: MyCustomDialogInterface) : Dialog(context) {
+ class MyCustomDialog(context: Context, myCustomDialogInterface: MyCustomDialogInterface) : Dialog(context) {
 
     private var mBinding : CustomDialogBinding? = null
     private val binding get() = mBinding!!

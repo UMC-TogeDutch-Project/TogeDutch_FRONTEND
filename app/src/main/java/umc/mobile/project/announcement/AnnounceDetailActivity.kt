@@ -5,20 +5,18 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import Post
 import android.content.ContentValues
-import android.content.Intent
 import android.view.View
 import com.bumptech.glide.Glide
-import umc.mobile.project.MainActivity
 import umc.mobile.project.announcement.Auth.ApplyPost.ApplyRecordResult
 import umc.mobile.project.announcement.Auth.ApplyPost.ApplyRecordService
 import umc.mobile.project.announcement.Auth.ApplyPost.Result
 import umc.mobile.project.databinding.ActivityMyPostDetailBinding
+
 import umc.mobile.project.ram.Auth.Post.GetPostDetail.PostDetailGetResult
 import umc.mobile.project.ram.Auth.Post.GetPostDetail.PostDetailGetService
 import umc.mobile.project.ram.Geocoder_location
 import umc.mobile.project.ram.my_application_1.post_id_to_detail
 import umc.mobile.project.ram.my_application_1.user_id_var
-import umc.mobile.project.restaurant.RestaurantPageDialog
 
 var access_token = ""
 

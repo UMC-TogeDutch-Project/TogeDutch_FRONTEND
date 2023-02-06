@@ -18,13 +18,9 @@ import umc.mobile.project.ram.Auth.Application.GetUser.UserGet
 import umc.mobile.project.ram.Auth.Application.GetUser.UserGetResult
 import umc.mobile.project.ram.Auth.Application.GetUser.UserGetService
 import umc.mobile.project.ram.Auth.Application.ViewUpload.ApplicationGet
-import umc.mobile.project.ram.Auth.Application.ViewUpload.ViewUploadGetService
 import umc.mobile.project.ram.Auth.Post.GetPost.PostGetResult
 import umc.mobile.project.ram.Auth.Post.GetPost.PostGetService
-import umc.mobile.project.ram.Auth.Post.GetPostDetail.PostDetailGetResult
-import umc.mobile.project.ram.Auth.Post.GetPostDetail.PostDetailGetService
 import umc.mobile.project.ram.my_application_1.Timestamp_to_SDF
-import java.sql.Timestamp
 
 class CurrentRVAdapter(private val currentList: ArrayList<ApplicationGet>) : RecyclerView.Adapter<CurrentRVAdapter.ViewHolder>(){
 

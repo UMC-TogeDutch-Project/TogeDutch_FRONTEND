@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+>
+
+
+    <TextView
+        android:id="@+id/com_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/notosanskr_black"
+        android:text="광고 신청"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/back_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_baseline_close_24"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="18dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="wrap_content"
+            android:layout_height="600dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/com_title">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/notosanskr_black"
+                    android:text="가게 이름"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/com_et_title"
+                    android:layout_width="370dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/button_round_11"
+                    android:backgroundTint="#1F767680"
+                    android:gravity="center"
+                    android:text="가게 이름을 입력해주세요"
+                    android:paddingLeft="7dp"
+                    android:paddingRight="7dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/notosanskr_black"
+                    android:text="가게 정보"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/com_et_inform"
+                    android:layout_width="370dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/button_round_11"
+                    android:backgroundTint="#1F767680"
+                    android:gravity="center"
+                    android:text="URL 링크"
+                    android:paddingLeft="7dp"
+                    android:paddingRight="7dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/notosanskr_black"
+                    android:text="주메뉴"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/com_et_menu"
+                    android:layout_width="370dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/button_round_11"
+                    android:backgroundTint="#1F767680"
+                    android:gravity="center"
+                    android:text="주메뉴를 선택해주세요"
+                    android:paddingLeft="7dp"
+                    android:paddingRight="7dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/notosanskr_black"
+                    android:text="배달팁"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/com_et_tip"
+                    android:layout_width="370dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/button_round_11"
+                    android:backgroundTint="#1F767680"
+                    android:gravity="center"
+                    android:text="0000 원"
+                    android:paddingLeft="7dp"
+                    android:paddingRight="7dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/notosanskr_black"
+                    android:text="위치"
+                    android:textColor="@color/black" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_round_11"
+                    android:backgroundTint="#1F767680">
+
+                    <TextView
+                        android:id="@+id/com_et_place"
+                        android:layout_width="370dp"
+                        android:layout_height="40dp"
+                        android:text="위치를 설정해 주세요"
+                        android:fontFamily="@font/notosanskr_regular"
+                        android:includeFontPadding="false"
+                        android:background="@null"
+                        android:gravity="center"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageButton
+                        android:id="@+id/image_btn_map"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="7dp"
+                        android:background="@drawable/ic_map"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/notosanskr_black"
+                    android:text="광고 요청 사항"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/com_et_request"
+                    android:layout_width="370dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/button_round_11"
+                    android:backgroundTint="#1F767680"
+                    android:fontFamily="@font/notosanskr_regular"
+                    android:gravity="center"
+                    android:paddingLeft="7dp"
+                    android:paddingRight="7dp" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/notosanskr_black"
+                    android:text="광광고 이미지"
+                    android:textColor="@color/black" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_round_11"
+                    android:backgroundTint="#1F767680">
+
+                    <TextView
+                        android:id="@+id/tv_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="선택된 이미지가 없습니다."
+                        android:fontFamily="@font/notosanskr_regular"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/img_view_img"
+                        android:layout_width="370dp"
+                        android:layout_height="40dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <ImageButton
+                        android:id="@+id/image_btn_camera"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="7dp"
+                        android:background="@drawable/ic_photo_camera"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+            </LinearLayout>
+
+        </ScrollView>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

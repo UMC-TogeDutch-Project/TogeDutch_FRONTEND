@@ -15,7 +15,6 @@ import umc.mobile.project.announcement.Auth.PostImminentGet.PostImminentGetServi
 import umc.mobile.project.announcement.Auth.PostRecentGet.PostRecentGetResult
 import umc.mobile.project.announcement.Auth.PostRecentGet.PostRecentGetService
 import umc.mobile.project.databinding.ActivityAnnounceListBinding
-import umc.mobile.project.ram.my_application_1.MyPostDetailActivity
 import kotlin.collections.ArrayList
 
 class AnnounceListActivity : AppCompatActivity(), PostRecentGetResult, PostImminentGetResult {

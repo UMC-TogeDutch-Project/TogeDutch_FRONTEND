@@ -11,7 +11,7 @@ import umc.mobile.project.ram.Auth.Post.GetPostDetail.PostDetailGetService
 import umc.mobile.project.ram.Geocoder_location
 import umc.mobile.project.ram.my_application_1.current_application.CurrentApplicationActivity
 
-class MyPostDetailActivity : AppCompatActivity(), PostDetailGetResult {
+class MyCommercialDetailActivity : AppCompatActivity(), PostDetailGetResult {
     lateinit var binding: ActivityMyPostDetailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

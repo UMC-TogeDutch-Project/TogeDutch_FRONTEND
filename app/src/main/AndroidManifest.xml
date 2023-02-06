@@ -71,6 +71,7 @@
         <activity android:name=".wishlist.WishListActivity"></activity>
         <activity android:name=".notice.NoticeActivity"></activity>
         <activity android:name=".announcement.PlaceSearchActivity"></activity>
+        <activity android:name=".ram.my_application_1.JoinPostDetailActivity"></activity>
 
         <activity
             android:name=".login.LoginActivity"

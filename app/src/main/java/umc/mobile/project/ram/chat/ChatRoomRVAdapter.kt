@@ -30,7 +30,10 @@ class ChatRoomRVAdapter(private val chatRoomList: ArrayList<ChatRoomList>) :
     var chatRoom_id_list = ArrayList<Int>()
     var isFirst = true
     var previous_found_chatRoom_id = 0 // 이전에 찾은 chatRoom_id
+    var previous_found_index = 0
     var found_post_index = 0
+
+    var user_id = 0
 
     // 아이템 레이아웃 결합
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
@@ -69,50 +72,29 @@ class ChatRoomRVAdapter(private val chatRoomList: ArrayList<ChatRoomList>) :
         override fun getPostJoinSuccess(code: Int, result: ArrayList<Post>) {
             var i = 0
             var j = 0
-            var user_id = 0
 
+            for(item in chatRoom_id_list){
+                println(item)
+            }
+
+            Log.d("================================== 가져오기 시작 ================================", i.toString())
+            Log.d("(1)현재 isFirst ================================", isFirst.toString())
             if (isFirst) { // 처음 찾을 때
-//                while (i == result.size) {
-//                    Log.d("(찾음)현재 i ================================", i.toString())
-//                    if (result[i].chatRoom_id == chatRoom_id_list[0]) { // 처음이랑 같은 id 찾기
-//                        user_id = result[i].user_id // user_id 저장
-//                        previous_found_chatRoom_id = result[i].chatRoom_id // 이전에 찾은 값에 넣어놓기
-//                        found_post_index = i
-//                        isFirst = !isFirst // false로 바꿔주기
-//                        Log.d("(처음) 찾음 ================================", previous_found_chatRoom_id.toString())
-//                        break
-//                    }
-//                    i++
-//                }
+                user_id = findChatRoomId(result)
             } else {
-//                i = i + 1
-//                Log.d("현재 i ================================", i.toString())
-//                while (i == result.size) { // result로 받은 array size 만큼 반복
-//                    Log.d("현재 i ================================", i.toString())
-//                    while (j == chatRoom_id_list.size) { // id들 저장해둔 array size만큼 반복
-//                        if (chatRoom_id_list[j] == result[i].chatRoom_id) { // id 저장한 값과 반환받은 post 안의 chatRoom_id와 같을 때
-//                            if (result[i].chatRoom_id != previous_found_chatRoom_id) { // 이전에 찾은 값과 같을 때
-//                                user_id = result[i].user_id
-//                                previous_found_chatRoom_id = result[i].chatRoom_id
-//                                found_post_index = i
-//                                Log.d("(처음) 찾음 ================================", previous_found_chatRoom_id.toString())
-//                                break
-//                            }
-//                        }
-//                        j++
-//                        if(j == result.size)
-//                            j = 0
-//                    }
-//                    i++
-//                }
+                user_id = findChatRoomId2(result)
             }
 
 
-            Log.d("찾은 user_id ================================", user_id.toString())
+            Log.d("(1)현재 previous_found_index ================================", previous_found_index.toString())
+            Log.d("(1)현재 previous_found_chatRoom_id ================================", previous_found_chatRoom_id.toString())
+            Log.d("(1)현재 user_id ================================", user_id.toString())
+
             val userGetService = UserGetService()
             userGetService.setUserGetResult(this)
             userGetService.getUser(user_id)
 
+            Log.d("(1)현재 found_post_index ================================", found_post_index.toString())
             val txtSubject: String = result[found_post_index].title
             Glide.with(context).load(result[found_post_index].image).override(38, 38)
                 .into(binding.itemShopImg) // 이미지 가져오기
@@ -134,7 +116,7 @@ class ChatRoomRVAdapter(private val chatRoomList: ArrayList<ChatRoomList>) :
         }
 
         override fun getUserFailure(code: Int, message: String) {
-            TODO("Not yet implemented")
+            Log.d("getUserFailure ===============================================", code.toString())
         }
     }
 
@@ -148,5 +130,43 @@ class ChatRoomRVAdapter(private val chatRoomList: ArrayList<ChatRoomList>) :
 
     private lateinit var itemClickListener: OnItemClickListener
 
+    private fun findChatRoomId(result : ArrayList<Post>) : Int{
+        var i = 0
+        while (i < result.size) {
+            if(result[i].chatRoom_id == chatRoom_id_list[0]){
+                previous_found_chatRoom_id = result[i].chatRoom_id
+                previous_found_index = 0 // chatRoom_id_list에서 찾았던 인덱스값 저장
+                found_post_index = i
+                isFirst = !isFirst
+                return result[i].user_id
+            }
+            i++
+        }
+        return 0
+    }
 
+    private fun findChatRoomId2(result: ArrayList<Post>) : Int {
+        var i = 1
+        var j = 0
+        while (i < result.size) { // result로 받은 array size 만큼 반복
+            while (j < chatRoom_id_list.size) { // id들 저장해둔 array size만큼 반복
+                if (chatRoom_id_list[j] == result[i].chatRoom_id && result[i].chatRoom_id != previous_found_chatRoom_id) { // id 저장한 값과 반환받은 post 안의 chatRoom_id와 같을 때
+                    if ( j > previous_found_index) { // 이전에 찾은 값과 다를 때
+                        previous_found_index = j
+                        previous_found_chatRoom_id = result[i].chatRoom_id
+                        found_post_index = i
+
+                        return result[i].user_id
+                    }
+                }
+                j++
+                if(j == result.size) {
+                    j = 0
+                    break
+                }
+            }
+            i++
+        }
+        return 0
+    }
 }

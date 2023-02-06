@@ -63,7 +63,7 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
 
 
     /// stomp 연결
-    private var url = "ws://ec2-3-34-255-129.ap-northeast-2.compute.amazonaws.com:9000/stomp/chat"
+    private var url = "ws://ec2-3-34-255-129.ap-northeast-2.compute.amazonaws.com:9000/"
 //    private var url = "ws://localhost:9000/stomp/chat"
     val stompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, url)
 
@@ -91,7 +91,7 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
                 chatAllGetService.setChatAllGetResult(this)
                 chatAllGetService.getChatAll(chatRoomId)
 
-//                runStomp(chatRoomId, user_id_logined)
+                runStomp(chatRoomId, user_id_logined)
             } catch (e:Exception){
                 Log.d("ERROR", "stomp 자체의 오류")
                 Log.d("ERROR", e.message.toString())
@@ -184,7 +184,7 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
     private fun runStomp(chatRoom_id : Int, user_id : Int){ // user_id는 현재 로그인한 유저 아이디!!!
         stompClient.connect()
 
-        stompClient.topic("chatRoom/${chatRoom_id}/conversation").subscribe { topicMessage ->
+        stompClient.topic("sub/chat/room/{$chatRoom_id}").subscribe { topicMessage ->
             Log.d("message Receive", topicMessage.payload)
             val sender = JSONObject(topicMessage.payload).getString("userId").toInt() // 메세지 보낸 user_id 가져오기
 

@@ -13,6 +13,5 @@ data class CommercialRecord(
     @SerializedName(value =  "longitude") val longitude : Double,
     @SerializedName(value =  "request") val request : String,
     @SerializedName(value =  "userIdx") val userIdx : Int,
-    @Part @SerializedName(value =  "image") val image : MultipartBody.Part?
 
 )

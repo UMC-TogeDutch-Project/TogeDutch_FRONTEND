@@ -18,4 +18,8 @@ interface ApiLoginService {
         @Query ("email") email : String
     ): Call<FindPwdResponse>
 
+    @POST("oauth/kakao")
+    fun kakaoLogin(
+            @Query("email") email : String
+    ): Call<LoginResponse>
 }

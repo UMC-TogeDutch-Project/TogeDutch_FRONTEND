@@ -15,6 +15,7 @@ import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.common.util.Utility
 import com.kakao.sdk.user.UserApiClient
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import retrofit2.Call
@@ -30,6 +31,7 @@ import umc.mobile.project.databinding.ActivityLoginBinding
 import umc.mobile.project.ram.my_application_1.user_id_logined
 import java.util.logging.Handler
 import java.util.regex.Pattern
+import kotlinx.coroutines.delay as delay1
 
 class LoginActivity : AppCompatActivity(), MyCustomDialogInterface {
     private lateinit var viewBinding: ActivityLoginBinding
@@ -110,44 +112,7 @@ class LoginActivity : AppCompatActivity(), MyCustomDialogInterface {
         viewBinding.btnKakaoLogin.setOnClickListener {
             val myCustomDialog = MyCustomDialog(this, this)
 
-            runBlocking {
-                val a = launch {
-                    kakaoLogin() // 카카오 로그인
-                }
-
-                a.join()
-                // kakaoLogin 끝나면 실행되게 하고 싶음
-                // 어케하는데 제발
-                apiLoginService.kakaoLogin(kakaoEmail)
-                        .enqueue(object : Callback<LoginResponse> {
-                            override fun onResponse(
-                                    call: Call<LoginResponse>,
-                                    response: Response<LoginResponse>
-                            ) {
-                                Log.d(TAG, "1. onResponse:KakaoLogin 통신 성공")
-                                val loginResponseData = response.body()
-                                Log.d(TAG, "1. onResponse:${loginResponseData}, ${response.isSuccessful}")
-
-                                when (loginResponseData?.code) {
-                                    1000 -> {
-                                        Log.d(TAG, "onResponse:login응답 성공 userIdx: ${loginResponseData.result!!.userIdx}, 상태: ${loginResponseData.result!!.status}")
-                                        user_id_logined = loginResponseData.result!!.userIdx
-                                        access_token = loginResponseData.result.jwt
-                                        myCustomDialog.show()
-                                    }
-                                    2039 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
-                                    4000 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
-                                }
-
-
-                            }
-
-                            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                                Log.d(TAG, "onFailure:KakaoLogin통신 실패")
-                            }
-
-                        })
-            }
+            kakaoLogin() // 카카오 로그인
         }
 
         viewBinding.tbFindPassword.setOnClickListener {
@@ -210,23 +175,61 @@ class LoginActivity : AppCompatActivity(), MyCustomDialogInterface {
 
     // 23.02.06 제이 추가
     private fun kakaoLogin() {
+        val myCustomDialog = MyCustomDialog(this, this)
+
         // 카카오계정으로 로그인 공통 callback 구성
         // 카카오톡으로 로그인 할 수 없어 카카오계정으로 로그인할 경우 사용됨
 
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {
                 Log.d(TAG, "카카오계정으로 로그인 실패 : ${error}")
-                Toast.makeText(this@LoginActivity, "카카오 로그인 실패 -> 일반 로그인 필요", Toast.LENGTH_SHORT).show()
-                setLogin(false) // 카카오 로그인 버튼 없애기
             } else if (token != null) {
                 //TODO: 최종적으로 카카오로그인 및 유저정보 가져온 결과
+                
                 UserApiClient.instance.me { user, error ->
-                    Log.d(TAG, "1. 카카오계정으로 로그인 성공 \n\n " +
+                    Log.d(TAG, "카카오계정으로 로그인 성공 \n\n " +
                             "token: ${token.accessToken} \n\n " +
                             "me: ${user}")
                     kakaoNickname = "${user?.kakaoAccount?.profile?.nickname}"
                     kakaoEmail = "${user?.kakaoAccount?.email}"
                 }
+
+                android.os.Handler(Looper.getMainLooper()).postDelayed({
+                    //실행할 코드
+                    apiLoginService.kakaoLogin(kakaoEmail)
+                            .enqueue(object : Callback<LoginResponse> {
+                                override fun onResponse(
+                                        call: Call<LoginResponse>,
+                                        response: Response<LoginResponse>
+                                ) {
+                                    Log.d(TAG, "onResponse:KakaoLogin 통신 성공")
+                                    val loginResponseData = response.body()
+                                    Log.d(TAG, "onResponse:${loginResponseData}, ${response.isSuccessful}")
+
+                                    if (loginResponseData != null) {
+                                        if(!loginResponseData.isSuccess){
+                                            Toast.makeText(this@LoginActivity, "카카오 로그인 실패 -> 일반 로그인 필요", Toast.LENGTH_SHORT).show()
+                                            setLogin(false) // 카카오 로그인 버튼 없애기
+                                        }
+
+                                            when (loginResponseData?.code) {
+                                                1000 -> {
+                                                    Log.d(TAG, "onResponse:login응답 성공 userIdx: ${loginResponseData.result!!.userIdx}, 상태: ${loginResponseData.result!!.status}")
+                                                    user_id_logined = loginResponseData.result!!.userIdx
+                                                    access_token = loginResponseData.result.jwt
+                                                    myCustomDialog.show()
+                                                }
+                                                2039 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
+                                                4000 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
+                                            }
+                                    }
+                                }
+                                override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                                    Log.d(TAG, "onFailure:KakaoLogin통신 실패")
+                                }
+                            })
+                }, 3000)
+
             }
         }
 
@@ -248,10 +251,46 @@ class LoginActivity : AppCompatActivity(), MyCustomDialogInterface {
                     UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
                 } else if (token != null) {
                     UserApiClient.instance.me { user, error ->
-                        Log.d(TAG, "2. 카카오톡으로 로그인 성공 \n\n " +
+                        Log.d(TAG, "카카오톡으로 로그인 성공 \n\n " +
                                 "token: ${token.accessToken} \n\n " +
                                 "me: ${user}")
                     }
+
+                    android.os.Handler(Looper.getMainLooper()).postDelayed({
+                        //실행할 코드
+                        apiLoginService.kakaoLogin(kakaoEmail)
+                                .enqueue(object : Callback<LoginResponse> {
+                                    override fun onResponse(
+                                            call: Call<LoginResponse>,
+                                            response: Response<LoginResponse>
+                                    ) {
+                                        Log.d(TAG, "onResponse:KakaoLogin 통신 성공")
+                                        val loginResponseData = response.body()
+                                        Log.d(TAG, "onResponse:${loginResponseData}, ${response.isSuccessful}")
+
+                                        if (loginResponseData != null) {
+                                            if(!loginResponseData.isSuccess){
+                                                Toast.makeText(this@LoginActivity, "카카오 로그인 실패 -> 일반 로그인 필요", Toast.LENGTH_SHORT).show()
+                                                setLogin(false) // 카카오 로그인 버튼 없애기
+                                            }
+
+                                            when (loginResponseData?.code) {
+                                                1000 -> {
+                                                    Log.d(TAG, "onResponse:login응답 성공 userIdx: ${loginResponseData.result!!.userIdx}, 상태: ${loginResponseData.result!!.status}")
+                                                    user_id_logined = loginResponseData.result!!.userIdx
+                                                    access_token = loginResponseData.result.jwt
+                                                    myCustomDialog.show()
+                                                }
+                                                2039 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
+                                                4000 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
+                                            }
+                                        }
+                                    }
+                                    override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                                        Log.d(TAG, "onFailure:KakaoLogin통신 실패")
+                                    }
+                                })
+                    }, 3000)
                 }
             }
         } else {
@@ -278,6 +317,4 @@ class LoginActivity : AppCompatActivity(), MyCustomDialogInterface {
             return false
         }
     }
-
-
 }

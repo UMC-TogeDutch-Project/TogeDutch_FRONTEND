@@ -268,7 +268,7 @@ class CommercialSignUpActivity: AppCompatActivity(), CommercialRecordResult {
                 viewBinding.imageBtnCamera.setImageBitmap(
                     Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, false)
                 )
-                viewBinding.imageBtnCamera.visibility = View.INVISIBLE
+                viewBinding.tvImg.visibility = View.INVISIBLE
             }
         }
     }

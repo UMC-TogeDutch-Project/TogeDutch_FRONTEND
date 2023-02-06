@@ -167,19 +167,4 @@
         android:layout_marginTop="13dp"
         />
 
-    <!-- 23.02.06 제이 추가 -->
-    <TextView
-        android:id="@+id/tv_hashKey"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_marginTop="68dp"
-        android:text="텍스트"
-        android:textColor="@color/black"
-        android:textSize="14dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tbSignUp" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

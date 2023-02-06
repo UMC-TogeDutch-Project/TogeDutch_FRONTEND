@@ -13,7 +13,7 @@ class PutRetouchService {
 
     var timestamp = Timestamp(Date().time)
     private var result : Post = Post(post_id = 0, title = "", url = "", delivery_tips = 0, minimum = 0, order_time = "", num_of_recruits = 0, recruited_num = 0,
-        status = "", created_at = timestamp, updated_at = timestamp, image = "", latitude = 0.0, longitude = 0.0, chatRoom_id = 0, category = "")
+        status = "", created_at = timestamp, updated_at = timestamp, image = "", latitude = 0.0, longitude = 0.0, chatRoom_id = 0, category = "", user_id = 0)
 
     private lateinit var putRetouchResult: PutRetouchResult
 
@@ -21,9 +21,10 @@ class PutRetouchService {
         this.putRetouchResult = putRetouchResult
     }
 
-    fun putRetouch(post_id : Int, user_id : Int){
+    fun putRetouch(post_id : Int, user_id : Int, title : String, url : String, delivery_tips : Int, minimum : Int, order_time : String,
+                   num_of_recruits : Int, recruited_num : Int, status : String, latitude : Double, longitude : Double){
         val authService = getRetrofit().create(PutRetouchRetrofitInterfaces::class.java)
-        authService.putRetouch(post_id, user_id).enqueue(object: Callback<PutRetouchResponse> {
+        authService.putRetouch(post_id, user_id, title, url, delivery_tips, minimum, order_time, num_of_recruits, recruited_num, status, latitude, longitude).enqueue(object: Callback<PutRetouchResponse> {
             override fun onResponse(call: Call<PutRetouchResponse>, response: Response<PutRetouchResponse>) {
                 Log.d("CHAT-POST SUCCESS",response.toString())
                 val resp: PutRetouchResponse = response.body()!!

@@ -34,6 +34,7 @@ android {
     viewBinding {
         enabled true
     }
+
 }
 
 dependencies {
@@ -57,8 +58,22 @@ dependencies {
 
     implementation 'com.google.android.gms:play-services-location:18.0.0' // 위치정보 라이브러리
 
+    //stomp
+    implementation 'com.github.NaikSoftware:StompProtocolAndroid:1.6.6'
+    implementation 'com.github.bishoybasily.stomp:lib:2.0.5'
+
+    //rx
+    //rx
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.5'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+
+
 
     // 글라이드
     implementation 'com.github.bumptech.glide:glide:4.14.2'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
+
+    // 23.02.06 제이 추가
+    // Kakao-SDK
+    implementation "com.kakao.sdk:v2-user:2.8.5" // 카카오 로그인
 }

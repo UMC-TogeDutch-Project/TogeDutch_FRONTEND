@@ -10,8 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import umc.mobile.project.databinding.FragmentMyprofileBinding
-import umc.mobile.project.ram.my_application_1.MyPostDetailActivity
-import umc.mobile.project.ram.my_application_1.ParticipatePopupDialog
+import umc.mobile.project.ram.my_application_1.MyCommercialDetailActivity
 
 
 class MyProfileFragment : Fragment() {
@@ -92,7 +91,7 @@ class MyProfileFragment : Fragment() {
                 // 공고 상세 페이지 이동
 //                val dialog = activity?.let { ParticipatePopupDialog(it) }
 //                dialog?.start()
-                val intent = Intent(context, MyPostDetailActivity::class.java)
+                val intent = Intent(context, MyCommercialDetailActivity::class.java)
                 startActivity(intent)
             }
         })

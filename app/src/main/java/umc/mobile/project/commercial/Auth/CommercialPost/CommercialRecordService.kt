@@ -5,16 +5,18 @@ import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import umc.mobile.project.commercial.kakao_url
 import umc.mobile.project.getRetrofit
+import java.sql.Timestamp
 import java.util.*
 
 class CommercialRecordService {
-//var timestamp = Date(System.currentTimeMillis())
-    private var result : Result = Result(tid = "", next_redirect_pc_url = "", next_redirect_mobile_url = "", partner_order_id = 1, created_at = 1)
+    var timestamp = Timestamp(Date().time)
+    private var result : Result = Result(tid = "", next_redirect_pc_url = "", next_redirect_mobile_url = "", partner_order_id = 1, created_at = timestamp)
 
     private lateinit var commercialRecordResult : CommercialRecordResult
 
-    fun setRecordResult(commercialRecordResult: CommercialRecordResult){
+    fun setCommercialRecordResult(commercialRecordResult: CommercialRecordResult){
         this.commercialRecordResult = commercialRecordResult
     }
 
@@ -27,8 +29,9 @@ class CommercialRecordService {
                 val resp: CommercialRecordResponse = response.body()!!
                 result = resp.result!!
                 when(resp.code){
-                    1000 -> commercialRecordResult.CommercialRecordSuccess(result)
-                    else -> commercialRecordResult.CommercialRecordFailure()
+                    1000 -> {commercialRecordResult.commercialRecordSuccess(result)
+                    kakao_url = resp.result.next_redirect_mobile_url }
+                    else -> commercialRecordResult.commercialRecordFailure()
                 }
             }
 

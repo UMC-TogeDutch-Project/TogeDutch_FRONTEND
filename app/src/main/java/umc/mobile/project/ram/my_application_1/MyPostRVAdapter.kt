@@ -4,17 +4,21 @@ import MemberData
 import Post
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import umc.mobile.project.databinding.FragmentRandomMatchingBinding
 import umc.mobile.project.databinding.ItemMyPostBinding
 import umc.mobile.project.ram.Auth.Matching.GetMatching.MatchingGetResult
 import umc.mobile.project.ram.Auth.Matching.GetMatching.MatchingGetService
+import umc.mobile.project.ram.Auth.Post.PUTRetouch.PutRetouchService
 
 import umc.mobile.project.ram.Geocoder_location
 import java.util.*
@@ -60,6 +64,8 @@ class MyPostRVAdapter (
     // 레이아웃 내 view 연결
     inner class ViewHolder(val binding: ItemMyPostBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(post: Post) {
+            // Log.d("현재 유저 아이디 =============", post.user_id.toString())
+
             var selected_random_btn : Int = 0
             var isSelected = false
 
@@ -87,7 +93,8 @@ class MyPostRVAdapter (
 
             // 수정 버튼
             binding.modifyBtn.setOnClickListener {
-
+                val intent = Intent(context, PostRetouchActivity::class.java)
+                context.startActivity(intent)
             }
 
             // 삭제 버튼

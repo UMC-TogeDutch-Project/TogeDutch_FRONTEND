@@ -58,7 +58,7 @@
         <activity android:name=".ram.my_application_1.MyPostActivity"></activity>
         <activity android:name=".commercial.CommercialListActivity"></activity>
         <activity android:name=".commercial.CommercialSignUpActivity"></activity>
-        <activity android:name=".ram.my_application_1.MyPostDetailActivity"></activity>
+        <activity android:name=".ram.my_application_1.MyCommercialDetailActivity"></activity>
         <activity android:name=".ram.my_application_1.current_application.CurrentApplicationActivity"></activity>
         <activity android:name=".ram.chat.ChattingActivity"></activity>
         <activity android:name=".signup.SignUpUserCategoryActivity"></activity>
@@ -71,10 +71,30 @@
         <activity android:name=".wishlist.WishListActivity"></activity>
         <activity android:name=".notice.NoticeActivity"></activity>
         <activity android:name=".announcement.PlaceSearchActivity"></activity>
+        <activity android:name=".ram.my_application_1.JoinPostDetailActivity"></activity>
+        <activity android:name=".ram.my_application_1.PostRetouchActivity"></activity>
 
         <activity
             android:name=".login.LoginActivity"
             android:exported="false">
+        </activity>
+
+        <!-- 23.02.06 제이 추가Kakao 로그인 -->
+        <activity
+            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- Redirect URI: "kakao{NATIVE_APP_KEY}://oauth" -->
+                <!-- scheme-example: "kakao{NATIVE_APP_KEY}" -->
+                <data
+                    android:host="oauth"
+                    android:scheme="@string/kakao_app_key2" />
+
+            </intent-filter>
         </activity>
 
         <meta-data
@@ -82,6 +102,7 @@
             android:value="@string/google_maps_key" />
 
     </application>
+
 
 
 </manifest>

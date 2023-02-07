@@ -7,7 +7,6 @@ import umc.mobile.project.databinding.ActivityCurrentapplicationBinding
 import umc.mobile.project.ram.Auth.Application.ViewUpload.ApplicationGet
 import umc.mobile.project.ram.Auth.Application.ViewUpload.ViewUploadGetResult
 import umc.mobile.project.ram.Auth.Application.ViewUpload.ViewUploadGetService
-import umc.mobile.project.ram.Auth.Post.GetPostDetail.PostDetailGetService
 import umc.mobile.project.ram.my_application_1.*
 
 class CurrentApplicationActivity : AppCompatActivity(), ViewUploadGetResult {
@@ -41,11 +40,11 @@ class CurrentApplicationActivity : AppCompatActivity(), ViewUploadGetResult {
 
     private fun initActionBar() {
 
-        binding.mainActionbar.appbarPageNameLeftTv.text = "공고 신청 현황"
-
-        binding.mainActionbar.appbarBackBtn.setOnClickListener {
-             finish()
-        }
+//        binding.mainActionbar.appbarPageNameLeftTv.text = "공고 신청 현황"
+//
+//        binding.mainActionbar.appbarBackBtn.setOnClickListener {
+//             finish()
+//        }
 
     }
 

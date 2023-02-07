@@ -102,7 +102,7 @@ class MyPostRVAdapter (
                     selected_random_btn++
                     binding.randomFramelayout.visibility = View.VISIBLE
 
-                    // 첫 랜덤 매칭
+                    // 첫 랜덤 매칭  -> 위랑 순서 바꿔야 매칭되었을때 화면 나옴
                     getMatching()
 
                     // 메이트 매칭 신청 (알람 가게 설정)
@@ -176,8 +176,7 @@ class MyPostRVAdapter (
     private fun getMatching(){
         val matchingGetService = MatchingGetService()
         matchingGetService.setMatchingGetResult(this)
-        matchingGetService.getRandomMatching(post_id_to_detail) // 임의로 지정
-
+        matchingGetService.getRandomMatching(10) // 임의로 지정
     }
 
     override fun getMatchingSuccess(code: Int, result: MemberData) {
@@ -187,7 +186,7 @@ class MyPostRVAdapter (
     }
 
     override fun getMatchingFailure(code: Int, message: String) {
-        TODO("Not yet implemented")
+
     }
 
 }

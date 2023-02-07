@@ -13,18 +13,11 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import okhttp3.Interceptor
-import okhttp3.OkHttpClient
-import okhttp3.Response
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import umc.mobile.project.R
+import umc.mobile.project.announcement.access_token
 import umc.mobile.project.databinding.FragmentMypageProfileReviseBinding
 import umc.mobile.project.mypage.ChangePassword.*
 import umc.mobile.project.ram.my_application_1.user_id_logined
-import java.io.IOException
 
 
 class MyProfileReviseFragment : Fragment(), PasswordPatchResult {
@@ -36,21 +29,12 @@ class MyProfileReviseFragment : Fragment(), PasswordPatchResult {
 
     var newPasswordEditText : EditText? = null
 
-    companion object {
-        var userIdx: Int
-            get() {
-                return userIdx
-            }
-            set(value) {}
-        lateinit var prefs: PreferenceUtil
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        prefs = PreferenceUtil(requireContext())
         viewBinding = FragmentMypageProfileReviseBinding.inflate(layoutInflater)
 
         newPasswordEditText = viewBinding.newPassword
@@ -124,7 +108,8 @@ class MyProfileReviseFragment : Fragment(), PasswordPatchResult {
     private fun save() {
         val passwordPatchService = PasswordPatchService()
         passwordPatchService.setPasswordPatchResult(this)
-        passwordPatchService.changePassword(prefs.getString("accessToken", ""), userIdx,
+        passwordPatchService.changePassword(
+            access_token, user_id_logined,
             getChangePassword())
     }
 

@@ -60,9 +60,6 @@ class LoginActivity : AppCompatActivity(), MyCustomDialogInterface {
                                 user_id_logined = loginResponseData.result!!.userIdx
                                 access_token = loginResponseData.result.jwt
 
-                                MyProfileReviseFragment.userIdx = loginResponseData.result!!.userIdx
-                                MyProfileReviseFragment.prefs.setString("jwt", access_token)
-
                                 myCustomDialog.show()
                             }
                             2010 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()

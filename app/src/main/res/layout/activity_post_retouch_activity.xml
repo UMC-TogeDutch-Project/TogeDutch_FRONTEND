@@ -147,19 +147,37 @@
                     android:text="위치"
                     android:textColor="@color/black" />
 
-                <EditText
-                    android:id="@+id/text_location"
-                    android:layout_width="370dp"
-                    android:layout_height="40dp"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/button_round_11"
                     android:backgroundTint="#1F767680"
-                    android:drawableEnd="@drawable/ic_map"
-                    android:fontFamily="@font/notosanskr_bold"
-                    android:gravity="center"
-                    android:text=""
-                    android:textColor="@color/black"
-                    android:paddingLeft="7dp"
-                    android:paddingRight="7dp" />
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/text_Location"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:hint="위치를 설정해주세요"
+                        android:background="@null"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageButton
+                        android:id="@+id/image_btn_map"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_map"
+                        android:layout_marginRight="5dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
                 <TextView
                     android:layout_width="wrap_content"

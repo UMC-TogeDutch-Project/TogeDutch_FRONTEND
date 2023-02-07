@@ -2,11 +2,9 @@ package umc.mobile.project.ram.my_application_1
 
 import Post
 import android.app.SearchManager
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -19,11 +17,6 @@ import umc.mobile.project.ram.Auth.Post.GetPostJoin.PostJoinGetResult
 import umc.mobile.project.ram.Auth.Post.GetPostJoin.PostJoinGetService
 import umc.mobile.project.ram.Auth.Post.GetPostUpload.PostUploadGetResult
 import umc.mobile.project.ram.Auth.Post.GetPostUpload.PostUploadGetService
-import umc.mobile.project.ram.chat.DeclarationPopupDialog
-import umc.mobile.project.ram.my_application_1.current_application.CurrentApplicationActivity
-import java.sql.Timestamp
-import java.text.SimpleDateFormat
-import java.util.*
 import kotlin.collections.ArrayList
 
 var postUploadList = ArrayList<Post>()
@@ -188,7 +181,7 @@ class MyPostActivity : AppCompatActivity(), PostUploadGetResult, PostJoinGetResu
             MyPostRVAdapter.OnItemClickListener {
 
             override fun onItemClick(application: Post) {
-                val intent = Intent(this@MyPostActivity, MyPostDetailActivity::class.java)
+                val intent = Intent(this@MyPostActivity, MyCommercialDetailActivity::class.java)
                 startActivity(intent)
 
 
@@ -222,15 +215,8 @@ class MyPostActivity : AppCompatActivity(), PostUploadGetResult, PostJoinGetResu
         joinRVAdatpter.setItemClickListener(object :
             JoinRVAdatpter.OnItemClickListener {
             override fun onItemClick(application: Post) {
-
-                val dlg = ParticipatePopupDialog(this@MyPostActivity)
-                dlg.start()
-//                    val dlg = ReviewWritePopupDialog(this@MyPostActivity)
-//                    dlg.start()
-//                    fun open_activity(){
-//                        val intent = Intent(this@MyPostActivity,CurrentApplicationActivity::class.java)
-//                        startActivity(intent)
-//                    }
+                val intent = Intent(this@MyPostActivity, JoinPostDetailActivity::class.java)
+                startActivity(intent)
             }
         })
 

@@ -5,13 +5,14 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import Post
+import android.util.Log
 import umc.mobile.project.databinding.ActivityMyPostDetailBinding
 import umc.mobile.project.ram.Auth.Post.GetPostDetail.PostDetailGetResult
 import umc.mobile.project.ram.Auth.Post.GetPostDetail.PostDetailGetService
 import umc.mobile.project.ram.Geocoder_location
 import umc.mobile.project.ram.my_application_1.current_application.CurrentApplicationActivity
 
-class MyPostDetailActivity : AppCompatActivity(), PostDetailGetResult {
+class MyCommercialDetailActivity : AppCompatActivity(), PostDetailGetResult {
     lateinit var binding: ActivityMyPostDetailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,6 +67,6 @@ class MyPostDetailActivity : AppCompatActivity(), PostDetailGetResult {
     }
 
     override fun getPostUploadFailure(code: Int, message: String) {
-        TODO("Not yet implemented")
+        Log.d("getPostUpload 실패", message)
     }
 }

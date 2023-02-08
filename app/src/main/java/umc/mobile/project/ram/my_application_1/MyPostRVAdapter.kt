@@ -1,24 +1,21 @@
 package umc.mobile.project.ram.my_application_1
 
-import MemberData
+import umc.mobile.project.MemberData
 import Post
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import umc.mobile.project.databinding.FragmentRandomMatchingBinding
 import umc.mobile.project.databinding.ItemMyPostBinding
 import umc.mobile.project.ram.Auth.Matching.GetMatching.MatchingGetResult
 import umc.mobile.project.ram.Auth.Matching.GetMatching.MatchingGetService
-import umc.mobile.project.ram.Auth.Post.PUTRetouch.PutRetouchService
 
 import umc.mobile.project.ram.Geocoder_location
 import java.util.*
@@ -183,7 +180,7 @@ class MyPostRVAdapter (
     private fun getMatching(){
         val matchingGetService = MatchingGetService()
         matchingGetService.setMatchingGetResult(this)
-        matchingGetService.getRandomMatching(10) // 임의로 지정
+        matchingGetService.getRandomMatching(33) // 임의로 지정
     }
 
     override fun getMatchingSuccess(code: Int, result: MemberData) {

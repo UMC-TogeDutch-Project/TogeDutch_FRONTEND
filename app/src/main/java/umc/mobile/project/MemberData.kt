@@ -1,3 +1,5 @@
+package umc.mobile.project
+
 import com.google.gson.annotations.SerializedName
 import java.sql.Timestamp
 

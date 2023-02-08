@@ -89,7 +89,6 @@ class MyPhoneNumReviseFragment : Fragment(), PhoneNumberPatchResult {
                     if(smsResponseData?.result != null){
                         Log.d(TAG, "onResponse: 응답 성공 ${smsResponseData.result.smsConfirmNum}")
                         checkSum = smsResponseData.result.smsConfirmNum
-
                     }
                     else{
                         Log.d(TAG, "onResponse: 응답실패")
@@ -148,11 +147,14 @@ class MyPhoneNumReviseFragment : Fragment(), PhoneNumberPatchResult {
         var checkPhoneNum = viewBinding.authenticationNum.text.toString()
 
         if (checkSum != checkPhoneNum){
-            viewBinding.errorMessage.setText("패스워드가 같지 않습니다.")
+            viewBinding.errorMessage.setText("인증번호가 올바르지 않습니다.")
             viewBinding.authenticationNum.setTextColor(Color.parseColor("#C854FF"))
             return false
+        } else {
+            viewBinding.errorMessage.setText("")
+            viewBinding.authenticationNum.setTextColor(Color.parseColor("#FF000000"))
+            return true
         }
-        return true
     }
 
     // 서버에 보낼 데이터 담아주는 함수

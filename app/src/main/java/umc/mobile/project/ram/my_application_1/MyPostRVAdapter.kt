@@ -25,7 +25,7 @@ import kotlin.collections.ArrayList
 
 class MyPostRVAdapter (
     private val applicationList: ArrayList<Post>
-    ) :
+) :
     RecyclerView.Adapter<MyPostRVAdapter.ViewHolder>(), Filterable, MatchingGetResult {
 
     lateinit var context : Context

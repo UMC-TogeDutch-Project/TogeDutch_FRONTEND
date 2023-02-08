@@ -26,14 +26,6 @@ class SignUpAlarmKeywordActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        var key1 : String? = "word1"
-        var key2 : String? = "word2"
-        var key3 : String? = "word3"
-        var key4 : String? = "word4"
-        var key5 : String? = "word5"
-        var key6 : String? = "word6"
-
-
         var name = intent.getStringExtra("name")
         var email = intent.getStringExtra("email")
         var password = intent.getStringExtra("password")
@@ -50,6 +42,7 @@ class SignUpAlarmKeywordActivity : AppCompatActivity() {
         setContentView(viewBinding.root)
 
         val keywordList : ArrayList<DataVo> = arrayListOf()
+        val keywordListIt : MutableList<String?> = mutableListOf(null, null, null, null, null, null)
 
         Log.d(TAG, "onCreate: ${name}, ${email}, ${password}, ${phoneNum}")
 
@@ -67,14 +60,13 @@ class SignUpAlarmKeywordActivity : AppCompatActivity() {
         viewBinding.btnInputAlarm.setOnClickListener{
             val keyword = viewBinding.etInputAlarmKeyword.text.toString()
 //            if(keywordList.size < 6){
+            keywordList.apply { add(DataVo(keyword)) }
             Log.d(TAG, "onCreate:${keywordList.size}")
-                keywordList.apply { add(DataVo(keyword)) }
-                customAdapter.notifyDataSetChanged()
-                Log.d(TAG, "onCreate:${keywordList}")
-                key1 = keywordList?.get(0).toString()
+            customAdapter.notifyDataSetChanged()
+            Log.d(TAG, "onCreate:${keywordList}")
 
-                Log.d(TAG, "onCreate: key1: ${key1}")
-                viewBinding.etInputAlarmKeyword.setText(null)
+
+            viewBinding.etInputAlarmKeyword.setText(null)
 //            }
 //            else{
 //                Toast.makeText(this@SignUpAlarmKeywordActivity, "최대 키워드 갯수를 초과했습니다.", Toast.LENGTH_SHORT).show()
@@ -84,6 +76,8 @@ class SignUpAlarmKeywordActivity : AppCompatActivity() {
 
 
         viewBinding.btnNext.setOnClickListener {
+            val keywordListIt : MutableList<String?> = mutableListOf(null, null, null, null, null, null)
+
             val intent = Intent(this, SignUpRegionActivity::class.java)
             intent.putExtra("name", name)
             intent.putExtra("email", email)
@@ -91,7 +85,11 @@ class SignUpAlarmKeywordActivity : AppCompatActivity() {
             intent.putExtra("phoneNum", phoneNum)
             intent.putExtra("keyWord", viewBinding.etInputAlarmKeyword.text.toString())
 
-            apiService.getUserKeywordId(KeywordRequest("${key1}", "${key2}", "${key3}", "${key4}","${key5}","${key6}"))
+            for(i in 0..keywordList.size - 1){
+                keywordListIt[i] = keywordList.get(i).toString().substring(22, keywordList.get(i).toString().lastIndex)
+            }
+
+            apiService.getUserKeywordId(KeywordRequest("${keywordListIt[0]}", "${keywordListIt[1]}", "${keywordListIt[2]}", "${keywordListIt[3]}","${keywordListIt[4]}","${keywordListIt[5]}"))
                 .enqueue(object : Callback<KeywordResponse>{
                 override fun onResponse(
                     call: Call<KeywordResponse>,
@@ -109,8 +107,8 @@ class SignUpAlarmKeywordActivity : AppCompatActivity() {
                                     intent.putExtra("password", password)
                                     intent.putExtra("phoneNum", phoneNum)
                                     intent.putExtra("keyWordIdx", keywordIdx)
-                                    Log.d(TAG, "onResponse: ${key1}, ${key2}, ${key3} ${key4}, ${key5}, ${key6}")
-
+                                    Log.d(TAG, "onResponse: ${keywordListIt[0]}, ${keywordListIt[1]}, ${keywordListIt[2]} ${keywordListIt[3]}, ${keywordListIt[4]}, ${keywordListIt[5]}")
+                                    Log.d(TAG, "onResponse: ${keywordResponseData}")
                                     startActivity(intent)
                                     overridePendingTransition(0, 0)
                                 }

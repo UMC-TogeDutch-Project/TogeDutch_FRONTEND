@@ -27,6 +27,7 @@ class PhoneNumberPatchService {
             override fun onResponse(call: Call<PhoneNumberPatchResponse>, response: Response<PhoneNumberPatchResponse>) {
                 Log.d("RECORD/SUCCESS",response.toString())
                 val resp: PhoneNumberPatchResponse = response.body()!!
+                Log.d("success code: ", resp.code.toString())
                 result = resp.result!!
                 when(resp.code){
                     1000 -> phoneNumberPatchResult.changePhoneNumberSuccess(result)

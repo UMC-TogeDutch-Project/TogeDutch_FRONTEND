@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import umc.mobile.project.DataRecentRVAdapter
+import umc.mobile.project.announcement.AnnounceDetailActivity
 //import umc.mobile.project.announcement.AnnounceDetailActivity
 import umc.mobile.project.commercial.Auth.CommercialGet.CommercialGet
 import umc.mobile.project.commercial.Auth.CommercialGet.CommercialGetResult
@@ -11,6 +13,7 @@ import umc.mobile.project.commercial.Auth.CommercialGet.CommercialGetService
 import umc.mobile.project.databinding.ActivityCommercialListBinding
 import umc.mobile.project.ram.my_application_1.user_id_logined
 
+var ad_id = 1
 
 class CommercialListActivity: AppCompatActivity(), CommercialGetResult {
     private lateinit var binding: ActivityCommercialListBinding
@@ -61,7 +64,7 @@ class CommercialListActivity: AppCompatActivity(), CommercialGetResult {
     private fun getCommercial(){
         val commercialGetService = CommercialGetService()
         commercialGetService.setCommercialGetResult(this)
-        commercialGetService.sendPost(user_id_logined, )
+        commercialGetService.sendPost(user_id_logined )
     }
 
     override fun commercialGetSuccess(result: ArrayList<CommercialGet>) {
@@ -70,6 +73,13 @@ class CommercialListActivity: AppCompatActivity(), CommercialGetResult {
         binding.recyclerView.adapter = commercialRVAdapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
+
+        commercialRVAdapter.setItemClickListener(object: CommercialRVAdapter.OnItemClickListener{
+            override fun onItemClick(commercialGet: CommercialGet) {
+                val intent = Intent(this@CommercialListActivity, CommercialDetailActivity::class.java)
+                startActivity(intent)
+            }
+        })
         commercialRVAdapter.notifyDataSetChanged()
     }
 

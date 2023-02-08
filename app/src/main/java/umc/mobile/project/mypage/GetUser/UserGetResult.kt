@@ -1,6 +1,6 @@
 package umc.mobile.project.mypage.GetUser
 
-import MemberData
+import umc.mobile.project.MemberData
 
 interface UserGetResult {
     fun getUserSuccess(code: Int, result: MemberData)

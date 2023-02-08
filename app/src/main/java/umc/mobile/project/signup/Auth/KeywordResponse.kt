@@ -18,7 +18,7 @@ data class KeywordResponse(
 )
 
 data class Result(
-    @SerializedName("keyword_Id") val keyword_Id: Int,
+    @SerializedName("keywordIdx") val keywordIdx: Int,
     @SerializedName("word1") val word1: String?,
     @SerializedName("word2") val word2: String?,
     @SerializedName("word3") val word3: String?,

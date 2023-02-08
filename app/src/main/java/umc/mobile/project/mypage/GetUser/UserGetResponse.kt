@@ -1,6 +1,6 @@
 package umc.mobile.project.mypage.GetUser
 
-import MemberData
+import umc.mobile.project.MemberData
 import com.google.gson.annotations.SerializedName
 
 data class UserGetResponse (

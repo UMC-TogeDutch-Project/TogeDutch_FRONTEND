@@ -32,6 +32,7 @@ class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
     lateinit var dataImminentRVAdapter: DataImminentRVAdapter
     private lateinit var viewBinding: FragmentHomeBinding
 
+    val TAG: String = "로그"
 //    private var _viewBinding: FragmentHomeBinding? = null
 //    private val viewBinding get() = _viewBinding!!
 //

@@ -13,59 +13,59 @@ data class UpLoadResponse(
     val message: String,
 
     @SerializedName("result")
-    val result: Result?
-) {
-    data class Result(
-        @SerializedName("post_id")
-        val post_id: Int,
+    val result: UploadResult?
+)
 
-        @SerializedName("title")
-        val title: String,
+data class UploadResult(
+    @SerializedName("post_id")
+    val post_id: Int,
 
-        @SerializedName("url")
-        val url: String,
+    @SerializedName("title")
+    val title: String,
 
-        @SerializedName("delivery_tips")
-        val delivery_tips: Int,
+    @SerializedName("url")
+    val url: String,
 
-        @SerializedName("minimum")
-        val minimum: Int,
+    @SerializedName("delivery_tips")
+    val delivery_tips: Int,
 
-        @SerializedName("order_time")
-        val order_time: String,
+    @SerializedName("minimum")
+    val minimum: Int,
 
-        @SerializedName("num_of_recruits")
-        val num_of_recruits: Int,
+    @SerializedName("order_time")
+    val order_time: String,
 
-        @SerializedName("recruited_num")
-        val recruited_num: Int,
+    @SerializedName("num_of_recruits")
+    val num_of_recruits: Int,
 
-        @SerializedName("status")
-        val status: String,
+    @SerializedName("recruited_num")
+    val recruited_num: Int,
 
-        @SerializedName("created_at")
-        val created_at: String,
+    @SerializedName("status")
+    val status: String,
 
-        @SerializedName("updated_at")
-        val updated_at: String,
+    @SerializedName("created_at")
+    val created_at: String,
 
-        @SerializedName("latitude")
-        val latitude: Double,
+    @SerializedName("updated_at")
+    val updated_at: String,
 
-        @SerializedName("longitude")
-        val longitude: Double,
+    @SerializedName("latitude")
+    val latitude: Double,
 
-        @SerializedName("chatRoom_id")
-        val chatRoom_id: Int,
+    @SerializedName("longitude")
+    val longitude: Double,
 
-        @SerializedName("category")
-        val category: String,
+    @SerializedName("chatRoom_id")
+    val chatRoom_id: Int,
 
-        @SerializedName("image")
-        val image: String?,
+    @SerializedName("category")
+    val category: String,
 
-        @SerializedName("user_id")
-        val user_id: Int?
+    @SerializedName("image")
+    val image: String?,
 
-    )
-}
+    @SerializedName("user_id")
+    val user_id: Int?
+
+)

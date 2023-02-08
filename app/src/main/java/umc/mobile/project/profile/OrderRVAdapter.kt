@@ -34,7 +34,7 @@ class OrderRVAdapter (private val orderList: ArrayList<OrderData>): RecyclerView
             binding.score.text = orderData.score.toString()
 
             binding.listItemScore.setOnClickListener {
-//                val dialog = ReviewPopupDialog()
+//                val dialog = ReviewPopupDialog(this)
 //                dialog.start()
 
             }

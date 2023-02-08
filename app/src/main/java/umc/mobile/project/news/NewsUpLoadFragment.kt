@@ -46,11 +46,13 @@ class NewsUpLoadFragment : Fragment(){
                 call: Call<UpLoadResponse>,
                 response: Response<UpLoadResponse>
             ) {
+
                 Log.d(TAG, "onResponse:통신성공")
+
             }
 
             override fun onFailure(call: Call<UpLoadResponse>, t: Throwable) {
-                Log.d(TAG, "onFailure:통신실패")
+                Log.d(TAG, "onFailure:통신실패 ${t}")
             }
 
         })

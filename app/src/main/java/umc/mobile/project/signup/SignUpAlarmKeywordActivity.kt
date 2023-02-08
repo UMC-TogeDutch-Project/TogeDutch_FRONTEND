@@ -100,14 +100,14 @@ class SignUpAlarmKeywordActivity : AppCompatActivity() {
                         if(keywordResponseData != null){
                             when(keywordResponseData.code){
                                 1000 -> {//Toast.makeText(this@SignUpAlarmKeywordActivity, "성공! ${keywordResponseData.message}", Toast.LENGTH_SHORT).show()
-                                    var keywordIdx :Int = keywordResponseData.result.keyword_Id
-                                    Log.d(TAG, "onResponse: ${keywordResponseData}")
+                                    var keywordIdx :Int = keywordResponseData.result.keywordIdx
+
                                     intent.putExtra("name", name)
                                     intent.putExtra("email", email)
                                     intent.putExtra("password", password)
                                     intent.putExtra("phoneNum", phoneNum)
                                     intent.putExtra("keyWordIdx", keywordIdx)
-                                    Log.d(TAG, "onResponse: ${keywordListIt[0]}, ${keywordListIt[1]}, ${keywordListIt[2]} ${keywordListIt[3]}, ${keywordListIt[4]}, ${keywordListIt[5]}")
+                                    Log.d(TAG, "onResponse: ${keywordListIt[0]}, ${keywordListIt[1]}, ${keywordListIt[2]}, ${keywordListIt[3]}, ${keywordListIt[4]}, ${keywordListIt[5]}")
                                     Log.d(TAG, "onResponse: ${keywordResponseData}")
                                     startActivity(intent)
                                     overridePendingTransition(0, 0)

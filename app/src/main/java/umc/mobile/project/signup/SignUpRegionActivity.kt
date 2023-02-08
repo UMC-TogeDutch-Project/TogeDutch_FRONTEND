@@ -92,7 +92,7 @@ class SignUpRegionActivity : AppCompatActivity() {
 
                     viewBinding.tvRegionCheck.text = " "
                     viewBinding.etInputRegion.setTextColor(Color.parseColor("#FF000000"))
-                    Toast.makeText(this, "${Toast.makeText(this, "해당되는 주소 정보는 없습니다", Toast.LENGTH_LONG).show()} 로 주소가 설정되었습니다.", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "${viewBinding.etInputRegion.text.toString()} 로 주소가 설정되었습니다.", Toast.LENGTH_LONG).show()
                     Log.d("위치정보", "주소: $address 위도: $latitude  경도: $longitude")
                 }
 

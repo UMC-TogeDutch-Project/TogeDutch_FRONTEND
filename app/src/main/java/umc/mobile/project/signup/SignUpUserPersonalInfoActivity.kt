@@ -25,8 +25,7 @@ class SignUpUserPersonalInfoActivity : AppCompatActivity() {
         var email = intent.getStringExtra("email")
         var password = intent.getStringExtra("password")
         var phoneNum = intent.getStringExtra("phoneNum")
-//        var keyWordIdx: Int = intent.getIntExtra("keyWordIdx", 1)
-        var keyWordIdx: Int = 1
+        var keyWordIdx = intent.getIntExtra("keyWordIdx", 0)
         var role = intent.getStringExtra("role")
         var status= intent.getStringExtra("status")
         var latitude = intent.getDoubleExtra("latitude", 50.02)

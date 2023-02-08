@@ -96,7 +96,6 @@ class MyProfileFragment : Fragment() {
             }
         })
 
-
         orderRVAdapter.notifyDataSetChanged()
     }
 

@@ -1,9 +1,9 @@
-package umc.mobile.project.mypage.ChangePassword
+package umc.mobile.project.withdrawal
 
 import com.google.gson.annotations.SerializedName
 import java.sql.Timestamp
 
-data class PasswordPatchResponse (
+data class WithdrawalResponse (
     @SerializedName("isSuccess")
     val isSuccess: Boolean,
 
@@ -14,10 +14,10 @@ data class PasswordPatchResponse (
     val message: String,
 
     @SerializedName("result")
-    val result: ChangePasswordResult?
+    val result: ChangeUserStatusResult?
 )
 
-data class ChangePasswordResult(
+data class ChangeUserStatusResult(
     @SerializedName("userIdx")
     var userIdx: Int,
 

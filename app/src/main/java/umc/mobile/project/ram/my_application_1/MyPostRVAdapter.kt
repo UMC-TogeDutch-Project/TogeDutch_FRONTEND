@@ -1,24 +1,21 @@
 package umc.mobile.project.ram.my_application_1
 
-import MemberData
+import umc.mobile.project.MemberData
 import Post
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import umc.mobile.project.databinding.FragmentRandomMatchingBinding
 import umc.mobile.project.databinding.ItemMyPostBinding
 import umc.mobile.project.ram.Auth.Matching.GetMatching.MatchingGetResult
 import umc.mobile.project.ram.Auth.Matching.GetMatching.MatchingGetService
-import umc.mobile.project.ram.Auth.Post.PUTRetouch.PutRetouchService
 
 import umc.mobile.project.ram.Geocoder_location
 import java.util.*
@@ -109,7 +106,7 @@ class MyPostRVAdapter (
                     selected_random_btn++
                     binding.randomFramelayout.visibility = View.VISIBLE
 
-                    // 첫 랜덤 매칭
+                    // 첫 랜덤 매칭  -> 위랑 순서 바꿔야 매칭되었을때 화면 나옴
                     getMatching()
 
                     // 메이트 매칭 신청 (알람 가게 설정)
@@ -183,8 +180,7 @@ class MyPostRVAdapter (
     private fun getMatching(){
         val matchingGetService = MatchingGetService()
         matchingGetService.setMatchingGetResult(this)
-        matchingGetService.getRandomMatching(post_id_to_detail) // 임의로 지정
-
+        matchingGetService.getRandomMatching(33) // 임의로 지정
     }
 
     override fun getMatchingSuccess(code: Int, result: MemberData) {
@@ -194,7 +190,7 @@ class MyPostRVAdapter (
     }
 
     override fun getMatchingFailure(code: Int, message: String) {
-        TODO("Not yet implemented")
+
     }
 
 }

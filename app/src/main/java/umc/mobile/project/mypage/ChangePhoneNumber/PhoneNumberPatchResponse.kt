@@ -1,9 +1,9 @@
-package umc.mobile.project.mypage.ChangePassword
+package umc.mobile.project.mypage.ChangePhoneNumber
 
 import com.google.gson.annotations.SerializedName
 import java.sql.Timestamp
 
-data class PasswordPatchResponse (
+data class PhoneNumberPatchResponse (
     @SerializedName("isSuccess")
     val isSuccess: Boolean,
 
@@ -14,10 +14,10 @@ data class PasswordPatchResponse (
     val message: String,
 
     @SerializedName("result")
-    val result: ChangePasswordResult?
+    val result: ChangePhoneNumberResult?
 )
 
-data class ChangePasswordResult(
+data class ChangePhoneNumberResult(
     @SerializedName("userIdx")
     var userIdx: Int,
 
@@ -59,5 +59,4 @@ data class ChangePasswordResult(
 
     @SerializedName("jwt")
     var jwt: String
-
 )

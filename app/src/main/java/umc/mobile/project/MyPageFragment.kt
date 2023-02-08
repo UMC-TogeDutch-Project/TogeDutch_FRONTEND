@@ -1,7 +1,5 @@
 package umc.mobile.project
 
-import MemberData
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -17,7 +15,6 @@ import umc.mobile.project.mypage.GetUser.UserGetService
 import umc.mobile.project.notice.NoticeActivity
 import umc.mobile.project.ram.my_application_1.MyPostActivity
 import umc.mobile.project.profile.MyProfileActivity
-import umc.mobile.project.ram.Geocoder_location
 import umc.mobile.project.ram.my_application_1.user_id_var
 import umc.mobile.project.wishlist.WishListActivity
 import umc.mobile.project.withdrawal.WithdrawalActivity

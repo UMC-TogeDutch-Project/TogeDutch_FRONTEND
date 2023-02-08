@@ -49,7 +49,7 @@
         app:layout_constraintTop_toBottomOf="@+id/nickname" />
 
     <EditText
-        android:id="@+id/newPhoneNumber"
+        android:id="@+id/newPassword"
         android:layout_width="370dp"
         android:layout_height="37dp"
         android:layout_marginTop="9dp"
@@ -72,10 +72,10 @@
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newPhoneNumber" />
+        app:layout_constraintTop_toBottomOf="@+id/newPassword" />
 
     <EditText
-        android:id="@+id/authenticationNum"
+        android:id="@+id/authenticationPassword"
         android:layout_width="370dp"
         android:layout_height="37dp"
         android:layout_marginTop="9dp"
@@ -100,7 +100,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/authenticationNum" />
+        app:layout_constraintTop_toBottomOf="@+id/authenticationPassword" />
 
     <TextView
         android:id="@+id/errorMessage"
@@ -110,7 +110,7 @@
         android:layout_marginTop="1dp"
         android:textColor="#C854FF"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/authenticationNum" />
+        app:layout_constraintTop_toBottomOf="@+id/authenticationPassword" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

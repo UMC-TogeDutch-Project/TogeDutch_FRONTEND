@@ -40,9 +40,9 @@ class LoginActivity : AppCompatActivity(), MyCustomDialogInterface {
     val TAG: String = "로그"
 
     val retrofit = Retrofit.Builder()
-            .baseUrl("http://ec2-3-34-255-129.ap-northeast-2.compute.amazonaws.com:9000/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+        .baseUrl("http://ec2-3-34-255-129.ap-northeast-2.compute.amazonaws.com:9000/")
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
     val apiLoginService = retrofit.create(ApiLoginService::class.java)
 
     var kakaoNickname: String? = null
@@ -58,46 +58,46 @@ class LoginActivity : AppCompatActivity(), MyCustomDialogInterface {
             val myCustomDialog = MyCustomDialog(this, this)
 
             apiLoginService.userLogin(LoginRequest("${viewBinding.etEmailId.text.toString()!!}", "${viewBinding.etPassword.text.toString()!!}"))
-                    .enqueue(object : Callback<LoginResponse> {
-                        override fun onResponse(
-                                call: Call<LoginResponse>,
-                                response: Response<LoginResponse>
-                        ) {
-                            Log.d(TAG, "onResponse:login통신 성공")
-                            val loginResponseData = response.body()
-                            Log.d(TAG, "onResponse:${loginResponseData}, ${response.isSuccessful}")
+                .enqueue(object : Callback<LoginResponse> {
+                    override fun onResponse(
+                        call: Call<LoginResponse>,
+                        response: Response<LoginResponse>
+                    ) {
+                        Log.d(TAG, "onResponse:login통신 성공")
+                        val loginResponseData = response.body()
+                        Log.d(TAG, "onResponse:${loginResponseData}, ${response.isSuccessful}")
 
-                            when (loginResponseData?.code) {
-                                1000 -> {
-                                    Log.d(TAG, "onResponse:login응답 성공 userIdx: ${loginResponseData.result!!.userIdx}, 상태: ${loginResponseData.result!!.status}")
-                                    user_id_logined = loginResponseData.result!!.userIdx
-                                    access_token = loginResponseData.result.jwt
-                                    myCustomDialog.show()
-                                }
-                                2010 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
-                                2011 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
-                                2012 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
-                                2013 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
-                                2014 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
-                                2015 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
-                                2016 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
-                                2017 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
-                                2018 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
-                                3000 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
-                                3013 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
-                                3014 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
-                                3015 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
-                                null -> Toast.makeText(this@LoginActivity, "잘못된 이메일입니다.", Toast.LENGTH_SHORT).show()
+                        when (loginResponseData?.code) {
+                            1000 -> {
+                                Log.d(TAG, "onResponse:login응답 성공 userIdx: ${loginResponseData.result!!.userIdx}, 상태: ${loginResponseData.result!!.status}")
+                                user_id_logined = loginResponseData.result!!.userIdx
+                                access_token = loginResponseData.result.jwt
+                                myCustomDialog.show()
                             }
-
-
+                            2010 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
+                            2011 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
+                            2012 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
+                            2013 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
+                            2014 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
+                            2015 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
+                            2016 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
+                            2017 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
+                            2018 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
+                            3000 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
+                            3013 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
+                            3014 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
+                            3015 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
+                            null -> Toast.makeText(this@LoginActivity, "잘못된 이메일입니다.", Toast.LENGTH_SHORT).show()
                         }
 
-                        override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                            Log.d(TAG, "onFailure:login통신 실패")
-                        }
 
-                    })
+                    }
+
+                    override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                        Log.d(TAG, "onFailure:login통신 실패")
+                    }
+
+                })
 
         }
 
@@ -119,8 +119,8 @@ class LoginActivity : AppCompatActivity(), MyCustomDialogInterface {
             val email = viewBinding.etEmailId.text.toString()
             apiLoginService.findPwd(email).enqueue(object : Callback<FindPwdResponse> {
                 override fun onResponse(
-                        call: Call<FindPwdResponse>,
-                        response: Response<FindPwdResponse>
+                    call: Call<FindPwdResponse>,
+                    response: Response<FindPwdResponse>
                 ) {
                     if (response.isSuccessful) {
                         val findPwdResponseData = response.body()
@@ -185,7 +185,7 @@ class LoginActivity : AppCompatActivity(), MyCustomDialogInterface {
                 Log.d(TAG, "카카오계정으로 로그인 실패 : ${error}")
             } else if (token != null) {
                 //TODO: 최종적으로 카카오로그인 및 유저정보 가져온 결과
-                
+
                 UserApiClient.instance.me { user, error ->
                     Log.d(TAG, "카카오계정으로 로그인 성공 \n\n " +
                             "token: ${token.accessToken} \n\n " +
@@ -197,37 +197,37 @@ class LoginActivity : AppCompatActivity(), MyCustomDialogInterface {
                 android.os.Handler(Looper.getMainLooper()).postDelayed({
                     //실행할 코드
                     apiLoginService.kakaoLogin(kakaoEmail)
-                            .enqueue(object : Callback<LoginResponse> {
-                                override fun onResponse(
-                                        call: Call<LoginResponse>,
-                                        response: Response<LoginResponse>
-                                ) {
-                                    Log.d(TAG, "onResponse:KakaoLogin 통신 성공")
-                                    val loginResponseData = response.body()
-                                    Log.d(TAG, "onResponse:${loginResponseData}, ${response.isSuccessful}")
+                        .enqueue(object : Callback<LoginResponse> {
+                            override fun onResponse(
+                                call: Call<LoginResponse>,
+                                response: Response<LoginResponse>
+                            ) {
+                                Log.d(TAG, "onResponse:KakaoLogin 통신 성공")
+                                val loginResponseData = response.body()
+                                Log.d(TAG, "onResponse:${loginResponseData}, ${response.isSuccessful}")
 
-                                    if (loginResponseData != null) {
-                                        if(!loginResponseData.isSuccess){
-                                            Toast.makeText(this@LoginActivity, "카카오 로그인 실패 -> 일반 로그인 필요", Toast.LENGTH_SHORT).show()
-                                            setLogin(false) // 카카오 로그인 버튼 없애기
+                                if (loginResponseData != null) {
+                                    if(!loginResponseData.isSuccess){
+                                        Toast.makeText(this@LoginActivity, "카카오 로그인 실패 -> 일반 로그인 필요", Toast.LENGTH_SHORT).show()
+                                        setLogin(false) // 카카오 로그인 버튼 없애기
+                                    }
+
+                                    when (loginResponseData?.code) {
+                                        1000 -> {
+                                            Log.d(TAG, "onResponse:login응답 성공 userIdx: ${loginResponseData.result!!.userIdx}, 상태: ${loginResponseData.result!!.status}")
+                                            user_id_logined = loginResponseData.result!!.userIdx
+                                            access_token = loginResponseData.result.jwt
+                                            myCustomDialog.show()
                                         }
-
-                                            when (loginResponseData?.code) {
-                                                1000 -> {
-                                                    Log.d(TAG, "onResponse:login응답 성공 userIdx: ${loginResponseData.result!!.userIdx}, 상태: ${loginResponseData.result!!.status}")
-                                                    user_id_logined = loginResponseData.result!!.userIdx
-                                                    access_token = loginResponseData.result.jwt
-                                                    myCustomDialog.show()
-                                                }
-                                                2039 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
-                                                4000 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
-                                            }
+                                        2039 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
+                                        4000 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
                                     }
                                 }
-                                override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                                    Log.d(TAG, "onFailure:KakaoLogin통신 실패")
-                                }
-                            })
+                            }
+                            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                                Log.d(TAG, "onFailure:KakaoLogin통신 실패")
+                            }
+                        })
                 }, 3000)
 
             }
@@ -259,37 +259,37 @@ class LoginActivity : AppCompatActivity(), MyCustomDialogInterface {
                     android.os.Handler(Looper.getMainLooper()).postDelayed({
                         //실행할 코드
                         apiLoginService.kakaoLogin(kakaoEmail)
-                                .enqueue(object : Callback<LoginResponse> {
-                                    override fun onResponse(
-                                            call: Call<LoginResponse>,
-                                            response: Response<LoginResponse>
-                                    ) {
-                                        Log.d(TAG, "onResponse:KakaoLogin 통신 성공")
-                                        val loginResponseData = response.body()
-                                        Log.d(TAG, "onResponse:${loginResponseData}, ${response.isSuccessful}")
+                            .enqueue(object : Callback<LoginResponse> {
+                                override fun onResponse(
+                                    call: Call<LoginResponse>,
+                                    response: Response<LoginResponse>
+                                ) {
+                                    Log.d(TAG, "onResponse:KakaoLogin 통신 성공")
+                                    val loginResponseData = response.body()
+                                    Log.d(TAG, "onResponse:${loginResponseData}, ${response.isSuccessful}")
 
-                                        if (loginResponseData != null) {
-                                            if(!loginResponseData.isSuccess){
-                                                Toast.makeText(this@LoginActivity, "카카오 로그인 실패 -> 일반 로그인 필요", Toast.LENGTH_SHORT).show()
-                                                setLogin(false) // 카카오 로그인 버튼 없애기
-                                            }
+                                    if (loginResponseData != null) {
+                                        if(!loginResponseData.isSuccess){
+                                            Toast.makeText(this@LoginActivity, "카카오 로그인 실패 -> 일반 로그인 필요", Toast.LENGTH_SHORT).show()
+                                            setLogin(false) // 카카오 로그인 버튼 없애기
+                                        }
 
-                                            when (loginResponseData?.code) {
-                                                1000 -> {
-                                                    Log.d(TAG, "onResponse:login응답 성공 userIdx: ${loginResponseData.result!!.userIdx}, 상태: ${loginResponseData.result!!.status}")
-                                                    user_id_logined = loginResponseData.result!!.userIdx
-                                                    access_token = loginResponseData.result.jwt
-                                                    myCustomDialog.show()
-                                                }
-                                                2039 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
-                                                4000 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
+                                        when (loginResponseData?.code) {
+                                            1000 -> {
+                                                Log.d(TAG, "onResponse:login응답 성공 userIdx: ${loginResponseData.result!!.userIdx}, 상태: ${loginResponseData.result!!.status}")
+                                                user_id_logined = loginResponseData.result!!.userIdx
+                                                access_token = loginResponseData.result.jwt
+                                                myCustomDialog.show()
                                             }
+                                            2039 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
+                                            4000 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()
                                         }
                                     }
-                                    override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                                        Log.d(TAG, "onFailure:KakaoLogin통신 실패")
-                                    }
-                                })
+                                }
+                                override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                                    Log.d(TAG, "onFailure:KakaoLogin통신 실패")
+                                }
+                            })
                     }, 3000)
                 }
             }

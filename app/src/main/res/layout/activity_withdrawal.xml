@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#EEF2FF"
     android:orientation="vertical"
-    tools:context=".withdrawal.WithdrawalActivity">
+    tools:context=".mypage.withdrawal.WithdrawalActivity">
 
     <include
         android:id="@+id/include"
@@ -79,7 +79,7 @@
             android:gravity="top"
             android:background="@drawable/edittext_withdrawal_content_background"
             android:inputType="textPersonName"
-            android:text="ㅇㅇㅇㅇㅇ"
+            android:hint="탈퇴 사유를 적어주세요 (선택사항)"
             android:textColor="#CC000000"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"

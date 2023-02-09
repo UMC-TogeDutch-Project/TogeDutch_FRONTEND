@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import umc.mobile.project.R
 import umc.mobile.project.databinding.ActivityMypostBinding
 import umc.mobile.project.ram.Auth.Post.GetPostJoin.PostJoinGetResult
@@ -29,22 +30,26 @@ var post_id_to_detail = 10
 
 class MyPostActivity : AppCompatActivity(), PostUploadGetResult, PostJoinGetResult {
     lateinit var binding: ActivityMypostBinding
-    lateinit var myPostRVAdapter: MyPostRVAdapter
+//    lateinit var myPostRVAdapter: MyPostRVAdapter
+    var postUploadList = ArrayList<Post>()
     var postJoinList = ArrayList<Post>()
-    lateinit var joinRVAdatpter: JoinRVAdatpter
+//    lateinit var joinRVAdatpter: JoinRVAdatpter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMypostBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initActionBar()
-        initRecycler()
-
 
         // 스피너
         setupSpinnerText()
         setupSpinnerHandler()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initActionBar()
+        getPostUpload()
     }
 
     private fun setupSpinnerText() {
@@ -70,7 +75,8 @@ class MyPostActivity : AppCompatActivity(), PostUploadGetResult, PostJoinGetResu
                     binding.frameLayoutParticipate.visibility = View.INVISIBLE // 참여 화면 없애기
                     binding.frameLayoutDefault.visibility = View.VISIBLE // 업로드 화면 보이기
                 } else { // 참여 일 때
-                    initRecycler_join()
+                    initRecycler_join(postJoinList)
+                    getPostJoin()
 //                    binding.mainActionbar.appbarPageNameLeftTv.text = "참여"
                     binding.searchView.queryHint = "나의 참여내역을 검색해보세요"
                     binding.frameLayoutParticipate.visibility = View.VISIBLE // 참여 화면 없애기
@@ -93,21 +99,45 @@ class MyPostActivity : AppCompatActivity(), PostUploadGetResult, PostJoinGetResu
 
     private fun initActionBar() {
 
-//        binding.mainActionbar.appbarPageNameLeftTv.text = "나의 공고"
-//
-//        binding.mainActionbar.appbarBackBtn.setOnClickListener {
-//            finish()
-//        }
+        binding.mainActionbar.appbarPageNameLeftTv.text = "나의 공고"
+
+        binding.mainActionbar.appbarBackBtn.setOnClickListener {
+            finish()
+        }
 
     }
 
-    private fun initRecycler() {
-        getPostUpload()
+    private fun initRecycler(result : ArrayList<Post>) {
+        val myPostRVAdapter = MyPostRVAdapter(result)
+        binding.rvApplication.adapter = myPostRVAdapter
+        binding.rvApplication.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
+        myPostRVAdapter.setItemClickListener(object :
+            MyPostRVAdapter.OnItemClickListener {
+            override fun onItemClick(application: Post) {
+                val intent = Intent(this@MyPostActivity, MyCommercialDetailActivity::class.java)
+                intent.putExtra("post_id", application.post_id)
+                startActivity(intent)
+            }
+        })
+        initSearchView(myPostRVAdapter)
 
     }
 
-    private fun initRecycler_join() {
-        getPostJoin()
+    private fun initRecycler_join(result : ArrayList<Post>) {
+        val joinRVAdatpter = JoinRVAdatpter(result)
+        binding.rvParticipate.adapter = joinRVAdatpter
+        binding.rvParticipate.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
+        joinRVAdatpter.setItemClickListener(object :
+            JoinRVAdatpter.OnItemClickListener {
+            override fun onItemClick(application: Post) {
+                val intent = Intent(this@MyPostActivity, JoinPostDetailActivity::class.java)
+                startActivity(intent)
+            }
+        })
+
+        initSearchView2(joinRVAdatpter)
     }
 
     private fun initSearchView(myPostRVAdapter: MyPostRVAdapter) {
@@ -173,24 +203,7 @@ class MyPostActivity : AppCompatActivity(), PostUploadGetResult, PostJoinGetResu
 
     ) {
 
-        postUploadList.addAll(result)
-        myPostRVAdapter = MyPostRVAdapter(postUploadList)
-        binding.rvApplication.adapter = myPostRVAdapter
-
-        myPostRVAdapter.setItemClickListener(object :
-            MyPostRVAdapter.OnItemClickListener {
-
-            override fun onItemClick(application: Post) {
-                val intent = Intent(this@MyPostActivity, MyCommercialDetailActivity::class.java)
-                startActivity(intent)
-
-
-            }
-        })
-
-        myPostRVAdapter.notifyDataSetChanged()
-
-        initSearchView(myPostRVAdapter)
+        initRecycler(result)
 
         Toast.makeText(this, "업로드 불러오기 성공", Toast.LENGTH_SHORT).show()
     }
@@ -208,21 +221,7 @@ class MyPostActivity : AppCompatActivity(), PostUploadGetResult, PostJoinGetResu
 
 
     override fun getPostJoinSuccess(code: Int, result: ArrayList<Post>) {
-        postJoinList.addAll(result)
-        joinRVAdatpter = JoinRVAdatpter(postJoinList)
-        binding.rvParticipate.adapter = joinRVAdatpter
-
-        joinRVAdatpter.setItemClickListener(object :
-            JoinRVAdatpter.OnItemClickListener {
-            override fun onItemClick(application: Post) {
-                val intent = Intent(this@MyPostActivity, JoinPostDetailActivity::class.java)
-                startActivity(intent)
-            }
-        })
-
-        joinRVAdatpter.notifyDataSetChanged()
-
-        initSearchView2(joinRVAdatpter)
+        initRecycler_join(result)
     }
 
     override fun getPostJoinFailure(code: Int, message: String) {

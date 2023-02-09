@@ -1,6 +1,7 @@
-package umc.mobile.project.ram.Auth.Chat.ChatPost
+package umc.mobile.project.ram.Auth.ChatPhoto.ChatPhotoPost
 
 import android.util.Log
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -8,28 +9,28 @@ import umc.mobile.project.getRetrofit
 import java.sql.Timestamp
 import java.util.*
 
-class PostChatService {
+class PostPhotoService {
 
     var timestamp = Timestamp(Date().time)
-    private var result : Result = Result(chatId = 1, chatRoomId = 1, userId = 1, createdAt = timestamp, content = "", writer = "", type = "")
+    private var result : Result = Result(chatId = 1,   createdAt = timestamp, chatRoomId = 1, user_id = 1, image = "" )
 
-    private lateinit var postChatResult: PostChatResult
+    private lateinit var postPhotoResult: PostPhotoResult
 
-    fun setChatResult(postChatResult: PostChatResult){
-        this.postChatResult = postChatResult
+    fun setPhotoResult(postPhotoResult: PostPhotoResult){
+        this.postPhotoResult = postPhotoResult
     }
 
-    fun sendChat(chatRoom_id : Int, user_id : Int, message : chatPost){
-        val authService = getRetrofit().create(PostChatRetrofitInterfaces::class.java)
-        authService.sendChat(chatRoom_id, user_id, message).enqueue(object: Callback<PostChatResponse> {
+    fun sendPhoto(chatRoom_id : Int, user_id : Int, photo : MultipartBody.Part){
+        val authService = getRetrofit().create(PostPhotoRetrofitInterfaces::class.java)
+        authService.sendPhoto(chatRoom_id, user_id, photo).enqueue(object: Callback<PostChatResponse> {
             override fun onResponse(call: Call<PostChatResponse>, response: Response<PostChatResponse>) {
                 Log.d("SNED-ACCEPT SUCCESS",response.toString())
                 if(response.body() != null) {
                     val resp: PostChatResponse = response.body()!!
                     result = resp.result!!
                     when (resp.code) {
-                        1000 -> postChatResult.sendChatSuccess(result)
-                        else -> postChatResult.sendChatFailure()
+                        1000 -> postPhotoResult.sendChatSuccess(result)
+                        else -> postPhotoResult.sendChatFailure()
                     }
                 }
                 else{

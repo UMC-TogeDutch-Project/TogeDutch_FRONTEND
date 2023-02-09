@@ -5,6 +5,7 @@ import Post
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,13 +17,16 @@ import umc.mobile.project.databinding.FragmentRandomMatchingBinding
 import umc.mobile.project.databinding.ItemMyPostBinding
 import umc.mobile.project.ram.Auth.Matching.GetMatching.MatchingGetResult
 import umc.mobile.project.ram.Auth.Matching.GetMatching.MatchingGetService
+import umc.mobile.project.ram.Auth.Post.DeletePost.DeletePostResult
+import umc.mobile.project.ram.Auth.Post.DeletePost.DeletePostService
+
 
 import umc.mobile.project.ram.Geocoder_location
 import java.util.*
 import kotlin.collections.ArrayList
 
 
-
+var isOk = false
 class MyPostRVAdapter (
     private val applicationList: ArrayList<Post>
 ) :
@@ -30,6 +34,7 @@ class MyPostRVAdapter (
 
     lateinit var context : Context
 
+    var delete_position : Int = 0
     lateinit var viewBinding : FragmentRandomMatchingBinding
 
     // 아이템 레이아웃 결합
@@ -48,6 +53,7 @@ class MyPostRVAdapter (
     // 아이템 개수
     override fun getItemCount(): Int = applicationList.size
 
+
     // view에 내용 입력
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(applicationList[position])
@@ -59,7 +65,7 @@ class MyPostRVAdapter (
     }
 
     // 레이아웃 내 view 연결
-    inner class ViewHolder(val binding: ItemMyPostBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(val binding: ItemMyPostBinding) : RecyclerView.ViewHolder(binding.root) , DeletePostResult {
         fun bind(post: Post) {
             // Log.d("현재 유저 아이디 =============", post.user_id.toString())
 
@@ -91,12 +97,25 @@ class MyPostRVAdapter (
             // 수정 버튼
             binding.modifyBtn.setOnClickListener {
                 val intent = Intent(context, PostRetouchActivity::class.java)
+                intent.putExtra("post_id", post.post_id)
                 context.startActivity(intent)
             }
 
             // 삭제 버튼
             binding.deleteBtn.setOnClickListener {
+                delete_position = absoluteAdapterPosition
+                val deletePostService = DeletePostService()
+                deletePostService.setDeletePostResult(this)
+                deletePostService.deletePost(post.post_id)
 
+            }
+
+            var timestampToSdf = Timestamp_to_SDF()
+            //            2022-01-23T03:34:56.000+00:00
+            val currentTime = timestampToSdf.timestamp_to_String(System.currentTimeMillis())
+            println("현재 시간 : " + currentTime)
+            if(post.order_time > currentTime){
+                binding.btnRandom.visibility = View.INVISIBLE
             }
 
             //랜덤 버튼
@@ -125,6 +144,23 @@ class MyPostRVAdapter (
                 }
             }
         }
+
+        override fun deletePostSuccess(result : Int) {
+            println(result)
+            removePost(delete_position)
+            Log.d("공고 삭제 성공", "")
+        }
+
+        override fun deletePostFailure() {
+            Log.d("공고 삭제 실패", "")
+        }
+    }
+
+    fun removePost(position: Int){
+        if(position > 0){
+            applicationList.removeAt(position)
+            notifyDataSetChanged()
+        }
     }
 
     interface OnItemClickListener {
@@ -136,6 +172,7 @@ class MyPostRVAdapter (
     }
 
     private lateinit var itemClickListener : OnItemClickListener
+
 
 
     // 검색

@@ -1,8 +1,8 @@
 package umc.mobile.project.wishlist.GetLikePost
 
-import umc.mobile.project.LikePost
+import Post
 
 interface LikePostGetResult {
-    fun getPostUploadSuccess(code: Int, result: ArrayList<LikePost>)
+    fun getPostUploadSuccess(code: Int, result: ArrayList<Post>)
     fun getPostUploadFailure(code : Int, message : String)
 }

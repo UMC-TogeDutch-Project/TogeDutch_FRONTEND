@@ -52,7 +52,7 @@
         app:layout_constraintTop_toBottomOf="@+id/search_myWish">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/orderList"
+            android:id="@+id/wishList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingLeft="16dp"

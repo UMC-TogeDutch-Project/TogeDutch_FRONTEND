@@ -1,23 +1,35 @@
 package umc.mobile.project.wishlist
 
+import Post
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import umc.mobile.project.databinding.ActivityWishlistBinding
+import umc.mobile.project.ram.my_application_1.MyCommercialDetailActivity
+import umc.mobile.project.ram.my_application_1.user_id_logined
+import umc.mobile.project.ram.my_application_1.user_id_var
+import umc.mobile.project.wishlist.GetLikePost.LikePostGetResult
+import umc.mobile.project.wishlist.GetLikePost.LikePostGetService
 
-class WishListActivity: AppCompatActivity() {
+class WishListActivity: AppCompatActivity(), LikePostGetResult {
     lateinit var viewBinding: ActivityWishlistBinding
-    lateinit var wishListRVAdapter: WishListRVAdapter
-    val wishApplicationList = ArrayList<WishApplication>()
+    //lateinit var wishListRVAdapter: WishListRVAdapter
+    val wishApplicationList = ArrayList<Post>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewBinding = ActivityWishlistBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-        initActionBar()
-        initRecyclerView()
-
         //viewBinding.searchMyWish.setOnQueryTextListener(searchViewTextListener)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initActionBar()
+        getLikePost()
     }
 
     private fun initActionBar() {
@@ -30,31 +42,34 @@ class WishListActivity: AppCompatActivity() {
 
     }
 
-    private fun initRecyclerView() {
-        wishApplicationList.apply {
-            add(WishApplication(7, "오매떡 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 4000, 20000, "2023-01-15T03:04:56.000+00:00",
-                2, 1, "모집중", "2023-01-15T01:43:39.000+00:00", null, 0.0, 0.0, 5, "떡볶이", false
-                )
-            )
-            add(
-                WishApplication(8, "엽떡 2인으로 같이 시킬 사람 구해요", "https://baemin.me/1A5x-ZYDB", 1000, 130000, "2023-01-15T03:04:56.000+00:00",
-                    2, 1, "모집중", "2023-01-15T01:43:39.000+00:00", null, 0.0, 0.0, 4, "떡볶이", false
-                )
-            )
-        }
+    private fun initRecyclerView(result : ArrayList<Post>) {
+       val wishListRVAdapter = WishListRVAdapter(result)
+        viewBinding.wishList.adapter = wishListRVAdapter
+        viewBinding.wishList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        wishListRVAdapter = WishListRVAdapter(wishApplicationList)
-        viewBinding.orderList.adapter = wishListRVAdapter
+        wishListRVAdapter.setItemClickListener(object : WishListRVAdapter.OnItemClickListener {
+            override fun onItemClick(post: Post) {
+                val intent = Intent(this@WishListActivity, MyCommercialDetailActivity::class.java)
+                intent.putExtra("post_id", post.post_id)
+                startActivity(intent)
+            }
+        })
+    }
 
-//        wishListRVAdapter.setItemClickListener(object:
-//            WishListRVAdapter.OnItemClickListener {
-//            @SuppressLint("NotifyDataSetChanged")
-//            override fun onItemClick(wishApplication: WishApplication) {
-//            }
-//        })
+    private fun getLikePost() {
+        val likePostGetService = LikePostGetService()
+        likePostGetService.setLikePostGetResult(this)
+        likePostGetService.getLikePost(user_id_logined)
+        user_id_var = user_id_logined // 상세목록 볼 때 현재 로그인된 유저를 보여줄 수 있게 덮어씌워주기
+    }
 
+    override fun getPostUploadSuccess(code: Int, result: ArrayList<Post>) {
+       initRecyclerView(result)
+        Toast.makeText(this, "관심목록 불러오기 성공", Toast.LENGTH_SHORT).show()
+    }
 
-        wishListRVAdapter.notifyDataSetChanged()
+    override fun getPostUploadFailure(code: Int, message: String) {
+        Toast.makeText(this, "관심목록 불러오기 실패", Toast.LENGTH_SHORT).show()
     }
 
     // 검색 기능

@@ -67,7 +67,7 @@
         <activity android:name=".signup.SignUpActivity"></activity>
         <activity android:name=".signup.SignUpAlarmKeywordActivity"></activity>
         <activity android:name=".signup.SignUpRegionActivity"></activity>
-        <activity android:name=".withdrawal.WithdrawalActivity"></activity>
+        <activity android:name=".mypage.withdrawal.WithdrawalActivity"></activity>
         <activity android:name=".wishlist.WishListActivity"></activity>
         <activity android:name=".notice.NoticeActivity"></activity>
         <activity android:name=".announcement.PlaceSearchActivity"></activity>

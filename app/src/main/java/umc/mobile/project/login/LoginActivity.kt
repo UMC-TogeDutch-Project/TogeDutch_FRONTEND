@@ -317,4 +317,8 @@ class LoginActivity : AppCompatActivity(), MyCustomDialogInterface {
             return false
         }
     }
+
+    override fun onBackPressed() {
+        // super.onBackPressed()
+    }
 }

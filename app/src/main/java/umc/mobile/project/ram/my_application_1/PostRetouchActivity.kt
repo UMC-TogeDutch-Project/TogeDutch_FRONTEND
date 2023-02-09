@@ -50,8 +50,10 @@ class PostRetouchActivity : AppCompatActivity(), PostDetailGetResult, PutRetouch
     var longitude: Double = 0.0
     val SUBACTIITY_REQUEST_CODE = 100
     var picture : MultipartBody.Part? = null
+    var picture_pre : MultipartBody.Part? = null
     var post_id_get = 0
     private var PICK_IMAGE = 1
+    var category = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,10 +61,14 @@ class PostRetouchActivity : AppCompatActivity(), PostDetailGetResult, PutRetouch
         setContentView(binding.root)
 
         post_id_get = intent.getIntExtra("post_id", -1)
+        println("post_id_get ===== " + post_id_get.toString())
+
+        editTextAnnEtPlace = binding.textLocation.toString()
 
         if(post_id_get != -1) {
             getPostUpload()
-        }
+        }else
+            Log.d("-1이래 나도 힘들다", "")
 
         binding.btnSave.setOnClickListener {
             save()
@@ -234,7 +240,7 @@ class PostRetouchActivity : AppCompatActivity(), PostDetailGetResult, PutRetouch
             BitmapFactory.decodeStream(inputStream, null, bmOptions)?.also { bitmap ->
                 val matrix = Matrix()
                 matrix.preRotate(0f, 0f, 0f)
-                binding.imageBtnCamera.setImageBitmap(
+                binding.image.setImageBitmap(
                     Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, false)
                 )
             }
@@ -244,7 +250,7 @@ class PostRetouchActivity : AppCompatActivity(), PostDetailGetResult, PutRetouch
     private fun getPostUpload(){
         val postDetailGetService = PostDetailGetService()
         postDetailGetService.setPostDetailGetResult(this)
-        postDetailGetService.getPostDetail(post_id_to_detail , user_id_var) // 임의로 지정
+        postDetailGetService.getPostDetail(post_id_get , user_id_var) // 임의로 지정
 
     }
 
@@ -280,7 +286,9 @@ class PostRetouchActivity : AppCompatActivity(), PostDetailGetResult, PutRetouch
         binding.textPeople.text = Editable.Factory.getInstance().newEditable(result.recruited_num.toString())
 
         Glide.with(this).load(result.image).into(binding.image)
+//        picture_pre = result.image
 
+        category = result.category // 카테고리 저장
     }
 
     override fun getPostUploadFailure(code: Int, message: String) {
@@ -326,21 +334,22 @@ class PostRetouchActivity : AppCompatActivity(), PostDetailGetResult, PutRetouch
         val num_of_recruits = binding.textPeople.text.toString().toInt()
         val recruited_num = 0
         val status = "모집중"
-        val latitude = latitude_var
-        val longitude = longtitude_var
+        val latitude = latitude
+        val longitude = longitude
+
 
         Log.d("order_time 값 ==========================", order_time)
 
-        return Request_put(title, url, delivery_tips, minimum, order_time, num_of_recruits, recruited_num, status, latitude, longitude)
+        return Request_put(title, url, delivery_tips, minimum, order_time, num_of_recruits, recruited_num, status, latitude, longitude, category)
     }
 
     private fun save(){
         val putRetouchService = PutRetouchService()
         putRetouchService.setPutRetouchResult(this)
-        putRetouchService.putRetouch(post_id_to_detail, user_id_logined, getRequest(), picture )
+        putRetouchService.putRetouch(post_id_get,  user_id_logined, getRequest(), picture )
     }
 
-    override fun PutRetouchSuccess(result: Post) {
+    override fun PutRetouchSuccess(result: umc.mobile.project.ram.Auth.Post.PUTRetouch.Result) {
         Log.d("수정완료","" )
         finish()
     }

@@ -12,12 +12,15 @@ import umc.mobile.project.databinding.ItemChatRoomBinding
 import umc.mobile.project.ram.Auth.Application.GetUser.UserGet
 import umc.mobile.project.ram.Auth.Application.GetUser.UserGetResult
 import umc.mobile.project.ram.Auth.Application.GetUser.UserGetService
+import umc.mobile.project.ram.Auth.Chat.ChatAllGet.ChatAllGetResult
+import umc.mobile.project.ram.Auth.Chat.ChatAllGet.ChatAllGetService
 import umc.mobile.project.ram.Auth.ChatRoom.ChatRoomGetList.ChatRoomList
 import umc.mobile.project.ram.Auth.Post.GetPostAll.PostGetAllResult
 import umc.mobile.project.ram.Auth.Post.GetPostAll.PostGetAllService
 import umc.mobile.project.ram.Auth.Post.GetPostJoin.PostJoinGetResult
 import umc.mobile.project.ram.Auth.Post.GetPostJoin.PostJoinGetService
 import umc.mobile.project.ram.Auth.Post.GetPostUpload.PostUploadGetService
+import umc.mobile.project.ram.my_application_1.Timestamp_to_SDF
 import umc.mobile.project.ram.my_application_1.user_id_logined
 
 var post_id_chatroom = 0
@@ -60,7 +63,7 @@ class ChatRoomRVAdapter(private val chatRoomList: ArrayList<ChatRoomList>) :
 
     // 레이아웃 내 view 연결
     inner class ViewHolder(val binding: ItemChatRoomBinding) :
-        RecyclerView.ViewHolder(binding.root), PostJoinGetResult, UserGetResult {
+        RecyclerView.ViewHolder(binding.root), PostJoinGetResult, UserGetResult, ChatAllGetResult {
         fun bind(chatRoom: ChatRoomList) {
             chatRoom_id_list.add(chatRoom.chatRoomIdx)
             val postJoinGetService = PostJoinGetService()
@@ -98,12 +101,16 @@ class ChatRoomRVAdapter(private val chatRoomList: ArrayList<ChatRoomList>) :
             val txtSubject: String = result[found_post_index].title
             Glide.with(context).load(result[found_post_index].image).override(38, 38)
                 .into(binding.itemShopImg) // 이미지 가져오기
-            val txtContent: String = "chat 메세지 최신으로 불러와야함"
-            val txtTime: String = "chat 메세지 보낸 시간 뜨게 하기"
 
-            binding.itemDateTxt.text = txtTime
+            val chatAllGetService = ChatAllGetService()
+            chatAllGetService.setChatAllGetResult(this)
+            chatAllGetService.getChatAll(result[found_post_index].chatRoom_id)
+
+
+
+
             binding.itemSubjectTxt.text = txtSubject
-            binding.itemChatContentTxt.text = txtContent
+
         }
 
         override fun getPostJoinFailure(code: Int, message: String) {
@@ -116,6 +123,27 @@ class ChatRoomRVAdapter(private val chatRoomList: ArrayList<ChatRoomList>) :
         }
 
         override fun getUserFailure(code: Int, message: String) {
+            Log.d("getUserFailure ===============================================", code.toString())
+        }
+
+        override fun getChatAllSuccess(code: Int, result: ArrayList<Chat>) {
+            if(result.size > 0) {
+                var index = result.count() - 1
+                val txtContent: String = result[index].content
+
+                var timestampToSdf = Timestamp_to_SDF()
+                binding.itemDateTxt.text =
+                    timestampToSdf.convert_only_time(result[index].created_at)
+                binding.itemChatContentTxt.text = txtContent
+            }
+            else{
+                binding.itemDateTxt.text = ""
+                binding.itemChatContentTxt.text = "채팅을 시작해보세요"
+
+            }
+        }
+
+        override fun getChatAllFailure(code: Int, message: String) {
             Log.d("getUserFailure ===============================================", code.toString())
         }
     }

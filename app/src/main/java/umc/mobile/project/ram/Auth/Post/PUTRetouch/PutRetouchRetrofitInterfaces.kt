@@ -6,6 +6,6 @@ import retrofit2.http.*
 
 interface PutRetouchRetrofitInterfaces {
     @Multipart
-    @PUT("post/{post_id}")
-    fun putRetouch(@Path("post_id") post_id : Int, @Query("user") user_id : Int, @Body request : Request_put, @Part file : MultipartBody.Part? ) : Call<PutRetouchResponse>
+    @PUT("post/{postIdx}")
+    fun putRetouch(@Path("postIdx") post_id : Int, @Part("post") request : Request_put, @Query("user") user_id : Int, @Part file : MultipartBody.Part? ) : Call<PutRetouchResponse>
 }

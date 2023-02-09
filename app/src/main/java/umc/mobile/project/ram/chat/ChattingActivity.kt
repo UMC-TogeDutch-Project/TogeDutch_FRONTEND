@@ -32,9 +32,9 @@ import umc.mobile.project.ram.Auth.Post.GetPostAll.PostGetAllService
 import umc.mobile.project.ram.Auth.Post.GetPostDetail.PostDetailGetResult
 import umc.mobile.project.ram.Auth.Post.GetPostDetail.PostDetailGetService
 import umc.mobile.project.ram.my_application_1.user_id_logined
-import umc.mobile.project.ram.Auth.Post.GetPostJoin.PostJoinGetService
 import umc.mobile.project.ram.my_application_1.*
 import java.sql.Timestamp
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -72,11 +72,6 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
 
         if(chatRoom_id_get != -1){
             try {
-                // 이전에 했던 채팅들 불러오기
-                val chatAllGetService = ChatAllGetService()
-                chatAllGetService.setChatAllGetResult(this)
-                chatAllGetService.getChatAll(chatRoom_id_get)
-
                 runStomp(chatRoom_id_get, user_id_logined)
             } catch (e:Exception){
                 Log.d("ERROR", "stomp 자체의 오류")
@@ -87,6 +82,20 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
         edit_message = binding.editMessage
         edit_message!!.addTextChangedListener(textWatcher)
 
+
+        // dummy data
+        var chatDatas = mutableListOf<Chat>()
+        chatRVAdapter = ChatRVAdapter(this)
+        binding.recyclerMessages.adapter = chatRVAdapter
+        binding.recyclerMessages.layoutManager = LinearLayoutManager(this)
+
+        chatRVAdapter.chatList = chatDatas
+        chatRVAdapter.notifyDataSetChanged()
+
+        // 이전에 했던 채팅들 불러오기
+        val chatAllGetService = ChatAllGetService()
+        chatAllGetService.setChatAllGetResult(this)
+        chatAllGetService.getChatAll(chatRoom_id_get)
 
 
         /// 버튼 클릭
@@ -228,7 +237,15 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
 
     override fun sendChatSuccess(result: Result) {
         Log.d("=============================== Message Post 성공!!!!!!!!!!!!!!!!!!!!", "==================================================" )
+        // 현재 시간 구하기
+        var sdf = SimpleDateFormat("MM월 dd일")
+        var now = sdf.format(System.currentTimeMillis())
+        var created_at = sdf.format(result.createdAt)
 
+        if(now > created_at) // 현재 시간이 채팅 생성 시간보다 빠를 때 시간 띄워주기
+            chatRVAdapter.addItem(Chat(0, chatRoom_id_get, 0, timestamp, getCurrentTime(), "time", "time", 3))
+
+        println(result.createdAt)
         val data = JSONObject()
         data.put("chatId", result.chatId)
         data.put("chatRoomId", result.chatRoomId)
@@ -240,6 +257,8 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
 
         stompClient.send("/pub/chat/message", data.toString()).subscribe()
         Log.d("Message Send", "내가 보낸 메세지 : " + result.content)
+
+        edit_message.text = Editable.Factory.getInstance().newEditable("") // 채팅 입력창 다시 초기화시켜주기
 
         chatRVAdapter.addItem(Chat(result.chatId, result.chatRoomId, user_id_logined, result.createdAt, result.content, result.writer, result.type, 2))
         runOnUiThread {
@@ -304,11 +323,18 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
 
     override fun getChatAllSuccess(code: Int, result: ArrayList<Chat>) {
         Log.d("=============================== getChatAllSuccess!!!!!!!!!!!!!!!!!!!!", "==================================================" )
-        chatList.addAll(result)
 
-        chatRVAdapter = ChatRVAdapter(this, chatList)
-        binding.recyclerMessages.adapter = chatRVAdapter
-        binding.recyclerMessages.layoutManager = LinearLayoutManager(this)
+        if(result.size == 0)
+            // 채팅방 비어있을 때 시간 띄워주기
+            chatRVAdapter.addItem(Chat(0, chatRoom_id_get, 0, timestamp, getCurrentTime(), "time", "time", 3))
+
+        for(i in 0 until result.count()){
+            if(result[i].user_id != user_id_logined) // 로그인 유저가 아니면 상대방 채팅
+                chatRVAdapter.addItem(Chat(result[i].chat_id, result[i].chatRoom_id, result[i].user_id, result[i].created_at, result[i].content, result[i].writer, result[i].type, 1))
+            else // 로그인 유저면 내 채팅
+                chatRVAdapter.addItem(Chat(result[i].chat_id, result[i].chatRoom_id, result[i].user_id, result[i].created_at, result[i].content, result[i].writer, result[i].type, 2))
+        }
+
 
         chatRVAdapter.notifyDataSetChanged()
     }
@@ -317,6 +343,13 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
         Log.d("=============================== getChatAllFailure!!!!!!!!!!!!!!!!!!!!", "==================================================" )
     }
 
+    fun getCurrentTime() :  String{
+        val currentTime : Long = System.currentTimeMillis()
+        val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일")
+        var current_time = dateFormat.format(currentTime)
+
+        return current_time
+    }
     val textWatcher = object : TextWatcher {
 
         override

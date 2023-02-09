@@ -19,21 +19,26 @@ class PostChatService {
         this.postChatResult = postChatResult
     }
 
-    fun sendChat(chatRoom_id : Int, userId : Int, content : String){
+    fun sendChat(chatRoom_id : Int, user_id : Int, message : chatPost){
         val authService = getRetrofit().create(PostChatRetrofitInterfaces::class.java)
-        authService.sendChat(chatRoom_id, userId, content).enqueue(object: Callback<PostChatResponse> {
+        authService.sendChat(chatRoom_id, user_id, message).enqueue(object: Callback<PostChatResponse> {
             override fun onResponse(call: Call<PostChatResponse>, response: Response<PostChatResponse>) {
-                Log.d("CHAT-POST SUCCESS",response.toString())
-                val resp: PostChatResponse = response.body()!!
-                result = resp.result!!
-                when(resp.code){
-                    1000 -> postChatResult.AcceptSuccess(result)
-                    else -> postChatResult.AcceptFailure()
+                Log.d("SNED-ACCEPT SUCCESS",response.toString())
+                if(response.body() != null) {
+                    val resp: PostChatResponse = response.body()!!
+                    result = resp.result!!
+                    when (resp.code) {
+                        1000 -> postChatResult.sendChatSuccess(result)
+                        else -> postChatResult.sendChatFailure()
+                    }
+                }
+                else{
+                    Log.d("SNED-ACCEPT FAILURE","null")
                 }
             }
 
             override fun onFailure(call: Call<PostChatResponse>, t: Throwable) {
-                Log.d("CHAT-POST FAILURE",t.message.toString())
+                Log.d("SNED-ACCEPT FAILURE",t.message.toString())
             }
         })
     }

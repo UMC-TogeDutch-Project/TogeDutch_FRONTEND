@@ -2,6 +2,7 @@ package umc.mobile.project.ram.Auth.Post.PUTRetouch
 
 import Post
 import android.util.Log
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,9 +22,9 @@ class PutRetouchService {
         this.putRetouchResult = putRetouchResult
     }
 
-    fun putRetouch(post_id : Int, user_id : Int, request : Request_put){
+    fun putRetouch(post_id : Int, user_id : Int, request : Request_put, file : MultipartBody.Part?){
         val authService = getRetrofit().create(PutRetouchRetrofitInterfaces::class.java)
-        authService.putRetouch(post_id, user_id,request).enqueue(object: Callback<PutRetouchResponse> {
+        authService.putRetouch(post_id, user_id, request, file).enqueue(object: Callback<PutRetouchResponse> {
             override fun onResponse(call: Call<PutRetouchResponse>, response: Response<PutRetouchResponse>) {
                 Log.d("CHAT-POST SUCCESS",response.toString())
                 val resp: PutRetouchResponse = response.body()!!

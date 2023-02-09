@@ -182,9 +182,8 @@ class MyPostActivity : AppCompatActivity(), PostUploadGetResult, PostJoinGetResu
 
             override fun onItemClick(application: Post) {
                 val intent = Intent(this@MyPostActivity, MyCommercialDetailActivity::class.java)
+                intent.putExtra("post_id", application.post_id)
                 startActivity(intent)
-
-
             }
         })
 

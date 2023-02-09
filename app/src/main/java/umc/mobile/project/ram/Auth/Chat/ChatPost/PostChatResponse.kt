@@ -19,3 +19,7 @@ data class Result(
     @SerializedName(value =  "writer") var writer : String,
     @SerializedName(value = "type") var type : String
 )
+
+data class chatPost(
+    @SerializedName(value =  "content") var content : String,
+)

@@ -1,4 +1,4 @@
-package umc.mobile.project.withdrawal;
+package umc.mobile.project.mypage.withdrawal;
 
 import retrofit2.Call;
 import retrofit2.http.Header;

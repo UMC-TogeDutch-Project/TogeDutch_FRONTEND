@@ -1,4 +1,4 @@
-package umc.mobile.project.withdrawal
+package umc.mobile.project.mypage.withdrawal
 
 import com.google.gson.annotations.SerializedName
 import java.sql.Timestamp

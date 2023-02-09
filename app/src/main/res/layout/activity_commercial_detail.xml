@@ -33,7 +33,7 @@
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="wrap_content"
-            android:layout_height="600dp"
+            android:layout_height="500dp"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -217,7 +217,21 @@
 
         </ScrollView>
 
-
+    <Button
+        android:id="@+id/btn_refund"
+        android:layout_width="270dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/button_round_13"
+        android:backgroundTint="@color/main_color"
+        android:fontFamily="@font/notosanskr_bold"
+        android:includeFontPadding="false"
+        android:text="환불요청"
+        android:textColor="@color/white"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

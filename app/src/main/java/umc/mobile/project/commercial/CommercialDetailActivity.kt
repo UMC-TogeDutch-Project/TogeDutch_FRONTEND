@@ -1,16 +1,18 @@
 package umc.mobile.project.commercial
 
 import android.os.Bundle
-import android.os.PersistableBundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import umc.mobile.project.commercial.Auth.CommercialDetailGet.CommercialDetailGetResult
 import umc.mobile.project.commercial.Auth.CommercialDetailGet.CommercialDetailGetService
 import umc.mobile.project.commercial.Auth.CommercialGet.CommercialGet
+import umc.mobile.project.commercial.Auth.RefundPost.*
 import umc.mobile.project.databinding.ActivityCommercialDetailBinding
 import umc.mobile.project.ram.Geocoder_location
 
-class CommercialDetailActivity:AppCompatActivity(), CommercialDetailGetResult {
+var commercial_tid = ""
+class CommercialDetailActivity:AppCompatActivity(), CommercialDetailGetResult, RefundResult {
     lateinit var viewBinding: ActivityCommercialDetailBinding
     var latitude: Double = 0.0
     var longitude: Double = 0.0
@@ -23,6 +25,9 @@ class CommercialDetailActivity:AppCompatActivity(), CommercialDetailGetResult {
 
         viewBinding.backBtn.setOnClickListener{
             finish()
+        }
+        viewBinding.btnRefund.setOnClickListener {
+            refund()
         }
 
         getCommercialUpload()
@@ -48,8 +53,28 @@ class CommercialDetailActivity:AppCompatActivity(), CommercialDetailGetResult {
         Glide.with(this).load(result.image).into(viewBinding.imgViewImg)
 
     }
+    private fun refund(){
+        val refundService = RefundService()
+        refundService.setRefundResult(this)
+        refundService.sendPost(commercial_tid)
+    }
 
     override fun getCommercialUploadFailure(code: Int, message: String) {
         TODO("Not yet implemented")
+    }
+
+    override fun refundSuccess(
+        amount: Amount?,
+        approvedCancelAmount: Approved_cancel_amount,
+        canceledAmount: Canceled_amount,
+        cancelAvailableAmount: Cancel_available_amount
+    ) {
+        Toast.makeText(applicationContext, "성공", Toast.LENGTH_SHORT)
+            .show()
+        finish()
+    }
+
+    override fun refundFailure() {
+
     }
 }

@@ -18,11 +18,7 @@ import umc.mobile.project.restaurant.RestaurantData
 import umc.mobile.project.restaurant.RestaurantPageDialog
 import umc.mobile.project.restaurant.RestaurantRVAdapter
 import umc.mobile.project.restaurant.RestaurantRVAdapterDecoration
-import noman.googleplaces.NRPlaces;
-import noman.googleplaces.Place;
-import noman.googleplaces.PlaceType;
-import noman.googleplaces.PlacesException;
-import noman.googleplaces.PlacesListener;
+
 class RestaurantFragment : Fragment() {
     private lateinit var binding: FragmentRestaurantBinding
     private lateinit var restaurantRVAdapter: RestaurantRVAdapter

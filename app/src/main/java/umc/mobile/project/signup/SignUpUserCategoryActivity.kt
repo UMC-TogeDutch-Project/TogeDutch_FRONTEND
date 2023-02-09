@@ -25,13 +25,13 @@ class SignUpUserCategoryActivity : AppCompatActivity() {
         var email = intent.getStringExtra("email")
         var password = intent.getStringExtra("password")
         var phoneNum = intent.getStringExtra("phoneNum")
-        var keyWordIdx: Int = intent.getIntExtra("keyWordIdx", 1)
+        var keyWordIdx: Int = intent.getIntExtra("keyWordIdx", 0)
         var latitude = intent.getDoubleExtra("latitude", 50.02)
         var longitude = intent.getDoubleExtra("longitude", 60.02)
         var role : String = "user"
         var status : String = "active"
 
-        Log.d(TAG, "onCreate: ${name}, ${email}, ${password}, ${phoneNum}, ${keyWordIdx}, ${status}")
+        Log.d(TAG, "onCreate: ${name}, ${email}, ${password}, ${phoneNum}, ${keyWordIdx}, ${latitude}, ${longitude}, ${status}")
 
         viewBinding.btnNext.setOnClickListener {
             val intent = Intent(this, SignUpUserPersonalInfoActivity::class.java)

@@ -1,6 +1,7 @@
 package umc.mobile.project.ram.chat
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,15 +15,16 @@ import umc.mobile.project.databinding.ItemYourChatBinding
 import umc.mobile.project.ram.Auth.Application.GetUser.UserGet
 import umc.mobile.project.ram.Auth.Application.GetUser.UserGetResult
 import umc.mobile.project.ram.Auth.Application.GetUser.UserGetService
+import umc.mobile.project.ram.my_application_1.Timestamp_to_SDF
 import umc.mobile.project.ram.my_application_1.current_application.CurrentRVAdapter
+import java.text.SimpleDateFormat
 
 class ChatRVAdapter(
-    val context: Context,
-    var chatList : ArrayList<Chat>
+    val context: Context
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-//    var chatList = mutableListOf<Chat>()
+    var chatList = mutableListOf<Chat>()
 
     interface MyItemClickListener {
         fun clickButton1(chat: Chat)
@@ -39,16 +41,13 @@ class ChatRVAdapter(
     //처음에 화면에 보일 아이템뷰 생성
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view: View?
-        val binding_1: ItemYourChatBinding = ItemYourChatBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent, false)
 
         return when (viewType) {
             1 -> {
                 view = LayoutInflater.from(parent.context).inflate(
                     R.layout.item_your_chat, parent, false
                 )
-                LeftViewHolder(view, binding_1)
+                LeftViewHolder(view)
             }
             2 -> {
                 view = LayoutInflater.from(parent.context).inflate(
@@ -100,28 +99,28 @@ class ChatRVAdapter(
         return chatList[position].viewType
     }
 
-    inner class LeftViewHolder(view: View, val binding: ItemYourChatBinding) : RecyclerView.ViewHolder(view), UserGetResult {
+    inner class LeftViewHolder(view: View) : RecyclerView.ViewHolder(view){
         private val content: AppCompatButton = view.findViewById(R.id.your_chat_iv)
+        private val name : TextView = view.findViewById(R.id.your_name_txt)
+        private val time : TextView = view.findViewById(R.id.your_chat_date_txt)
 
         fun bind(chat: Chat) {
-            val userGetService = UserGetService()
-            userGetService.setUserGetResult(this)
-            userGetService.getUser(chat.user_id)
+            name.text = chat.writer
             content.text = chat.content
-        }
-        override fun getUserSuccess(code: Int, result: UserGet) {
-            binding.yourNameTxt.text = result.name
-        }
 
-        override fun getUserFailure(code: Int, message: String) {
-            TODO("Not yet implemented")
+            var timestampToSdf = Timestamp_to_SDF()
+            time.text = timestampToSdf.convert_only_time(chat.created_at)
         }
     }
 
     inner class RightViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val content: AppCompatButton = view.findViewById(R.id.my_chat_iv)
+        private val time : TextView = view.findViewById(R.id.my_chat_date_txt)
         fun bind(chat: Chat) {
             content.text = chat.content
+
+            var timestampToSdf = Timestamp_to_SDF()
+            time.text = timestampToSdf.convert_only_time(chat.created_at)
         }
     }
 
@@ -130,7 +129,7 @@ class ChatRVAdapter(
         private val time: TextView = view.findViewById(R.id.item_time_date_txt)
 
         fun bind(chat: Chat) {
-
+            time.text = chat.content
         }
     }
 }

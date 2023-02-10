@@ -1,4 +1,4 @@
-package umc.mobile.project.withdrawal
+package umc.mobile.project.mypage.withdrawal
 
 import android.util.Log
 import retrofit2.Call

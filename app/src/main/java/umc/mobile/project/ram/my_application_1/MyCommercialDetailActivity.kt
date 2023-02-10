@@ -56,8 +56,8 @@ class MyCommercialDetailActivity : AppCompatActivity(), PostDetailGetResult {
         var txt_day = txt_time.substring(8 until 10)
 
         var txt_hour = txt_time.substring(11 until 13)
-        var txt_minute = txt_time.substring(14 until 17)
-        var txt_timestamp_substring = txt_year + "년" + txt_month + "월" + txt_day + "일" + txt_hour+"시" + txt_minute + "분"
+        var txt_minute = txt_time.substring(14 until 16)
+        var txt_timestamp_substring = txt_year + "년 " + txt_month + "월 " + txt_day + "일 " + txt_hour+"시 " + txt_minute + "분"
         binding.textTime.text = txt_timestamp_substring
 
         binding.textPeople.text = result.recruited_num.toString() + "명"

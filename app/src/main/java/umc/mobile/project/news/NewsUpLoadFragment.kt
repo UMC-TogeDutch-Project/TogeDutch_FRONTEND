@@ -40,17 +40,39 @@ class NewsUpLoadFragment : Fragment(){
 
         Log.d(TAG, "onCreateView: 실행")
 
-        val category : String = "닭꼬치"
-        newsApiService.getPostFromCategory("${category}", 37.606, 127.039).enqueue(object : Callback<UpLoadResponse>{
+        val category1 : String? = "닭꼬치"
+        val category2 : String? = "떡볶이"
+        val category3 : String? = "짜장면"
+        val category4 : String? = null
+        val category5 : String? = null
+        val category6 : String? = null
+
+        newsApiService.getPostFromCategory(category1, category2, category3, category4, category5, category6, 37.606, 127.036).enqueue(object : Callback<UpLoadResponse>{
             override fun onResponse(
                 call: Call<UpLoadResponse>,
                 response: Response<UpLoadResponse>
             ) {
-
                 Log.d(TAG, "onResponse:통신성공")
+                if(response.isSuccessful){
+                    val upLoadResponseData = response.body()
+                    Log.d(TAG, "onResponse: ${upLoadResponseData}")
+                    if(upLoadResponseData != null){
+                        when(upLoadResponseData.code){
+                            1000 -> Log.d(TAG, "onResponse: ${upLoadResponseData.result}")
+
+                        }
+                    }
+                    else{
+                        Log.d(TAG, "onResponse: null check 실패")
+                    }
+                }
+                else{
+                    Log.d(TAG, "onResponse: ${response.code()}")
+                    val upLoadResponseData = response.body()
+                    Log.d(TAG, "onResponse:body: ${upLoadResponseData}")
+                }
 
             }
-
             override fun onFailure(call: Call<UpLoadResponse>, t: Throwable) {
                 Log.d(TAG, "onFailure:통신실패 ${t}")
             }

@@ -65,7 +65,7 @@ class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
         apiService.adsRandom()?.enqueue(object : Callback<AdsRandomResponse> {
             override fun onResponse(
                 call: Call<AdsRandomResponse>,
-                response: Response<AdsRandomResponse>
+                response: Response<AdsRandomResponse>,
             ) {
                 Log.d(TAG, "onResponse:adsRandom요청 성공")
                 if(response.isSuccessful) {

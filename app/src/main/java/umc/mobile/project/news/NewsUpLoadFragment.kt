@@ -47,7 +47,7 @@ class NewsUpLoadFragment : Fragment(){
         val category5 : String? = null
         val category6 : String? = null
 
-        newsApiService.getPostFromCategory(category1, category2, category3, category4, category5, category6, 37.606, 127.036).enqueue(object : Callback<UpLoadResponse>{
+        newsApiService.getPostFromCategory("닭꼬치", "떡볶이", null, null, null, null, 37.606, 127.036).enqueue(object : Callback<UpLoadResponse>{
             override fun onResponse(
                 call: Call<UpLoadResponse>,
                 response: Response<UpLoadResponse>
@@ -67,6 +67,9 @@ class NewsUpLoadFragment : Fragment(){
                     }
                 }
                 else{
+                    if (response.code() == 400) {
+                        Log.v("Error code 400",response.errorBody()!!.string());
+                    }
                     Log.d(TAG, "onResponse: ${response.code()}")
                     val upLoadResponseData = response.body()
                     Log.d(TAG, "onResponse:body: ${upLoadResponseData}")

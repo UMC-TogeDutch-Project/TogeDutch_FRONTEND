@@ -10,7 +10,7 @@ import umc.mobile.project.ram.my_application_1.MyPostRVAdapter
 class MatchingGetService {
     private lateinit var matchingGetResult: MatchingGetResult
 
-    fun setMatchingGetResult(matchingGetResult: MyPostRVAdapter) {
+    fun setMatchingGetResult(matchingGetResult: MatchingGetResult) {
         this.matchingGetResult = matchingGetResult
     }
 

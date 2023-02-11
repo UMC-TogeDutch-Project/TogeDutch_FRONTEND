@@ -33,6 +33,7 @@ import kotlin.collections.ArrayList
 
 import kotlinx.coroutines.*
 
+lateinit var bindingItemMyPostView : ItemMyPostBinding
 var isOk = false
 class MyPostRVAdapter (
     private val applicationList: ArrayList<Post>
@@ -44,9 +45,11 @@ class MyPostRVAdapter (
     var delete_position : Int = 0
     lateinit var viewBinding : FragmentRandomMatchingBinding
 
-    lateinit var bindingView : ItemMyPostBinding
+    var myPostActivity: MyPostActivity? = null
 
     var getUserIdx : Int = 0
+
+    var post_id : Int = 0
 
     // 아이템 레이아웃 결합
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
@@ -57,6 +60,8 @@ class MyPostRVAdapter (
 
         viewBinding = FragmentRandomMatchingBinding.inflate(LayoutInflater.from(viewGroup.context),
             viewGroup, false)
+
+        myPostActivity = context as MyPostActivity
 
         return ViewHolder(binding)
     }
@@ -79,6 +84,7 @@ class MyPostRVAdapter (
     inner class ViewHolder(val binding: ItemMyPostBinding) : RecyclerView.ViewHolder(binding.root) , DeletePostResult, PutPostResult, PutPostStatusResult {
         fun bind(post: Post) {
             // Log.d("현재 유저 아이디 =============", post.user_id.toString())
+            post_id = post.post_id
 
             var selected_random_btn : Int = 0
             var isSelected = false
@@ -144,13 +150,14 @@ class MyPostRVAdapter (
                 putPostStatusService.putPostStatus(post.post_id)
             }
 
+
             //랜덤 버튼
             binding.btnRandom.setOnClickListener {
                 isSelected = !isSelected
                 if(isSelected) {
                     selected_random_btn++
 
-                    bindingView = binding
+                    bindingItemMyPostView = binding
 
                     // 첫 랜덤 매칭  -> 위랑 순서 바꿔야 매칭되었을때 화면 나옴
                     runBlocking {
@@ -158,26 +165,7 @@ class MyPostRVAdapter (
                             getMatching()
                         }.join()
 
-
-//                        launch {
-//                            Log.d("getUserIdx 값 : ", getUserIdx.toString())
-//
-//                            if (getUserIdx != 0) {
-//                                binding.randomFramelayout.visibility = View.VISIBLE
-//
-//                                // 메이트 매칭 신청 (알람 가게 설정)
-//                                viewBinding.btnMatchingApplication.setOnClickListener {
-//
-//                                }
-//
-//                                // 재추천 받기
-//                                viewBinding.btnRecommend.setOnClickListener {
-//                                    getMatching()
-//                                }
-//
-//                            }
-//                        }
-                    }
+                   }
                 }
                 else {
                     selected_random_btn--
@@ -271,31 +259,18 @@ class MyPostRVAdapter (
     }
 
     // 랜덤 매칭
-    private fun getMatching(){
+    fun getMatching(){
         val matchingGetService = MatchingGetService()
         matchingGetService.setMatchingGetResult(this)
-        matchingGetService.getRandomMatching(32) // 임의로 지정
+        matchingGetService.getRandomMatching(39) // 임의로 지정 (post_id 넣으면 됨)
     }
 
     override fun getMatchingSuccess(code: Int, result: MemberData) {
         if(result.userIdx != 0 && result.name != null) {
-            bindingView.randomFramelayout.visibility = View.VISIBLE
+            bindingItemMyPostView.randomFramelayout.visibility = View.VISIBLE
 
-            viewBinding.nickName.text = result.name
-            Glide.with(context).load(result.image).into(viewBinding.profileImage)
+            result.image?.let { myPostActivity!!.replaceFragment(result.userIdx, result.name, it) }
 
-
-            Toast.makeText(context, "랜덤 매칭 성공", Toast.LENGTH_SHORT).show()
-
-            // 메이트 매칭 신청 (알람 가게 설정)
-            viewBinding.btnMatchingApplication.setOnClickListener {
-                Toast.makeText(context, "메이트 매칭 신청", Toast.LENGTH_SHORT).show()
-            }
-
-            // 재추천 받기
-            viewBinding.btnRecommend.setOnClickListener {
-                getMatching()
-            }
         } else {
             Toast.makeText(context, "랜덤 매칭 3회 초과", Toast.LENGTH_SHORT).show()
         }

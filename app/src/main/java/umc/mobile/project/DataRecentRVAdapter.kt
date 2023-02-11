@@ -20,7 +20,8 @@ import umc.mobile.project.ram.Geocoder_location
 import umc.mobile.project.ram.my_application_1.post_id_to_detail
 import umc.mobile.project.ram.my_application_1.user_id_logined
 import umc.mobile.project.ram.my_application_1.user_id_var
-
+var likeId = 1
+var postUserIdx = 1
 class DataRecentRVAdapter(private val homeDataList: ArrayList<Post>) : RecyclerView.Adapter<DataRecentRVAdapter.RecentViewHolder>() {
 
     lateinit var context : Context

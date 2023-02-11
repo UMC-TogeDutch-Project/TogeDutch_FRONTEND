@@ -137,10 +137,8 @@ class MyPostRVAdapter (
             val currentTime = timestampToSdf.timestamp_to_String(System.currentTimeMillis())
             println("현재 시간 : " + currentTime)
 
-            if(post.order_time > currentTime && (post.recruited_num == post.num_of_recruits) && !post.status.equals("시간만료")){ // 현재 시간이 주문 시간 전 && 인원 다 채웠을 때
-                binding.btnRandom.visibility = View.INVISIBLE
-            }
-            if(post.order_time > currentTime && (post.recruited_num != post.num_of_recruits)){
+            if(post.order_time > currentTime && (post.recruited_num != post.num_of_recruits) && post.status.equals("시간만료")){ // 현재 시간이 주문 시간 전 && 인원 다 채웠을 때
+                binding.btnRandom.visibility = View.VISIBLE
                 val putPostStatusService = PutPostStatusService()
                 putPostStatusService.setPutPostStatusResult(this)
                 putPostStatusService.putPostStatus(post.post_id)

@@ -14,6 +14,7 @@ import umc.mobile.project.ram.chat.ChatRoom
 import umc.mobile.project.ram.chat.ChatRoomRVAdapter
 import umc.mobile.project.ram.chat.ChattingActivity
 import umc.mobile.project.databinding.FragmentChatBinding
+import umc.mobile.project.databinding.FragmentRandomMatchingBinding
 import umc.mobile.project.ram.Auth.Application.GetUser.UserGetService
 import umc.mobile.project.ram.Auth.ChatRoom.ChatRoomGetList.ChatRoomList
 import umc.mobile.project.ram.Auth.ChatRoom.ChatRoomGetList.ChatRoomListGetResult
@@ -27,7 +28,6 @@ class ChatFragment : Fragment(), ChatRoomListGetResult {
     var chatRoomList = ArrayList<ChatRoomList>()
     lateinit var chatRoomRVAdapter: ChatRoomRVAdapter
     lateinit var binding: FragmentChatBinding
-
     val TAG: String = "로그"
 
     override fun onCreateView(

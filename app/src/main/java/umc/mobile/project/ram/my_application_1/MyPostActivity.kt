@@ -5,6 +5,7 @@ import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -14,13 +15,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import umc.mobile.project.R
 import umc.mobile.project.databinding.ActivityMypostBinding
+import umc.mobile.project.databinding.FragmentRandomMatchingBinding
+import umc.mobile.project.databinding.ItemMyPostBinding
+import umc.mobile.project.ram.Auth.Matching.GetMatching.RandomMatchingFragment
 import umc.mobile.project.ram.Auth.Post.GetPostJoin.PostJoinGetResult
 import umc.mobile.project.ram.Auth.Post.GetPostJoin.PostJoinGetService
 import umc.mobile.project.ram.Auth.Post.GetPostUpload.PostUploadGetResult
 import umc.mobile.project.ram.Auth.Post.GetPostUpload.PostUploadGetService
 import kotlin.collections.ArrayList
 
-var postUploadList = ArrayList<Post>()
 
 var user_id_var = 32
 var user_id_logined = 32
@@ -30,16 +33,18 @@ var post_id_to_detail = 10
 
 class MyPostActivity : AppCompatActivity(), PostUploadGetResult, PostJoinGetResult {
     lateinit var binding: ActivityMypostBinding
-//    lateinit var myPostRVAdapter: MyPostRVAdapter
     var postUploadList = ArrayList<Post>()
     var postJoinList = ArrayList<Post>()
-//    lateinit var joinRVAdatpter: JoinRVAdatpter
+
+
+    lateinit var viewBinding : FragmentRandomMatchingBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMypostBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        viewBinding = FragmentRandomMatchingBinding.inflate(layoutInflater)
 
         // 스피너
         setupSpinnerText()
@@ -202,6 +207,10 @@ class MyPostActivity : AppCompatActivity(), PostUploadGetResult, PostJoinGetResu
         result: ArrayList<Post>
 
     ) {
+        for(i in result.size-1 downTo 0 ){
+            if(result[i].status.equals("공고사용불가"))
+                result.removeAt(i)
+        }
 
         initRecycler(result)
 
@@ -226,5 +235,25 @@ class MyPostActivity : AppCompatActivity(), PostUploadGetResult, PostJoinGetResu
 
     override fun getPostJoinFailure(code: Int, message: String) {
         TODO("Not yet implemented")
+    }
+
+    fun replaceFragment(user_id: Int, name: String, image: String) {
+        Log.d("Activity, user_id: ", user_id.toString())
+        Log.d("Activity, name: ", name)
+        Log.d("Activity, image: ", image)
+
+        val bundle = Bundle()
+        bundle.putInt("user_id", user_id)
+        bundle.putString("name", name)
+        bundle.putString("image", image)
+
+        val randomMatchingFragment = RandomMatchingFragment()
+
+        val transaction = supportFragmentManager.beginTransaction()
+
+        randomMatchingFragment.arguments = bundle
+
+        transaction.replace(bindingItemMyPostView.randomFramelayout.id, randomMatchingFragment)
+            .commitAllowingStateLoss()
     }
 }

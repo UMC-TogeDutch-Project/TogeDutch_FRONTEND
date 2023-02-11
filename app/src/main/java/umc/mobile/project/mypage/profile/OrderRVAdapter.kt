@@ -75,8 +75,8 @@ class OrderRVAdapter (private val orderList: ArrayList<Post>): RecyclerView.Adap
 
             binding.listItemScore.setOnClickListener {
 
-                val dialog = ReviewPopupDialog(context)
-                dialog.start()
+//                val dialog = ReviewPopupDialog(context)
+//                dialog.start()
 
             }
         }

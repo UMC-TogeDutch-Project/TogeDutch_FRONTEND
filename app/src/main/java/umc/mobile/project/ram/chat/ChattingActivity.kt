@@ -2,7 +2,17 @@ package umc.mobile.project.ram.chat
 
 import Post
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Matrix
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -10,9 +20,14 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.json.JSONObject
 import ua.naiksoftware.stomp.Stomp
 import ua.naiksoftware.stomp.dto.LifecycleEvent
@@ -27,19 +42,22 @@ import umc.mobile.project.ram.Auth.Chat.ChatPost.PostChatResult
 import umc.mobile.project.ram.Auth.Chat.ChatPost.PostChatService
 import umc.mobile.project.ram.Auth.Chat.ChatPost.Result
 import umc.mobile.project.ram.Auth.Chat.ChatPost.chatPost
+import umc.mobile.project.ram.Auth.ChatPhoto.ChatPhotoPost.PostPhotoResult
+import umc.mobile.project.ram.Auth.ChatPhoto.ChatPhotoPost.PostPhotoService
 import umc.mobile.project.ram.Auth.Post.GetPostAll.PostGetAllResult
 import umc.mobile.project.ram.Auth.Post.GetPostAll.PostGetAllService
 import umc.mobile.project.ram.Auth.Post.GetPostDetail.PostDetailGetResult
 import umc.mobile.project.ram.Auth.Post.GetPostDetail.PostDetailGetService
 import umc.mobile.project.ram.my_application_1.user_id_logined
 import umc.mobile.project.ram.my_application_1.*
+import java.io.File
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
 
-class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult, PostGetAllResult, PostChatResult, ChatAllGetResult {
+class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult, PostGetAllResult, PostChatResult, ChatAllGetResult,PostPhotoResult {
     lateinit var binding: ActivityChattingBinding
     lateinit var chatRVAdapter: ChatRVAdapter
     var timestamp = Timestamp(Date().time)
@@ -50,6 +68,13 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
     lateinit var more_btn : AppCompatButton
     var chatRoom_id_get : Int = 0
 
+    lateinit var dialog : BottomSheetDialog
+
+    private var PICK_IMAGE = 1
+    var picture : MultipartBody.Part? = null
+
+    var writer_me = ""
+    var type_me = "TALK"
 
     /// stomp 연결
     private var url = "ws://ec2-3-34-255-129.ap-northeast-2.compute.amazonaws.com:9000/stomp/chat/websocket"
@@ -107,7 +132,8 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
 
         binding.etcBtn.setOnClickListener {
             // 다이얼로그 부분
-            val dialog:BottomSheetDialog = BottomSheetDialog(this)
+//            val dialog:BottomSheetDialog = BottomSheetDialog(this)
+            dialog = BottomSheetDialog(this)
             dialog.setContentView(R.layout.chat_bottom_dialog_content)
 
             val phone_btn = dialog.findViewById<AppCompatButton>(R.id.phone_btn)
@@ -140,6 +166,24 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
             val photo_btn = dialog.findViewById<AppCompatButton>(R.id.btn_photo)
             photo_btn?.setOnClickListener {
                 Toast.makeText(this, "사진 클릭", Toast.LENGTH_LONG).show()
+
+                val status = ContextCompat.checkSelfPermission(
+                    this,
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE
+                )
+                if (status == PackageManager.PERMISSION_GRANTED) {
+                    // Permission 허용
+                    getImage()
+                } else {
+                    // Permission 허용
+
+                    // 허용 요청
+                    ActivityCompat.requestPermissions(
+                        this,
+                        arrayOf<String>(android.Manifest.permission.READ_EXTERNAL_STORAGE),
+                        100
+                    )
+                }
             }
 
             val camera_btn = dialog.findViewById<AppCompatButton>(R.id.btn_camera)
@@ -181,8 +225,6 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
                 val user_id = JSONObject(topicMessage.payload).getInt("user_id")
 
                 val created_at_before = JSONObject(topicMessage.payload).getString("created_at")
-//                var txt_hour = created_at_before.substring(11 until 13)
-//                var txt_minute = created_at_before.substring(14 until 16)
                 var created_at : Timestamp = Timestamp.valueOf(created_at_before)
 
                 val content = JSONObject(topicMessage.payload).getString("content")
@@ -218,6 +260,10 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
 
         binding.btnSubmit.setOnClickListener {
             sendStomp(binding.editMessage.text.toString(), chatRoom_id_get, user_id_logined)
+        }
+
+        dialog.findViewById<AppCompatButton>(R.id.btn_submit)!!.setOnClickListener {
+            sendPhoto(picture!!, chatRoom_id_get, user_id_logined)
         }
     }
 
@@ -269,6 +315,48 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
     override fun sendChatFailure() {
         Log.d("=============================== Message Post 실패!!!!!!!!!!!!!!!!!!!!", "==================================================" )
     }
+
+    ///////////////////////////// 사진 전송 //////////////
+    private fun sendPhoto(picture: MultipartBody.Part, chatRoom_id: Int, user_id: Int){
+        // 서버에 post해서 데이터베이스에서 chat_id 값까지 생성된 chat 데이터 가져오기
+        val postPhotoService = PostPhotoService() // chat 보내놓기
+        postPhotoService.setPhotoResult(this)
+        Log.d("chatRoom_id : $chatRoom_id, user_id : $user_id, chatPost : $picture", "CHECK" )
+        postPhotoService.sendPhoto(chatRoom_id, user_id, picture)
+    }
+
+    override fun sendPhotoSuccess(result: umc.mobile.project.ram.Auth.ChatPhoto.ChatPhotoPost.Result) {
+        Log.d("=============================== Photo Post 성공!!!!!!!!!!!!!!!!!!!!", "==================================================" )
+        // 현재 시간 구하기
+        var sdf = SimpleDateFormat("MM월 dd일")
+        var now = sdf.format(System.currentTimeMillis())
+        var created_at = sdf.format(result.createdAt)
+
+        if(now > created_at) // 현재 시간이 채팅 생성 시간보다 빠를 때 시간 띄워주기
+            chatRVAdapter.addItem(Chat(0, chatRoom_id_get, 0, timestamp, getCurrentTime(), "time", "time", 3))
+
+        println(result.createdAt)
+        val data = JSONObject()
+        data.put("chatPhoto_id", result.chatId)
+        data.put("chatRoom_id", result.chatRoomId)
+        data.put("userId", user_id_logined)
+        data.put("created_at", result.createdAt)
+        data.put("image", result.image)
+
+        edit_message.text = Editable.Factory.getInstance().newEditable("") // 채팅 입력창 다시 초기화시켜주기
+
+        chatRVAdapter.addItem(Chat(result.chatId, result.chatRoomId, user_id_logined, result.createdAt, result.image, writer_me, type_me, 2))
+        runOnUiThread {
+            chatRVAdapter.notifyDataSetChanged()
+        }
+    }
+
+    override fun sendPhotoFailure() {
+        Log.d("=============================== Photo Post 실패!!!!!!!!!!!!!!!!!!!!", "==================================================" )
+    }
+
+
+    /////////////////////////////////////////////////////////
 
     private fun initActionBar() {
 
@@ -374,6 +462,91 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
         super.onDestroy()
         stompClient.disconnect()
     }
+
+    //////////////////////// 사진 /////////////////////////
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        // 돌려받은 resultCode가 정상인지 체크
+        if(resultCode == Activity.RESULT_OK){
+
+            // 사진 가져오는 부분
+            if (requestCode == PICK_IMAGE) {
+                val imagePath = data!!.data
+
+                val file = File(absolutelyPath(imagePath, this))
+                val requestFile = RequestBody.create(MediaType.parse("image/*"), file)
+                val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
+
+//                pictureNameList.addAll(listOf(file.name)) // 데이터 넣는 부분
+
+                Log.d("파일 생성!! ======== ", file.name)
+                picture = body
+
+                setAdjImgUri(imagePath!!)
+
+
+                Toast.makeText(this, "사진 첨부", Toast.LENGTH_SHORT).show()
+            }else {
+                Toast.makeText(this, "오류가 발생하였습니다.", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    fun absolutelyPath(path: Uri?, context: Context): String {
+        var proj: Array<String> = arrayOf(MediaStore.Images.Media.DATA)
+        var c: Cursor? = context.contentResolver.query(path!!, proj, null, null, null)
+        var index = c?.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+        c?.moveToFirst()
+
+        var result = c?.getString(index!!)
+
+        return result!!
+    }
+
+    fun getImage() {
+        // val intent = Intent("android.intent.action.GET_CONTENT")
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = MediaStore.Images.Media.CONTENT_TYPE
+        intent.type = "image/*" // 모든 이미지
+        startActivityForResult(intent, PICK_IMAGE)
+    }
+
+    private fun setAdjImgUri(imgUri: Uri) {
+
+        //2)Resizing 할 BitmapOption 만들기
+        val bmOptions = BitmapFactory.Options().apply {
+            // Get the dimensions of the bitmap
+            inJustDecodeBounds = true
+            contentResolver.openInputStream(imgUri)?.use { inputStream ->
+                //get img dimension
+                BitmapFactory.decodeStream(inputStream, null, this)
+            }
+
+            // Determine how much to scale down the image
+            val targetW: Int = 1000 //in pixel
+            val targetH: Int = 1000 //in pixel
+            val scaleFactor: Int = Math.min(outWidth / targetW, outHeight / targetH)
+
+            // Decode the image file into a Bitmap sized to fill the View
+            inJustDecodeBounds = false
+            inSampleSize = scaleFactor
+        }
+
+        //3) Bitmap 생성 및 셋팅 (resized + rotated)
+        contentResolver.openInputStream(imgUri)?.use { inputStream ->
+            BitmapFactory.decodeStream(inputStream, null, bmOptions)?.also { bitmap ->
+                val matrix = Matrix()
+                matrix.preRotate(0f, 0f, 0f)
+//                binding.m.setImageBitmap(
+//                    Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, false)
+//                )
+            }
+        }
+    }
+
+
 
 
 }

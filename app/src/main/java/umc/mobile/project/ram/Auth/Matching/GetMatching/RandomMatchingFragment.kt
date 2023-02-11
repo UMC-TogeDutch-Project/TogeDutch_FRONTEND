@@ -101,7 +101,7 @@ class RandomMatchingFragment: Fragment(), MatchingGetResult, MatchingAcceptGetRe
     fun getMatchingAccept() {
         val matchingAcceptGetService = MatchingAcceptGetService()
         matchingAcceptGetService.setMatchingAcceptGetResult(this)
-        matchingAcceptGetService.getMatchingAccept(38, getUserIdx)    // 임의로 지정
+        matchingAcceptGetService.getMatchingAccept(getUserIdx, 39)    // 임의로 지정
     }
 
     override fun getMatchingAcceptSuccess(code: Int, result: Int) {

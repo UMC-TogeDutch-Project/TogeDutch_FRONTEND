@@ -1,13 +1,13 @@
 package umc.mobile.project.restaurant.Auth.PlaceApi
 
 import android.util.Log
-import com.google.android.libraries.places.api.model.Place
+import com.google.android.gms.maps.model.LatLng
 import umc.mobile.project.getRetrofit
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import umc.mobile.project.announcement.Auth.ApplyPost.Result
-import umc.mobile.project.ram.Geocoder_location
+import umc.mobile.project.latitude_var
+import umc.mobile.project.longtitude_var
 
 class PlaceGetService {
     private lateinit var placeGetResult: PlaceGetResult
@@ -16,10 +16,11 @@ class PlaceGetService {
     fun setPlaceGetResult(placeGetResult: PlaceGetResult) {
         this.placeGetResult = placeGetResult
     }
-    fun getPost(location: String, radius: Int, type: String, keyword: String, language: String, key: String){
+//    location: LatLng,
+    fun getPost( radius: Int, type: String, language: String, key: String){
         val postUploadDetailGetService = getRetrofit().create(PlaceGetRetrofitInterfaces::class.java)
-
-        postUploadDetailGetService.getPost(location, radius, type, keyword, language, key).enqueue(object : Callback<PlaceGetResponse> {
+        val location = LatLng(latitude_var, longtitude_var)
+        postUploadDetailGetService.getPost( radius, type, language, key).enqueue(object : Callback<PlaceGetResponse> {
             override fun onResponse(call: Call<PlaceGetResponse>, response: Response<PlaceGetResponse>,) {
                 Log.d("PLACE-GET SUCCESS",response.toString())
                 val resp : PlaceGetResponse = response.body()!!

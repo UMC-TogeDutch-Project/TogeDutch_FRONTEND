@@ -5,6 +5,7 @@
     <string name="menu_mypage">마이페이지</string>
     <string name="menu_restaurant">맛집</string>
 
+
     <string-array name="spinner_txt">
         <item>업로드</item>
         <item>참여</item>

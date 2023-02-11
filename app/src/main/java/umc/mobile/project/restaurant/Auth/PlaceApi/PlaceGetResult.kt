@@ -1,8 +1,6 @@
 package umc.mobile.project.restaurant.Auth.PlaceApi
 
-import com.google.android.libraries.places.api.model.Place
-
 interface PlaceGetResult {
-    fun getPostSuccess(result: ArrayList<Place>)
+    fun getPostSuccess(result: ArrayList<umc.mobile.project.restaurant.Auth.PlaceApi.Place>)
     fun getPostFailure()
 }

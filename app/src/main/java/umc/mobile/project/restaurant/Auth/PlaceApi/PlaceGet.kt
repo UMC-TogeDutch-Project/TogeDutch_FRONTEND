@@ -8,21 +8,21 @@ data class PlaceGet (
     @SerializedName(value =  "place_id") val place_id : String,
     @SerializedName(value =  "international_phone_number") val international_phone_number : String,
     @SerializedName(value =  "name") val name : String,
-    @SerializedName(value =  "location") val location: location,
-    @SerializedName(value =  "photos") val photos : ArrayList<PlacePhoto>,
-    @SerializedName(value =  "reviews") val reviews : ArrayList<PlaceReview>,
-    @SerializedName(value =  "editorial_summary") val editorial_summary : PlaceEditorialSummary
+//    @SerializedName(value =  "location") val location: location,
+    @SerializedName(value =  "photos") val photos : ArrayList<PlacePhoto>?,
+    @SerializedName(value =  "reviews") val reviews : ArrayList<PlaceReview>?,
+    @SerializedName(value =  "editorial_summary") val editorial_summary : PlaceEditorialSummary?
 
     )
 
 
-data class location(
-    @SerializedName("lat")
-    val lat: Double,
-
-    @SerializedName("lng")
-    val lng: Double
-)
+//data class location(
+//    @SerializedName("lat")
+//    val lat: Double,
+//
+//    @SerializedName("lng")
+//    val lng: Double
+//)
 data class PlacePhoto(
     @SerializedName(value =  "height") val height : Int,
     @SerializedName(value =  "width") val width : Int,

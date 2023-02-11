@@ -14,8 +14,12 @@ data class Result(
     @SerializedName(value =  "chatId") var chatId : Int,
     @SerializedName(value =  "chatRoomId") var chatRoomId : Int,
     @SerializedName(value =  "userId") var userId : Int,
-    @SerializedName(value =  "createdAt") var createdAt : Timestamp,
+    @SerializedName(value =  "createAt") var createdAt : Timestamp,
     @SerializedName(value =  "content") var content : String,
     @SerializedName(value =  "writer") var writer : String,
     @SerializedName(value = "type") var type : String
+)
+
+data class chatPost(
+    @SerializedName(value =  "content") var content : String,
 )

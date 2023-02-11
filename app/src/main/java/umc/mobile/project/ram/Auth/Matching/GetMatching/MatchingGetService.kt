@@ -18,9 +18,7 @@ class MatchingGetService {
         val matchingGetService = getRetrofit().create(MatchingGetRetrofitInterfaces::class.java)
 
         matchingGetService.getMatching(post_id).enqueue(object : Callback<MatchingGetResponse> {
-            override fun onResponse(
-                call: Call<MatchingGetResponse>,
-                response: Response<MatchingGetResponse>, ) {
+            override fun onResponse(call: Call<MatchingGetResponse>, response: Response<MatchingGetResponse>, ) {
                 Log.d("RANDOMMATCHING-GET SUCCESS", response.toString())
                 val resp: MatchingGetResponse = response.body()!!
                 Log.d("success code: ", resp.code.toString())

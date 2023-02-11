@@ -80,4 +80,36 @@ class AnnounceAlertDialog (context: Context,announceAlertDialogInterface: Announ
 
         dlg.show()
     }
+    fun start5(){
+        dlg.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dlg.setContentView(R.layout.announce_alert_dialog)
+        dlg.setCanceledOnTouchOutside(false)       //다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히게 설정
+        dlg.setCancelable(true)    // 취소가 가능하도록 하는 코드
+        alert_text = dlg.findViewById(R.id.tv_alert)
+        alert_text.text = "본인의 공고는 관심 목록에 담을 수 없습니다."
+        btn_back = dlg.findViewById(R.id.back_btn)
+        btn_back.setOnClickListener {
+            this.announceAlertDialogInterface?.btnFinish()
+            dlg.dismiss()
+
+        }
+
+        dlg.show()
+    }
+    fun start6(){
+        dlg.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dlg.setContentView(R.layout.announce_alert_dialog)
+        dlg.setCanceledOnTouchOutside(false)       //다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히게 설정
+        dlg.setCancelable(true)    // 취소가 가능하도록 하는 코드
+        alert_text = dlg.findViewById(R.id.tv_alert)
+        alert_text.text = "이미 관심목록에 담은 공고입니다."
+        btn_back = dlg.findViewById(R.id.back_btn)
+        btn_back.setOnClickListener {
+            this.announceAlertDialogInterface?.btnFinish()
+            dlg.dismiss()
+
+        }
+
+        dlg.show()
+    }
 }

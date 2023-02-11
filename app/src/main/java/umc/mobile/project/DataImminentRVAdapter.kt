@@ -7,9 +7,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import umc.mobile.project.announcement.AnnounceAlertDialog
+import umc.mobile.project.announcement.AnnounceAlertDialogInterface
+import umc.mobile.project.announcement.Auth.LikePost.LikePostResult
+import umc.mobile.project.announcement.Auth.LikePost.LikePostService
+import umc.mobile.project.announcement.Auth.LikePost.Result
 import umc.mobile.project.databinding.ItemDataBinding
 import umc.mobile.project.ram.Geocoder_location
 import umc.mobile.project.ram.my_application_1.post_id_to_detail
+import umc.mobile.project.ram.my_application_1.user_id_logined
 import umc.mobile.project.ram.my_application_1.user_id_var
 
 
@@ -20,7 +26,7 @@ class DataImminentRVAdapter(private val homeDataList: ArrayList<Post>) : Recycle
 
     //ViewHolder 객체
    inner class ImminentViewHolder(private val viewBinding: ItemDataBinding) :
-        RecyclerView.ViewHolder(viewBinding.root) {
+        RecyclerView.ViewHolder(viewBinding.root), LikePostResult, AnnounceAlertDialogInterface {
 
         fun bind(homeData: Post) {
             Glide.with(context).load(homeData.image).centerCrop().into(viewBinding.ivItemImageThird)
@@ -40,11 +46,44 @@ class DataImminentRVAdapter(private val homeDataList: ArrayList<Post>) : Recycle
             viewBinding.annApp.text = homeData.recruited_num.toString() // 신청인원
             viewBinding.annRecruit.text = homeData.num_of_recruits.toString() //총 인원
 
+            viewBinding.btnLikeThird.setOnClickListener {
+                viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon_fill)
+
+            }
+            viewBinding.btnLikeThird.setOnClickListener {
+                viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon_fill)
+                val likePostService = LikePostService()
+                likePostService.setLikePostResult(this)
+                likePostService.sendLike(user_id_logined, post_id_to_detail)
+            }
+        }
+
+
+        override fun LikePostSuccess(result: Result) {
+            viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon_fill)
+
+        }
+
+        override fun LikePostFailureMyPost() {
+            val dlg = AnnounceAlertDialog(context, this)
+            dlg.start5()
+        }
+
+        override fun LikePostFailureAdd() {
+            val dlg = AnnounceAlertDialog(context, this)
+            dlg.start6()
+        }
+
+        override fun btnFinish() {
+
         }
 
     }
-
-
+//    fun likePost(){
+//        val likePostService = LikePostService()
+//        likePostService.setLikePostResult(this)
+//        likePostService.sendLike(user_id_logined, post_id_to_detail)
+//    }
 
     //ViewHolder 만들어질 때 실행할 동작
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): DataImminentRVAdapter.ImminentViewHolder {
@@ -55,9 +94,7 @@ class DataImminentRVAdapter(private val homeDataList: ArrayList<Post>) : Recycle
 
         context = viewGroup.context
 
-//        homeDataList.sortByDescending {
-//            it.created_at
-//        }
+
 
         return ImminentViewHolder(viewBinding)
     }
@@ -72,6 +109,7 @@ class DataImminentRVAdapter(private val homeDataList: ArrayList<Post>) : Recycle
             itemClickListener.onItemClick(homeDataList[position])
             notifyItemChanged(position)
         }
+
 
     }
 
@@ -91,6 +129,7 @@ class DataImminentRVAdapter(private val homeDataList: ArrayList<Post>) : Recycle
     }
 
     private lateinit var itemClickListener : OnItemClickListener
+
 
 
 

@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".mypage.alarmKeyword.MypageAlarmKeywordActivity">
 
     <include
         android:id="@+id/include"
@@ -13,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/search_myWish"
+        android:id="@+id/setMyKeyword"
         android:layout_width="370dp"
         android:layout_height="41dp"
         android:layout_marginTop="15dp"
@@ -27,15 +28,15 @@
         app:layout_constraintTop_toBottomOf="@+id/include" />
 
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/appCompatSearch"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginEnd="9dp"
         android:src="@drawable/tabler_icon_search"
-        app:layout_constraintBottom_toBottomOf="@+id/search_myWish"
-        app:layout_constraintEnd_toEndOf="@+id/search_myWish"
-        app:layout_constraintTop_toTopOf="@+id/search_myWish" />
+        app:layout_constraintBottom_toBottomOf="@+id/setMyKeyword"
+        app:layout_constraintEnd_toEndOf="@+id/setMyKeyword"
+        app:layout_constraintTop_toTopOf="@+id/setMyKeyword" />
 
     <TextView
         android:id="@+id/textView6"
@@ -47,20 +48,30 @@
         android:textColor="#AEAEAE"
         android:textSize="11sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_myWish" />
+        app:layout_constraintTop_toBottomOf="@+id/setMyKeyword" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/tableRecycleEdit"
+        android:layout_width="match_parent"
+        android:layout_height="363dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <Button
         android:id="@+id/btn_save"
         android:layout_width="260dp"
         android:layout_height="43dp"
-        android:layout_marginTop="467dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/btn_big_blue_background"
         android:text="저장하기"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_myWish" />
+        app:layout_constraintTop_toBottomOf="@+id/setMyKeyword" />
 </androidx.constraintlayout.widget.ConstraintLayout>

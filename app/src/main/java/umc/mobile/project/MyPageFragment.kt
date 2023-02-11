@@ -10,14 +10,16 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import umc.mobile.project.commercial.CommercialListActivity
 import umc.mobile.project.databinding.FragmentMypageBinding
+import umc.mobile.project.login.LoginActivity
 import umc.mobile.project.mypage.GetUser.UserGetResult
 import umc.mobile.project.mypage.GetUser.UserGetService
-import umc.mobile.project.notice.NoticeActivity
+import umc.mobile.project.mypage.alarmKeyword.MypageAlarmKeywordActivity
+import umc.mobile.project.mypage.notice.NoticeActivity
 import umc.mobile.project.ram.my_application_1.MyPostActivity
-import umc.mobile.project.profile.MyProfileActivity
+import umc.mobile.project.mypage.profile.MyProfileActivity
 import umc.mobile.project.ram.my_application_1.user_id_var
 import umc.mobile.project.wishlist.WishListActivity
-import umc.mobile.project.withdrawal.WithdrawalActivity
+import umc.mobile.project.mypage.withdrawal.WithdrawalActivity
 
 class MyPageFragment: Fragment(), UserGetResult {
     private lateinit var viewBinding: FragmentMypageBinding
@@ -43,7 +45,8 @@ class MyPageFragment: Fragment(), UserGetResult {
         }
 
         viewBinding.btnLogout.setOnClickListener {
-
+            val intent = Intent(context, LoginActivity::class.java)
+            startActivity(intent)
         }
 
         viewBinding.participation.setOnClickListener {
@@ -67,7 +70,8 @@ class MyPageFragment: Fragment(), UserGetResult {
         }
 
         viewBinding.alarmKeyword.setOnClickListener {
-
+            val intent = Intent(context, MypageAlarmKeywordActivity::class.java)
+            startActivity(intent)
         }
 
         viewBinding.withdrawal.setOnClickListener {

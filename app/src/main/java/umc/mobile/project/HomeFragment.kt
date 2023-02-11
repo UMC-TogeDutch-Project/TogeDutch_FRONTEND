@@ -65,7 +65,7 @@ class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
         apiService.adsRandom()?.enqueue(object : Callback<AdsRandomResponse> {
             override fun onResponse(
                 call: Call<AdsRandomResponse>,
-                response: Response<AdsRandomResponse>
+                response: Response<AdsRandomResponse>,
             ) {
                 Log.d(TAG, "onResponse:adsRandom요청 성공")
                 if(response.isSuccessful) {
@@ -123,6 +123,12 @@ class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
             startActivity(intent)
             num1 =1
         }
+
+        // 검색 버튼 클릭 시 api 연결 필요
+        viewBinding.btnInputAlarm.setOnClickListener {
+            val search_keyword = viewBinding.etInputAlarmKeyword.text.toString()
+        }
+
         initRecyclerViewRecent()
         initRecyclerViewImminent()
 

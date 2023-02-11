@@ -1,4 +1,4 @@
-package umc.mobile.project
+package umc.mobile.project.search
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

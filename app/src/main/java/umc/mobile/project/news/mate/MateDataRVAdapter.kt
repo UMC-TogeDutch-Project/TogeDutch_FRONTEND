@@ -1,4 +1,4 @@
-package umc.mobile.project.news
+package umc.mobile.project.news.mate
 
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
@@ -14,10 +14,10 @@ class MateDataRVAdapter (private val MateDataList: ArrayList<MateData>) : Recycl
     inner class DataViewHolder(private val viewBinding: ItemNewsMateDataBinding) :
         RecyclerView.ViewHolder(viewBinding.root) {
         fun bind(mateData: MateData) {
-            viewBinding.tvDate.text = mateData.tvDate
-            viewBinding.ivMainImage.setImageResource(mateData.ivMainImage!!)
-            viewBinding.tvTitle.text = mateData.tvTitle
-            viewBinding.tvUserId.text = mateData.tvUserId
+//            viewBinding.tvDate.text = mateData.tvDate
+//            viewBinding.ivMainImage.setImageResource(mateData.ivMainImage!!)
+//            viewBinding.tvTitle.text = mateData.tvTitle
+//            viewBinding.tvUserId.text = mateData.tvUserId
 
         }
     }

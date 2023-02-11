@@ -2,6 +2,7 @@ package umc.mobile.project.ram.my_application_1
 
 import Post
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -31,6 +32,8 @@ class JoinRVAdatpter(private val joinList: ArrayList<Post>) : RecyclerView.Adapt
         holder.itemView.setOnClickListener {
             user_id_var = joinList[position].user_id
             post_id_to_detail = joinList[position].post_id
+            Log.d("post_id_to_detail 값: ", post_id_to_detail.toString())
+            Log.d("post_id 값: ", joinList[position].post_id.toString())
             itemClickListener.onItemClick(joinList[position])
             notifyItemChanged(position)
         }
@@ -58,6 +61,7 @@ class JoinRVAdatpter(private val joinList: ArrayList<Post>) : RecyclerView.Adapt
             binding.orderListTime.text = txt_time_substring // 주문시간
 
             binding.listItemReview.setOnClickListener {
+                post_id_to_detail = post.post_id
                 val dlg = ReviewWritePopupDialog(context)
                 dlg.start()
             }

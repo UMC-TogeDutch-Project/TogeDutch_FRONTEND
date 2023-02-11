@@ -64,7 +64,7 @@
         android:id="@+id/btn_save"
         android:layout_width="260dp"
         android:layout_height="43dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="467dp"
         android:background="@drawable/btn_big_blue_background"
         android:text="저장하기"
         android:textColor="#FFFFFF"

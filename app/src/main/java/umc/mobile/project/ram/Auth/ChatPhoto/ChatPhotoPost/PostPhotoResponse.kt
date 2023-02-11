@@ -3,7 +3,7 @@ package umc.mobile.project.ram.Auth.ChatPhoto.ChatPhotoPost
 import com.google.gson.annotations.SerializedName
 import java.sql.Timestamp
 
-data class PostChatResponse (
+data class PostPhotoResponse (
     @SerializedName(value = "isSuccess") val isSuccess: Boolean,
     @SerializedName(value = "code") val code : Int,
     @SerializedName(value = "message") val message : String,

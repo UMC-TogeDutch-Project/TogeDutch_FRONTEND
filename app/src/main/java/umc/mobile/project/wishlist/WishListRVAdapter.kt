@@ -1,18 +1,23 @@
 package umc.mobile.project.wishlist
 
 import Post
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import umc.mobile.project.databinding.WishlistAdapterBinding
 import umc.mobile.project.ram.Geocoder_location
 import umc.mobile.project.ram.my_application_1.Timestamp_to_SDF
+import java.util.*
+import kotlin.collections.ArrayList
 
-class WishListRVAdapter (private val wishApplicationList: ArrayList<Post>) : RecyclerView.Adapter<WishListRVAdapter.ViewHolder>() {
+class WishListRVAdapter (private val wishApplicationList: ArrayList<Post>) : RecyclerView.Adapter<WishListRVAdapter.ViewHolder>(),
+    Filterable {
     lateinit var context : Context
 
     // 보여줄 아이템 개수만큼 View를 생성 (RecyclerView가 초기화 될 때 호출)
@@ -68,6 +73,44 @@ class WishListRVAdapter (private val wishApplicationList: ArrayList<Post>) : Rec
             binding.totalPersonNum.text = txt_recruits.toString() // 필요 인원
 
         }
+    }
+
+    // 검색
+    val mDataListAll = ArrayList<Post>(wishApplicationList)
+    var mAccounts:MutableList<Post> = wishApplicationList as MutableList<Post>
+    override fun getFilter(): Filter {
+        return exampleFilter
+    }
+    private val exampleFilter: Filter = object : Filter() {
+        // Automatic on background thread
+        override fun performFiltering(constraint: CharSequence?): FilterResults {
+            val filteredList: MutableList<Post> = java.util.ArrayList<Post>()
+            if(constraint!!.isEmpty()){
+                filteredList.addAll(mDataListAll)
+            }
+            else{
+                val filterPattern = constraint.toString().lowercase(Locale.getDefault()).trim{ it <= ' '}
+                for(item in mDataListAll){
+                    //filter 대상 setting
+                    if(item.title.lowercase(Locale.getDefault()).contains(filterPattern)) {
+                        filteredList.add(item)
+                    }
+
+                }
+            }
+            val results = FilterResults()
+            results.values = filteredList
+            return results
+        }
+
+        // Automatic on UI thread
+        @SuppressLint("NotifyDataSetChanged")
+        override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+            mAccounts.clear()
+            mAccounts.addAll(results?.values as Collection<Post>)
+            notifyDataSetChanged()
+        }
+
     }
 
     // 클릭 리스너 추가

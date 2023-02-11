@@ -26,19 +26,18 @@ import com.bumptech.glide.Glide
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import umc.mobile.project.R
+import umc.mobile.project.*
 import umc.mobile.project.announcement.Auth.PostPost.PostRecord
 import umc.mobile.project.announcement.PlaceSearchActivity
 import umc.mobile.project.databinding.ActivityMyPostDetailBinding
 import umc.mobile.project.databinding.ActivityPostRetouchActivityBinding
-import umc.mobile.project.latitude_var
-import umc.mobile.project.longtitude_var
 import umc.mobile.project.ram.Auth.Post.GetPostDetail.PostDetailGetResult
 import umc.mobile.project.ram.Auth.Post.GetPostDetail.PostDetailGetService
 import umc.mobile.project.ram.Auth.Post.PUTRetouch.PutRetouchResult
 import umc.mobile.project.ram.Auth.Post.PUTRetouch.PutRetouchService
 import umc.mobile.project.ram.Auth.Post.PUTRetouch.Request_put
 import umc.mobile.project.ram.Geocoder_location
+import umc.mobile.project.ram.chat.chatRoom_selected_subject
 import umc.mobile.project.ram.my_application_1.current_application.CurrentApplicationActivity
 import java.io.File
 
@@ -54,6 +53,7 @@ class PostRetouchActivity : AppCompatActivity(), PostDetailGetResult, PutRetouch
     var post_id_get = 0
     private var PICK_IMAGE = 1
     var category = ""
+    var picture_name : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -183,6 +183,8 @@ class PostRetouchActivity : AppCompatActivity(), PostDetailGetResult, PutRetouch
 
                 Log.d("파일 생성!! ======== ", file.name)
                 picture = body
+                picture_name = file.name
+
 
                 setAdjImgUri(imagePath!!)
 
@@ -288,6 +290,7 @@ class PostRetouchActivity : AppCompatActivity(), PostDetailGetResult, PutRetouch
         Glide.with(this).load(result.image).into(binding.image)
 //        picture_pre = result.image
 
+
         category = result.category // 카테고리 저장
     }
 
@@ -346,11 +349,21 @@ class PostRetouchActivity : AppCompatActivity(), PostDetailGetResult, PutRetouch
     private fun save(){
         val putRetouchService = PutRetouchService()
         putRetouchService.setPutRetouchResult(this)
-        putRetouchService.putRetouch(post_id_get,  user_id_logined, getRequest(), picture )
+
+        if(picture == null){ // 사진 수정 안 했을 때
+            var get_picture_save = picture_upload_uri_list.find { it.post_id == post_id_get }!!
+            putRetouchService.putRetouch(post_id_get,  user_id_logined, getRequest(), get_picture_save.file) // 이전에 저장한 거 넣기
+        }else {
+            var same_picture = picture_upload_uri_list.find { it.file_name.equals(picture_name) } // chatRoom 목록에서 받아온 제목이랑 똑같은 공고 찾기
+            if (same_picture != null)
+                picture_upload_uri_list.add(Picture_Save(post_id_get, picture_name, picture!!)) // 이전에 저장한 사진이랑 다른 거면 리스트에 저장해두기
+            putRetouchService.putRetouch(post_id_get, user_id_logined, getRequest(), picture)
+        }
     }
 
     override fun PutRetouchSuccess(result: umc.mobile.project.ram.Auth.Post.PUTRetouch.Result) {
         Log.d("수정완료","" )
+
         finish()
     }
 

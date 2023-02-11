@@ -1,4 +1,4 @@
-package umc.mobile.project.notice
+package umc.mobile.project.mypage.notice
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

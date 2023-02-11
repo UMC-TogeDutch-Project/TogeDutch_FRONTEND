@@ -138,19 +138,18 @@ class MyPostRVAdapter (
 
             }
 
-//            var timestampToSdf = Timestamp_to_SDF()
-//            //            2022-01-23T03:34:56.000+00:00
-//            val currentTime = timestampToSdf.timestamp_to_String(System.currentTimeMillis())
-//            println("현재 시간 : " + currentTime)
-//
-//            if(post.order_time > currentTime && (post.recruited_num == post.num_of_recruits) && !post.status.equals("시간만료")){ // 현재 시간이 주문 시간 전 && 인원 다 채웠을 때
-//                binding.btnRandom.visibility = View.INVISIBLE
-//            }
-//            if(post.order_time > currentTime && (post.recruited_num != post.num_of_recruits)){
-//                val putPostStatusService = PutPostStatusService()
-//                putPostStatusService.setPutPostStatusResult(this)
-//                putPostStatusService.putPostStatus(post.post_id)
-//            }
+            var timestampToSdf = Timestamp_to_SDF()
+            //            2022-01-23T03:34:56.000+00:00
+            val currentTime = timestampToSdf.timestamp_to_String(System.currentTimeMillis())
+            println("현재 시간 : " + currentTime)
+
+            if(post.order_time > currentTime && (post.recruited_num != post.num_of_recruits) && post.status.equals("시간만료")){ // 현재 시간이 주문 시간 전 && 인원 다 채웠을 때
+                binding.btnRandom.visibility = View.VISIBLE
+                val putPostStatusService = PutPostStatusService()
+                putPostStatusService.setPutPostStatusResult(this)
+                putPostStatusService.putPostStatus(post.post_id)
+            }
+
 
             //랜덤 버튼
             binding.btnRandom.setOnClickListener {

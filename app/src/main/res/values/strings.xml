@@ -26,7 +26,7 @@
 
     </string-array>
 
-    <string name="google_maps_key" translatable="false" templateMergeStrategy="preserve">AIzaSyCC4KrkEvk1cYehJPuA1hliUc8hPqxE-aQ</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyCC4KrkEvk1cYehJPuA1hliUc8hPqxE-aQ</string>
 
     <string name="kakao_native_key">cebb5d61102a4081a1fd2a9a73b4616a</string>
     <!--02.06 제이 추가 -->

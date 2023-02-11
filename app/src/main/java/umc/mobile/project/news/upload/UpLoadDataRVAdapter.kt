@@ -6,6 +6,7 @@ import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import umc.mobile.project.DataRecentRVAdapter
 import umc.mobile.project.databinding.ItemNewsUploadDataBinding
 import umc.mobile.project.ram.Geocoder_location
@@ -20,12 +21,14 @@ class UpLoadDataRVAdapter(private val UpLoadDataList: ArrayList<UpLoadData>) : R
     //ViewHolder객체
     inner class DataViewHolder(private val viewBinding: ItemNewsUploadDataBinding) :
         RecyclerView.ViewHolder(viewBinding.root) {
+
         fun bind(upLoadData: UpLoadData) {
 
             var latLong_to_address : String = Geocoder_location().calculate_location(context, upLoadData.latitude, upLoadData.longitude)
             var txt_location = latLong_to_address
 
             viewBinding.tvDate.text = upLoadData.created_at.toString()
+            Glide.with(context).load(upLoadData.image).centerCrop().into(viewBinding.ivMainImage)
 //            viewBinding.ivMainImage.setImageResource(upLoadData.ivMainImage!!)
             viewBinding.tvTitle.text = upLoadData.title
             viewBinding.tvUserId.text = upLoadData.user_id.toString()
@@ -43,14 +46,16 @@ class UpLoadDataRVAdapter(private val UpLoadDataList: ArrayList<UpLoadData>) : R
     }
 
     //ViewHolder 만들어질 때 실행할 동작
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): DataViewHolder {
         val viewBinding =
-            ItemNewsUploadDataBinding.inflate(LayoutInflater.from(parent.context))
+            ItemNewsUploadDataBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
+        context = viewGroup.context
         return DataViewHolder(viewBinding)
     }
 
     //ViewHolder가 실제로 데이터를 표시해야 할 때 호출되는 함수
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
+
         holder.bind(UpLoadDataList[position])
         post_id_to_detail = UpLoadDataList[position].post_id
         holder.itemView.setOnClickListener {
@@ -71,9 +76,9 @@ class UpLoadDataRVAdapter(private val UpLoadDataList: ArrayList<UpLoadData>) : R
 
     }
 
-    fun setItemClickListener(onItemClickListener: UpLoadDataRVAdapter.OnItemClickListener) {
+    fun setItemClickListener(onItemClickListener: OnItemClickListener) {
         this.itemClickListener = onItemClickListener
     }
 
-    private lateinit var itemClickListener : UpLoadDataRVAdapter.OnItemClickListener
+    private lateinit var itemClickListener : OnItemClickListener
 }

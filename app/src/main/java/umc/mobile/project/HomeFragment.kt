@@ -109,6 +109,13 @@ class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
 
         }
 
+        viewBinding.btnInputAlarm.setOnClickListener {
+            val intent = Intent(getActivity(), SearchActivity::class.java)
+            val search = viewBinding.etInputAlarmKeyword.text.toString()
+            intent.putExtra("search", search)
+            startActivity(intent)
+        }
+
 
         viewBinding.btnMoreRcent.setOnClickListener() {
             val intent = Intent(context, AnnounceListActivity::class.java)

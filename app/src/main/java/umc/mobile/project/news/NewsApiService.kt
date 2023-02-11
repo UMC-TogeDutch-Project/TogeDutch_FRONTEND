@@ -2,7 +2,10 @@ package umc.mobile.project.news
 
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
+import umc.mobile.project.news.upload.KeywordResponse
 import umc.mobile.project.news.upload.UpLoadRequest
 import umc.mobile.project.news.upload.UpLoadResponse
 
@@ -20,6 +23,11 @@ interface NewsApiService {
 //        @Query("latitude") latitude: Double,
 //        @Query("longitude") longitude: Double
     ): Call<UpLoadResponse>
+
+    @GET("user/{user_id}/keyword")
+    fun getKeyword(
+        @Path("user_id") user_id : Int
+    ) : Call<KeywordResponse>
 
 
 

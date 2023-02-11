@@ -194,9 +194,9 @@
         app:layout_constraintStart_toStartOf="@id/list_item"
         app:layout_constraintEnd_toEndOf="@id/list_item"
         android:visibility="gone">
-        <include
-            android:id="@+id/random_matching"
-            layout="@layout/fragment_random_matching"/>
+<!--        <include-->
+<!--            android:id="@+id/random_matching"-->
+<!--            layout="@layout/fragment_random_matching"/>-->
 
     </FrameLayout>
 

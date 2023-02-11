@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import umc.mobile.project.databinding.FragmentRandomMatchingBinding
@@ -30,6 +31,7 @@ import umc.mobile.project.ram.Geocoder_location
 import java.util.*
 import kotlin.collections.ArrayList
 
+import kotlinx.coroutines.*
 
 var isOk = false
 class MyPostRVAdapter (
@@ -41,6 +43,10 @@ class MyPostRVAdapter (
 
     var delete_position : Int = 0
     lateinit var viewBinding : FragmentRandomMatchingBinding
+
+    lateinit var bindingView : ItemMyPostBinding
+
+    var getUserIdx : Int = 0
 
     // 아이템 레이아웃 결합
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
@@ -130,6 +136,7 @@ class MyPostRVAdapter (
             //            2022-01-23T03:34:56.000+00:00
             val currentTime = timestampToSdf.timestamp_to_String(System.currentTimeMillis())
             println("현재 시간 : " + currentTime)
+
             if(post.order_time > currentTime && (post.recruited_num == post.num_of_recruits) && !post.status.equals("시간만료")){ // 현재 시간이 주문 시간 전 && 인원 다 채웠을 때
                 binding.btnRandom.visibility = View.INVISIBLE
             }
@@ -142,24 +149,39 @@ class MyPostRVAdapter (
             //랜덤 버튼
             binding.btnRandom.setOnClickListener {
                 isSelected = !isSelected
-                if(isSelected){
+                if(isSelected) {
                     selected_random_btn++
-                    binding.randomFramelayout.visibility = View.VISIBLE
+
+                    bindingView = binding
 
                     // 첫 랜덤 매칭  -> 위랑 순서 바꿔야 매칭되었을때 화면 나옴
-                    getMatching()
+                    runBlocking {
+                        launch {
+                            getMatching()
+                        }.join()
 
-                    // 메이트 매칭 신청 (알람 가게 설정)
-                    viewBinding.btnMatchingApplication.setOnClickListener {
 
-                    }
-
-                    // 재추천 받기
-                    viewBinding.btnRecommend.setOnClickListener {
-                        getMatching()
+//                        launch {
+//                            Log.d("getUserIdx 값 : ", getUserIdx.toString())
+//
+//                            if (getUserIdx != 0) {
+//                                binding.randomFramelayout.visibility = View.VISIBLE
+//
+//                                // 메이트 매칭 신청 (알람 가게 설정)
+//                                viewBinding.btnMatchingApplication.setOnClickListener {
+//
+//                                }
+//
+//                                // 재추천 받기
+//                                viewBinding.btnRecommend.setOnClickListener {
+//                                    getMatching()
+//                                }
+//
+//                            }
+//                        }
                     }
                 }
-                else{
+                else {
                     selected_random_btn--
                     binding.randomFramelayout.visibility = View.GONE
                 }
@@ -254,17 +276,39 @@ class MyPostRVAdapter (
     private fun getMatching(){
         val matchingGetService = MatchingGetService()
         matchingGetService.setMatchingGetResult(this)
-        matchingGetService.getRandomMatching(33) // 임의로 지정
+        matchingGetService.getRandomMatching(32) // 임의로 지정
     }
 
     override fun getMatchingSuccess(code: Int, result: MemberData) {
-        viewBinding.nickName.text = result.name
+        if(result.userIdx != 0 && result.name != null) {
+            bindingView.randomFramelayout.visibility = View.VISIBLE
 
-        Glide.with(context).load(result.image).into(viewBinding.profileImage)
+            viewBinding.nickName.text = result.name
+            Glide.with(context).load(result.image).into(viewBinding.profileImage)
+
+
+            Toast.makeText(context, "랜덤 매칭 성공", Toast.LENGTH_SHORT).show()
+
+            // 메이트 매칭 신청 (알람 가게 설정)
+            viewBinding.btnMatchingApplication.setOnClickListener {
+                Toast.makeText(context, "메이트 매칭 신청", Toast.LENGTH_SHORT).show()
+            }
+
+            // 재추천 받기
+            viewBinding.btnRecommend.setOnClickListener {
+                getMatching()
+            }
+        } else {
+            Toast.makeText(context, "랜덤 매칭 3회 초과", Toast.LENGTH_SHORT).show()
+        }
+        getUserIdx = result.userIdx
+        Log.d("success getUserIdx 값 : ", getUserIdx.toString())
     }
 
     override fun getMatchingFailure(code: Int, message: String) {
-
+        Toast.makeText(context, "랜덤 매칭 실패", Toast.LENGTH_SHORT).show()
+        getUserIdx = 0
+        Log.d("fail getUserIdx 값 : ", getUserIdx.toString())
     }
 
 }

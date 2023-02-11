@@ -1,4 +1,4 @@
-package umc.mobile.project.profile
+package umc.mobile.project.mypage.profile
 
 import Post
 import android.content.Context
@@ -19,7 +19,7 @@ class OrderRVAdapter (private val orderList: ArrayList<Post>): RecyclerView.Adap
     lateinit var context : Context
 
     // 보여줄 아이템 개수만큼 View를 생성 (RecyclerView가 초기화 될 때 호출)
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): OrderRVAdapter.ViewHolder {
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val binding: OrderListAdapterBinding = OrderListAdapterBinding.inflate(
             LayoutInflater.from(viewGroup.context),
             viewGroup, false
@@ -40,7 +40,7 @@ class OrderRVAdapter (private val orderList: ArrayList<Post>): RecyclerView.Adap
     override fun getItemCount(): Int = orderList.size
 
     // 생성된 View에 보여줄 데이터를 설정
-    override fun onBindViewHolder(holder: OrderRVAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(orderList[position])
         holder.itemView.setOnClickListener {
             post_id_to_detail = orderList[position].post_id
@@ -74,6 +74,7 @@ class OrderRVAdapter (private val orderList: ArrayList<Post>): RecyclerView.Adap
 
 
             binding.listItemScore.setOnClickListener {
+
                 val dialog = ReviewPopupDialog(context)
                 dialog.start()
 

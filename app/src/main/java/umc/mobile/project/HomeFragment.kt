@@ -109,6 +109,13 @@ class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
 
         }
 
+        viewBinding.btnInputAlarm.setOnClickListener {
+            val intent = Intent(getActivity(), SearchActivity::class.java)
+            val search = viewBinding.etInputAlarmKeyword.text.toString()
+            intent.putExtra("search", search)
+            startActivity(intent)
+        }
+
 
         viewBinding.btnMoreRcent.setOnClickListener() {
             val intent = Intent(context, AnnounceListActivity::class.java)
@@ -123,6 +130,12 @@ class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
             startActivity(intent)
             num1 =1
         }
+
+        // 검색 버튼 클릭 시 api 연결 필요
+        viewBinding.btnInputAlarm.setOnClickListener {
+            val search_keyword = viewBinding.etInputAlarmKeyword.text.toString()
+        }
+
         initRecyclerViewRecent()
         initRecyclerViewImminent()
 

@@ -28,6 +28,8 @@ import umc.mobile.project.R
 import umc.mobile.project.announcement.access_token
 import umc.mobile.project.signup.SignUpActivity
 import umc.mobile.project.databinding.ActivityLoginBinding
+import umc.mobile.project.latitude_var
+import umc.mobile.project.longtitude_var
 import umc.mobile.project.ram.my_application_1.user_id_logined
 import java.util.logging.Handler
 import java.util.regex.Pattern
@@ -72,6 +74,8 @@ class LoginActivity : AppCompatActivity(), MyCustomDialogInterface {
                                 Log.d(TAG, "onResponse:login응답 성공 userIdx: ${loginResponseData.result!!.userIdx}, 상태: ${loginResponseData.result!!.status}")
                                 user_id_logined = loginResponseData.result!!.userIdx
                                 access_token = loginResponseData.result.jwt
+                                latitude_var = loginResponseData.result.latitude
+                                longtitude_var = loginResponseData.result.longitude
                                 myCustomDialog.show()
                             }
                             2010 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()

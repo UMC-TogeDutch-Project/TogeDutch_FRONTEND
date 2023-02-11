@@ -20,17 +20,17 @@ class PostPhotoService {
         this.postPhotoResult = postPhotoResult
     }
 
-    fun sendPhoto(chatRoom_id : Int, user_id : Int, photo : MultipartBody.Part){
+    fun sendPhoto(chatRoom_id : Int, user : Int, photo : MultipartBody.Part){
         val authService = getRetrofit().create(PostPhotoRetrofitInterfaces::class.java)
-        authService.sendPhoto(chatRoom_id, user_id, photo).enqueue(object: Callback<PostChatResponse> {
-            override fun onResponse(call: Call<PostChatResponse>, response: Response<PostChatResponse>) {
+        authService.sendPhoto(chatRoom_id, user, photo).enqueue(object: Callback<PostPhotoResponse> {
+            override fun onResponse(call: Call<PostPhotoResponse>, response: Response<PostPhotoResponse>) {
                 Log.d("SNED-ACCEPT SUCCESS",response.toString())
                 if(response.body() != null) {
-                    val resp: PostChatResponse = response.body()!!
+                    val resp: PostPhotoResponse = response.body()!!
                     result = resp.result!!
                     when (resp.code) {
-                        1000 -> postPhotoResult.sendChatSuccess(result)
-                        else -> postPhotoResult.sendChatFailure()
+                        1000 -> postPhotoResult.sendPhotoSuccess(result)
+                        else -> postPhotoResult.sendPhotoFailure()
                     }
                 }
                 else{
@@ -38,7 +38,7 @@ class PostPhotoService {
                 }
             }
 
-            override fun onFailure(call: Call<PostChatResponse>, t: Throwable) {
+            override fun onFailure(call: Call<PostPhotoResponse>, t: Throwable) {
                 Log.d("SNED-ACCEPT FAILURE",t.message.toString())
             }
         })

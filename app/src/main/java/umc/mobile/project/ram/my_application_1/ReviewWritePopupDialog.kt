@@ -37,14 +37,6 @@ class ReviewWritePopupDialog(context : Context) {
         // BAD
         badImage = dlg.findViewById<ImageView>(R.id.sad)
         badImage.setOnClickListener {
-            // 색 바꾸고
-//            badImage.isSelected = !badImage.isSelected
-
-//            if(badImage.isSelected) {
-//
-//            } else {
-//
-//            }
             
             isSelected_bad = !isSelected_bad
             badImage.isSelected = isSelected_bad

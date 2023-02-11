@@ -23,7 +23,9 @@ class CustomAdapter (
             RecyclerView.ViewHolder(viewBinding.root){
 
         fun bind(dataVo: DataVo){
-            viewBinding.tvKeywordTitle.text = dataVo.tvKeywordTitle
+            if (dataVo.toString() != "null") {
+                viewBinding.tvKeywordTitle.text = dataVo.tvKeywordTitle
+            }
 
             viewBinding.cancelBtn.setOnClickListener {
                 dataList.removeAt(position)

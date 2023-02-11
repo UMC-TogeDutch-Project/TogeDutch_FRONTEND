@@ -1,4 +1,4 @@
-package umc.mobile.project.profile
+package umc.mobile.project.mypage.profile
 
 import Post
 import android.content.Context
@@ -25,7 +25,7 @@ class MyProfileFragment : Fragment(), PostUploadGetResult {
     var postUploadList = ArrayList<Post>()
     var reviewList = ArrayList<ReviewData>()
 
-    var myProfileActivity:MyProfileActivity? = null
+    var myProfileActivity: MyProfileActivity? = null
 
     var name : String = ""
     var image : String = ""

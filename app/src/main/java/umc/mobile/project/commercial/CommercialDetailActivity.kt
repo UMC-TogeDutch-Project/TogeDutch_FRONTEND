@@ -1,6 +1,7 @@
 package umc.mobile.project.commercial
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -12,6 +13,7 @@ import umc.mobile.project.databinding.ActivityCommercialDetailBinding
 import umc.mobile.project.ram.Geocoder_location
 
 var commercial_tid = ""
+var commercial_cid = ""
 class CommercialDetailActivity:AppCompatActivity(), CommercialDetailGetResult, RefundResult {
     lateinit var viewBinding: ActivityCommercialDetailBinding
     var latitude: Double = 0.0
@@ -49,22 +51,34 @@ class CommercialDetailActivity:AppCompatActivity(), CommercialDetailGetResult, R
         val geocoderLocation = Geocoder_location()
         viewBinding.comTvPlace.text = geocoderLocation.calculate_location(this, result.latitude, result.longitude)
         viewBinding.comTvRequest.text = result.request
-
+        commercial_tid = result.tid
         Glide.with(this).load(result.image).into(viewBinding.imgViewImg)
 
     }
     private fun refund(){
         val refundService = RefundService()
         refundService.setRefundResult(this)
+        Log.d("tid로그", commercial_tid)
         refundService.sendPost(commercial_tid)
+
     }
 
     override fun getCommercialUploadFailure(code: Int, message: String) {
         TODO("Not yet implemented")
     }
 
+//    override fun refundSuccess(
+//        amount: RefundResponse,
+//        approvedCancelAmount: Approved_cancel_amount,
+//        canceledAmount: Canceled_amount,
+//        cancelAvailableAmount: Cancel_available_amount
+//    ) {
+//
+//    }
+
+
     override fun refundSuccess(
-        amount: Amount?,
+        refundResponse: Amount,
         approvedCancelAmount: Approved_cancel_amount,
         canceledAmount: Canceled_amount,
         cancelAvailableAmount: Cancel_available_amount
@@ -74,7 +88,10 @@ class CommercialDetailActivity:AppCompatActivity(), CommercialDetailGetResult, R
         finish()
     }
 
-    override fun refundFailure() {
 
+    override fun refundFailure(code: Int, msg: String) {
+        TODO("Not yet implemented")
     }
+
+
 }

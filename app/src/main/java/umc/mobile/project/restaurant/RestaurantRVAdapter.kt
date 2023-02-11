@@ -4,8 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import umc.mobile.project.databinding.RestaurantRecyclerviewItemBinding
+import umc.mobile.project.restaurant.Auth.PlaceApi.PlaceGet
 
-class RestaurantRVAdapter (private val restaurantData:  ArrayList<RestaurantData>): RecyclerView.Adapter<RestaurantRVAdapter.MyViewHolder>() {
+class RestaurantRVAdapter(private val restaurantData: ArrayList<PlaceGet>): RecyclerView.Adapter<RestaurantRVAdapter.MyViewHolder>() {
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): MyViewHolder {
         val binding: RestaurantRecyclerviewItemBinding = RestaurantRecyclerviewItemBinding.inflate(
             LayoutInflater.from(viewGroup.context),
@@ -15,26 +16,26 @@ class RestaurantRVAdapter (private val restaurantData:  ArrayList<RestaurantData
     override fun getItemCount(): Int = restaurantData.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.bind(restaurantData[position])
-        holder.itemView.setOnClickListener {
-            itemClickListener.onItemClick(restaurantData[position])
-            notifyItemChanged(position)
-        }
+//        holder.bind(restaurantData[position])
+//        holder.itemView.setOnClickListener {
+//            itemClickListener.onItemClick(restaurantData[position])
+//            notifyItemChanged(position)
+//        }
     }
 
     inner class MyViewHolder(private val binding: RestaurantRecyclerviewItemBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(restaurantData: RestaurantData){
-            binding.resTitle.text = restaurantData.title
-            binding.resPlace.text = restaurantData.place
-            binding.resPhone.text = restaurantData.phone
-            binding.resScore.text = restaurantData.score
-
-
-        }
+//        fun bind(restaurantData: PlaceGet){
+//            binding.resTitle.text = restaurantData.title
+//            binding.resPlace.text = restaurantData.place
+//            binding.resPhone.text = restaurantData.phone
+//            binding.resScore.text = restaurantData.score
+//
+//
+//        }
     }
 
     interface OnItemClickListener {
-        fun onItemClick(restaurantData: RestaurantData)
+        fun onItemClick(restaurantData: PlaceGet)
 
     }
     fun setItemClickListener(onItemClickListener:OnItemClickListener) {

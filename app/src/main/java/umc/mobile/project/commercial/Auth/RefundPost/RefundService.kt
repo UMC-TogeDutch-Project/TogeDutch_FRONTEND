@@ -4,14 +4,14 @@ import android.util.Log
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import umc.mobile.project.commercial.commercial_tid
+import umc.mobile.project.commercial.commercial_cid
 import umc.mobile.project.getRetrofit
 
 class RefundService {
     private var amount : Amount = Amount(total = 1, tax_free = 1, vat = 1, point = 1, discount = 1)
-    private var approved_cancel_amount : Approved_cancel_amount = Approved_cancel_amount(total = 1, tax_free = 1, vat = 1, point = 1, discount = 1)
-    private var canceled_amount : Canceled_amount = Canceled_amount(total = 1, tax_free = 1, vat = 1, point = 1, discount = 1)
-    private var cancel_available_amount : Cancel_available_amount = Cancel_available_amount(total = 1, tax_free = 1, vat = 1, point = 1, discount = 1)
+    private var approved_cancel_amount : Approved_cancel_amount = Approved_cancel_amount(total = 1, tax_free = 1, vat = 1, point = 1, discount = 1, green_deposit = 1)
+    private var canceled_amount : Canceled_amount = Canceled_amount(total = 1, tax_free = 1, vat = 1, point = 1, discount = 1,green_deposit = 1)
+    private var cancel_available_amount : Cancel_available_amount = Cancel_available_amount(total = 1, tax_free = 1, vat = 1, point = 1, discount = 1, green_deposit = 1)
 
     private lateinit var refundResult : RefundResult
 
@@ -31,19 +31,22 @@ class RefundService {
                 approved_cancel_amount = resp.approved_cancel_amount!!
                 canceled_amount = resp.canceled_amount!!
                 cancel_available_amount = resp.cancel_available_amount!!
-
                 when(resp.status){
-                    "CANCEL_PAYMENT" -> {
+                    "CANCEL_PAYMENT" ->{
                         refundResult.refundSuccess(
                             resp.amount,
                             resp.approved_cancel_amount,
                             resp.canceled_amount,
                             resp.cancel_available_amount
                         )
-                        commercial_tid = resp.tid
                     }
-                    else -> refundResult.refundFailure()
+                    else -> refundResult.refundFailure(resp.code, resp.msg)
                 }
+
+
+
+
+
             }
 
             override fun onFailure(call: Call<RefundResponse>, t: Throwable) {

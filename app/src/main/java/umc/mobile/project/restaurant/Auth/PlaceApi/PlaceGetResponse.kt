@@ -2,11 +2,16 @@ package umc.mobile.project.restaurant.Auth.PlaceApi
 
 import com.google.gson.annotations.SerializedName
 import Post
+import com.google.android.libraries.places.api.model.Place
 
 
 data class PlaceGetResponse(
-    @SerializedName(value = "isSuccess") val isSuccess: Boolean,
-    @SerializedName(value = "code") val code : Int,
-    @SerializedName(value = "message") val message : String,
-    @SerializedName(value = "result") val result : Post
-)
+    @SerializedName(value = "html_attributions") val html_attributions: ArrayList<String>,
+    @SerializedName(value = "result") val result : ArrayList<Place>,
+    @SerializedName(value = "status") val status : String,
+    @SerializedName(value = "error_message") val error_message : String,
+    @SerializedName(value = "info_messages") val info_messages : ArrayList<String>,
+    @SerializedName(value = "next_page_token") val next_page_token : String
+
+    )
+

@@ -4,12 +4,13 @@ import android.content.Context
 import android.location.Address
 import android.location.Geocoder
 import android.widget.Toast
+import umc.mobile.project.ram.my_application_1.PostRetouchActivity
 import java.io.IOException
 import java.util.Locale
 
 
 class Geocoder_location {
-    fun calculate_location(context : Context, latitude : Double, longtitude : Double) : String{
+    fun calculate_location(context: Context, latitude: Double, longtitude: Double) : String{
         var nowAddress : String = "현재 위치를 확인할 수 없습니다."
         val geocoder = Geocoder(context, Locale.KOREA)
         var address : List<Address>

@@ -1,19 +1,15 @@
 package umc.mobile.project.ram.my_application_1
 
 import Post
-import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import umc.mobile.project.R
-import umc.mobile.project.announcement.Auth.PostPost.PostRecord
-import umc.mobile.project.databinding.ActivityMyPostDetailBinding
 import umc.mobile.project.databinding.ActivityPostRetouchActivityBinding
 import umc.mobile.project.latitude_var
 import umc.mobile.project.longtitude_var
@@ -23,7 +19,6 @@ import umc.mobile.project.ram.Auth.Post.PUTRetouch.PutRetouchResult
 import umc.mobile.project.ram.Auth.Post.PUTRetouch.PutRetouchService
 import umc.mobile.project.ram.Auth.Post.PUTRetouch.Request_put
 import umc.mobile.project.ram.Geocoder_location
-import umc.mobile.project.ram.my_application_1.current_application.CurrentApplicationActivity
 
 class PostRetouchActivity : AppCompatActivity(), PostDetailGetResult, PutRetouchResult {
     lateinit var binding: ActivityPostRetouchActivityBinding

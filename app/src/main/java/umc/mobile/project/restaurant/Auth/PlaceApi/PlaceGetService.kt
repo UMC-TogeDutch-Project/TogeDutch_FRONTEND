@@ -1,34 +1,39 @@
 package umc.mobile.project.restaurant.Auth.PlaceApi
 
 import android.util.Log
+import com.google.android.libraries.places.api.model.Place
 import umc.mobile.project.getRetrofit
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import umc.mobile.project.announcement.Auth.ApplyPost.Result
+import umc.mobile.project.ram.Geocoder_location
 
 class PlaceGetService {
-    private lateinit var postGetResult: PlaceGetResult
+    private lateinit var placeGetResult: PlaceGetResult
 
-    fun setPostGetResult(postGetResult: PlaceGetResult){
-        this.postGetResult = postGetResult
+
+    fun setPlaceGetResult(placeGetResult: PlaceGetResult) {
+        this.placeGetResult = placeGetResult
     }
-
-    fun getPost(post_id : Int){
+    fun getPost(location: String, radius: Int, type: String, keyword: String, language: String, key: String){
         val postUploadDetailGetService = getRetrofit().create(PlaceGetRetrofitInterfaces::class.java)
 
-        postUploadDetailGetService.getPost(post_id).enqueue(object : Callback<PlaceGetResponse> {
+        postUploadDetailGetService.getPost(location, radius, type, keyword, language, key).enqueue(object : Callback<PlaceGetResponse> {
             override fun onResponse(call: Call<PlaceGetResponse>, response: Response<PlaceGetResponse>,) {
-                Log.d("POSTONE-GET SUCCESS",response.toString())
+                Log.d("PLACE-GET SUCCESS",response.toString())
                 val resp : PlaceGetResponse = response.body()!!
-                when(resp.code) {
-//                    1000 ->
-                    1000 -> postGetResult.getPostSuccess(resp.code, resp.result!!)
-                    else -> postGetResult.getPostFailure(resp.code, resp.message)
+                when(resp.status) {
+//
+                    "OK" -> placeGetResult.getPostSuccess(resp.result)
+                    else -> placeGetResult.getPostFailure()
                 }
+
+
             }
 
             override fun onFailure(call: Call<PlaceGetResponse>, t: Throwable) {
-                Log.d("POSTONE-GET FAILURE",t.message.toString())
+                Log.d("PLACE-GET FAILURE",t.message.toString())
             }
         })
     }

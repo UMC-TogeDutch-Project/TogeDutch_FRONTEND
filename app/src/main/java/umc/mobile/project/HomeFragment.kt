@@ -123,6 +123,12 @@ class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
             startActivity(intent)
             num1 =1
         }
+
+        // 검색 버튼 클릭 시 api 연결 필요
+        viewBinding.btnInputAlarm.setOnClickListener {
+            val search_keyword = viewBinding.etInputAlarmKeyword.text.toString()
+        }
+
         initRecyclerViewRecent()
         initRecyclerViewImminent()
 

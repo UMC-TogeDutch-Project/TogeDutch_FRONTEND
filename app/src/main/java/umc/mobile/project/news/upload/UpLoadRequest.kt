@@ -1,4 +1,4 @@
-package umc.mobile.project.news
+package umc.mobile.project.news.upload
 
 import com.google.gson.annotations.SerializedName
 

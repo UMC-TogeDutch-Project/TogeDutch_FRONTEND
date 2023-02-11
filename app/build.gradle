@@ -76,4 +76,6 @@ dependencies {
     // 23.02.06 제이 추가
     // Kakao-SDK
     implementation "com.kakao.sdk:v2-user:2.8.5" // 카카오 로그인
+
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.5"
 }

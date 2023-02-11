@@ -1,4 +1,4 @@
-package umc.mobile.project.profile
+package umc.mobile.project.mypage.profile
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,7 +9,7 @@ import umc.mobile.project.databinding.ItemReviewBinding
 class ReviewRVAdapter (private val reviewList: ArrayList<ReviewData>) : RecyclerView.Adapter<ReviewRVAdapter.ViewHolder>() {
 
     // 보여줄 아이템 개수만큼 View를 생성 (RecyclerView가 초기화 될 때 호출)
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ReviewRVAdapter.ViewHolder {
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val binding: ItemReviewBinding = ItemReviewBinding.inflate(
             LayoutInflater.from(viewGroup.context),
             viewGroup, false
@@ -21,7 +21,7 @@ class ReviewRVAdapter (private val reviewList: ArrayList<ReviewData>) : Recycler
     override fun getItemCount(): Int = reviewList.size
 
     // 생성된 View에 보여줄 데이터를 설정
-    override fun onBindViewHolder(holder: ReviewRVAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(reviewList[position])
 
     }

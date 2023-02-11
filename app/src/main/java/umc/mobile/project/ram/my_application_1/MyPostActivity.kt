@@ -20,7 +20,6 @@ import umc.mobile.project.ram.Auth.Post.GetPostUpload.PostUploadGetResult
 import umc.mobile.project.ram.Auth.Post.GetPostUpload.PostUploadGetService
 import kotlin.collections.ArrayList
 
-var postUploadList = ArrayList<Post>()
 
 var user_id_var = 32
 var user_id_logined = 32
@@ -30,10 +29,9 @@ var post_id_to_detail = 10
 
 class MyPostActivity : AppCompatActivity(), PostUploadGetResult, PostJoinGetResult {
     lateinit var binding: ActivityMypostBinding
-//    lateinit var myPostRVAdapter: MyPostRVAdapter
     var postUploadList = ArrayList<Post>()
     var postJoinList = ArrayList<Post>()
-//    lateinit var joinRVAdatpter: JoinRVAdatpter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -202,6 +200,10 @@ class MyPostActivity : AppCompatActivity(), PostUploadGetResult, PostJoinGetResu
         result: ArrayList<Post>
 
     ) {
+        for(i in result.size-1 downTo 0 ){
+            if(result[i].status.equals("공고사용불가"))
+                result.removeAt(i)
+        }
 
         initRecycler(result)
 

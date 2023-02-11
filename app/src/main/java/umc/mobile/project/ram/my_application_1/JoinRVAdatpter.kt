@@ -2,12 +2,15 @@ package umc.mobile.project.ram.my_application_1
 
 import Post
 import android.content.Context
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import umc.mobile.project.databinding.ItemParticipateBinding
 import umc.mobile.project.ram.Geocoder_location
+import java.time.ZoneId
 
 
 class JoinRVAdatpter(private val joinList: ArrayList<Post>) : RecyclerView.Adapter<JoinRVAdatpter.ViewHolder>(){
@@ -61,8 +64,6 @@ class JoinRVAdatpter(private val joinList: ArrayList<Post>) : RecyclerView.Adapt
                 val dlg = ReviewWritePopupDialog(context)
                 dlg.start()
             }
-
-
 
         }
     }

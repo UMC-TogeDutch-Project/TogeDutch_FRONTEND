@@ -1,12 +1,14 @@
 package umc.mobile.project.ram.chat
 
 import android.content.Context
+import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -106,6 +108,7 @@ class ChatRVAdapter(
         private val name : TextView = view.findViewById(R.id.your_name_txt)
         private val time : TextView = view.findViewById(R.id.your_chat_date_txt)
 
+
         fun bind(chat: Chat) {
             name.text = chat.writer
             content.text = chat.content
@@ -131,6 +134,8 @@ class ChatRVAdapter(
             }else
                 content.text = chat.content
 
+
+            Log.d("채팅 timestamp", chat.created_at.toString())
             var timestampToSdf = Timestamp_to_SDF()
             time.text = timestampToSdf.convert_only_time(chat.created_at)
         }

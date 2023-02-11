@@ -44,6 +44,7 @@ import umc.mobile.project.ram.Auth.Chat.ChatPost.Result
 import umc.mobile.project.ram.Auth.Chat.ChatPost.chatPost
 import umc.mobile.project.ram.Auth.ChatPhoto.ChatPhotoPost.PostPhotoResult
 import umc.mobile.project.ram.Auth.ChatPhoto.ChatPhotoPost.PostPhotoService
+import umc.mobile.project.ram.Auth.Post.GetPost.PostGetService
 import umc.mobile.project.ram.Auth.Post.GetPostAll.PostGetAllResult
 import umc.mobile.project.ram.Auth.Post.GetPostAll.PostGetAllService
 import umc.mobile.project.ram.Auth.Post.GetPostDetail.PostDetailGetResult
@@ -68,13 +69,16 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
     lateinit var more_btn : AppCompatButton
     var chatRoom_id_get : Int = 0
 
-    lateinit var dialog : BottomSheetDialog
+    lateinit var dialog_more : BottomSheetDialog
+    lateinit var dialog_etc : BottomSheetDialog
 
     private var PICK_IMAGE = 1
     var picture : MultipartBody.Part? = null
 
     var writer_me = ""
     var type_me = "TALK"
+
+
 
     /// stomp 연결
     private var url = "ws://ec2-3-34-255-129.ap-northeast-2.compute.amazonaws.com:9000/stomp/chat/websocket"
@@ -84,6 +88,8 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
         super.onCreate(savedInstanceState)
         binding = ActivityChattingBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
 
         val postGetAllService = PostGetAllService() // 공고 전체 불러오기
         postGetAllService.setPostGetResult(this)
@@ -133,15 +139,15 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
         binding.etcBtn.setOnClickListener {
             // 다이얼로그 부분
 //            val dialog:BottomSheetDialog = BottomSheetDialog(this)
-            dialog = BottomSheetDialog(this)
-            dialog.setContentView(R.layout.chat_bottom_dialog_content)
+            dialog_etc = BottomSheetDialog(this)
+            dialog_etc.setContentView(R.layout.chat_bottom_dialog_content)
 
-            val phone_btn = dialog.findViewById<AppCompatButton>(R.id.phone_btn)
+            val phone_btn = dialog_etc.findViewById<AppCompatButton>(R.id.phone_btn)
             phone_btn?.setOnClickListener {
                 Toast.makeText(this, "전화 걸기 클릭", Toast.LENGTH_LONG).show()
             }
 
-            val declaration_btn = dialog.findViewById<AppCompatButton>(R.id.declaration_btn)
+            val declaration_btn = dialog_etc.findViewById<AppCompatButton>(R.id.declaration_btn)
             declaration_btn?.setOnClickListener {
                 Toast.makeText(this, "신고 버튼 클릭", Toast.LENGTH_LONG).show()
 
@@ -150,20 +156,21 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
 
             }
 
-            val exit_btn = dialog.findViewById<AppCompatButton>(R.id.exit_btn)
+            val exit_btn = dialog_etc.findViewById<AppCompatButton>(R.id.exit_btn)
             exit_btn?.setOnClickListener {
                 Toast.makeText(this, "나가기 클릭", Toast.LENGTH_LONG).show()
 
             }
-            dialog.show()
+            dialog_etc.show()
         }
 
         binding.moreBtn.setOnClickListener {
             // 다이얼로그 부분
-            val dialog:BottomSheetDialog = BottomSheetDialog(this)
-            dialog.setContentView(R.layout.chat_bottom_dialog_more)
+//            val dialog:BottomSheetDialog = BottomSheetDialog(this)
+            dialog_more = BottomSheetDialog(this)
+            dialog_more.setContentView(R.layout.chat_bottom_dialog_more)
 
-            val photo_btn = dialog.findViewById<AppCompatButton>(R.id.btn_photo)
+            val photo_btn = dialog_more.findViewById<AppCompatButton>(R.id.btn_photo)
             photo_btn?.setOnClickListener {
                 Toast.makeText(this, "사진 클릭", Toast.LENGTH_LONG).show()
 
@@ -186,13 +193,14 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
                 }
             }
 
-            val camera_btn = dialog.findViewById<AppCompatButton>(R.id.btn_camera)
+
+            val camera_btn = dialog_more.findViewById<AppCompatButton>(R.id.btn_camera)
             camera_btn?.setOnClickListener {
                 Toast.makeText(this, "카메라 클릭", Toast.LENGTH_LONG).show()
 
             }
 
-            val location_btn = dialog.findViewById<AppCompatButton>(R.id.btn_location)
+            val location_btn = dialog_more.findViewById<AppCompatButton>(R.id.btn_location)
             location_btn?.setOnClickListener {
 
                 val dlg = LocationPopupDialog(this)
@@ -200,13 +208,18 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
 
             }
 
-            val calendar_btn = dialog.findViewById<AppCompatButton>(R.id.btn_calendar)
+            val calendar_btn = dialog_more.findViewById<AppCompatButton>(R.id.btn_calendar)
             calendar_btn?.setOnClickListener {
                 val dlg = PromisePopupDialog(this)
                 dlg.start()
 
             }
-            dialog.show()
+
+            dialog_more.findViewById<AppCompatButton>(R.id.btn_submit_dialog)!!.setOnClickListener {
+                sendPhoto(picture!!, chatRoom_id_get, user_id_logined)
+            }
+
+            dialog_more.show()
         }
 
     }
@@ -261,10 +274,6 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
         binding.btnSubmit.setOnClickListener {
             sendStomp(binding.editMessage.text.toString(), chatRoom_id_get, user_id_logined)
         }
-
-        dialog.findViewById<AppCompatButton>(R.id.btn_submit)!!.setOnClickListener {
-            sendPhoto(picture!!, chatRoom_id_get, user_id_logined)
-        }
     }
 
     fun getChatPost(content: String) : chatPost{
@@ -283,13 +292,13 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
 
     override fun sendChatSuccess(result: Result) {
         Log.d("=============================== Message Post 성공!!!!!!!!!!!!!!!!!!!!", "==================================================" )
-        // 현재 시간 구하기
-        var sdf = SimpleDateFormat("MM월 dd일")
-        var now = sdf.format(System.currentTimeMillis())
-        var created_at = sdf.format(result.createdAt)
-
-        if(now > created_at) // 현재 시간이 채팅 생성 시간보다 빠를 때 시간 띄워주기
-            chatRVAdapter.addItem(Chat(0, chatRoom_id_get, 0, timestamp, getCurrentTime(), "time", "time", 3))
+//        // 현재 시간 구하기
+//        var sdf = SimpleDateFormat("MM월 dd일")
+//        var now = sdf.format(System.currentTimeMillis())
+//        var created_at = sdf.format(result.createdAt)
+//
+//        if(now > created_at) // 현재 시간이 채팅 생성 시간보다 빠를 때 시간 띄워주기
+//            chatRVAdapter.addItem(Chat(0, chatRoom_id_get, 0, timestamp, getCurrentTime(), "time", "time", 3))
 
         println(result.createdAt)
         val data = JSONObject()
@@ -327,15 +336,7 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
 
     override fun sendPhotoSuccess(result: umc.mobile.project.ram.Auth.ChatPhoto.ChatPhotoPost.Result) {
         Log.d("=============================== Photo Post 성공!!!!!!!!!!!!!!!!!!!!", "==================================================" )
-        // 현재 시간 구하기
-        var sdf = SimpleDateFormat("MM월 dd일")
-        var now = sdf.format(System.currentTimeMillis())
-        var created_at = sdf.format(result.createdAt)
 
-        if(now > created_at) // 현재 시간이 채팅 생성 시간보다 빠를 때 시간 띄워주기
-            chatRVAdapter.addItem(Chat(0, chatRoom_id_get, 0, timestamp, getCurrentTime(), "time", "time", 3))
-
-        println(result.createdAt)
         val data = JSONObject()
         data.put("chatPhoto_id", result.chatId)
         data.put("chatRoom_id", result.chatRoomId)
@@ -343,6 +344,7 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
         data.put("created_at", result.createdAt)
         data.put("image", result.image)
 
+        stompClient.send("/pub/chat/image", data.toString()).subscribe()
         edit_message.text = Editable.Factory.getInstance().newEditable("") // 채팅 입력창 다시 초기화시켜주기
 
         chatRVAdapter.addItem(Chat(result.chatId, result.chatRoomId, user_id_logined, result.createdAt, result.image, writer_me, type_me, 2))
@@ -370,7 +372,9 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
 
     override fun getPostAllSuccess(code: Int, result: ArrayList<Post>) {
 
+
         var id = result.find { it.chatRoom_id == chatRoom_id_get }
+//        var id = result.find { it.title.equals(chatRoom_selected_subject) } // chatRoom 목록에서 받아온 제목이랑 똑같은 공고 찾기
 
         user_id_chatroom = id!!.user_id  // 그 post의 user_id 저장
         post_id_chatroom = id!!.post_id
@@ -386,6 +390,8 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
     override fun getPostAllFailure(code: Int, message: String) {
         Log.d("getPostAllFailure ===============================================", code.toString())
     }
+
+
 
     override fun getPostUploadSuccess(code: Int, result: Post) {
 

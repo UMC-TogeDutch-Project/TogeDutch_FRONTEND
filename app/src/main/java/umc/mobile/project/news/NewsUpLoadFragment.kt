@@ -167,7 +167,7 @@ class NewsUpLoadFragment : Fragment(), UpLoadGetResult {
                     when(upLoadResponseData.code){
                         1000 -> recordSuccess(upLoadResponseData.result)
                         3016 -> recordFailure()
-                        3016 -> recordFailure()
+                        3017 -> recordFailure()
                         else -> recordFailure()
                     }
 

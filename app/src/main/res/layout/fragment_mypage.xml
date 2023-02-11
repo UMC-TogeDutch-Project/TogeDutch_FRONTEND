@@ -84,6 +84,21 @@
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/tvName"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/alarmKeyword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="90dp"
+            android:layout_marginTop="1dp"
+            android:onClick="onClick"
+            android:text="알림 키워드 설정"
+            android:textAllCaps="false"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_profile" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -257,21 +272,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appCompatNotice" />
 
-        <TextView
-            android:id="@+id/alarmKeyword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="20dp"
-            android:onClick="onClick"
-            android:text="알림 키워드 설정"
-            android:textAllCaps="false"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/appCompatAlarmKeyword"
-            app:layout_constraintTop_toBottomOf="@+id/notice" />
-
         <ImageView
             android:id="@+id/appCompatWithdrawal"
             android:layout_width="28dp"
@@ -287,14 +287,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
-            android:layout_marginTop="20dp"
             android:onClick="onClick"
             android:text="계정 탈퇴"
             android:textColor="#000000"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/appCompatWithdrawal"
-            app:layout_constraintTop_toBottomOf="@+id/alarmKeyword" />
+            tools:layout_editor_absoluteY="361dp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

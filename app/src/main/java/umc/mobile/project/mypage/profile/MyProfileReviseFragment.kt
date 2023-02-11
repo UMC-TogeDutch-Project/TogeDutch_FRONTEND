@@ -1,4 +1,4 @@
-package umc.mobile.project.profile
+package umc.mobile.project.mypage.profile
 
 import android.content.ContentValues.TAG
 import android.graphics.Color

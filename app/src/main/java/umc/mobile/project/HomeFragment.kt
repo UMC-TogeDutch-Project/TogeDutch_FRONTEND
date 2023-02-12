@@ -251,7 +251,7 @@ class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
     private fun getPostImminent(){
         val postImminentGetService = PostImminentGetService()
         postImminentGetService.setPostGetResult(this)
-        postImminentGetService.getPost( )
+        postImminentGetService.getPost()
 
     }
 

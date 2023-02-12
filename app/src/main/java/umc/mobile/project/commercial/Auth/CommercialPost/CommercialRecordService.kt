@@ -5,6 +5,7 @@ import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import umc.mobile.project.commercial.commercial_tid
 import umc.mobile.project.commercial.kakao_url
 import umc.mobile.project.getRetrofit
 import java.sql.Timestamp

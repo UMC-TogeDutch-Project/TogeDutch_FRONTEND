@@ -6,14 +6,22 @@ import android.util.Log
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import umc.mobile.project.announcement.AnnounceAlertDialog
+import umc.mobile.project.announcement.AnnounceAlertDialogInterface
+import umc.mobile.project.announcement.Auth.LikePost.LikePostResult
+import umc.mobile.project.announcement.Auth.LikePost.LikePostService
+import umc.mobile.project.announcement.Auth.LikePost.Result
 import umc.mobile.project.databinding.ItemDataBinding
 import umc.mobile.project.ram.Geocoder_location
 import umc.mobile.project.ram.my_application_1.post_id_to_detail
+import umc.mobile.project.ram.my_application_1.user_id_logined
 import umc.mobile.project.ram.my_application_1.user_id_var
-
-
+var likeId = 1
+var postUserIdx = 1
 class DataRecentRVAdapter(private val homeDataList: ArrayList<Post>) : RecyclerView.Adapter<DataRecentRVAdapter.RecentViewHolder>() {
 
     lateinit var context : Context
@@ -21,7 +29,7 @@ class DataRecentRVAdapter(private val homeDataList: ArrayList<Post>) : RecyclerV
 
     //ViewHolder 객체
     inner class RecentViewHolder(val viewBinding: ItemDataBinding) :
-        RecyclerView.ViewHolder(viewBinding.root) {
+        RecyclerView.ViewHolder(viewBinding.root) , LikePostResult, AnnounceAlertDialogInterface {
 
         fun bind(homeData: Post) {
 
@@ -43,7 +51,35 @@ class DataRecentRVAdapter(private val homeDataList: ArrayList<Post>) : RecyclerV
             viewBinding.annApp.text = homeData.recruited_num.toString() // 신청인원
             viewBinding.annRecruit.text = homeData.num_of_recruits.toString() //총 인원
 
+
+            viewBinding.btnLikeThird.setOnClickListener {
+//                viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon_fill)
+                val likePostService = LikePostService()
+                likePostService.setLikePostResult(this)
+                likePostService.sendLike(user_id_logined, post_id_to_detail)
+            }
         }
+
+        override fun LikePostSuccess(result: Result) {
+            viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon_fill)
+            Toast.makeText(context, "관심 공고 등록 성공.", Toast.LENGTH_SHORT).show()
+
+
+        }
+
+        override fun LikePostFailureMyPost() {
+            val dlg = AnnounceAlertDialog(context, this)
+            dlg.start5()
+        }
+
+        override fun LikePostFailureAdd() {
+            val dlg = AnnounceAlertDialog(context, this)
+            dlg.start6()
+        }
+
+        override fun btnFinish() {
+        }
+
 
     }
 
@@ -73,6 +109,8 @@ class DataRecentRVAdapter(private val homeDataList: ArrayList<Post>) : RecyclerV
 
     }
 
+
+
     //표현할 아이템의 총 갯수
     override fun getItemCount(): Int = homeDataList.size
 
@@ -87,6 +125,7 @@ class DataRecentRVAdapter(private val homeDataList: ArrayList<Post>) : RecyclerV
     }
 
     private lateinit var itemClickListener : OnItemClickListener
+
 
 
 }

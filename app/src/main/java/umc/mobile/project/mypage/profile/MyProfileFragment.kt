@@ -146,16 +146,6 @@ class MyProfileFragment : Fragment(), PostUploadGetResult {
 //        orderRVAdapter.notifyDataSetChanged()
 //    }
 
-//    private fun initReview() {
-//        reviewList.apply {
-//            add(ReviewData("친절하고 약속을 잘 지켜서 좋았어요!"))
-//            add(ReviewData("좋았습니당"))
-//            add(ReviewData("굿굿"))
-//            add(ReviewData("친절해요"))
-//        }
-//        reviewRVAdapter = ReviewRVAdapter(reviewList)
-//    }
-
     override fun onDestroy() {
         super.onDestroy()
     }

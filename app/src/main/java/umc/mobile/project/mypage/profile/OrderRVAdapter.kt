@@ -2,25 +2,38 @@ package umc.mobile.project.mypage.profile
 
 import Post
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import umc.mobile.project.databinding.OrderListAdapterBinding
 import umc.mobile.project.databinding.ReviewCollectionDialogBinding
+import umc.mobile.project.mypage.profile.emotionStatus.EmotionStatusGet
+import umc.mobile.project.mypage.profile.emotionStatus.EmotionStatusGetResult
+import umc.mobile.project.mypage.profile.emotionStatus.EmotionStatusGetService
 import umc.mobile.project.ram.Geocoder_location
 import umc.mobile.project.ram.my_application_1.post_id_to_detail
 
 
-class OrderRVAdapter (private val orderList: ArrayList<Post>): RecyclerView.Adapter<OrderRVAdapter.ViewHolder>() {
+class OrderRVAdapter (private val orderList: ArrayList<Post>): RecyclerView.Adapter<OrderRVAdapter.ViewHolder>(),
+    EmotionStatusGetResult {
+    val TAG: String = "로그"
+
     private lateinit var viewBinding: ReviewCollectionDialogBinding
     private lateinit var reviewRVAdapter: ReviewRVAdapter
     var reviewList = ArrayList<ReviewData>()
     lateinit var context : Context
 
+    var postId : Int = -1
+    lateinit var scoreTextView : TextView
+
+    lateinit var binding: OrderListAdapterBinding
+
     // 보여줄 아이템 개수만큼 View를 생성 (RecyclerView가 초기화 될 때 호출)
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        val binding: OrderListAdapterBinding = OrderListAdapterBinding.inflate(
+       binding = OrderListAdapterBinding.inflate(
             LayoutInflater.from(viewGroup.context),
             viewGroup, false
         )
@@ -30,8 +43,6 @@ class OrderRVAdapter (private val orderList: ArrayList<Post>): RecyclerView.Adap
             LayoutInflater.from(viewGroup.context),
             viewGroup, false
         )
-
-        initReview()
 
         return ViewHolder(binding)
     }
@@ -70,13 +81,17 @@ class OrderRVAdapter (private val orderList: ArrayList<Post>): RecyclerView.Adap
             binding.orderListLocation.text = txt_location// 위치
             binding.orderListTime.text = txt_time_substring
 
-            // 후기 점수
+            postId = post.post_id
+            Log.d("postId값: ", postId.toString())
+            Log.d("post_id값: ", post.post_id.toString())
 
+            // 후기 점수
+            getEmotionStatus()
 
             binding.listItemScore.setOnClickListener {
-
-//                val dialog = ReviewPopupDialog(context)
-//                dialog.start()
+                Log.d(TAG, "화면 연결")
+                val dialog = ReviewPopupDialog(context)
+                dialog.start()
 
             }
         }
@@ -92,15 +107,23 @@ class OrderRVAdapter (private val orderList: ArrayList<Post>): RecyclerView.Adap
 
     private lateinit var itemClickListener : OnItemClickListener
 
-    private fun initReview() {
-        reviewList.apply {
-            add(ReviewData("친절하고 약속을 잘 지켜서 좋았어요!"))
-            add(ReviewData("좋았습니당"))
-            add(ReviewData("굿굿"))
-            add(ReviewData("친절해요"))
-        }
-        reviewRVAdapter = ReviewRVAdapter(reviewList)
+    // 점수
+    fun getEmotionStatus() {
+        val emotionStatusGetService = EmotionStatusGetService()
+        emotionStatusGetService.setEmotionStatusGetResult(this)
+        emotionStatusGetService.getEmotionStatus(postId)
+    }
 
-        viewBinding.reviewList.adapter = reviewRVAdapter
+    override fun getEmotionStatusSuccess(code: Int, result: EmotionStatusGet) {
+        Log.d("result post_id값 : ", result.post_id.toString())
+        Log.d("점수 값 : ", result.avg.toString())
+
+        binding.score.text = result.avg.toString()
+        Log.d("binding.score.text 값 : ", binding.score.text.toString())
+    }
+
+    override fun getEmotionStatusFailure(code: Int, message: String) {
+        Log.d("실패 : ", code.toString())
+        Log.d("실패 : ", message)
     }
 }

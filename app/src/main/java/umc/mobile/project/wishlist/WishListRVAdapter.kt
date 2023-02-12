@@ -10,6 +10,7 @@ import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import umc.mobile.project.R
 import umc.mobile.project.databinding.WishlistAdapterBinding
 import umc.mobile.project.ram.Geocoder_location
 import umc.mobile.project.ram.my_application_1.Timestamp_to_SDF
@@ -71,7 +72,7 @@ class WishListRVAdapter (private val wishApplicationList: ArrayList<Post>) : Rec
             binding.orderListTime.text = txt_time_substring
             binding.currentPersonNum.text = txt_recruited.toString() // 현재 사람
             binding.totalPersonNum.text = txt_recruits.toString() // 필요 인원
-
+            binding.appCompatLike.setBackgroundResource(R.drawable.main_item_heart_icon_fill)
         }
     }
 

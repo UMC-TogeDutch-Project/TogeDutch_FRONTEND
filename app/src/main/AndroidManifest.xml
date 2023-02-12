@@ -25,13 +25,13 @@
         android:theme="@style/Theme.Project"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        <activity
-            android:name=".search.SearchActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+<!--        <activity-->
+<!--            android:name=".SearchActivity"-->
+<!--            android:exported="false">-->
+<!--            <meta-data-->
+<!--                android:name="android.app.lib_name"-->
+<!--                android:value="" />-->
+<!--        </activity>-->
         <activity
             android:name=".MainActivity"
             android:exported="false" />
@@ -73,6 +73,7 @@
         <activity android:name=".ram.my_application_1.JoinPostDetailActivity" />
         <activity android:name=".ram.my_application_1.PostRetouchActivity" />
         <activity android:name=".mypage.alarmKeyword.MypageAlarmKeywordActivity" />
+        <activity android:name=".search.SearchActivity"/>
         <activity
             android:name=".login.LoginActivity"
             android:exported="false" /> <!-- 23.02.06 제이 추가Kakao 로그인 -->

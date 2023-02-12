@@ -15,6 +15,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import umc.mobile.project.R
 import umc.mobile.project.databinding.ActivitySignUpBinding
+import umc.mobile.project.news.mate.MateData
 import umc.mobile.project.signup.Auth.ApiService
 import java.util.regex.Pattern
 

@@ -415,5 +415,4 @@ class PlaceSearchActivity : AppCompatActivity(), OnMapReadyCallback,
         private const val KEY_LOCATION = "location"
     }
 
-
 }

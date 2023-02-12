@@ -47,6 +47,7 @@
             android:layout_width="370dp"
             android:layout_height="41dp"
             android:hint="검색"
+            android:text=""
             android:paddingLeft="17dp"
             android:background="@drawable/sign_up_alram__edit_text_box"
             />
@@ -66,8 +67,8 @@
 
     <LinearLayout
         android:id="@+id/rvLinearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_width="370dp"
+        android:layout_height="550dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/frameLayoutEdit"
@@ -78,7 +79,10 @@
             android:id="@+id/rvMain"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_gravity="center"
             />
 
     </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

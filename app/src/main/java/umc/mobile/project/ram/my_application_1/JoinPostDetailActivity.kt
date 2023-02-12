@@ -1,7 +1,6 @@
 package umc.mobile.project.ram.my_application_1
 
 import Post
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity

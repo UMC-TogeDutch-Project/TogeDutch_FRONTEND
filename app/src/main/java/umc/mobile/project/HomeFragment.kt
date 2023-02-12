@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 
@@ -26,6 +27,7 @@ import umc.mobile.project.announcement.Auth.PostRecentGet.PostRecentGetService
 import umc.mobile.project.databinding.FragmentHomeBinding
 import umc.mobile.project.news.NewsActivity
 import umc.mobile.project.search.SearchActivity
+import umc.mobile.project.search.SearchPostService
 
 class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
     lateinit var dataRecentRVAdapter: DataRecentRVAdapter
@@ -110,10 +112,16 @@ class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
         }
 
         viewBinding.btnInputAlarm.setOnClickListener {
-            val intent = Intent(getActivity(), SearchActivity::class.java)
-            val search = viewBinding.etInputAlarmKeyword.text.toString()
-            intent.putExtra("search", search)
-            startActivity(intent)
+            Log.d(TAG, "onCreateView: 검색버튼 클릭")
+            if(viewBinding.etInputAlarmKeyword.text.toString() == ""){
+                Toast.makeText(getActivity(), "검색어를 입력하세요.", Toast.LENGTH_SHORT).show()
+            }
+            else{
+                val intent = Intent(getActivity(), SearchActivity::class.java)
+                var search : String = viewBinding.etInputAlarmKeyword.text.toString()
+                intent.putExtra("search", search)
+                startActivity(intent)
+            }
         }
 
 
@@ -132,10 +140,7 @@ class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
         }
 
         // 검색 버튼 클릭 시 api 연결 필요
-        viewBinding.btnInputAlarm.setOnClickListener {
-            val search_keyword = viewBinding.etInputAlarmKeyword.text.toString()
-            println(search_keyword)
-        }
+
 
         initRecyclerViewRecent()
         initRecyclerViewImminent()
@@ -254,6 +259,7 @@ class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
         postImminentGetService.getPost( )
 
     }
+
 
 
 

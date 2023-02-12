@@ -6,8 +6,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import umc.mobile.project.DataImminentRVAdapter
 import umc.mobile.project.getRetrofit
-import umc.mobile.project.likeId
-import umc.mobile.project.postUserIdx
+
 import java.sql.Timestamp
 import java.util.*
 
@@ -30,7 +29,9 @@ class LikePostService {
                 val resp: ApplyRecordResponse = response.body()!!
 
                 when(resp.code){
-                    1000 -> likePostResult.LikePostSuccess(result)
+                    1000 -> {likePostResult.LikePostSuccess(result)
+                            Log.d("postiIdx: ", result.postIdx.toString())
+                            Log.d("userId", result.Like_userIdx.toString())}
                     2033 -> likePostResult.LikePostFailureMyPost()
                     2034 -> likePostResult.LikePostFailureAdd()
                 }

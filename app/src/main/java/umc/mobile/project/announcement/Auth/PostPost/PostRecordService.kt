@@ -11,6 +11,7 @@ import umc.mobile.project.ram.my_application_1.user_id_var
 import java.sql.Timestamp
 import java.time.Instant
 import java.util.*
+var userPostId = 0
 
 class PostRecordService {
     var timestamp = Timestamp(Date().time)
@@ -33,10 +34,14 @@ class PostRecordService {
         authService.sendPost(user_id, record, file).enqueue(object: Callback<PostRecordResponse> {
             override fun onResponse(call: Call<PostRecordResponse>, response: Response<PostRecordResponse>) {
                 Log.d("RECORD/SUCCESS",response.toString())
+                Log.d("postid", result.toString())
                 val resp: PostRecordResponse = response.body()!!
                 result = resp.result!!
                 when(resp.code){
-                    1000 -> postRecordResult.recordSuccess(result)
+                    1000 ->{
+                        postRecordResult.recordSuccess(result)
+                        userPostId = result.post_id
+                    }
                     else -> postRecordResult.recordFailure()
                 }
             }

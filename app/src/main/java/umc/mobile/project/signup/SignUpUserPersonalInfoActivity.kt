@@ -9,6 +9,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import umc.mobile.project.R
 import umc.mobile.project.databinding.ActivitySignUpUserPersonalInfoBinding
 import umc.mobile.project.login.LoginActivity
 import umc.mobile.project.signup.Auth.ApiService
@@ -39,6 +40,17 @@ class SignUpUserPersonalInfoActivity : AppCompatActivity() {
             .build()
 
         val apiService = retrofit.create(ApiService::class.java)
+
+        viewBinding.AgreeCheckbox.setOnCheckedChangeListener { buttonView, isChecked ->
+            if(isChecked){
+                viewBinding.btnNext.isEnabled = true
+                viewBinding.btnNext.setBackgroundResource(R.drawable.sign_up_btn_background_blue_color)
+            }
+            else{
+                viewBinding.btnNext.isEnabled = false
+                viewBinding.btnNext.setBackgroundResource(R.drawable.sign_up_btn_background_grey_color)
+            }
+        }
 
         viewBinding.btnNext.setOnClickListener {
 

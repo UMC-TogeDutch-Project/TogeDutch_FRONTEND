@@ -1,10 +1,13 @@
 package umc.mobile.project.commercial
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import umc.mobile.project.announcement.AnnounceAlertDialog
+import umc.mobile.project.announcement.AnnounceAlertDialogInterface
 import umc.mobile.project.commercial.Auth.CommercialDetailGet.CommercialDetailGetResult
 import umc.mobile.project.commercial.Auth.CommercialDetailGet.CommercialDetailGetService
 import umc.mobile.project.commercial.Auth.CommercialGet.CommercialGet
@@ -14,8 +17,10 @@ import umc.mobile.project.ram.Geocoder_location
 
 var commercial_tid = ""
 var commercial_cid = ""
-class CommercialDetailActivity:AppCompatActivity(), CommercialDetailGetResult, RefundResult {
+class CommercialDetailActivity:AppCompatActivity(), CommercialDetailGetResult, RefundResult,
+    AnnounceAlertDialogInterface {
     lateinit var viewBinding: ActivityCommercialDetailBinding
+    lateinit var context : Context
     var latitude: Double = 0.0
     var longitude: Double = 0.0
 
@@ -85,12 +90,18 @@ class CommercialDetailActivity:AppCompatActivity(), CommercialDetailGetResult, R
     ) {
         Toast.makeText(applicationContext, "성공", Toast.LENGTH_SHORT)
             .show()
-        finish()
+        val dlg = AnnounceAlertDialog(context, this)
+        dlg.start7()
+
     }
 
 
     override fun refundFailure(code: Int, msg: String) {
-        TODO("Not yet implemented")
+
+    }
+
+    override fun btnFinish() {
+
     }
 
 

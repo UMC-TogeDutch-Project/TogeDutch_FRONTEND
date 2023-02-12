@@ -1,7 +1,6 @@
 package umc.mobile.project
 
 import Post
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -26,6 +25,7 @@ import umc.mobile.project.announcement.Auth.PostRecentGet.PostRecentGetResult
 import umc.mobile.project.announcement.Auth.PostRecentGet.PostRecentGetService
 import umc.mobile.project.databinding.FragmentHomeBinding
 import umc.mobile.project.news.NewsActivity
+import umc.mobile.project.search.SearchActivity
 
 class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
     lateinit var dataRecentRVAdapter: DataRecentRVAdapter
@@ -109,6 +109,13 @@ class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
 
         }
 
+        viewBinding.btnInputAlarm.setOnClickListener {
+            val intent = Intent(getActivity(), SearchActivity::class.java)
+            val search = viewBinding.etInputAlarmKeyword.text.toString()
+            intent.putExtra("search", search)
+            startActivity(intent)
+        }
+
 
         viewBinding.btnMoreRcent.setOnClickListener() {
             val intent = Intent(context, AnnounceListActivity::class.java)
@@ -127,6 +134,7 @@ class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
         // 검색 버튼 클릭 시 api 연결 필요
         viewBinding.btnInputAlarm.setOnClickListener {
             val search_keyword = viewBinding.etInputAlarmKeyword.text.toString()
+            println(search_keyword)
         }
 
         initRecyclerViewRecent()

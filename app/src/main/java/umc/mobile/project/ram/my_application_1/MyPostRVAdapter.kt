@@ -20,6 +20,11 @@ import umc.mobile.project.ram.Auth.Matching.GetMatching.MatchingGetResult
 import umc.mobile.project.ram.Auth.Matching.GetMatching.MatchingGetService
 import umc.mobile.project.ram.Auth.Post.DeletePost.DeletePostResult
 import umc.mobile.project.ram.Auth.Post.DeletePost.DeletePostService
+import umc.mobile.project.ram.Auth.Post.PUTPost.PutPostResult
+import umc.mobile.project.ram.Auth.Post.PUTPost.PutPostService
+import umc.mobile.project.ram.Auth.Post.PUTPost.Result
+import umc.mobile.project.ram.Auth.Post.PUTPostStatus.PutPostStatusResult
+import umc.mobile.project.ram.Auth.Post.PUTPostStatus.PutPostStatusService
 
 
 import umc.mobile.project.ram.Geocoder_location
@@ -28,6 +33,7 @@ import kotlin.collections.ArrayList
 
 import kotlinx.coroutines.*
 
+lateinit var bindingItemMyPostView : ItemMyPostBinding
 var isOk = false
 class MyPostRVAdapter (
     private val applicationList: ArrayList<Post>
@@ -39,9 +45,11 @@ class MyPostRVAdapter (
     var delete_position : Int = 0
     lateinit var viewBinding : FragmentRandomMatchingBinding
 
-    lateinit var bindingView : ItemMyPostBinding
+    var myPostActivity: MyPostActivity? = null
 
     var getUserIdx : Int = 0
+
+    var post_id : Int = 0
 
     // 아이템 레이아웃 결합
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
@@ -52,6 +60,8 @@ class MyPostRVAdapter (
 
         viewBinding = FragmentRandomMatchingBinding.inflate(LayoutInflater.from(viewGroup.context),
             viewGroup, false)
+
+        myPostActivity = context as MyPostActivity
 
         return ViewHolder(binding)
     }
@@ -71,9 +81,10 @@ class MyPostRVAdapter (
     }
 
     // 레이아웃 내 view 연결
-    inner class ViewHolder(val binding: ItemMyPostBinding) : RecyclerView.ViewHolder(binding.root) , DeletePostResult {
+    inner class ViewHolder(val binding: ItemMyPostBinding) : RecyclerView.ViewHolder(binding.root) , DeletePostResult, PutPostResult, PutPostStatusResult {
         fun bind(post: Post) {
             // Log.d("현재 유저 아이디 =============", post.user_id.toString())
+            post_id = post.post_id
 
             var selected_random_btn : Int = 0
             var isSelected = false
@@ -100,6 +111,17 @@ class MyPostRVAdapter (
             binding.numRecruited.text = txt_recruited.toString() // 현재 사람
             binding.numRecruits.text = txt_recruits.toString() // 필요 인원
 
+            if(txt_recruited == txt_recruits){
+                binding.numRecruited.visibility = View.INVISIBLE
+                binding.numRecruits.visibility = View.INVISIBLE
+                binding.numberOfPersonDash.visibility = View.INVISIBLE
+                binding.textRecruitDone.visibility = View.VISIBLE
+
+                val putPostService = PutPostService()
+                putPostService.setPutPostResult(this)
+                putPostService.putPost(post.post_id)
+            }
+
             // 수정 버튼
             binding.modifyBtn.setOnClickListener {
                 val intent = Intent(context, PostRetouchActivity::class.java)
@@ -120,8 +142,14 @@ class MyPostRVAdapter (
             //            2022-01-23T03:34:56.000+00:00
             val currentTime = timestampToSdf.timestamp_to_String(System.currentTimeMillis())
             println("현재 시간 : " + currentTime)
-            if(post.order_time > currentTime && (post.recruited_num < post.num_of_recruits)){
+
+            if(post.order_time > currentTime && (post.recruited_num == post.num_of_recruits) && !post.status.equals("시간만료")){ // 현재 시간이 주문 시간 전 && 인원 다 채웠을 때
                 binding.btnRandom.visibility = View.INVISIBLE
+            }
+            if(post.order_time > currentTime && (post.recruited_num != post.num_of_recruits)){
+                val putPostStatusService = PutPostStatusService()
+                putPostStatusService.setPutPostStatusResult(this)
+                putPostStatusService.putPostStatus(post.post_id)
             }
 
             //랜덤 버튼
@@ -130,7 +158,7 @@ class MyPostRVAdapter (
                 if(isSelected) {
                     selected_random_btn++
 
-                    bindingView = binding
+                    bindingItemMyPostView = binding
 
                     // 첫 랜덤 매칭  -> 위랑 순서 바꿔야 매칭되었을때 화면 나옴
                     runBlocking {
@@ -138,26 +166,7 @@ class MyPostRVAdapter (
                             getMatching()
                         }.join()
 
-
-//                        launch {
-//                            Log.d("getUserIdx 값 : ", getUserIdx.toString())
-//
-//                            if (getUserIdx != 0) {
-//                                binding.randomFramelayout.visibility = View.VISIBLE
-//
-//                                // 메이트 매칭 신청 (알람 가게 설정)
-//                                viewBinding.btnMatchingApplication.setOnClickListener {
-//
-//                                }
-//
-//                                // 재추천 받기
-//                                viewBinding.btnRecommend.setOnClickListener {
-//                                    getMatching()
-//                                }
-//
-//                            }
-//                        }
-                    }
+                   }
                 }
                 else {
                     selected_random_btn--
@@ -175,10 +184,26 @@ class MyPostRVAdapter (
         override fun deletePostFailure() {
             Log.d("공고 삭제 실패", "")
         }
+
+        override fun PutPostSuccess(result: Result) {
+            Log.d("공고 수정 성공", "")
+        }
+
+        override fun PutPostFailure() {
+            Log.d("공고 수정 실패", "")
+        }
+
+        override fun PutPostStatusSuccess(result: umc.mobile.project.ram.Auth.Post.PUTPostStatus.Result) {
+            Log.d("공고 상태 put 성공", "")
+        }
+
+        override fun PutPostStatusFailure() {
+            Log.d("공고 상태 put 실패", "")
+        }
     }
 
     fun removePost(position: Int){
-        if(position > 0){
+        if(position >= 0){
             applicationList.removeAt(position)
             notifyDataSetChanged()
         }
@@ -235,31 +260,18 @@ class MyPostRVAdapter (
     }
 
     // 랜덤 매칭
-    private fun getMatching(){
+    fun getMatching(){
         val matchingGetService = MatchingGetService()
         matchingGetService.setMatchingGetResult(this)
-        matchingGetService.getRandomMatching(32) // 임의로 지정
+        matchingGetService.getRandomMatching(38) // 임의로 지정 (post_id 넣으면 됨)
     }
 
     override fun getMatchingSuccess(code: Int, result: MemberData) {
         if(result.userIdx != 0 && result.name != null) {
-            bindingView.randomFramelayout.visibility = View.VISIBLE
+            bindingItemMyPostView.randomFramelayout.visibility = View.VISIBLE
 
-            viewBinding.nickName.text = result.name
-            Glide.with(context).load(result.image).into(viewBinding.profileImage)
+            result.image?.let { myPostActivity!!.replaceFragment(result.userIdx, result.name, it) }
 
-
-            Toast.makeText(context, "랜덤 매칭 성공", Toast.LENGTH_SHORT).show()
-
-            // 메이트 매칭 신청 (알람 가게 설정)
-            viewBinding.btnMatchingApplication.setOnClickListener {
-                Toast.makeText(context, "메이트 매칭 신청", Toast.LENGTH_SHORT).show()
-            }
-
-            // 재추천 받기
-            viewBinding.btnRecommend.setOnClickListener {
-                getMatching()
-            }
         } else {
             Toast.makeText(context, "랜덤 매칭 3회 초과", Toast.LENGTH_SHORT).show()
         }

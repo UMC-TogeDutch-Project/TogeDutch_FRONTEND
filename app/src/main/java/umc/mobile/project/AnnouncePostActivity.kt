@@ -41,9 +41,11 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.*
+import kotlin.collections.ArrayList
 
 var latitude_var : Double = 1.0
 var longtitude_var : Double = 1.0
+var picture_upload_uri_list = ArrayList<Picture_Save>()
 
 class AnnouncePostActivity : AppCompatActivity(), PostRecordResult {
     private var editText1: EditText? = null
@@ -68,6 +70,7 @@ class AnnouncePostActivity : AppCompatActivity(), PostRecordResult {
     var longitude: Double = 0.0
     val SUBACTIITY_REQUEST_CODE = 100
     var picture : MultipartBody.Part? = null
+    var picture_name : String = ""
 
     private val viewBinding: ActivityAnnouncePostBinding by lazy {
         ActivityAnnouncePostBinding.inflate(layoutInflater)
@@ -219,6 +222,7 @@ class AnnouncePostActivity : AppCompatActivity(), PostRecordResult {
 
     override fun recordSuccess(result: Result) {
         Log.d("post_id 변환 값 ==========================", result.post_id.toString())
+        picture_upload_uri_list.add(Picture_Save(result.post_id, picture_name, picture!!)) // 이전에 저장한 사진이랑 다른 거면 리스트에 저장해두기
         Toast.makeText(this, "공고 등록 성공.", Toast.LENGTH_SHORT).show()
         finish()
 
@@ -259,6 +263,7 @@ class AnnouncePostActivity : AppCompatActivity(), PostRecordResult {
 
                 Log.d("파일 생성!! ======== ", file.name)
                 picture = body
+                picture_name = file.name
 
                 setAdjImgUri(imagePath!!)
 

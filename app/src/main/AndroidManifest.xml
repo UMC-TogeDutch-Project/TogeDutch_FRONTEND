@@ -6,17 +6,13 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-    <!-- 갤러리 접근 가능 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 갤러리 접근 가능 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
 
     <application
         android:allowBackup="true"
@@ -30,11 +26,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".search.SearchActivity"
             android:exported="false">
-
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
         </activity>
-
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
         <activity
             android:name=".login.IntroActivity"
             android:exported="true">
@@ -48,45 +48,40 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
-        <activity android:name=".announcement.AnnounceRecyclerviewItem"></activity>
-        <activity android:name=".announcement.AnnounceListActivity"></activity>
-        <activity android:name=".announcement.AnnounceDetailActivity"></activity>
-        <activity android:name=".AnnouncePostActivity"></activity>
-        <activity android:name=".restaurant.blog.RestaurantPageActivity"></activity>
-        <activity android:name=".mypage.profile.MyProfileActivity"></activity>
-        <activity android:name=".ram.my_application_1.MyPostActivity"></activity>
-        <activity android:name=".commercial.CommercialListActivity"></activity>
-        <activity android:name=".commercial.CommercialSignUpActivity"></activity>
-        <activity android:name=".commercial.CommercialDetailActivity"></activity>
-        <activity android:name=".ram.my_application_1.MyCommercialDetailActivity"></activity>
-        <activity android:name=".ram.my_application_1.current_application.CurrentApplicationActivity"></activity>
-        <activity android:name=".ram.chat.ChattingActivity"></activity>
-        <activity android:name=".signup.SignUpUserCategoryActivity"></activity>
-        <activity android:name=".signup.SignUpUserPersonalInfoActivity"></activity>
-        <activity android:name=".news.NewsActivity"></activity>
-        <activity android:name=".signup.SignUpActivity"></activity>
-        <activity android:name=".signup.SignUpAlarmKeywordActivity"></activity>
-        <activity android:name=".signup.SignUpRegionActivity"></activity>
-        <activity android:name=".mypage.withdrawal.WithdrawalActivity"></activity>
-        <activity android:name=".wishlist.WishListActivity"></activity>
-        <activity android:name=".mypage.notice.NoticeActivity"></activity>
-        <activity android:name=".announcement.PlaceSearchActivity"></activity>
-        <activity android:name=".ram.my_application_1.JoinPostDetailActivity"></activity>
-        <activity android:name=".ram.my_application_1.PostRetouchActivity"></activity>
-        <activity android:name=".mypage.alarmKeyword.MypageAlarmKeywordActivity"></activity>
-
+        <activity android:name=".announcement.AnnounceRecyclerviewItem" />
+        <activity android:name=".announcement.AnnounceListActivity" />
+        <activity android:name=".announcement.AnnounceDetailActivity" />
+        <activity android:name=".AnnouncePostActivity" />
+        <activity android:name=".restaurant.blog.RestaurantPageActivity" />
+        <activity android:name=".mypage.profile.MyProfileActivity" />
+        <activity android:name=".ram.my_application_1.MyPostActivity" />
+        <activity android:name=".commercial.CommercialListActivity" />
+        <activity android:name=".commercial.CommercialSignUpActivity" />
+        <activity android:name=".ram.my_application_1.MyCommercialDetailActivity" />
+        <activity android:name=".ram.my_application_1.current_application.CurrentApplicationActivity" />
+        <activity android:name=".ram.chat.ChattingActivity" />
+        <activity android:name=".signup.SignUpUserCategoryActivity" />
+        <activity android:name=".signup.SignUpUserPersonalInfoActivity" />
+        <activity android:name=".news.NewsActivity" />
+        <activity android:name=".signup.SignUpActivity" />
+        <activity android:name=".signup.SignUpAlarmKeywordActivity" />
+        <activity android:name=".signup.SignUpRegionActivity" />
+        <activity android:name=".mypage.withdrawal.WithdrawalActivity" />
+        <activity android:name=".wishlist.WishListActivity" />
+        <activity android:name=".mypage.notice.NoticeActivity" />
+        <activity android:name=".announcement.PlaceSearchActivity" />
+        <activity android:name=".ram.my_application_1.JoinPostDetailActivity" />
+        <activity android:name=".ram.my_application_1.PostRetouchActivity" />
+        <activity android:name=".mypage.alarmKeyword.MypageAlarmKeywordActivity" />
         <activity
             android:name=".login.LoginActivity"
-            android:exported="false">
-        </activity>
-
-        <!-- 23.02.06 제이 추가Kakao 로그인 -->
+            android:exported="false" /> <!-- 23.02.06 제이 추가Kakao 로그인 -->
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
@@ -95,16 +90,12 @@
                 <data
                     android:host="oauth"
                     android:scheme="@string/kakao_app_key2" />
-
             </intent-filter>
         </activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-
     </application>
-
-
 
 </manifest>

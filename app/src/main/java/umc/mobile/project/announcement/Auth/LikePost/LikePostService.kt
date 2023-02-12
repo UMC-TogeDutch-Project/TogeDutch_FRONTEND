@@ -30,10 +30,7 @@ class LikePostService {
                 val resp: ApplyRecordResponse = response.body()!!
 
                 when(resp.code){
-                    1000 -> {likePostResult.LikePostSuccess(result)
-//                    likeId = result.Like_userIdx
-//                    postUserIdx = result.Post_User_userIdx
-                    }
+                    1000 -> likePostResult.LikePostSuccess(result)
                     2033 -> likePostResult.LikePostFailureMyPost()
                     2034 -> likePostResult.LikePostFailureAdd()
                 }

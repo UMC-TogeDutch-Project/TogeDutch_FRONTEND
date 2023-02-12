@@ -112,4 +112,20 @@ class AnnounceAlertDialog (context: Context,announceAlertDialogInterface: Announ
 
         dlg.show()
     }
+    fun start7(){
+        dlg.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dlg.setContentView(R.layout.announce_alert_dialog)
+        dlg.setCanceledOnTouchOutside(false)       //다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히게 설정
+        dlg.setCancelable(true)    // 취소가 가능하도록 하는 코드
+        alert_text = dlg.findViewById(R.id.tv_alert)
+        alert_text.text = "환불 신청이 완료되었습니다."
+        btn_back = dlg.findViewById(R.id.back_btn)
+        btn_back.setOnClickListener {
+            this.announceAlertDialogInterface?.btnFinish()
+            dlg.dismiss()
+
+        }
+
+        dlg.show()
+    }
 }

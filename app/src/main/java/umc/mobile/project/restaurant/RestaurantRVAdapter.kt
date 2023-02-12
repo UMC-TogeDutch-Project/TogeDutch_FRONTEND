@@ -27,10 +27,10 @@ class RestaurantRVAdapter(private val restaurantData: ArrayList<umc.mobile.proje
 
     inner class MyViewHolder(private val binding: RestaurantRecyclerviewItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(restaurantData: umc.mobile.project.restaurant.Auth.PlaceApi.Place){
-            binding.resTitle.text = restaurantData.placeName
-            binding.resPlace.text = "아직 미완"
-            binding.resPhone.text = restaurantData.placePhoneNumber
-            binding.resScore.text = "아직 미완"
+//            binding.resTitle.text = restaurantData.name
+//            binding.resPlace.text = "아직 미완"
+//            binding.resPhone.text = restaurantData.phoneNumber
+//            binding.resScore.text = "아직 미완"
 
 
         }

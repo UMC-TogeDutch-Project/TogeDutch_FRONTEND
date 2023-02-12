@@ -39,7 +39,7 @@ class WithdrawalActivity : AppCompatActivity(), WithdrawalResult {
     }
 
     override fun changeUserStatusSuccess(result: ChangeUserStatusResult) {
-        Toast.makeText(this, "회원 탈퇴 성공", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, "회원 탈퇴 성공", Toast.LENGTH_SHORT).show()
     }
 
     override fun changeUserStatusFailure() {

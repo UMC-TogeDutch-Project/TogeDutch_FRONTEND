@@ -1,6 +1,8 @@
 package umc.mobile.project.mypage.notice.all
 
+import umc.mobile.project.mypage.notice.NoticeGet
+
 interface GetAllNoticeResult {
-    fun getAllNoticesSuccess(result: ArrayList<Notice>)
-    fun getAllNoticesFailure()
+    fun getAllNoticesSuccess(code: Int, result: ArrayList<NoticeGet>)
+    fun getAllNoticesFailure(code : Int, message : String)
 }

@@ -32,6 +32,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 import kotlinx.coroutines.*
+import umc.mobile.project.ram.Auth.Matching.GetMatching.sendMatching
 
 lateinit var bindingItemMyPostView : ItemMyPostBinding
 var isOk = false
@@ -155,17 +156,19 @@ class MyPostRVAdapter (
             binding.btnRandom.setOnClickListener {
                 isSelected = !isSelected
                 if(isSelected) {
-                    selected_random_btn++
+                    if(!sendMatching) {
+                        selected_random_btn++
 
-                    bindingItemMyPostView = binding
+                        bindingItemMyPostView = binding
 
-                    // 첫 랜덤 매칭  -> 위랑 순서 바꿔야 매칭되었을때 화면 나옴
-                    runBlocking {
-                        launch {
-                            getMatching()
-                        }.join()
+                        // 첫 랜덤 매칭  -> 위랑 순서 바꿔야 매칭되었을때 화면 나옴
+                        runBlocking {
+                            launch {
+                                getMatching()
+                            }.join()
 
-                   }
+                        }
+                    }
                 }
                 else {
                     selected_random_btn--

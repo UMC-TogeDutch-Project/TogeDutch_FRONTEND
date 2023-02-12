@@ -33,7 +33,7 @@
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="wrap_content"
-            android:layout_height="600dp"
+            android:layout_height="500dp"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -53,13 +53,14 @@
                     android:textColor="@color/black" />
 
                 <TextView
-                    android:id="@+id/com_et_title"
+                    android:id="@+id/com_tv_title"
                     android:layout_width="370dp"
                     android:layout_height="40dp"
                     android:background="@drawable/button_round_11"
                     android:backgroundTint="#1F767680"
                     android:gravity="center"
-                    android:text="가게 이름을 입력해주세요"
+                    android:fontFamily="@font/notosanskr_regular"
+                    android:textColor="@color/black"
                     android:paddingLeft="7dp"
                     android:paddingRight="7dp" />
 
@@ -71,13 +72,14 @@
                     android:textColor="@color/black" />
 
                 <TextView
-                    android:id="@+id/com_et_inform"
+                    android:id="@+id/com_tv_inform"
                     android:layout_width="370dp"
                     android:layout_height="40dp"
                     android:background="@drawable/button_round_11"
                     android:backgroundTint="#1F767680"
                     android:gravity="center"
-                    android:text="URL 링크"
+                    android:fontFamily="@font/notosanskr_regular"
+                    android:textColor="@color/black"
                     android:paddingLeft="7dp"
                     android:paddingRight="7dp" />
 
@@ -89,13 +91,14 @@
                     android:textColor="@color/black" />
 
                 <TextView
-                    android:id="@+id/com_et_menu"
+                    android:id="@+id/com_tv_menu"
                     android:layout_width="370dp"
                     android:layout_height="40dp"
                     android:background="@drawable/button_round_11"
                     android:backgroundTint="#1F767680"
                     android:gravity="center"
-                    android:text="주메뉴를 선택해주세요"
+                    android:fontFamily="@font/notosanskr_regular"
+                    android:textColor="@color/black"
                     android:paddingLeft="7dp"
                     android:paddingRight="7dp" />
 
@@ -107,13 +110,14 @@
                     android:textColor="@color/black" />
 
                 <TextView
-                    android:id="@+id/com_et_tip"
+                    android:id="@+id/com_tv_tip"
                     android:layout_width="370dp"
                     android:layout_height="40dp"
                     android:background="@drawable/button_round_11"
                     android:backgroundTint="#1F767680"
                     android:gravity="center"
-                    android:text="0000 원"
+                    android:fontFamily="@font/notosanskr_regular"
+                    android:textColor="@color/black"
                     android:paddingLeft="7dp"
                     android:paddingRight="7dp" />
 
@@ -131,13 +135,12 @@
                     android:backgroundTint="#1F767680">
 
                     <TextView
-                        android:id="@+id/com_et_place"
+                        android:id="@+id/com_tv_place"
                         android:layout_width="370dp"
                         android:layout_height="40dp"
-                        android:text="위치를 설정해 주세요"
                         android:fontFamily="@font/notosanskr_regular"
+                        android:textColor="@color/black"
                         android:includeFontPadding="false"
-                        android:background="@null"
                         android:gravity="center"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -164,7 +167,7 @@
                     android:textColor="@color/black" />
 
                 <TextView
-                    android:id="@+id/com_et_request"
+                    android:id="@+id/com_tv_request"
                     android:layout_width="370dp"
                     android:layout_height="40dp"
                     android:background="@drawable/button_round_11"
@@ -179,8 +182,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/notosanskr_black"
-                    android:text="광광고 이미지"
+                    android:text="광고 이미지"
                     android:textColor="@color/black" />
+
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
@@ -188,34 +192,22 @@
                     android:background="@drawable/button_round_11"
                     android:backgroundTint="#1F767680">
 
-                    <TextView
-                        android:id="@+id/tv_img"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="선택된 이미지가 없습니다."
-                        android:fontFamily="@font/notosanskr_regular"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <ImageView
-                        android:id="@+id/img_view_img"
+                    <View
                         android:layout_width="370dp"
                         android:layout_height="40dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-                    <ImageButton
-                        android:id="@+id/image_btn_camera"
-                        android:layout_width="wrap_content"
+                    <ImageView
+                        android:id="@+id/img_view_img"
+                        android:layout_width="370dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="7dp"
-                        android:background="@drawable/ic_photo_camera"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -225,7 +217,21 @@
 
         </ScrollView>
 
-
+    <Button
+        android:id="@+id/btn_refund"
+        android:layout_width="270dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/button_round_13"
+        android:backgroundTint="@color/main_color"
+        android:fontFamily="@font/notosanskr_bold"
+        android:includeFontPadding="false"
+        android:text="환불요청"
+        android:textColor="@color/white"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

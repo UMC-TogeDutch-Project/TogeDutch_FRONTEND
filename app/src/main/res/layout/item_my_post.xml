@@ -184,7 +184,8 @@
         android:textColor="@color/white"
         android:background="@drawable/square_round_background_round"
         app:layout_constraintBottom_toBottomOf="@+id/list_item"
-        app:layout_constraintRight_toLeftOf="@id/list_item_score" />
+        app:layout_constraintRight_toLeftOf="@id/list_item_score"
+        android:visibility="invisible"/>
 
     <FrameLayout
         android:id="@+id/random_framelayout"

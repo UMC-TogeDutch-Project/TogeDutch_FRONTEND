@@ -27,7 +27,6 @@ import umc.mobile.project.announcement.Auth.PostRecentGet.PostRecentGetService
 import umc.mobile.project.databinding.FragmentHomeBinding
 import umc.mobile.project.news.NewsActivity
 import umc.mobile.project.search.SearchActivity
-import umc.mobile.project.search.SearchPostService
 
 class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
     lateinit var dataRecentRVAdapter: DataRecentRVAdapter
@@ -138,8 +137,6 @@ class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
             startActivity(intent)
             num1 =1
         }
-
-        // 검색 버튼 클릭 시 api 연결 필요
 
 
         initRecyclerViewRecent()
@@ -256,10 +253,9 @@ class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
     private fun getPostImminent(){
         val postImminentGetService = PostImminentGetService()
         postImminentGetService.setPostGetResult(this)
-        postImminentGetService.getPost( )
+        postImminentGetService.getPost()
 
     }
-
 
 
 

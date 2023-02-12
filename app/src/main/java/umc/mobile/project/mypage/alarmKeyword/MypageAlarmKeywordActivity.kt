@@ -112,11 +112,11 @@ class MypageAlarmKeywordActivity : AppCompatActivity(), AlarmKeywordGetResult,
 
     override fun getKeywordSuccess(code: Int, result: KeywordData) {
         initRecyclerView(result)
-        Toast.makeText(this, "관심목록 불러오기 성공", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this, "관심목록 불러오기 성공", Toast.LENGTH_SHORT).show()
     }
 
     override fun getKeywordFailure(code: Int, message: String) {
-        Toast.makeText(this, "관심목록 불러오기 성공", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "키워드 불러오기 실패", Toast.LENGTH_SHORT).show()
     }
 
     // 서버에 보낼 데이터 담아주는 함수
@@ -150,7 +150,7 @@ class MypageAlarmKeywordActivity : AppCompatActivity(), AlarmKeywordGetResult,
         result.word5?.let { Log.d("키워드 변환 값5 ==========================", it) }
         result.word6?.let { Log.d("키워드 변환 값6 ==========================", it) }
 
-        Toast.makeText(this, "키워드 변경 성공.", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, "키워드 변경 성공.", Toast.LENGTH_SHORT).show()
     }
 
     override fun changeKeywordFailure() {

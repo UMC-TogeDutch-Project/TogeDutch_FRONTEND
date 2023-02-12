@@ -4,9 +4,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import umc.mobile.project.databinding.RestaurantRecyclerviewItemBinding
 
-class RestaurantRVAdapter(private val restaurantData: ArrayList<umc.mobile.project.restaurant.Auth.PlaceApi.Place>): RecyclerView.Adapter<RestaurantRVAdapter.MyViewHolder>() {
+class RestaurantRVAdapter(private val restaurantData: ArrayList<RestaurantData>): RecyclerView.Adapter<RestaurantRVAdapter.MyViewHolder>() {
     lateinit var context : Context
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): MyViewHolder {
         val binding: RestaurantRecyclerviewItemBinding = RestaurantRecyclerviewItemBinding.inflate(
@@ -26,18 +27,21 @@ class RestaurantRVAdapter(private val restaurantData: ArrayList<umc.mobile.proje
     }
 
     inner class MyViewHolder(private val binding: RestaurantRecyclerviewItemBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(restaurantData: umc.mobile.project.restaurant.Auth.PlaceApi.Place){
-//            binding.resTitle.text = restaurantData.name
-//            binding.resPlace.text = "아직 미완"
-//            binding.resPhone.text = restaurantData.phoneNumber
-//            binding.resScore.text = "아직 미완"
+        fun bind(restaurantData: RestaurantData){
+            binding.resTitle.text = restaurantData.title
+            binding.resPlace.text = restaurantData.place
+            binding.resPhone.text = restaurantData.phone
+            binding.resScore.text = restaurantData.score
+            Glide.with(itemView).load(restaurantData.image).into(binding.resImg)
+
+
 
 
         }
     }
 
     interface OnItemClickListener {
-        fun onItemClick(restaurantData: umc.mobile.project.restaurant.Auth.PlaceApi.Place)
+        fun onItemClick( restaurantData: RestaurantData)
 
     }
     fun setItemClickListener(onItemClickListener:OnItemClickListener) {

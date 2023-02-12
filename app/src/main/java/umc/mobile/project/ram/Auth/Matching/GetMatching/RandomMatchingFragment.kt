@@ -13,6 +13,7 @@ import umc.mobile.project.databinding.FragmentRandomMatchingBinding
 import umc.mobile.project.ram.Auth.Matching.GetMatchingAccept.MatchingAcceptGetResult
 import umc.mobile.project.ram.Auth.Matching.GetMatchingAccept.MatchingAcceptGetService
 
+var sendMatching = false
 
 class RandomMatchingFragment: Fragment(), MatchingGetResult, MatchingAcceptGetResult {
     private lateinit var viewBinding: FragmentRandomMatchingBinding
@@ -29,6 +30,8 @@ class RandomMatchingFragment: Fragment(), MatchingGetResult, MatchingAcceptGetRe
         savedInstanceState: Bundle?
     ): View {
         viewBinding = FragmentRandomMatchingBinding.inflate(layoutInflater)
+
+        sendMatching = false
 
         Log.d("user_id: ", arguments?.getInt("user_id").toString())
         Log.d("name: ", arguments?.getString("name").toString())
@@ -49,7 +52,7 @@ class RandomMatchingFragment: Fragment(), MatchingGetResult, MatchingAcceptGetRe
             Glide.with(this).load(arguments?.getString("image")).into(viewBinding.profileImage)
         }
 
-        Toast.makeText(context, "랜덤 매칭 성공", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(context, "랜덤 매칭 성공", Toast.LENGTH_SHORT).show()
 
         // 메이트 매칭 신청 (알람 가게 설정)
         viewBinding.btnMatchingApplication.setOnClickListener {
@@ -59,7 +62,9 @@ class RandomMatchingFragment: Fragment(), MatchingGetResult, MatchingAcceptGetRe
 
         // 재추천 받기
         viewBinding.btnRecommend.setOnClickListener {
-           getMatching()
+            if(!sendMatching) {
+                getMatching()
+            }
         }
 
         return viewBinding.root
@@ -67,6 +72,7 @@ class RandomMatchingFragment: Fragment(), MatchingGetResult, MatchingAcceptGetRe
 
     // 랜덤 매칭
     fun getMatching(){
+        sendMatching = false
         val matchingGetService = MatchingGetService()
         matchingGetService.setMatchingGetResult(this)
         matchingGetService.getRandomMatching(38) // 임의로 지정 (post_id 넣으면 됨)
@@ -82,7 +88,7 @@ class RandomMatchingFragment: Fragment(), MatchingGetResult, MatchingAcceptGetRe
             Glide.with(this).load(result.image).into(viewBinding.profileImage)
 
 
-            Toast.makeText(context, "랜덤 매칭 성공", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(context, "랜덤 매칭 성공", Toast.LENGTH_SHORT).show()
 
         } else {
             Toast.makeText(context, "랜덤 매칭 3회 초과", Toast.LENGTH_SHORT).show()
@@ -107,7 +113,9 @@ class RandomMatchingFragment: Fragment(), MatchingGetResult, MatchingAcceptGetRe
     override fun getMatchingAcceptSuccess(code: Int, result: Int) {
         Log.d("result 변환 값 ==========================", result.toString())
 
-        Toast.makeText(context, "메이트 매칭 성공", Toast.LENGTH_SHORT).show()
+        sendMatching = true
+
+        //Toast.makeText(context, "메이트 매칭 성공", Toast.LENGTH_SHORT).show()
     }
 
     override fun getMatchingAcceptFailure(code: Int, message: String) {

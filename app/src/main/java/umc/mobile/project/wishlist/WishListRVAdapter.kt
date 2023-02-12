@@ -3,17 +3,27 @@ package umc.mobile.project.wishlist
 import Post
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import umc.mobile.project.R
+
 import umc.mobile.project.databinding.WishlistAdapterBinding
 import umc.mobile.project.ram.Geocoder_location
 import umc.mobile.project.ram.my_application_1.Timestamp_to_SDF
+import umc.mobile.project.ram.my_application_1.post_id_to_detail
+import umc.mobile.project.ram.my_application_1.user_id_logined
+import umc.mobile.project.ram.my_application_1.user_id_var
+import umc.mobile.project.wishlist.LikeDelete.LikeDeleteResult
+import umc.mobile.project.wishlist.LikeDelete.LikeDeleteService
+import umc.mobile.project.wishlist.LikeDelete.rp
+
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -46,7 +56,7 @@ class WishListRVAdapter (private val wishApplicationList: ArrayList<Post>) : Rec
     }
 
     // ViewHolder 단위 객체로 View의 데이터를 설정
-    inner class ViewHolder(val binding: WishlistAdapterBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(val binding: WishlistAdapterBinding) : RecyclerView.ViewHolder(binding.root), LikeDeleteResult {
         fun bind(post: Post) {
             var selected_random_btn : Int = 0
             var isSelected = false
@@ -73,6 +83,33 @@ class WishListRVAdapter (private val wishApplicationList: ArrayList<Post>) : Rec
             binding.currentPersonNum.text = txt_recruited.toString() // 현재 사람
             binding.totalPersonNum.text = txt_recruits.toString() // 필요 인원
             binding.appCompatLike.setBackgroundResource(R.drawable.main_item_heart_icon_fill)
+
+            binding.appCompatLike.setOnClickListener{
+                likeDelete()
+            }
+        }
+
+        fun likeDelete(){
+            val likeDeleteService = LikeDeleteService()
+            likeDeleteService.setLikePostResult(this)
+            likeDeleteService.sendLike(user_id_logined, post_id_to_detail)
+            binding.appCompatLike.setBackgroundResource(R.drawable.main_item_heart_icon)
+
+        }
+
+
+
+        override fun LikeDeleteSuccess() {
+            Toast.makeText(context, "관심 공고 삭제 성공.", Toast.LENGTH_SHORT).show()
+            Log.d("response값 " , rp.toString())
+
+
+        }
+
+
+        override fun LikeDeleteFailure() {
+            Toast.makeText(context, "관심 공고 삭제 실패.", Toast.LENGTH_SHORT).show()
+            Log.d("response값 " , rp.toString())
         }
     }
 

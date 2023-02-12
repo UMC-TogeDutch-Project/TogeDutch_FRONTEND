@@ -2,15 +2,16 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="316dp"
-    android:layout_height="184dp">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/meet_time_id"
+        android:layout_width="316dp"
+        android:layout_height="184dp"
         android:background="@drawable/square_backgound_light_blue_round"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -25,21 +26,143 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/calendar_chose_btn"
+    <ImageView
+        android:id="@+id/calendar_text_edittext"
         android:layout_width="282dp"
         android:layout_height="39dp"
         android:background="@drawable/square_background_white_round"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="84dp"
+        android:layout_marginBottom="84dp"/>
 
-        android:drawableEnd="@drawable/ic_calendar_chatting_icon"
-        android:paddingRight="18dp"
+<!--        android:drawableEnd="@drawable/ic_calendar_chatting_icon"-->
+<!--        android:paddingRight="18dp"-->
 
 
-        />
+<!--        />-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/calendar_text_edittext"
+        app:layout_constraintStart_toStartOf="@+id/calendar_text_edittext"
+        app:layout_constraintEnd_toEndOf="@id/calendar_text_edittext">
+
+        <EditText
+            android:id="@+id/dialog_ann_et_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:gravity="center"
+            android:hint="0000"
+            android:paddingLeft="7dp"
+            android:paddingRight="7dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="년"
+            android:fontFamily="@font/notosanskr_regular"
+            android:textColor="@color/black"
+            android:gravity="center"
+
+            app:layout_constraintStart_toEndOf="@+id/dialog_ann_et_year"
+            app:layout_constraintTop_toTopOf="parent" />
+        <EditText
+            android:id="@+id/dialog_ann_et_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:gravity="center"
+            android:hint="00"
+            android:paddingLeft="7dp"
+            android:paddingRight="7dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/year"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/notosanskr_regular"
+            android:textColor="@color/black"
+            android:text="월"
+            app:layout_constraintStart_toEndOf="@+id/dialog_ann_et_month"
+            app:layout_constraintTop_toTopOf="parent" />
+        <EditText
+            android:id="@+id/dialog_ann_et_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:gravity="center"
+            android:hint="00"
+            android:paddingLeft="7dp"
+            android:paddingRight="7dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/month"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/notosanskr_regular"
+            android:textColor="@color/black"
+            android:text="일"
+            app:layout_constraintStart_toEndOf="@+id/dialog_ann_et_day"
+            app:layout_constraintTop_toTopOf="parent" />
+        <EditText
+            android:id="@+id/dialog_ann_et_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:gravity="center"
+            android:hint="오전"
+            android:paddingLeft="7dp"
+            android:paddingRight="7dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/day"
+            app:layout_constraintTop_toTopOf="parent" />
+        <EditText
+            android:id="@+id/dialog_ann_et_hour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:gravity="center"
+            android:hint="00"
+            android:paddingLeft="7dp"
+            android:paddingRight="7dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/dialog_ann_et_time"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            android:fontFamily="@font/notosanskr_regular"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toEndOf="@+id/dialog_ann_et_hour"
+            app:layout_constraintTop_toTopOf="parent" />
+        <EditText
+            android:id="@+id/dialog_ann_et_minute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:gravity="center"
+            android:hint="00"
+            android:paddingLeft="7dp"
+            android:paddingRight="7dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/time"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/close_btn"
@@ -53,7 +176,7 @@
 
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/send_btn"
+        android:id="@+id/meet_time_send_btn"
         android:layout_width="280dp"
         android:layout_height="43dp"
         android:background="@drawable/sqare_background_blue_round"

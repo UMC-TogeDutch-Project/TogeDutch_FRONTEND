@@ -6,6 +6,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import umc.mobile.project.getRetrofit
+import umc.mobile.project.ram.chat.ChatPhoto
 import java.sql.Timestamp
 import java.util.*
 

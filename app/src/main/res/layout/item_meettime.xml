@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="102dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/item_meet_time_iv"
+        android:layout_width="316dp"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/sqare_background_blue_round"/>
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="약속 시간"
+        android:textColor="@color/white"
+        android:textSize="17sp"
+        android:fontFamily="@font/notosanskr_bold"
+        android:includeFontPadding="false"
+        app:layout_constraintTop_toTopOf="@+id/item_meet_time_iv"
+        app:layout_constraintStart_toStartOf="@id/item_meet_time_iv"
+        app:layout_constraintEnd_toEndOf="@id/item_meet_time_iv"
+        android:layout_marginTop="6dp"/>
+
+    <ImageView
+        android:id="@+id/time_iv"
+        android:layout_width="282dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="46dp"
+        android:background="@drawable/square_background_light_gray_round"
+        app:layout_constraintTop_toTopOf="@+id/item_meet_time_iv"
+        app:layout_constraintStart_toStartOf="@id/item_meet_time_iv"
+        app:layout_constraintEnd_toEndOf="@id/item_meet_time_iv"
+        />
+
+    <TextView
+        android:id="@+id/item_meet_time_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2023년 02월 02일18시 55분"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:fontFamily="@font/notosanskr_regular"
+        android:includeFontPadding="false"
+        app:layout_constraintTop_toTopOf="@+id/time_iv"
+        app:layout_constraintStart_toStartOf="@id/time_iv"
+        app:layout_constraintBottom_toBottomOf="@id/time_iv"
+        app:layout_constraintEnd_toEndOf="@id/time_iv"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

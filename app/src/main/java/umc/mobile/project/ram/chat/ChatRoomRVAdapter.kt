@@ -115,12 +115,22 @@ class ChatRoomRVAdapter(private val chatRoomList: ArrayList<ChatRoomList>) :
         override fun getChatAllSuccess(code: Int, result: ArrayList<Chat>) {
             if(result.size > 0) {
                 var index = result.count() - 1
-                val txtContent: String = result[index].content
+
+                var length = result[index].content.length
+                var substring_str = ""
+                if(length >= 4) {
+                    substring_str = result[index].content.substring(length - 4, length)
+                }
+                if(substring_str.equals(".jpg"))
+                    binding.itemChatContentTxt.text = "사진"
+                else
+                    binding.itemChatContentTxt.text = result[index].content
+
 
                 var timestampToSdf = Timestamp_to_SDF()
                 binding.itemDateTxt.text =
                     timestampToSdf.convert_only_time(result[index].created_at)
-                binding.itemChatContentTxt.text = txtContent
+
             }
             else{
                 binding.itemDateTxt.text = ""

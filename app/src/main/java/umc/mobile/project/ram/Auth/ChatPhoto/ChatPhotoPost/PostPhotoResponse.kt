@@ -1,6 +1,7 @@
 package umc.mobile.project.ram.Auth.ChatPhoto.ChatPhotoPost
 
 import com.google.gson.annotations.SerializedName
+import umc.mobile.project.ram.chat.ChatPhoto
 import java.sql.Timestamp
 
 data class PostPhotoResponse (
@@ -17,4 +18,5 @@ data class Result(
     @SerializedName(value =  "user_id") var user_id : Int,
     @SerializedName(value =  "image") var image : String
 )
+
 

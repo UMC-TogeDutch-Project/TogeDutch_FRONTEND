@@ -38,6 +38,9 @@ import umc.mobile.project.ram.Auth.Application.GetUser.UserGetResult
 import umc.mobile.project.ram.Auth.Application.GetUser.UserGetService
 import umc.mobile.project.ram.Auth.Chat.ChatAllGet.ChatAllGetResult
 import umc.mobile.project.ram.Auth.Chat.ChatAllGet.ChatAllGetService
+import umc.mobile.project.ram.Auth.Chat.ChatMeetTimePost.ChatMeetTime
+import umc.mobile.project.ram.Auth.Chat.ChatMeetTimePost.PostChatMeetTimeResult
+import umc.mobile.project.ram.Auth.Chat.ChatMeetTimePost.PostChatMeetTimeService
 import umc.mobile.project.ram.Auth.Chat.ChatPost.PostChatResult
 import umc.mobile.project.ram.Auth.Chat.ChatPost.PostChatService
 import umc.mobile.project.ram.Auth.Chat.ChatPost.Result
@@ -62,7 +65,7 @@ import kotlin.collections.ArrayList
 var post_id_dialog : Int = 0
 var user_id_dialog : Int = 0
 var location_dialog = ""
-class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult, PostGetAllResult, PostChatResult, ChatAllGetResult,PostPhotoResult {
+class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult, PostGetAllResult, PostChatResult, ChatAllGetResult,PostPhotoResult, PostChatMeetTimeResult {
     lateinit var binding: ActivityChattingBinding
     lateinit var chatRVAdapter: ChatRVAdapter
     var timestamp = Timestamp(Date().time)
@@ -214,8 +217,24 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
 
             val calendar_btn = dialog_more.findViewById<AppCompatButton>(R.id.btn_calendar)
             calendar_btn?.setOnClickListener {
-                val dlg = PromisePopupDialog(this)
-                dlg.start()
+//                val dlg = PromisePopupDialog(this)
+//                dlg.start()
+//                dlg.setOnClickListener(object: PromisePopupDialog.ButtonClickListener{
+//                    override fun onClicked(text: String) {
+//                        // 약속시간 전송하는거 해주기
+//                        sendMeetTime(text)
+//                    }
+//                })
+                val promisePopupDialog = PromisePopupDialog(this)
+                promisePopupDialog.show()
+                promisePopupDialog.setOnClickListener(object: PromisePopupDialog.ButtonClickListener{
+                    override fun onClicked(text: String) {
+                        // 약속시간 전송하는거 해주기
+                        Log.d("가져온 time : ", text)
+                        sendMeetTime(text)
+                        promisePopupDialog.dismiss()
+                    }
+                })
 
             }
 
@@ -228,20 +247,23 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
 
     }
 
+
+
+
     @SuppressLint("CheckResult")
     private fun runStomp(chatRoom_id : Int, user_id : Int){ // user_id는 현재 로그인한 유저 아이디!!!
         stompClient.connect()
-
-        stompClient.topic("/sub/chat/room/{$chatRoom_id}").subscribe { topicMessage ->
+        
+        stompClient.topic("/sub/chat/room/${chatRoom_id}").subscribe { topicMessage ->
             Log.d("message Receive", topicMessage.payload)
             val sender = JSONObject(topicMessage.payload).getString("userId").toInt() // 메세지 보낸 user_id 가져오기
 
             if(sender != user_id){
-                val chat_id = JSONObject(topicMessage.payload).getInt("chat_id")
-                val chatRoom_id = JSONObject(topicMessage.payload).getInt("chatRoom_id")
-                val user_id = JSONObject(topicMessage.payload).getInt("user_id")
+                val chat_id = JSONObject(topicMessage.payload).getInt("chatId")
+                val chatRoom_id = JSONObject(topicMessage.payload).getInt("chatRoomId")
+                val user_id = JSONObject(topicMessage.payload).getInt("userId")
 
-                val created_at_before = JSONObject(topicMessage.payload).getString("created_at")
+                val created_at_before = JSONObject(topicMessage.payload).getString("createAt")
                 var created_at : Timestamp = Timestamp.valueOf(created_at_before)
 
                 val content = JSONObject(topicMessage.payload).getString("content")
@@ -296,15 +318,6 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
 
     override fun sendChatSuccess(result: Result) {
         Log.d("=============================== Message Post 성공!!!!!!!!!!!!!!!!!!!!", "==================================================" )
-//        // 현재 시간 구하기
-//        var sdf = SimpleDateFormat("MM월 dd일")
-//        var now = sdf.format(System.currentTimeMillis())
-//        var created_at = sdf.format(result.createdAt)
-//
-//        if(now > created_at) // 현재 시간이 채팅 생성 시간보다 빠를 때 시간 띄워주기
-//            chatRVAdapter.addItem(Chat(0, chatRoom_id_get, 0, timestamp, getCurrentTime(), "time", "time", 3))
-
-        println(result.createdAt)
         val data = JSONObject()
         data.put("chatId", result.chatId)
         data.put("chatRoomId", result.chatRoomId)
@@ -319,7 +332,23 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
 
         edit_message.text = Editable.Factory.getInstance().newEditable("") // 채팅 입력창 다시 초기화시켜주기
 
-        chatRVAdapter.addItem(Chat(result.chatId, result.chatRoomId, user_id_logined, result.createdAt, result.content, result.writer, result.type, 2))
+
+        // 약속 시간인지 아닌지 판별
+        var length = result.content.length
+        var substring_str = ""
+        if(length >= 4) {
+            substring_str = result.content.substring(length - 6, length)
+        }
+
+        Log.d("substring_str : ", substring_str)
+
+        if(substring_str.equals(":00:00")){
+            Log.d("이거 시간", "")
+            chatRVAdapter.addItem(Chat(result.chatId, result.chatRoomId, user_id_logined, result.createdAt, result.content, result.writer, result.type, 4))
+        }else{
+            chatRVAdapter.addItem(Chat(result.chatId, result.chatRoomId, user_id_logined, result.createdAt, result.content, result.writer, result.type, 2))
+        }
+
         runOnUiThread {
             chatRVAdapter.notifyDataSetChanged()
         }
@@ -340,7 +369,6 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
 
     override fun sendPhotoSuccess(result: umc.mobile.project.ram.Auth.ChatPhoto.ChatPhotoPost.Result) {
         Log.d("=============================== Photo Post 성공!!!!!!!!!!!!!!!!!!!!", "==================================================" )
-
         val data = JSONObject()
         data.put("chatPhoto_id", result.chatId)
         data.put("chatRoom_id", result.chatRoomId)
@@ -351,10 +379,7 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
         stompClient.send("/pub/chat/image", data.toString()).subscribe()
         edit_message.text = Editable.Factory.getInstance().newEditable("") // 채팅 입력창 다시 초기화시켜주기
 
-        chatRVAdapter.addItem(Chat(result.chatId, result.chatRoomId, user_id_logined, result.createdAt, result.image, writer_me, type_me, 2))
-        runOnUiThread {
-            chatRVAdapter.notifyDataSetChanged()
-        }
+        sendStomp(result.image, result.chatRoomId, user_id_logined)
     }
 
     override fun sendPhotoFailure() {
@@ -560,7 +585,30 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
         }
     }
 
+    private fun sendMeetTime(time : String){
+        val postChatMeetTimeService = PostChatMeetTimeService()
+        postChatMeetTimeService.setPhotoResult(this)
+        postChatMeetTimeService.sendChatMeetTime(chatRoom_id_get, user_id_logined, time)
+    }
 
+    override fun sendChatMeetTimeSuccess(result: ChatMeetTime) {
+        Log.d("=============================== ChatMeetTime Post 성공!!!!!!!!!!!!!!!!!!!!", "==================================================" )
+        val data = JSONObject()
+        data.put("chatMeetTimeId", result.chatMeetTimeId)
+        data.put("chatRoomId", result.chatRoomId)
+        data.put("userId", user_id_logined)
+        data.put("meetTime", result.meetTime)
+        data.put("createdAt", result.createdAt)
+
+        stompClient.send("/pub/chat/meettime", data.toString()).subscribe()
+        edit_message.text = Editable.Factory.getInstance().newEditable("") // 채팅 입력창 다시 초기화시켜주기
+
+        sendStomp(result.meetTime, result.chatRoomId, user_id_logined)
+    }
+
+    override fun sendChatMeetTimeFailure() {
+        Log.d("=============================== ChatMeetTime Post 실패!!!!!!!!!!!!!!!!!!!!", "==================================================" )
+    }
 
 
 }

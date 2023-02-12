@@ -49,6 +49,7 @@ import umc.mobile.project.ram.Auth.Post.GetPostAll.PostGetAllResult
 import umc.mobile.project.ram.Auth.Post.GetPostAll.PostGetAllService
 import umc.mobile.project.ram.Auth.Post.GetPostDetail.PostDetailGetResult
 import umc.mobile.project.ram.Auth.Post.GetPostDetail.PostDetailGetService
+import umc.mobile.project.ram.Geocoder_location
 import umc.mobile.project.ram.my_application_1.user_id_logined
 import umc.mobile.project.ram.my_application_1.*
 import java.io.File
@@ -58,6 +59,9 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
+var post_id_dialog : Int = 0
+var user_id_dialog : Int = 0
+var location_dialog = ""
 class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult, PostGetAllResult, PostChatResult, ChatAllGetResult,PostPhotoResult {
     lateinit var binding: ActivityChattingBinding
     lateinit var chatRVAdapter: ChatRVAdapter
@@ -99,7 +103,7 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
 
         // 채팅 부분
         chatRoom_id_get = intent.getIntExtra("chatRoom_id", -1)
-        Log.d("ChattinActivity 넘어온 chatRoom_id: $chatRoom_id_get", "")
+        Log.d("ChattingActivity 넘어온 chatRoom_id: $chatRoom_id_get", "")
 
         if(chatRoom_id_get != -1){
             try {
@@ -378,7 +382,8 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
 
         user_id_chatroom = id!!.user_id  // 그 post의 user_id 저장
         post_id_chatroom = id!!.post_id
-
+        post_id_dialog = id!!.post_id
+        user_id_dialog = id!!.user_id
 
         // 찾은 user_id, post_id로 화면 데이터 불러오기
         val postDetailGetService = PostDetailGetService()
@@ -397,6 +402,9 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
 
         binding.itemContentTxt.text = result.title
         Glide.with(this).load(result.image).override(38,38).into(binding.itemProfileImg) // 이미지 가져오기
+
+        val geocoderLocation = Geocoder_location()
+        location_dialog = geocoderLocation.calculate_location(this, result.latitude, result.longitude)
 
         val userGetService = UserGetService()
         userGetService.setUserGetResult(this)

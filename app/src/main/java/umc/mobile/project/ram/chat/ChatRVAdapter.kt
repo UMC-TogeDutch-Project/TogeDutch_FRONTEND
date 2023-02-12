@@ -107,7 +107,7 @@ class ChatRVAdapter(
         private val content: AppCompatButton = view.findViewById(R.id.your_chat_iv)
         private val name : TextView = view.findViewById(R.id.your_name_txt)
         private val time : TextView = view.findViewById(R.id.your_chat_date_txt)
-
+        private val picture : ImageView = view.findViewById(R.id.your_image_iv)
 
         fun bind(chat: Chat) {
             name.text = chat.writer
@@ -115,6 +115,19 @@ class ChatRVAdapter(
 
             var timestampToSdf = Timestamp_to_SDF()
             time.text = timestampToSdf.convert_only_time(chat.created_at)
+
+
+            var length = chat.content.length
+            var substring_str = ""
+            if(length >= 4) {
+                substring_str = chat.content.substring(length - 4, length)
+            }
+
+            if(substring_str.equals(".jpg")){ // content로 들어온 게 이미지일 때
+                content.visibility = View.GONE
+                Glide.with(context).load(chat.content).override(150, 150).into(picture)
+            }else
+                content.text = chat.content
         }
     }
 
@@ -128,14 +141,14 @@ class ChatRVAdapter(
             if(length >= 4) {
                 substring_str = chat.content.substring(length - 4, length)
             }
-
+            Log.d("채팅 내용 : ", chat.content)
             if(substring_str.equals(".jpg")){ // content로 들어온 게 이미지일 때
-                Glide.with(context).load(chat.content).into(picture)
+                content.visibility = View.GONE
+                Glide.with(context).load(chat.content).override(150, 150).into(picture)
             }else
                 content.text = chat.content
 
 
-            Log.d("채팅 timestamp", chat.created_at.toString())
             var timestampToSdf = Timestamp_to_SDF()
             time.text = timestampToSdf.convert_only_time(chat.created_at)
         }

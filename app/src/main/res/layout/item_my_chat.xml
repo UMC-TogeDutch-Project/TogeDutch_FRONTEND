@@ -23,8 +23,6 @@
         android:id="@+id/my_image_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/my_chat_box"
-        android:text="안녕하세요!"
         android:textColor="@color/white"
         android:textSize="14sp"
         android:textAlignment="center"

@@ -3,16 +3,18 @@ package umc.mobile.project.restaurant.blog
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import umc.mobile.project.announcement.AnnounceRVAdapterDecoration
 import umc.mobile.project.databinding.ActivityCommercialListBinding
 import umc.mobile.project.databinding.ActivityRestaurantPageBinding
+import umc.mobile.project.restaurant.RestaurantData
 import umc.mobile.project.restaurant.RestaurantRVAdapter
 
 class RestaurantPageActivity: AppCompatActivity() {
     private lateinit var binding: ActivityRestaurantPageBinding
     private lateinit var blogRVAdapter: BlogRVAdapter
     var mBlogData = ArrayList<BlogData>()
-
+    private lateinit var datas : ArrayList<RestaurantData>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRestaurantPageBinding.inflate(layoutInflater)
@@ -22,6 +24,14 @@ class RestaurantPageActivity: AppCompatActivity() {
         binding.backBtn.setOnClickListener{
             finish()
         }
+//        datas = intent.getSerializableExtra("data") as ArrayList<RestaurantData>
+//
+//        Glide.with(this).load(datas.image).into(binding.resImg)
+//        binding.resTitle.text = datas.title
+//        binding.resAddress.text = datas.place
+//        binding.resPhone.text = datas.phone
+//        binding.resMenu.text = datas.score
+
     }
 
 

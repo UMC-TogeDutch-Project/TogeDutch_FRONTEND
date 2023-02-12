@@ -72,7 +72,7 @@ class WishListActivity: AppCompatActivity(), LikePostGetResult {
 
     override fun getPostUploadSuccess(code: Int, result: ArrayList<Post>) {
        initRecyclerView(result)
-        Toast.makeText(this, "관심목록 불러오기 성공", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, "관심목록 불러오기 성공", Toast.LENGTH_SHORT).show()
     }
 
     override fun getPostUploadFailure(code: Int, message: String) {

@@ -13,10 +13,10 @@ class EmotionStatusGetService {
         this.emotionStatusGetResult = emotionStatusGetResult
     }
 
-    fun getEmotionStatus(post_id: Int) {
+    fun getEmotionStatus(user_id: Int) {
         val apiGetService = getRetrofit().create(EmotionStatusGetRetrofitInterface::class.java)
 
-        apiGetService.getJoinApplication(post_id).enqueue(object : Callback<EmotionStatusGetResponse> {
+        apiGetService.getJoinApplication(user_id).enqueue(object : Callback<EmotionStatusGetResponse> {
             override fun onResponse(call: Call<EmotionStatusGetResponse>, response: Response<EmotionStatusGetResponse>, ) {
                 Log.d("EMOTIONSTATUS-GET SUCCESS", response.toString())
                 val resp: EmotionStatusGetResponse = response.body()!!

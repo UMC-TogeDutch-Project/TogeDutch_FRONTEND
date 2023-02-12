@@ -174,7 +174,7 @@ class MyPhoneNumReviseFragment : Fragment(), PhoneNumberPatchResult {
 
     override fun changePhoneNumberSuccess(result: ChangePhoneNumberResult) {
         Log.d("전화번호 변환 값 ==========================", result.phone)
-        Toast.makeText(requireContext(), "전화번호 변경 성공.", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(requireContext(), "전화번호 변경 성공.", Toast.LENGTH_SHORT).show()
     }
 
     override fun changePhoneNumberFailure() {

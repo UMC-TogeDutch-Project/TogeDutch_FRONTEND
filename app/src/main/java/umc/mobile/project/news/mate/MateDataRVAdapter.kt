@@ -27,9 +27,9 @@ class MateDataRVAdapter (private val MateDataList: ArrayList<MateData>) : Recycl
     inner class DataViewHolder(private val viewBinding: ItemNewsMateDataBinding) :
         RecyclerView.ViewHolder(viewBinding.root) {
         fun bind(mateData: MateData) {
-            viewBinding.tvDate.text = "날짜 받아와야되는데..."
+            viewBinding.tvDate.text = mateData.status
             viewBinding.tvTitle.text = mateData.title
-            viewBinding.tvUserId.text = mateData.user_name + "님이 메이트를 신청했습니다."
+            viewBinding.tvUserId.text = mateData.applicant + "님이 메이트를 신청했습니다."
             val applicationIdx = mateData.application_id
             viewBinding.btnAcept.setOnClickListener {
                 pushBtnAccept(applicationIdx)

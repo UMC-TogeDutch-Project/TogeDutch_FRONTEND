@@ -2,26 +2,133 @@ package umc.mobile.project.ram.chat
 
 import android.app.Dialog
 import android.content.Context
+import android.os.Bundle
+import android.util.Log
 import android.view.Window
 import android.widget.Button
+import android.widget.EditText
 import umc.mobile.project.R
+import umc.mobile.project.databinding.CustomDialogBinding
+import umc.mobile.project.databinding.PromisePopupDialogBinding
+import umc.mobile.project.login.MyCustomDialogInterface
 
-class PromisePopupDialog (context : Context) {
+
+class PromisePopupDialog(context: Context) : Dialog(context) {
+    var dlg_meet_time_txt = ""
     private val dlg = Dialog(context)
     private lateinit var btn_close : Button
     private lateinit var btn_send : Button
+    private lateinit var binding : PromisePopupDialogBinding
 
+    private var editText6: EditText? = null
+    private var editText7: EditText? = null
+    private var editText8: EditText? = null
+    private var editText9: EditText? = null
+    private var editText10: EditText? = null
+    private var editText11: EditText? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = PromisePopupDialogBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        start()
+    }
     fun start(){
-        dlg.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dlg.setContentView(R.layout.promise_popup_dialog)     //다이얼로그에 사용할 xml 파일을 불러옴
-        dlg.setCancelable(false)    //다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않도록 함
+//        dlg.requestWindowFeature(Window.FEATURE_NO_TITLE)
+//        dlg.setContentView(R.layout.promise_popup_dialog)     //다이얼로그에 사용할 xml 파일을 불러옴
+//        dlg.setCancelable(false)    //다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않도록 함
 
-        btn_close = dlg.findViewById(R.id.close_btn)
+//        btn_close = dlg.findViewById(R.id.close_btn)
+//        btn_close.setOnClickListener {
+//            dlg.dismiss()
+//        }
+//
+//        editText6 = dlg.findViewById(R.id.dialog_ann_et_year)
+//        editText7 = dlg.findViewById(R.id.dialog_ann_et_month)
+//        editText8 = dlg.findViewById(R.id.dialog_ann_et_day)
+//        editText9 = dlg.findViewById(R.id.dialog_ann_et_time)
+//        editText10 = dlg.findViewById(R.id.dialog_ann_et_hour)
+//        editText11 = dlg.findViewById(R.id.dialog_ann_et_minute)
+//
+//        dlg_meet_time_txt = string_to_timestamp(editText6!!.text.toString(),editText7!!.text.toString(), editText8!!.text.toString(), editText9!!.text.toString()
+//            ,editText10!!.text.toString(), editText11!!.text.toString())
+//
+//        Log.d("dlg_시간  : ", dlg_meet_time_txt)
+//
+//
+//        btn_send = dlg.findViewById(R.id.meet_time_send_btn)
+//        btn_send.setOnClickListener {
+//            onClickListener.onClicked(dlg_meet_time_txt)
+//            dlg.dismiss()
+//        }
+
+        btn_close = binding.closeBtn
         btn_close.setOnClickListener {
             dlg.dismiss()
         }
 
+        editText6 = binding.dialogAnnEtYear
+        editText7 = binding.dialogAnnEtMonth
+        editText8 = binding.dialogAnnEtDay
+        editText9 = binding.dialogAnnEtTime
+        editText10 = binding.dialogAnnEtHour
+        editText11 = binding.dialogAnnEtMinute
+
+
+        btn_send = binding.meetTimeSendBtn
+        btn_send.setOnClickListener {
+            dlg_meet_time_txt = string_to_timestamp(editText6!!.text.toString(),editText7!!.text.toString(), editText8!!.text.toString(), editText9!!.text.toString()
+                ,editText10!!.text.toString(), editText11!!.text.toString())
+
+
+
+            Log.d("dlg_시간  : ", dlg_meet_time_txt)
+            onClickListener.onClicked(dlg_meet_time_txt)
+            dlg.dismiss()
+        }
+
+
         dlg.show()
+    }
+
+    interface ButtonClickListener{
+        fun onClicked(text: String)
+    }
+
+    private lateinit var onClickListener: ButtonClickListener
+
+    fun setOnClickListener(listener: ButtonClickListener){
+        onClickListener = listener
+    }
+
+    private fun string_to_timestamp(year :String, month: String, day : String, am_pm : String, hour : String, minute : String) : String{
+        var hour_int = 0
+
+        // 01, 02 이런 식으로 들어왔을 때
+        if(hour.substring(0).equals("0")){
+            // 1의 자리만 substring
+            hour_int = hour.substring(1).toInt()
+            if(am_pm.equals("오후") && hour.toInt() != 12){
+                hour_int = hour.toInt() + 12
+            }
+            else{
+                hour_int = hour.toInt()
+            }
+        }else{
+            if(am_pm.equals("오후") && hour.toInt() != 12){
+                hour_int = hour.toInt() + 12
+            }
+            else{
+                hour_int = hour.toInt()
+            }
+        }
+
+        var set = "2022-01-23T03:34:56.000+00:00"
+//        var order_time = year + "-" + month + "-" + day + "T" + hour_int + ":" + minute + ":" + "00.000+00:00"
+        var order_time = year + month + day + hour_int + minute + "00"
+
+        return order_time
     }
 
 }

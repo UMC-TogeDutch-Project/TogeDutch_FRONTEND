@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "636904014613",
+    "project_id": "togedutch-6a491",
+    "storage_bucket": "togedutch-6a491.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:636904014613:android:2e2fa749be9de80a025f1c",
+        "android_client_info": {
+          "package_name": "umc.mobile.project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "636904014613-fbdq33nv76aderrgqt36echncnbn9tlq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3BRrx-XP8C5h3pFjGtbrROT0aHipQnAE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "636904014613-fbdq33nv76aderrgqt36echncnbn9tlq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

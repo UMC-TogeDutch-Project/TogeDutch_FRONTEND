@@ -13,10 +13,10 @@ class MatchingAcceptGetService {
         this.matchingAcceptGetResult = matchingAcceptGetResult
     }
 
-    fun getMatchingAccept(post_id: Int, user_id: Int) {
+    fun getMatchingAccept(user_id: Int, post_id: Int) {
         val matchingGetService = getRetrofit().create(MatchingAcceptGetRetrofitInterface::class.java)
 
-        matchingGetService.getMatchingAccept(post_id, user_id).enqueue(object : Callback<MatchingAcceptGetResponse> {
+        matchingGetService.getMatchingAccept(user_id, post_id).enqueue(object : Callback<MatchingAcceptGetResponse> {
             override fun onResponse(call: Call<MatchingAcceptGetResponse>, response: Response<MatchingAcceptGetResponse>, ) {
                 Log.d("RANDOMMATCHING-ACCEPT-GET SUCCESS", response.toString())
                 val resp: MatchingAcceptGetResponse = response.body()!!

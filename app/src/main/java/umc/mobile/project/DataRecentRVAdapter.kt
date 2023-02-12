@@ -15,13 +15,13 @@ import umc.mobile.project.announcement.AnnounceAlertDialogInterface
 import umc.mobile.project.announcement.Auth.LikePost.LikePostResult
 import umc.mobile.project.announcement.Auth.LikePost.LikePostService
 import umc.mobile.project.announcement.Auth.LikePost.Result
+import umc.mobile.project.announcement.Auth.PostPost.userPostId
 import umc.mobile.project.databinding.ItemDataBinding
 import umc.mobile.project.ram.Geocoder_location
 import umc.mobile.project.ram.my_application_1.post_id_to_detail
 import umc.mobile.project.ram.my_application_1.user_id_logined
 import umc.mobile.project.ram.my_application_1.user_id_var
-var likeId = 1
-var postUserIdx = 1
+
 class DataRecentRVAdapter(private val homeDataList: ArrayList<Post>) : RecyclerView.Adapter<DataRecentRVAdapter.RecentViewHolder>() {
 
     lateinit var context : Context
@@ -54,31 +54,41 @@ class DataRecentRVAdapter(private val homeDataList: ArrayList<Post>) : RecyclerV
 
             viewBinding.btnLikeThird.setOnClickListener {
 //                viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon_fill)
-                val likePostService = LikePostService()
-                likePostService.setLikePostResult(this)
-                likePostService.sendLike(user_id_logined, post_id_to_detail)
+                likePost()
+
             }
+
+        }
+        fun likePost(){
+            val likePostService = LikePostService()
+            likePostService.setLikePostResult(this)
+            likePostService.sendLike(user_id_logined, post_id_to_detail)
+            viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon_fill)
+
+
         }
 
         override fun LikePostSuccess(result: Result) {
-            viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon_fill)
             Toast.makeText(context, "관심 공고 등록 성공.", Toast.LENGTH_SHORT).show()
-
-
         }
 
         override fun LikePostFailureMyPost() {
+            viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon)
             val dlg = AnnounceAlertDialog(context, this)
             dlg.start5()
         }
 
         override fun LikePostFailureAdd() {
+            viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon)
             val dlg = AnnounceAlertDialog(context, this)
             dlg.start6()
         }
 
         override fun btnFinish() {
         }
+
+
+
 
 
     }

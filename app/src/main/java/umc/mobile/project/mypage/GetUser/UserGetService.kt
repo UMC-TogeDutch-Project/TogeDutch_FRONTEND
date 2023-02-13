@@ -9,6 +9,8 @@ import umc.mobile.project.getRetrofit
 class UserGetService {
     private lateinit var userGetResult: UserGetResult
 
+    val TAG: String = "로그"
+
     fun setUserGetResult(userGetResult: UserGetResult){
         this.userGetResult = userGetResult
     }
@@ -23,7 +25,10 @@ class UserGetService {
                 Log.d("success code: ", resp.code.toString())
                 when(resp.code) {
 //                    1000 ->
-                    1000 -> userGetResult.getUserSuccess(resp.code, resp.result!!)
+                    1000 -> {
+                        userGetResult.getUserSuccess(resp.code, resp.result!!)
+                        Log.d(TAG, "onResponse: ${resp}")
+                    }
                     else -> userGetResult.getUserFailure(resp.code, resp.message)
                 }
             }

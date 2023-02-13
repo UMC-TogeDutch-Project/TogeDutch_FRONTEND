@@ -57,6 +57,7 @@
         <activity android:name=".ram.my_application_1.MyPostActivity" />
         <activity android:name=".commercial.CommercialListActivity" />
         <activity android:name=".commercial.CommercialSignUpActivity" />
+        <activity android:name=".commercial.CommercialDetailActivity"></activity>
         <activity android:name=".ram.my_application_1.MyCommercialDetailActivity" />
         <activity android:name=".ram.my_application_1.current_application.CurrentApplicationActivity" />
         <activity android:name=".ram.chat.ChattingActivity" />

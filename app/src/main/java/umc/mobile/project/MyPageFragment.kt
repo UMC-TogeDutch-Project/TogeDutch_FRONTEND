@@ -17,9 +17,9 @@ import umc.mobile.project.mypage.alarmKeyword.MypageAlarmKeywordActivity
 import umc.mobile.project.mypage.notice.NoticeActivity
 import umc.mobile.project.ram.my_application_1.MyPostActivity
 import umc.mobile.project.mypage.profile.MyProfileActivity
-import umc.mobile.project.ram.my_application_1.user_id_var
 import umc.mobile.project.wishlist.WishListActivity
 import umc.mobile.project.mypage.withdrawal.WithdrawalActivity
+import umc.mobile.project.ram.my_application_1.user_id_logined
 
 class MyPageFragment: Fragment(), UserGetResult {
     private lateinit var viewBinding: FragmentMypageBinding
@@ -27,6 +27,7 @@ class MyPageFragment: Fragment(), UserGetResult {
     var userImage : String = ""
     val SUBACTIITY_REQUEST_CODE = 100
 
+    val TAG: String = "로그"
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,6 +35,7 @@ class MyPageFragment: Fragment(), UserGetResult {
     ): View {
         viewBinding = FragmentMypageBinding.inflate(layoutInflater)
 
+        Log.d(TAG, "onCreateView: ${user_id_logined}")
         getUser()
 
         viewBinding.btnProfile.setOnClickListener {
@@ -85,7 +87,7 @@ class MyPageFragment: Fragment(), UserGetResult {
     private fun getUser(){
         val userGetService = UserGetService()
         userGetService.setUserGetResult(this)
-        userGetService.getUser(user_id_var) // 임의로 지정
+        userGetService.getUser(user_id_logined) // 임의로 지정
 
     }
 

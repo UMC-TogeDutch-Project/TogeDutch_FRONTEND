@@ -62,14 +62,18 @@
                     android:gravity="center"
                     android:hint="공고 제목을 입력해주세요"
                     android:paddingLeft="7dp"
-                    android:paddingRight="7dp" />
+                    android:paddingRight="7dp"
+                    android:singleLine="true"
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/notosanskr_black"
                     android:text="가게 정보"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+
+                    />
 
                 <EditText
                     android:id="@+id/ann_et_store"
@@ -81,7 +85,9 @@
                     android:gravity="center"
                     android:hint="URL 링크"
                     android:paddingLeft="7dp"
-                    android:paddingRight="7dp" />
+                    android:paddingRight="7dp"
+                    android:singleLine="true"
+                    />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -99,7 +105,9 @@
                     android:gravity="center"
                     android:hint="카테고리"
                     android:paddingLeft="7dp"
-                    android:paddingRight="7dp" />
+                    android:paddingRight="7dp"
+                    android:singleLine="true"
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -118,7 +126,9 @@
                     android:gravity="center"
                     android:hint="0000 원"
                     android:paddingLeft="7dp"
-                    android:paddingRight="7dp" />
+                    android:paddingRight="7dp"
+                    android:singleLine="true"
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -138,7 +148,9 @@
                     android:gravity="center"
                     android:hint="0000 원"
                     android:paddingLeft="7dp"
-                    android:paddingRight="7dp" />
+                    android:paddingRight="7dp"
+                    android:singleLine="true"
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -164,7 +176,9 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+
+                        />
 
                     <ImageButton
                         android:id="@+id/image_btn_map"
@@ -322,7 +336,9 @@
                     android:gravity="center"
                     android:hint="0000 명"
                     android:paddingLeft="7dp"
-                    android:paddingRight="7dp" />
+                    android:paddingRight="7dp"
+                    android:singleLine="true"
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"

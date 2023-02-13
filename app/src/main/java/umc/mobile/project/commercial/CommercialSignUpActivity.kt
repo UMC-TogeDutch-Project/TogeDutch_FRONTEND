@@ -148,8 +148,8 @@ class CommercialSignUpActivity: AppCompatActivity(), CommercialRecordResult {
             {
                 button?.isClickable =  true
                 button?.backgroundTintList = ColorStateList.valueOf(color)
-                Toast.makeText(applicationContext, "활성화", Toast.LENGTH_SHORT)
-                    .show()
+//                Toast.makeText(applicationContext, "활성화", Toast.LENGTH_SHORT)
+//                    .show()
             } else  {
                 button?.isClickable = false
                 button?.backgroundTintList = ColorStateList.valueOf(color2)
@@ -211,8 +211,8 @@ class CommercialSignUpActivity: AppCompatActivity(), CommercialRecordResult {
 
                 setAdjImgUri(imagePath!!)
 
-
-                Toast.makeText(this, "사진 첨부", Toast.LENGTH_SHORT).show()
+//
+//                Toast.makeText(this, "사진 첨부", Toast.LENGTH_SHORT).show()
             }else {
                 Toast.makeText(this, "오류가 발생하였습니다.", Toast.LENGTH_SHORT).show()
             }
@@ -275,7 +275,7 @@ class CommercialSignUpActivity: AppCompatActivity(), CommercialRecordResult {
 
 
     override fun commercialRecordSuccess(result: Result) {
-        Toast.makeText(this, "광고 등록 성공.", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this, "광고 등록 성공.", Toast.LENGTH_SHORT).show()
         viewBinding.btnSeeNow.text = "결제하기"
 
         viewBinding.btnSeeNow.setOnClickListener {

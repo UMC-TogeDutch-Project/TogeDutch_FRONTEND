@@ -17,13 +17,12 @@ import umc.mobile.project.ram.Geocoder_location
 import umc.mobile.project.ram.my_application_1.post_id_to_detail
 
 
-class OrderRVAdapter (private val orderList: ArrayList<Post>): RecyclerView.Adapter<OrderRVAdapter.ViewHolder>(),
-    EmotionStatusGetResult {
+class OrderRVAdapter (private val orderList: ArrayList<Post>): RecyclerView.Adapter<OrderRVAdapter.ViewHolder>() {
     val TAG: String = "로그"
 
     private lateinit var viewBinding: ReviewCollectionDialogBinding
     private lateinit var reviewRVAdapter: ReviewRVAdapter
-    var reviewList = ArrayList<ReviewData>()
+
     lateinit var context : Context
 
     var postId : Int = -1
@@ -85,12 +84,10 @@ class OrderRVAdapter (private val orderList: ArrayList<Post>): RecyclerView.Adap
             Log.d("postId값: ", postId.toString())
             Log.d("post_id값: ", post.post_id.toString())
 
-            // 후기 점수
-            getEmotionStatus()
 
             binding.listItemScore.setOnClickListener {
                 Log.d(TAG, "화면 연결")
-                val dialog = ReviewPopupDialog(context)
+                val dialog = ReviewPopupDialog(context, postId)
                 dialog.start()
 
             }
@@ -107,23 +104,4 @@ class OrderRVAdapter (private val orderList: ArrayList<Post>): RecyclerView.Adap
 
     private lateinit var itemClickListener : OnItemClickListener
 
-    // 점수
-    fun getEmotionStatus() {
-        val emotionStatusGetService = EmotionStatusGetService()
-        emotionStatusGetService.setEmotionStatusGetResult(this)
-        emotionStatusGetService.getEmotionStatus(postId)
-    }
-
-    override fun getEmotionStatusSuccess(code: Int, result: EmotionStatusGet) {
-        Log.d("result post_id값 : ", result.post_id.toString())
-        Log.d("점수 값 : ", result.avg.toString())
-
-        binding.score.text = result.avg.toString()
-        Log.d("binding.score.text 값 : ", binding.score.text.toString())
-    }
-
-    override fun getEmotionStatusFailure(code: Int, message: String) {
-        Log.d("실패 : ", code.toString())
-        Log.d("실패 : ", message)
-    }
 }

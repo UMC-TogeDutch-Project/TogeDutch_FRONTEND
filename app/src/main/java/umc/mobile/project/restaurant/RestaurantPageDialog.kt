@@ -23,6 +23,7 @@ class RestaurantPageDialog(context: Context) {
                 dlg.dismiss()
             }
 
+
             dlg.show()
         }
 

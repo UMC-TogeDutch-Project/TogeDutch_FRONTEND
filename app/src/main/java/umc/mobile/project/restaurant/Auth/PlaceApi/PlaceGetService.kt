@@ -5,7 +5,7 @@ import com.google.android.gms.maps.model.LatLng
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import umc.mobile.project.getRetrofit2
+import umc.mobile.project.getRetrofit
 import umc.mobile.project.latitude_var
 import umc.mobile.project.longtitude_var
 
@@ -18,7 +18,7 @@ class PlaceGetService {
     }
 //    location: LatLng,
     fun getPost( radius: Int, type: String, language: String, key: String){
-        val postUploadDetailGetService = getRetrofit2().create(PlaceGetRetrofitInterfaces::class.java)
+        val postUploadDetailGetService = getRetrofit().create(PlaceGetRetrofitInterfaces::class.java)
         val location = LatLng(latitude_var, longtitude_var)
         postUploadDetailGetService.getPost( radius, type, language, key).enqueue(object : Callback<PlaceGetResponse> {
             override fun onResponse(call: Call<PlaceGetResponse>, response: Response<PlaceGetResponse>,) {

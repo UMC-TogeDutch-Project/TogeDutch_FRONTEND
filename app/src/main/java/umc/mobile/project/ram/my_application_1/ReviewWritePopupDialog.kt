@@ -189,7 +189,7 @@ class ReviewWritePopupDialog(context : Context) : JoinApplicationGetResult, Revi
 
         dlg.dismiss()
 
-        Toast.makeText(context_, "후기 전송 성공.", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(context_, "후기 전송 성공.", Toast.LENGTH_SHORT).show()
     }
 
     override fun reviewFailure() {

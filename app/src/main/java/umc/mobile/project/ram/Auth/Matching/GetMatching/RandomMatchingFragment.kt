@@ -52,7 +52,7 @@ class RandomMatchingFragment: Fragment(), MatchingGetResult, MatchingAcceptGetRe
             Glide.with(this).load(arguments?.getString("image")).into(viewBinding.profileImage)
         }
 
-        Toast.makeText(context, "랜덤 매칭 성공", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(context, "랜덤 매칭 성공", Toast.LENGTH_SHORT).show()
 
         // 메이트 매칭 신청 (알람 가게 설정)
         viewBinding.btnMatchingApplication.setOnClickListener {
@@ -88,7 +88,7 @@ class RandomMatchingFragment: Fragment(), MatchingGetResult, MatchingAcceptGetRe
             Glide.with(this).load(result.image).into(viewBinding.profileImage)
 
 
-            Toast.makeText(context, "랜덤 매칭 성공", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(context, "랜덤 매칭 성공", Toast.LENGTH_SHORT).show()
 
         } else {
             Toast.makeText(context, "랜덤 매칭 3회 초과", Toast.LENGTH_SHORT).show()
@@ -115,7 +115,7 @@ class RandomMatchingFragment: Fragment(), MatchingGetResult, MatchingAcceptGetRe
 
         sendMatching = true
 
-        Toast.makeText(context, "메이트 매칭 성공", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(context, "메이트 매칭 성공", Toast.LENGTH_SHORT).show()
     }
 
     override fun getMatchingAcceptFailure(code: Int, message: String) {

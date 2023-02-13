@@ -21,7 +21,7 @@ data class MateData(
     @SerializedName("title")
     val title : String,
 
-    @SerializedName("user_name")
-    val user_name : String
+    @SerializedName("applicant")
+    val applicant : String
 
 )

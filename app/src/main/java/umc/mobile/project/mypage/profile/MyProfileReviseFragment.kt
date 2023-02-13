@@ -126,7 +126,7 @@ class MyProfileReviseFragment : Fragment(), PasswordPatchResult {
 
     override fun changePasswordSuccess(result: ChangePasswordResult) {
         Log.d("비밀번호 변환 값 ==========================", result.password)
-        Toast.makeText(requireContext(), "비밀번호 변경 성공.", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(requireContext(), "비밀번호 변경 성공.", Toast.LENGTH_SHORT).show()
     }
 
     override fun changePasswordFailure() {

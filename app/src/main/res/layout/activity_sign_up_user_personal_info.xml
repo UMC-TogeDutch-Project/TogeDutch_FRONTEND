@@ -29,29 +29,203 @@
         android:textStyle="bold"
         />
 
-    <LinearLayout
+    <ScrollView
         android:id="@+id/linearAgree"
         android:layout_width="match_parent"
         android:layout_height="400dp"
-        android:layout_marginTop="20dp"
         android:layout_marginStart="18dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="18dp"
-        android:background="@drawable/sign_up_alram__edit_text_box"
-        >
+        android:background="@drawable/sign_up_alram__edit_text_box">
 
-        <TextView
-            android:id="@+id/tvAgreement"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="19dp"
-            android:layout_marginBottom="60dp"
-            android:layout_marginStart="21dp"
-            android:layout_marginEnd="21dp"
-            android:text="아직미정"
-            />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/AgreeTitle1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:text="가치더치 개인정보처리방:" />
+
+            <TextView
+                android:id="@+id/AgreeTitle2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="가치더치는 서비스의 제공에 있어 정보통신망 이용촉진 및 정보보호 등에 관한 법률, 개인정보보호법 등 관련 개인정보보호법 등 관련 개인정보보호 규정을 철저히 준수하며, 관련법령에 따라 본 개인정보 처리방침을 정하여 이용자의 권익 보호에 최선을 다하고 있습니다.
+" />
+
+            <TextView
+                android:id="@+id/AgreeTitle3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="가치더치는 본 개인정보 처리방침을 통하여 가치더치가 어떤 정보를 수집하고, 수집한 정보를 어떻게 사용하며 필요에 따라 누구와 이를 공유(위탁 또는 제공)하는지 등에 관한 정보를 알려 드립니다. 본 개인정보처리방침은 가치더치가 제공하는 서비스에 적용됩니다." />
+
+            <TextView
+                android:id="@+id/firstAgreeTitle1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:text="1. 수집하는 개인정보 항목 및 수집방법" />
+
+            <TextView
+                android:id="@+id/firstAgreeTitle2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:text="회원가입 시점에 가치더치가 이용자로부터 수집하는 개인정보는 아래와 같습니다. " />
+
+            <TextView
+                android:id="@+id/firstAgreeTitle3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:text="이메일 가입 시
+" />
+
+            <TextView
+                android:id="@+id/firstAgreeTitle4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:text="- 필수항목 : 이메일, 실명, 휴대전화번호, 비밀번호, 위치정보" />
+
+            <TextView
+                android:id="@+id/firstAgreeTitle5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:text="카카오계정으로 간편 가입 시" />
+
+            <TextView
+                android:id="@+id/firstAgreeTitle6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:text="- 필수항목 : 실명, 카카오계정(이메일 주소)" />
+
+            <TextView
+                android:id="@+id/firstAgreeTitle7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:text="- 선택항목 : 닉네임"/>
 
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/secondAgreeTitle1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="15dp"
+                android:text="2. 개인정보 수집 및 이용목적"/>
+
+            <TextView
+                android:id="@+id/secondAgreeTitle2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:text="가치더치는 서비스의 회원관리, 서비스 제공, 서비스 개선 및 개발, 안전한 서비스 이용환경 구축 등 아래의 목적으로만 이용자의 개인정보를 수집하여 이용합니다."
+                />
+
+            <TextView
+                android:id="@+id/thirdAgreeTitle1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="15dp"
+                android:text="3. 개인정보의 제 3자 제공"
+                />
+
+            <TextView
+                android:id="@+id/thirdAgreeTitle2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:text="가치더치는 원칙적으로 이용자 동의 없이 개인정보를 제 3자에게 제공하지 않습니다. 다만 아래의 경우는 예외로 합니다."
+                />
+
+            <TextView
+                android:id="@+id/thirdAgreeTitle3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:text="- 이용자들이 사전에 동의한 경우"
+                />
+
+            <TextView
+                android:id="@+id/thirdAgreeTitle4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:text="- 통계작성, 학술연구, 시장조사를 위하여 특정개인을 식별할 수 없는 형태로 가공하여 제공하는 경우"
+                />
+
+            <TextView
+                android:id="@+id/thirdAgreeTitle5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:text="- 이용자의 생명이나 안전에 급박한 위험이 확인되어 이를 해소하기 위한 경우"
+                />
+
+            <TextView
+                android:id="@+id/thirdAgreeTitle6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:text="- 기타 관련법령의 의해 개인정보 제출의무가 발생한 경우"
+                />
+
+            <TextView
+                android:id="@+id/lastAgreeTitle1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="20dp"
+                android:text="- 제공받는자 : 가치더치"
+                />
+
+            <TextView
+                android:id="@+id/lastAgreeTitle2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="20dp"
+                android:text="위 모든사항에 동의합니다."
+                />
+
+            <CheckBox
+                android:id="@+id/AgreeCheckbox"
+                android:layout_marginStart="5dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
+
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
 
     <View
         android:layout_width="match_parent"
@@ -73,9 +247,12 @@
         android:layout_width="230dp"
         android:layout_height="43dp"
         android:layout_gravity="center"
-        android:background="@drawable/sign_up_btn_background_blue_color"
+        android:background="@drawable/sign_up_btn_background_grey_color"
         android:text="다음"
-        android:textColor="#FFFFFF" />
+        android:textColor="#FFFFFF"
+        android:enabled="false"
+
+        />
 
 
 </LinearLayout>

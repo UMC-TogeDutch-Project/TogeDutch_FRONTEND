@@ -21,17 +21,17 @@ class GetNoticeService {
         val getNoticeService = getRetrofit().create(GetNoticeServiceInterface::class.java)
         getNoticeService.getNoticeById(noticeIdx).enqueue(object: Callback<GetNoticeResponse> {
             override fun onResponse(call: Call<GetNoticeResponse>, response: Response<GetNoticeResponse>) {
-                Log.d("RECORD/SUCCESS",response.toString())
-                val getNoticeResponse: GetNoticeResponse = response.body()!!
-
-                when(getNoticeResponse.code) {
-                    1000 -> getNoticeResult.getNoticeSuccess(getNoticeResponse.result)
-                    else -> getNoticeResult.getNoticeFailure()
+                Log.d("NOTICEDETAIL-GET SUCCESS",response.toString())
+                val resp: GetNoticeResponse = response.body()!!
+                Log.d("success code: ", resp.code.toString())
+                when(resp.code) {
+                    1000 -> getNoticeResult.getNoticeSuccess(resp.code, resp.result!!)
+                    else -> getNoticeResult.getNoticeFailure(resp.code, resp.message)
                 }
             }
 
             override fun onFailure(call: Call<GetNoticeResponse>, t: Throwable) {
-                Log.d("RECORD/FAILURE",t.message.toString())
+                Log.d("NOTICEDETAIL-GET FAILURE",t.message.toString())
             }
         })
     }

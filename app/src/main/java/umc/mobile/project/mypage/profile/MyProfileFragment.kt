@@ -13,17 +13,19 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import umc.mobile.project.databinding.FragmentMyprofileBinding
+import umc.mobile.project.mypage.profile.emotionStatus.EmotionStatusGet
+import umc.mobile.project.mypage.profile.emotionStatus.EmotionStatusGetResult
+import umc.mobile.project.mypage.profile.emotionStatus.EmotionStatusGetService
 import umc.mobile.project.ram.Auth.Post.GetPostUpload.PostUploadGetResult
 import umc.mobile.project.ram.Auth.Post.GetPostUpload.PostUploadGetService
 import umc.mobile.project.ram.my_application_1.*
 
 
-class MyProfileFragment : Fragment(), PostUploadGetResult {
+class MyProfileFragment : Fragment(), PostUploadGetResult, EmotionStatusGetResult {
     private lateinit var viewBinding: FragmentMyprofileBinding
     //private lateinit var orderRVAdapter: OrderRVAdapter
     //private lateinit var reviewRVAdapter: ReviewRVAdapter
     var postUploadList = ArrayList<Post>()
-    var reviewList = ArrayList<ReviewData>()
 
     var myProfileActivity: MyProfileActivity? = null
 
@@ -85,6 +87,7 @@ class MyProfileFragment : Fragment(), PostUploadGetResult {
     override fun onResume() {
         super.onResume()
         getPostUpload()
+        //getEmotionStatus()
     }
 
     private fun initRecycler(result : ArrayList<Post>) {
@@ -117,36 +120,35 @@ class MyProfileFragment : Fragment(), PostUploadGetResult {
     ) {
         initRecycler(result)
 
-        Toast.makeText(context, "업로드 불러오기 성공", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(context, "업로드 불러오기 성공", Toast.LENGTH_SHORT).show()
     }
 
     override fun getPostUploadFailure(code: Int, message: String) {
         Toast.makeText(context, "업로드 불러오기 실패", Toast.LENGTH_SHORT).show()
     }
 
-//    private fun initRecyclerView() {
-//        orderList.apply{
-//            add(OrderData("푸라닭 같이 주문하실 분!", "가톨릭대 정문 앞", "3시 00분 주문", 10))
-//            add(OrderData("버거킹 같이 시키실 분 구합니다 ~", "동덕여대 인문관 앞", "3시 30분 주문", 10))
-//            add(OrderData("김밥천국 배달 메이트 구해요", "할리스 한양대점 앞", "2시 10분 주문", 5))
-//        }
-//        orderRVAdapter = OrderRVAdapter(orderList)
-//        viewBinding.orderList.adapter = orderRVAdapter
-//
-//        orderRVAdapter.setItemClickListener(object: OrderRVAdapter.OnItemClickListener{
-//            override fun onItemClick(order: OrderData) {
-//                // 공고 상세 페이지 이동
-////                val dialog = activity?.let { ParticipatePopupDialog(it) }
-////                dialog?.start()
-//                val intent = Intent(context, MyCommercialDetailActivity::class.java)
-//                startActivity(intent)
-//            }
-//        })
-//
-//        orderRVAdapter.notifyDataSetChanged()
-//    }
-
     override fun onDestroy() {
         super.onDestroy()
+    }
+
+    // 점수
+    fun getEmotionStatus() {
+        val emotionStatusGetService = EmotionStatusGetService()
+        emotionStatusGetService.setEmotionStatusGetResult(this)
+        emotionStatusGetService.getEmotionStatus(user_id_logined)
+    }
+
+    override fun getEmotionStatusSuccess(code: Int, result: ArrayList<EmotionStatusGet>) {
+        for(i in 0 .. result.size - 1) {
+            Log.d("result post_id값 : ", result[i].post_id.toString())
+            Log.d("점수 값 : ", result[i].avg.toString())
+        }
+
+        Log.d("점수 조회", "성공")
+    }
+
+    override fun getEmotionStatusFailure(code: Int, message: String) {
+        Log.d("실패 : ", code.toString())
+        Log.d("실패 : ", message)
     }
 }

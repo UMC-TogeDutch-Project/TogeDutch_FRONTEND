@@ -1,8 +1,9 @@
 package umc.mobile.project.mypage.notice.detail
 
-import umc.mobile.project.mypage.notice.detail.Notice
+import umc.mobile.project.mypage.notice.NoticeGet
+
 
 interface GetNoticeResult {
-    fun getNoticeSuccess(result: Notice)
-    fun getNoticeFailure()
+    fun getNoticeSuccess(code: Int, result: NoticeGet)
+    fun getNoticeFailure(code : Int, message : String)
 }

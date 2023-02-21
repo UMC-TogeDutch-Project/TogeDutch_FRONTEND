@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+    // Add the Google Services Gradle Plugin
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -74,13 +76,21 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.14.2'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
 
-    // 23.02.06 제이 추가
     // Kakao-SDK
     implementation "com.kakao.sdk:v2-user:2.8.5" // 카카오 로그인
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.5"
 
-    // 23.02.11 제이 추가
     // 주변 관심장소 PlaceID 확인용
     implementation files('libs/placebasic-release.aar')
+
+    // firebase
+    implementation platform('com.google.firebase:firebase-bom:31.2.2')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    // Cloud-Messaging
+    implementation 'com.google.firebase:firebase-messaging-ktx'
+
+    // Add the dependencies for any other desired Firebase products
+    // https://firebase.google.com/docs/android/setup#available-libraries
 }

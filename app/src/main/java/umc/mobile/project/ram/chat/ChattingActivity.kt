@@ -16,6 +16,7 @@ import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -32,12 +33,15 @@ import org.json.JSONObject
 import ua.naiksoftware.stomp.Stomp
 import ua.naiksoftware.stomp.dto.LifecycleEvent
 import umc.mobile.project.R
+import umc.mobile.project.announcement.PlaceSearchActivity
 import umc.mobile.project.databinding.ActivityChattingBinding
 import umc.mobile.project.ram.Auth.Application.GetUser.UserGet
 import umc.mobile.project.ram.Auth.Application.GetUser.UserGetResult
 import umc.mobile.project.ram.Auth.Application.GetUser.UserGetService
 import umc.mobile.project.ram.Auth.Chat.ChatAllGet.ChatAllGetResult
 import umc.mobile.project.ram.Auth.Chat.ChatAllGet.ChatAllGetService
+import umc.mobile.project.ram.Auth.Chat.ChatGet.ChatGetResult
+import umc.mobile.project.ram.Auth.Chat.ChatGet.ChatGetService
 import umc.mobile.project.ram.Auth.Chat.ChatMeetTimePost.ChatMeetTime
 import umc.mobile.project.ram.Auth.Chat.ChatMeetTimePost.PostChatMeetTimeResult
 import umc.mobile.project.ram.Auth.Chat.ChatMeetTimePost.PostChatMeetTimeService
@@ -45,6 +49,8 @@ import umc.mobile.project.ram.Auth.Chat.ChatPost.PostChatResult
 import umc.mobile.project.ram.Auth.Chat.ChatPost.PostChatService
 import umc.mobile.project.ram.Auth.Chat.ChatPost.Result
 import umc.mobile.project.ram.Auth.Chat.ChatPost.chatPost
+import umc.mobile.project.ram.Auth.ChatLocation.PostLocationResult
+import umc.mobile.project.ram.Auth.ChatLocation.PostLocationService
 import umc.mobile.project.ram.Auth.ChatPhoto.ChatPhotoPost.PostPhotoResult
 import umc.mobile.project.ram.Auth.ChatPhoto.ChatPhotoPost.PostPhotoService
 import umc.mobile.project.ram.Auth.Post.GetPost.PostGetService
@@ -62,41 +68,51 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-var post_id_dialog : Int = 0
-var user_id_dialog : Int = 0
+var post_id_dialog: Int = 0
+var user_id_dialog: Int = 0
 var location_dialog = ""
-class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult, PostGetAllResult, PostChatResult, ChatAllGetResult,PostPhotoResult, PostChatMeetTimeResult {
+
+class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult, PostGetAllResult,
+    PostChatResult, ChatAllGetResult, PostPhotoResult,
+    PostChatMeetTimeResult, ChatGetResult, PostLocationResult {
     lateinit var binding: ActivityChattingBinding
     lateinit var chatRVAdapter: ChatRVAdapter
     var timestamp = Timestamp(Date().time)
     var chatList = ArrayList<Chat>()
 
-    lateinit var edit_message : EditText
-    lateinit var btn_submit : AppCompatButton
-    lateinit var more_btn : AppCompatButton
-    var chatRoom_id_get : Int = 0
+    lateinit var edit_message: EditText
+    lateinit var btn_submit: AppCompatButton
+    lateinit var more_btn: AppCompatButton
+    var chatRoom_id_get: Int = 0
 
-    lateinit var dialog_more : BottomSheetDialog
-    lateinit var dialog_etc : BottomSheetDialog
+    lateinit var dialog_more: BottomSheetDialog
+    lateinit var dialog_etc: BottomSheetDialog
 
     private var PICK_IMAGE = 1
-    var picture : MultipartBody.Part? = null
+    var picture: MultipartBody.Part? = null
 
     var writer_me = ""
     var type_me = "TALK"
 
+    var latitude: Double = 0.0
+    var longitude: Double = 0.0
+    val SUBACTIITY_REQUEST_CODE = 100
 
+    var place_basic = ""
+    var place_detail = ""
+
+    lateinit var place_chat_iv: AppCompatButton
+    lateinit var picture_chat_iv: AppCompatButton
 
     /// stomp 연결
-    private var url = "ws://ec2-3-34-255-129.ap-northeast-2.compute.amazonaws.com:9000/stomp/chat/websocket"
+    private var url =
+        "ws://ec2-3-34-255-129.ap-northeast-2.compute.amazonaws.com:9000/stomp/chat/websocket"
     val stompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, url)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChattingBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
 
         val postGetAllService = PostGetAllService() // 공고 전체 불러오기
         postGetAllService.setPostGetResult(this)
@@ -108,10 +124,10 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
         chatRoom_id_get = intent.getIntExtra("chatRoom_id", -1)
         Log.d("ChattingActivity 넘어온 chatRoom_id: $chatRoom_id_get", "")
 
-        if(chatRoom_id_get != -1){
+        if (chatRoom_id_get != -1) {
             try {
                 runStomp(chatRoom_id_get, user_id_logined)
-            } catch (e:Exception){
+            } catch (e: Exception) {
                 Log.d("ERROR", "stomp 자체의 오류")
                 Log.d("ERROR", e.message.toString())
             }
@@ -138,7 +154,7 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
 
         /// 버튼 클릭
 
-        binding.itemProfileImg.setOnClickListener{
+        binding.itemProfileImg.setOnClickListener {
             val dlg = PostDetailPopupDialog(this)
             dlg.start()
         }
@@ -176,10 +192,13 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
 //            val dialog:BottomSheetDialog = BottomSheetDialog(this)
             dialog_more = BottomSheetDialog(this)
             dialog_more.setContentView(R.layout.chat_bottom_dialog_more)
+            picture_chat_iv = dialog_more.findViewById<AppCompatButton>(R.id.picture_chat_iv)!!
+            place_chat_iv = dialog_more.findViewById<AppCompatButton>(R.id.place_chat_iv)!!
 
             val photo_btn = dialog_more.findViewById<AppCompatButton>(R.id.btn_photo)
             photo_btn?.setOnClickListener {
                 Toast.makeText(this, "사진 클릭", Toast.LENGTH_LONG).show()
+
 
                 val status = ContextCompat.checkSelfPermission(
                     this,
@@ -210,24 +229,19 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
             val location_btn = dialog_more.findViewById<AppCompatButton>(R.id.btn_location)
             location_btn?.setOnClickListener {
 
-                val dlg = LocationPopupDialog(this)
-                dlg.start()
+//                val dlg = LocationPopupDialog(this)
+//                dlg.start()
+                val intent = Intent(this@ChattingActivity, PlaceSearchActivity::class.java)
+                startActivityForResult(intent, SUBACTIITY_REQUEST_CODE)
 
             }
 
             val calendar_btn = dialog_more.findViewById<AppCompatButton>(R.id.btn_calendar)
             calendar_btn?.setOnClickListener {
-//                val dlg = PromisePopupDialog(this)
-//                dlg.start()
-//                dlg.setOnClickListener(object: PromisePopupDialog.ButtonClickListener{
-//                    override fun onClicked(text: String) {
-//                        // 약속시간 전송하는거 해주기
-//                        sendMeetTime(text)
-//                    }
-//                })
                 val promisePopupDialog = PromisePopupDialog(this)
                 promisePopupDialog.show()
-                promisePopupDialog.setOnClickListener(object: PromisePopupDialog.ButtonClickListener{
+                promisePopupDialog.setOnClickListener(object :
+                    PromisePopupDialog.ButtonClickListener {
                     override fun onClicked(text: String) {
                         // 약속시간 전송하는거 해주기
                         Log.d("가져온 time : ", text)
@@ -239,7 +253,17 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
             }
 
             dialog_more.findViewById<AppCompatButton>(R.id.btn_submit_dialog)!!.setOnClickListener {
-                sendPhoto(picture!!, chatRoom_id_get, user_id_logined)
+                if (picture_chat_iv.visibility == View.VISIBLE) {
+                    picture_chat_iv.visibility == View.GONE
+                    edit_message.hint = "메시지를 입력하세요"
+                    sendPhoto(picture!!, chatRoom_id_get, user_id_logined)
+                } else if (place_chat_iv.visibility == View.VISIBLE) {
+                    place_chat_iv.visibility == View.GONE
+                    edit_message.hint = "메시지를 입력하세요"
+                    // 장소 전송
+                    sendLocation(chatRoom_id_get, user_id_logined, latitude, longitude)
+                }
+
             }
 
             dialog_more.show()
@@ -248,39 +272,27 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
     }
 
 
-
-
     @SuppressLint("CheckResult")
-    private fun runStomp(chatRoom_id : Int, user_id : Int){ // user_id는 현재 로그인한 유저 아이디!!!
+    private fun runStomp(chatRoom_id: Int, user_id: Int) { // user_id는 현재 로그인한 유저 아이디!!!
         stompClient.connect()
-        
+
         stompClient.topic("/sub/chat/room/${chatRoom_id}").subscribe { topicMessage ->
             Log.d("message Receive", topicMessage.payload)
-            val sender = JSONObject(topicMessage.payload).getString("userId").toInt() // 메세지 보낸 user_id 가져오기
+            val sender =
+                JSONObject(topicMessage.payload).getString("userId").toInt() // 메세지 보낸 user_id 가져오기
 
-            if(sender != user_id){
+            if (sender != user_id) {
                 val chat_id = JSONObject(topicMessage.payload).getInt("chatId")
-                val chatRoom_id = JSONObject(topicMessage.payload).getInt("chatRoomId")
-                val user_id = JSONObject(topicMessage.payload).getInt("userId")
 
-                val created_at_before = JSONObject(topicMessage.payload).getString("createAt")
-                var created_at : Timestamp = Timestamp.valueOf(created_at_before)
 
-                val content = JSONObject(topicMessage.payload).getString("content")
-                val status = JSONObject(topicMessage.payload).getString("status")
-                val writer = JSONObject(topicMessage.payload).getString("writer")
-
-                chatRVAdapter.addItem(Chat(chat_id, chatRoom_id, user_id, created_at, content, status, writer, 1))
-
-                runOnUiThread{
-                    chatRVAdapter.notifyDataSetChanged()
-                }
+                val chatGetService = ChatGetService()
+                chatGetService.setChatGetResult(this)
+                chatGetService.getChat(chatRoom_id_get, chat_id)
             }
-
         }
 
         stompClient.lifecycle().subscribe { lifecycleEvent ->
-            when(lifecycleEvent.type){
+            when (lifecycleEvent.type) {
                 LifecycleEvent.Type.OPENED -> {
                     Log.d("OPENED", "opened")
                 }
@@ -302,22 +314,98 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
         }
     }
 
-    fun getChatPost(content: String) : chatPost{
+    override fun getChatSuccess(code: Int, result: Chat) {
+        Log.d("CHAT-GET 성공", "")
+        val chat_id = result.chat_id
+        val chatRoom_id = result.chatRoom_id
+        val user_id = result.user_id
+
+        val createAt: Timestamp = result.created_at
+        Log.d("************* 받은 createAt :", createAt.toString())
+
+        val content = result.content
+        val writer = result.writer
+
+        if (result.content.length >= 17 && result.content[4].toString()
+                .equals("-") && result.content[7].toString()
+                .equals("-") && result.content[13].toString()
+                .equals(":") && result.content[16].toString().equals(":")
+        ) {
+            println("시간 선택")
+            chatRVAdapter.addItem(
+                Chat(
+                    chat_id,
+                    chatRoom_id,
+                    user_id,
+                    createAt,
+                    content,
+                    writer,
+                    "TALK",
+                    4
+                )
+            )
+        } else if (result.content.length >= 17 && result.content.substring(0 until 4)
+                .equals("장소채팅")
+        ) {
+            println("장소 선택")
+            var place_text = result.content.substring(4)
+            chatRVAdapter.addItem(
+                Chat(
+                    chat_id,
+                    chatRoom_id,
+                    user_id,
+                    createAt,
+                    place_text,
+                    writer,
+                    "TALK",
+                    5
+                )
+            )
+        }else {
+            chatRVAdapter.addItem(
+                Chat(
+                    chat_id,
+                    chatRoom_id,
+                    user_id,
+                    createAt,
+                    content,
+                    writer,
+                    "TALK",
+                    1
+                )
+            )
+        }
+
+        runOnUiThread {
+            chatRVAdapter.notifyDataSetChanged()
+        }
+
+    }
+
+    override fun getChatFailure(code: Int, message: String) {
+        Log.d("CHAT-GET 실패", "")
+    }
+
+    fun getChatPost(content: String): chatPost {
 
         return chatPost(content)
     }
 
-    fun sendStomp(content: String, chatRoom_id: Int, user_id: Int){
+    fun sendStomp(content: String, chatRoom_id: Int, user_id: Int) {
         // 서버에 post해서 데이터베이스에서 chat_id 값까지 생성된 chat 데이터 가져오기
         val postChatService = PostChatService() // chat 보내놓기
         postChatService.setChatResult(this)
         var chatPost = getChatPost(content).content
-        Log.d("chatRoom_id : $chatRoom_id, user_id : $user_id, chatPost : $chatPost", "CHECK" )
+        Log.d("chatRoom_id : $chatRoom_id, user_id : $user_id, chatPost : $chatPost", "CHECK")
         postChatService.sendChat(chatRoom_id, user_id, getChatPost(content))
+
     }
 
     override fun sendChatSuccess(result: Result) {
-        Log.d("=============================== Message Post 성공!!!!!!!!!!!!!!!!!!!!", "==================================================" )
+        Log.d(
+            "=============================== Message Post 성공!!!!!!!!!!!!!!!!!!!!",
+            "=================================================="
+        )
         val data = JSONObject()
         data.put("chatId", result.chatId)
         data.put("chatRoomId", result.chatRoomId)
@@ -333,20 +421,54 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
         edit_message.text = Editable.Factory.getInstance().newEditable("") // 채팅 입력창 다시 초기화시켜주기
 
 
-        // 약속 시간인지 아닌지 판별
-        var length = result.content.length
-        var substring_str = ""
-        if(length >= 4) {
-            substring_str = result.content.substring(length - 6, length)
-        }
-
-        Log.d("substring_str : ", substring_str)
-
-        if(substring_str.equals(":00:00")){
-            Log.d("이거 시간", "")
-            chatRVAdapter.addItem(Chat(result.chatId, result.chatRoomId, user_id_logined, result.createdAt, result.content, result.writer, result.type, 4))
-        }else{
-            chatRVAdapter.addItem(Chat(result.chatId, result.chatRoomId, user_id_logined, result.createdAt, result.content, result.writer, result.type, 2))
+        if (result.content.length >= 17 && result.content[4].toString()
+                .equals("-") && result.content[7].toString()
+                .equals("-") && result.content[13].toString()
+                .equals(":") && result.content[16].toString().equals(":")
+        ) {
+            println("시간 선택")
+            chatRVAdapter.addItem(
+                Chat(
+                    result.chatId,
+                    result.chatRoomId,
+                    user_id_logined,
+                    result.createdAt,
+                    result.content,
+                    result.writer,
+                    result.type,
+                    4
+                )
+            )
+        } else if (result.content.length >= 17 && result.content.substring(0 until 4)
+                .equals("장소채팅")
+        ) {
+            println("장소 선택")
+            var place_text = result.content.substring(4)
+            chatRVAdapter.addItem(
+                Chat(
+                    result.chatId,
+                    result.chatRoomId,
+                    user_id_logined,
+                    result.createdAt,
+                    place_text,
+                    result.writer,
+                    result.type,
+                    5
+                )
+            )
+        } else {
+            chatRVAdapter.addItem(
+                Chat(
+                    result.chatId,
+                    result.chatRoomId,
+                    user_id_logined,
+                    result.createdAt,
+                    result.content,
+                    result.writer,
+                    result.type,
+                    2
+                )
+            )
         }
 
         runOnUiThread {
@@ -355,20 +477,23 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
     }
 
     override fun sendChatFailure() {
-        Log.d("=============================== Message Post 실패!!!!!!!!!!!!!!!!!!!!", "==================================================" )
+        Log.d("Message Post 실패", "")
     }
 
     ///////////////////////////// 사진 전송 //////////////
-    private fun sendPhoto(picture: MultipartBody.Part, chatRoom_id: Int, user_id: Int){
+    private fun sendPhoto(picture: MultipartBody.Part, chatRoom_id: Int, user_id: Int) {
         // 서버에 post해서 데이터베이스에서 chat_id 값까지 생성된 chat 데이터 가져오기
         val postPhotoService = PostPhotoService() // chat 보내놓기
         postPhotoService.setPhotoResult(this)
-        Log.d("chatRoom_id : $chatRoom_id, user_id : $user_id, chatPost : $picture", "CHECK" )
+        Log.d("chatRoom_id : $chatRoom_id, user_id : $user_id, chatPost : $picture", "CHECK")
         postPhotoService.sendPhoto(chatRoom_id, user_id, picture)
     }
 
     override fun sendPhotoSuccess(result: umc.mobile.project.ram.Auth.ChatPhoto.ChatPhotoPost.Result) {
-        Log.d("=============================== Photo Post 성공!!!!!!!!!!!!!!!!!!!!", "==================================================" )
+        Log.d(
+            "=============================== Photo Post 성공!!!!!!!!!!!!!!!!!!!!",
+            "=================================================="
+        )
         val data = JSONObject()
         data.put("chatPhoto_id", result.chatId)
         data.put("chatRoom_id", result.chatRoomId)
@@ -383,7 +508,10 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
     }
 
     override fun sendPhotoFailure() {
-        Log.d("=============================== Photo Post 실패!!!!!!!!!!!!!!!!!!!!", "==================================================" )
+        Log.d(
+            "=============================== Photo Post 실패!!!!!!!!!!!!!!!!!!!!",
+            "=================================================="
+        )
     }
 
 
@@ -403,7 +531,6 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
 
 
         var id = result.find { it.chatRoom_id == chatRoom_id_get }
-//        var id = result.find { it.title.equals(chatRoom_selected_subject) } // chatRoom 목록에서 받아온 제목이랑 똑같은 공고 찾기
 
         user_id_chatroom = id!!.user_id  // 그 post의 user_id 저장
         post_id_chatroom = id!!.post_id
@@ -414,7 +541,7 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
         val postDetailGetService = PostDetailGetService()
         postDetailGetService.setPostDetailGetResult(this)
         Log.d("post_id $post_id_chatroom, user_id $user_id_chatroom", "")
-        postDetailGetService.getPostDetail(post_id_chatroom , user_id_chatroom) // 임의로 지정
+        postDetailGetService.getPostDetail(post_id_chatroom, user_id_chatroom) // 임의로 지정
     }
 
     override fun getPostAllFailure(code: Int, message: String) {
@@ -422,14 +549,15 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
     }
 
 
-
     override fun getPostUploadSuccess(code: Int, result: Post) {
 
         binding.itemContentTxt.text = result.title
-        Glide.with(this).load(result.image).override(38,38).into(binding.itemProfileImg) // 이미지 가져오기
+        Glide.with(this).load(result.image).override(38, 38)
+            .into(binding.itemProfileImg) // 이미지 가져오기
 
         val geocoderLocation = Geocoder_location()
-        location_dialog = geocoderLocation.calculate_location(this, result.latitude, result.longitude)
+        location_dialog =
+            geocoderLocation.calculate_location(this, result.latitude, result.longitude)
 
         val userGetService = UserGetService()
         userGetService.setUserGetResult(this)
@@ -449,17 +577,130 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
     }
 
     override fun getChatAllSuccess(code: Int, result: ArrayList<Chat>) {
-        Log.d("=============================== getChatAllSuccess!!!!!!!!!!!!!!!!!!!!", "==================================================" )
+        Log.d(
+            "=============================== getChatAllSuccess!!!!!!!!!!!!!!!!!!!!",
+            "=================================================="
+        )
 
-        if(result.size == 0)
-            // 채팅방 비어있을 때 시간 띄워주기
-            chatRVAdapter.addItem(Chat(0, chatRoom_id_get, 0, timestamp, getCurrentTime(), "time", "time", 3))
+        if (result.size == 0)
+        // 채팅방 비어있을 때 시간 띄워주기
+            chatRVAdapter.addItem(
+                Chat(
+                    0,
+                    chatRoom_id_get,
+                    0,
+                    timestamp,
+                    getCurrentTime(),
+                    "time",
+                    "time",
+                    3
+                )
+            )
 
-        for(i in 0 until result.count()){
-            if(result[i].user_id != user_id_logined) // 로그인 유저가 아니면 상대방 채팅
-                chatRVAdapter.addItem(Chat(result[i].chat_id, result[i].chatRoom_id, result[i].user_id, result[i].created_at, result[i].content, result[i].writer, result[i].type, 1))
-            else // 로그인 유저면 내 채팅
-                chatRVAdapter.addItem(Chat(result[i].chat_id, result[i].chatRoom_id, result[i].user_id, result[i].created_at, result[i].content, result[i].writer, result[i].type, 2))
+        for (i in 0 until result.count()) {
+            if (result[i].user_id != user_id_logined) { // 로그인 유저가 아니면 상대방 채팅
+                if (result[i].content.length >= 17 && result[i].content[4].toString()
+                        .equals("-") && result[i].content[7].toString()
+                        .equals("-") && result[i].content[13].toString()
+                        .equals(":") && result[i].content[16].toString().equals(":")
+                ) {
+                    println("시간 선택")
+                    chatRVAdapter.addItem(
+                        Chat(
+                            result[i].chat_id,
+                            result[i].chatRoom_id,
+                            result[i].user_id,
+                            result[i].created_at,
+                            result[i].content,
+                            result[i].writer,
+                            result[i].type,
+                            4
+                        )
+                    )
+
+                } else if (result[i].content.length >= 17 && result[i].content.substring(0 until 4)
+                        .equals("장소채팅")
+                ) {
+                    println("장소 선택")
+                    var place_text = result[i].content.substring(4)
+                    chatRVAdapter.addItem(
+                        Chat(
+                            result[i].chat_id,
+                            result[i].chatRoom_id,
+                            user_id_logined,
+                            result[i].created_at,
+                            place_text,
+                            result[i].writer,
+                            result[i].type,
+                            5
+                        )
+                    )
+                } else {
+                    chatRVAdapter.addItem(
+                        Chat(
+                            result[i].chat_id,
+                            result[i].chatRoom_id,
+                            result[i].user_id,
+                            result[i].created_at,
+                            result[i].content,
+                            result[i].writer,
+                            result[i].type,
+                            1
+                        )
+                    )
+                }
+            } else {// 로그인 유저면 내 채팅
+                if (result[i].content.length >= 17 && result[i].content[4].toString()
+                        .equals("-") && result[i].content[7].toString()
+                        .equals("-") && result[i].content[13].toString()
+                        .equals(":") && result[i].content[16].toString().equals(":")
+                ) {
+                    println("시간 선택")
+                    chatRVAdapter.addItem(
+                        Chat(
+                            result[i].chat_id,
+                            result[i].chatRoom_id,
+                            result[i].user_id,
+                            result[i].created_at,
+                            result[i].content,
+                            result[i].writer,
+                            result[i].type,
+                            4
+                        )
+                    )
+
+                } else if (result[i].content.length >= 17 && result[i].content.substring(0 until 4)
+                        .equals("장소채팅")
+                ) {
+                    println("장소 선택")
+                    var place_text = result[i].content.substring(4)
+                    chatRVAdapter.addItem(
+                        Chat(
+                            result[i].chat_id,
+                            result[i].chatRoom_id,
+                            user_id_logined,
+                            result[i].created_at,
+                            place_text,
+                            result[i].writer,
+                            result[i].type,
+                            5
+                        )
+                    )
+                } else {
+                    chatRVAdapter.addItem(
+                        Chat(
+                            result[i].chat_id,
+                            result[i].chatRoom_id,
+                            result[i].user_id,
+                            result[i].created_at,
+                            result[i].content,
+                            result[i].writer,
+                            result[i].type,
+                            2
+                        )
+                    )
+                }
+            }
         }
 
 
@@ -467,16 +708,20 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
     }
 
     override fun getChatAllFailure(code: Int, message: String) {
-        Log.d("=============================== getChatAllFailure!!!!!!!!!!!!!!!!!!!!", "==================================================" )
+        Log.d(
+            "=============================== getChatAllFailure!!!!!!!!!!!!!!!!!!!!",
+            "=================================================="
+        )
     }
 
-    fun getCurrentTime() :  String{
-        val currentTime : Long = System.currentTimeMillis()
+    fun getCurrentTime(): String {
+        val currentTime: Long = System.currentTimeMillis()
         val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일")
         var current_time = dateFormat.format(currentTime)
 
         return current_time
     }
+
     val textWatcher = object : TextWatcher {
 
         override
@@ -490,7 +735,7 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
         }
 
         override fun afterTextChanged(p0: Editable?) {
-            if(binding.editMessage.text == null)
+            if (binding.editMessage.text == null)
                 binding.btnSubmit.isClickable = false
             else
                 binding.btnSubmit.isClickable = true
@@ -508,26 +753,42 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
         super.onActivityResult(requestCode, resultCode, data)
 
         // 돌려받은 resultCode가 정상인지 체크
-        if(resultCode == Activity.RESULT_OK){
+        if (resultCode == Activity.RESULT_OK) {
+
+            if (requestCode == SUBACTIITY_REQUEST_CODE) {
+                Log.d("log: ", "log 찍힘")
+                if (data != null) {
+
+                    place_basic = data.getStringExtra("place_basic").toString()
+                    place_detail = data.getStringExtra("place_detail").toString()
+
+                    place_chat_iv.visibility = View.VISIBLE
+                    place_chat_iv.setText(place_basic)
+                    edit_message.hint = ""
+//                    editTextAnnEtPlace = data.getStringExtra("address").toString()
+//                    viewBinding.annEtPlace.setText(data.getStringExtra("address"))
+                    latitude = data.getDoubleExtra("latitude", 0.0)
+                    longitude = data.getDoubleExtra("longitude", 0.0)
+                }
+            }
 
             // 사진 가져오는 부분
             if (requestCode == PICK_IMAGE) {
                 val imagePath = data!!.data
-
                 val file = File(absolutelyPath(imagePath, this))
                 val requestFile = RequestBody.create(MediaType.parse("image/*"), file)
                 val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
 
-//                pictureNameList.addAll(listOf(file.name)) // 데이터 넣는 부분
-
                 Log.d("파일 생성!! ======== ", file.name)
+
+                picture_chat_iv.visibility = View.VISIBLE
+                picture_chat_iv.setText(file.name)
+                edit_message.hint = ""
+
                 picture = body
-
                 setAdjImgUri(imagePath!!)
-
-
                 Toast.makeText(this, "사진 첨부", Toast.LENGTH_SHORT).show()
-            }else {
+            } else {
                 Toast.makeText(this, "오류가 발생하였습니다.", Toast.LENGTH_SHORT).show()
             }
         }
@@ -578,21 +839,23 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
             BitmapFactory.decodeStream(inputStream, null, bmOptions)?.also { bitmap ->
                 val matrix = Matrix()
                 matrix.preRotate(0f, 0f, 0f)
-//                binding.m.setImageBitmap(
-//                    Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, false)
-//                )
             }
         }
     }
 
-    private fun sendMeetTime(time : String){
+    ////////////////// 약속시간 전송
+
+    private fun sendMeetTime(time: String) {
         val postChatMeetTimeService = PostChatMeetTimeService()
         postChatMeetTimeService.setPhotoResult(this)
         postChatMeetTimeService.sendChatMeetTime(chatRoom_id_get, user_id_logined, time)
     }
 
     override fun sendChatMeetTimeSuccess(result: ChatMeetTime) {
-        Log.d("=============================== ChatMeetTime Post 성공!!!!!!!!!!!!!!!!!!!!", "==================================================" )
+        Log.d(
+            "=============================== ChatMeetTime Post 성공!!!!!!!!!!!!!!!!!!!!",
+            "=================================================="
+        )
         val data = JSONObject()
         data.put("chatMeetTimeId", result.chatMeetTimeId)
         data.put("chatRoomId", result.chatRoomId)
@@ -607,7 +870,49 @@ class ChattingActivity: AppCompatActivity(), PostDetailGetResult, UserGetResult,
     }
 
     override fun sendChatMeetTimeFailure() {
-        Log.d("=============================== ChatMeetTime Post 실패!!!!!!!!!!!!!!!!!!!!", "==================================================" )
+        Log.d(
+            "=============================== ChatMeetTime Post 실패!!!!!!!!!!!!!!!!!!!!",
+            "=================================================="
+        )
+    }
+
+
+    ////////////////////////////// 장소 전송 ///////////
+    private fun sendLocation(chatRoom_id: Int, user_id: Int, latitude: Double, longitude: Double) {
+        val postLocationService = PostLocationService()
+        postLocationService.setLocationResult(this)
+        postLocationService.sendLocation(
+            chatRoom_id,
+            user_id,
+            latitude.toBigDecimal(),
+            longitude.toBigDecimal()
+        )
+    }
+
+    override fun sendLocationSuccess(result: umc.mobile.project.ram.Auth.ChatLocation.Result) {
+        Log.d(
+            "=============================== ChatPlace Post 성공!!!!!!!!!!!!!!!!!!!!",
+            "=================================================="
+        )
+        val data = JSONObject()
+        data.put("chatLocationIdx", result.chatLocationIdx)
+        data.put("chatRoomId", result.chatRoomId)
+        data.put("userId", user_id_logined)
+        data.put("latitude", result.latitude)
+        data.put("longitude", result.longitude)
+        data.put("createdAt", result.createdAt)
+
+        stompClient.send("/pub/chat/meettime", data.toString()).subscribe()
+        edit_message.text = Editable.Factory.getInstance().newEditable("") // 채팅 입력창 다시 초기화시켜주기
+
+        sendStomp("장소채팅" + place_basic + "&" + place_detail, result.chatRoomId, user_id_logined)
+    }
+
+    override fun sendLocationFailure() {
+        Log.d(
+            "=============================== ChatPlace Post 실패!!!!!!!!!!!!!!!!!!!!",
+            "=================================================="
+        )
     }
 
 

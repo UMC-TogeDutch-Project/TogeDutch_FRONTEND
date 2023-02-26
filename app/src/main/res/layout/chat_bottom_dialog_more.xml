@@ -13,8 +13,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_submit_dialog"
         android:layout_width="38dp"
@@ -53,6 +51,40 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="18dp"
         app:layout_constraintHorizontal_chainStyle="spread"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/place_chat_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="28dp"
+        android:text="동덕여대 인문관"
+        android:textSize="14sp"
+        android:textColor="@color/white"
+        android:paddingLeft="5dp"
+        android:paddingRight="10dp"
+        android:background="@drawable/sqare_background_blue_round"
+        app:layout_constraintTop_toTopOf="@id/edit_message"
+        app:layout_constraintStart_toStartOf="@id/edit_message"
+        app:layout_constraintBottom_toBottomOf="@id/edit_message"
+        android:layout_marginLeft="10dp"
+        android:drawableLeft="@drawable/icon_close_chatting_edittext"
+        android:visibility="gone"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/picture_chat_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="28dp"
+        android:text="사진"
+        android:textSize="14sp"
+        android:textColor="@color/white"
+        android:paddingLeft="5dp"
+        android:paddingRight="10dp"
+        android:background="@drawable/sqare_background_blue_round"
+        app:layout_constraintTop_toTopOf="@id/edit_message"
+        app:layout_constraintStart_toStartOf="@id/edit_message"
+        app:layout_constraintBottom_toBottomOf="@id/edit_message"
+        android:layout_marginLeft="10dp"
+        android:drawableLeft="@drawable/icon_close_chatting_edittext"
+        android:visibility="gone"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_photo"

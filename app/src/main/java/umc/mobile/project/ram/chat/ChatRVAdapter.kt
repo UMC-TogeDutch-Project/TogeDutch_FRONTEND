@@ -1,28 +1,16 @@
 package umc.mobile.project.ram.chat
 
 import android.content.Context
-import android.os.Build
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import org.w3c.dom.Text
 import umc.mobile.project.R
-import umc.mobile.project.databinding.ItemApplyCurrentBinding
-import umc.mobile.project.databinding.ItemMyChatBinding
-import umc.mobile.project.databinding.ItemYourChatBinding
-import umc.mobile.project.ram.Auth.Application.GetUser.UserGet
-import umc.mobile.project.ram.Auth.Application.GetUser.UserGetResult
-import umc.mobile.project.ram.Auth.Application.GetUser.UserGetService
 import umc.mobile.project.ram.my_application_1.Timestamp_to_SDF
-import umc.mobile.project.ram.my_application_1.current_application.CurrentRVAdapter
-import java.text.SimpleDateFormat
 
 class ChatRVAdapter(
     val context: Context
@@ -63,7 +51,7 @@ class ChatRVAdapter(
             }
             3 -> {
                 view = LayoutInflater.from(parent.context).inflate(
-                    R.layout.item_time_chat, parent, false
+                    R.layout.item_meet_place, parent, false
                 )
                 CenterViewHolder(view)
             }
@@ -72,6 +60,12 @@ class ChatRVAdapter(
                     R.layout.item_meettime, parent, false
                 )
                 MeetTime_ViewHolder(view)
+            }
+            5->{
+                view = LayoutInflater.from(parent.context).inflate(
+                    R.layout.item_place_chat, parent, false
+                )
+                MeetPlace_ViewHolder(view)
             }
             else -> {
                 throw RuntimeException("Error")
@@ -92,6 +86,10 @@ class ChatRVAdapter(
             }
             4->{
                 (holder as MeetTime_ViewHolder).bind(chatList[position])
+                holder.setIsRecyclable(false)
+            }
+            5->{
+                (holder as MeetPlace_ViewHolder).bind(chatList[position])
                 holder.setIsRecyclable(false)
             }
             else -> {
@@ -145,16 +143,13 @@ class ChatRVAdapter(
                 content.text = chat.content
                 time.text = timestampToSdf.convert_only_time(chat.created_at)
             }
-
         }
 
     }
 
     inner class MeetTime_ViewHolder(view: View) : RecyclerView.ViewHolder(view){
         private val meet_time: TextView = view.findViewById(R.id.item_meet_time_text)
-
         fun bind(chat: Chat) {
-
             val txt_time = chat.content
 //            2022-01-23T03:34:56.000+00:00
 
@@ -168,7 +163,20 @@ class ChatRVAdapter(
             meet_time.text = txt_timestamp_substring
 
         }
+    }
 
+    inner class MeetPlace_ViewHolder(view: View) : RecyclerView.ViewHolder(view){
+        private val place_basic: TextView = view.findViewById(R.id.place_basic_text)
+        private val place_detail: TextView = view.findViewById(R.id.place_detail_text)
+        fun bind(chat: Chat) {
+            val place = chat.content
+
+            var token = place.split("&")
+
+            place_basic.text = token[0]
+            place_detail.text = token[1]
+
+        }
     }
 
     inner class RightViewHolder(view: View) : RecyclerView.ViewHolder(view) {

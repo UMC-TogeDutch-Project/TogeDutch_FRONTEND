@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="149dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/item_meet_place_iv"
+        android:layout_width="316dp"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/sqare_background_blue_round"/>
+
+    <TextView
+        android:id="@+id/place"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="약속 장소"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:fontFamily="@font/notosanskr_medium"
+        android:includeFontPadding="false"
+        app:layout_constraintTop_toTopOf="@+id/item_meet_place_iv"
+        app:layout_constraintStart_toStartOf="@id/item_meet_place_iv"
+        app:layout_constraintEnd_toEndOf="@id/item_meet_place_iv"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/place_basic_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="동덕여대 인문관"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:fontFamily="@font/notosanskr_medium"
+        android:includeFontPadding="false"
+        app:layout_constraintTop_toBottomOf="@id/place"
+        app:layout_constraintStart_toStartOf="@+id/item_meet_place_iv"
+        app:layout_constraintEnd_toEndOf="@+id/item_meet_place_iv"
+        android:layout_marginTop="10dp"
+        />
+
+    <TextView
+        android:id="@+id/place_detail_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="서울시 성북구 화랑로 13길 28"
+        android:textColor="@color/white"
+        android:textSize="11sp"
+        android:fontFamily="@font/notosanskr_medium"
+        android:includeFontPadding="false"
+        app:layout_constraintTop_toBottomOf="@id/place_basic_text"
+        app:layout_constraintStart_toStartOf="@+id/item_meet_place_iv"
+        app:layout_constraintEnd_toEndOf="@+id/item_meet_place_iv"
+        android:layout_marginTop="8dp"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

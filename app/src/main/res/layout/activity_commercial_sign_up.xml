@@ -180,7 +180,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/notosanskr_black"
-                    android:text="광광고 이미지"
+                    android:text="광고 이미지"
                     android:textColor="@color/black" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout

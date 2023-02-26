@@ -179,8 +179,8 @@ class AnnouncePostActivity : AppCompatActivity(), PostRecordResult {
             {
                 button?.isClickable =  true
                 button?.backgroundTintList = ColorStateList.valueOf(color)
-                Toast.makeText(applicationContext, "활성화", Toast.LENGTH_SHORT)
-                    .show()
+//                Toast.makeText(applicationContext, "활성화", Toast.LENGTH_SHORT)
+//                    .show()
 
             } else  {
                 button?.isClickable = false
@@ -268,7 +268,7 @@ class AnnouncePostActivity : AppCompatActivity(), PostRecordResult {
                 setAdjImgUri(imagePath!!)
 
 
-                Toast.makeText(this, "사진 첨부", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this, "사진 첨부", Toast.LENGTH_SHORT).show()
             }else {
                 Toast.makeText(this, "오류가 발생하였습니다.", Toast.LENGTH_SHORT).show()
             }

@@ -266,7 +266,7 @@ class MyPostRVAdapter (
     fun getMatching(){
         val matchingGetService = MatchingGetService()
         matchingGetService.setMatchingGetResult(this)
-        matchingGetService.getRandomMatching(39) // 임의로 지정 (post_id 넣으면 됨)
+        matchingGetService.getRandomMatching(38) // 임의로 지정 (post_id 넣으면 됨)
     }
 
     override fun getMatchingSuccess(code: Int, result: MemberData) {

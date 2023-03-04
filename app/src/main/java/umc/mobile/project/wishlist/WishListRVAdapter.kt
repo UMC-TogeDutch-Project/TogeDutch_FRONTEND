@@ -22,7 +22,6 @@ import umc.mobile.project.ram.my_application_1.user_id_logined
 import umc.mobile.project.ram.my_application_1.user_id_var
 import umc.mobile.project.wishlist.LikeDelete.LikeDeleteResult
 import umc.mobile.project.wishlist.LikeDelete.LikeDeleteService
-import umc.mobile.project.wishlist.LikeDelete.rp
 
 import java.util.*
 import kotlin.collections.ArrayList
@@ -30,6 +29,8 @@ import kotlin.collections.ArrayList
 class WishListRVAdapter (private val wishApplicationList: ArrayList<Post>) : RecyclerView.Adapter<WishListRVAdapter.ViewHolder>(),
     Filterable {
     lateinit var context : Context
+
+    var delete_position : Int = 0
 
     // 보여줄 아이템 개수만큼 View를 생성 (RecyclerView가 초기화 될 때 호출)
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): WishListRVAdapter.ViewHolder {
@@ -50,6 +51,7 @@ class WishListRVAdapter (private val wishApplicationList: ArrayList<Post>) : Rec
     override fun onBindViewHolder(holder: WishListRVAdapter.ViewHolder, position: Int) {
         holder.bind(wishApplicationList[position])
         holder.itemView.setOnClickListener {
+            post_id_to_detail = wishApplicationList[position].post_id
             itemClickListener.onItemClick(wishApplicationList[position])
             notifyItemChanged(position)
         }
@@ -58,6 +60,8 @@ class WishListRVAdapter (private val wishApplicationList: ArrayList<Post>) : Rec
     // ViewHolder 단위 객체로 View의 데이터를 설정
     inner class ViewHolder(val binding: WishlistAdapterBinding) : RecyclerView.ViewHolder(binding.root), LikeDeleteResult {
         fun bind(post: Post) {
+            Log.d("post_id: ", post.post_id.toString())
+
             var selected_random_btn : Int = 0
             var isSelected = false
 
@@ -85,31 +89,34 @@ class WishListRVAdapter (private val wishApplicationList: ArrayList<Post>) : Rec
             binding.appCompatLike.setBackgroundResource(R.drawable.main_item_heart_icon_fill)
 
             binding.appCompatLike.setOnClickListener{
-                likeDelete()
+                Log.d("user_id_logined: ", user_id_logined.toString())
+                Log.d("user_id_var: ", user_id_var.toString())
+
+                delete_position = absoluteAdapterPosition
+                val likeDeleteService = LikeDeleteService()
+                likeDeleteService.setDeletePostResult(this)
+                likeDeleteService.deleteLike(user_id_logined, post.post_id)
             }
         }
 
-        fun likeDelete(){
-            val likeDeleteService = LikeDeleteService()
-            likeDeleteService.setLikePostResult(this)
-            likeDeleteService.sendLike(user_id_logined, post_id_to_detail)
+        override fun getLikeDeleteSuccess(result : Int) {
             binding.appCompatLike.setBackgroundResource(R.drawable.main_item_heart_icon)
-
-        }
-
-
-
-        override fun LikeDeleteSuccess() {
+            removePost(delete_position)
             Toast.makeText(context, "관심 공고 삭제 성공.", Toast.LENGTH_SHORT).show()
-            Log.d("response값 " , rp.toString())
-
-
+            Log.d("result값: ", result.toString())
         }
 
 
-        override fun LikeDeleteFailure() {
+        override fun getLikeDeleteFailure(result : Int) {
             Toast.makeText(context, "관심 공고 삭제 실패.", Toast.LENGTH_SHORT).show()
-            Log.d("response값 " , rp.toString())
+            Log.d("result값: ", result.toString())
+        }
+    }
+
+    fun removePost(position: Int){
+        if(position >= 0){
+            wishApplicationList.removeAt(position)
+            notifyDataSetChanged()
         }
     }
 

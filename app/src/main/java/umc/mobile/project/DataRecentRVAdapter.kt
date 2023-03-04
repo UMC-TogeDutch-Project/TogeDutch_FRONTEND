@@ -53,33 +53,31 @@ class DataRecentRVAdapter(private val homeDataList: ArrayList<Post>) : RecyclerV
 
 
             viewBinding.btnLikeThird.setOnClickListener {
-//                viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon_fill)
-                likePost()
-
+                val likePostService = LikePostService()
+                likePostService.setLikePostResult(this)
+                likePostService.sendLike(user_id_logined, homeData.post_id)
+                Log.d("post_id: ", homeData.post_id.toString())
             }
-
-        }
-        fun likePost(){
-            val likePostService = LikePostService()
-            likePostService.setLikePostResult(this)
-            likePostService.sendLike(user_id_logined, post_id_to_detail)
-            viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon_fill)
-
 
         }
 
         override fun LikePostSuccess(result: Result) {
+            viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon_fill)
+            notifyDataSetChanged()
+            Log.d("관심목록 등록 성공", "")
+            Log.d("post_id: ", result.postIdx.toString())
+            Log.d("likeIdx: ", result.likeIdx.toString())
+            Log.d("post_User_userIdx: ", result.post_User_userIdx.toString())
+            Log.d("like_userIdx: ", result.like_userIdx.toString())
             Toast.makeText(context, "관심 공고 등록 성공.", Toast.LENGTH_SHORT).show()
         }
 
         override fun LikePostFailureMyPost() {
-            viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon)
             val dlg = AnnounceAlertDialog(context, this)
             dlg.start5()
         }
 
         override fun LikePostFailureAdd() {
-            viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon)
             val dlg = AnnounceAlertDialog(context, this)
             dlg.start6()
         }

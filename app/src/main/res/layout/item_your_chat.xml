@@ -12,6 +12,7 @@
         android:background="@drawable/chat_profile_icn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="5dp"
         />
 
     <TextView

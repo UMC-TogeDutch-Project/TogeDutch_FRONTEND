@@ -104,6 +104,7 @@ class PromisePopupDialog(context: Context) : Dialog(context) {
 
     private fun string_to_timestamp(year :String, month: String, day : String, am_pm : String, hour : String, minute : String) : String{
         var hour_int = 0
+        var hour_text = ""
 
         // 01, 02 이런 식으로 들어왔을 때
         if(hour.substring(0).equals("0")){
@@ -111,22 +112,24 @@ class PromisePopupDialog(context: Context) : Dialog(context) {
             hour_int = hour.substring(1).toInt()
             if(am_pm.equals("오후") && hour.toInt() != 12){
                 hour_int = hour.toInt() + 12
+                hour_text = hour_int.toString()
             }
             else{
-                hour_int = hour.toInt()
+                hour_text = "0" + hour
             }
         }else{
             if(am_pm.equals("오후") && hour.toInt() != 12){
                 hour_int = hour.toInt() + 12
+                hour_text = hour_int.toString()
             }
             else{
-                hour_int = hour.toInt()
+                hour_text = hour
             }
         }
 
         var set = "2022-01-23T03:34:56.000+00:00"
 //        var order_time = year + "-" + month + "-" + day + "T" + hour_int + ":" + minute + ":" + "00.000+00:00"
-        var order_time = year + month + day + hour_int + minute + "00"
+        var order_time = year + month + day + hour_text + minute + "00"
 
         return order_time
     }

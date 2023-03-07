@@ -155,6 +155,10 @@ class PlaceSearchActivity : AppCompatActivity(), OnMapReadyCallback,
             addressIntent.putExtra("latitude", latitude)
             addressIntent.putExtra("longitude", longitude)
 
+            // 지역 이름, 상세주소 담아서 데이터 전달 : 혜주 추가
+            addressIntent.putExtra("place_basic", binding.gpsTextView11.text.toString())
+            addressIntent.putExtra("place_detail", binding.gpsTextView12.text.toString())
+
             Log.d("3: 위치정보",  "주소: $currentAddress 위도: $latitude  경도: $longitude")
 
             //// 여기에서 announcePostActivity에 있는 latitude_var, longtitude_var 전역변수에 담아주기!

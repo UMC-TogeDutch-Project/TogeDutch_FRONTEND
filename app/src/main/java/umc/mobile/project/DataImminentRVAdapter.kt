@@ -2,6 +2,7 @@ package umc.mobile.project
 
 import android.content.Context
 import Post
+import android.util.Log
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -47,21 +48,22 @@ class DataImminentRVAdapter(private val homeDataList: ArrayList<Post>) : Recycle
             viewBinding.annRecruit.text = homeData.num_of_recruits.toString() //총 인원
 
             viewBinding.btnLikeThird.setOnClickListener {
-                viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon_fill)
-
-            }
-            viewBinding.btnLikeThird.setOnClickListener {
-                viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon_fill)
                 val likePostService = LikePostService()
                 likePostService.setLikePostResult(this)
-                likePostService.sendLike(user_id_logined, post_id_to_detail)
+                likePostService.sendLike(user_id_logined, homeData.post_id)
+                Log.d("post_id: ", homeData.post_id.toString())
             }
         }
 
 
         override fun LikePostSuccess(result: Result) {
             viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon_fill)
-
+            notifyDataSetChanged()
+            Log.d("관심목록 등록 성공", "")
+            Log.d("post_id: ", result.postIdx.toString())
+            Log.d("likeIdx: ", result.likeIdx.toString())
+            Log.d("post_User_userIdx: ", result.post_User_userIdx.toString())
+            Log.d("like_userIdx: ", result.like_userIdx.toString())
         }
 
         override fun LikePostFailureMyPost() {

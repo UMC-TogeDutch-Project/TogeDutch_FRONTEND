@@ -18,7 +18,8 @@
         android:paddingRight="20dp"
         android:clickable="false"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="5dp"/>
     <ImageView
         android:id="@+id/my_image_iv"
         android:layout_width="200dp"
@@ -32,6 +33,7 @@
         android:clickable="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="5dp"
         android:visibility="invisible"/>
     <TextView
         android:id="@+id/my_image_date_txt"

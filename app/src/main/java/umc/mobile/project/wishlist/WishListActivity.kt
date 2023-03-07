@@ -5,11 +5,13 @@ import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import umc.mobile.project.R
+import umc.mobile.project.announcement.AnnounceDetailActivity
 import umc.mobile.project.databinding.ActivityWishlistBinding
 import umc.mobile.project.ram.my_application_1.MyCommercialDetailActivity
 import umc.mobile.project.ram.my_application_1.MyPostRVAdapter
@@ -47,6 +49,10 @@ class WishListActivity: AppCompatActivity(), LikePostGetResult {
 
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
     private fun initRecyclerView(result : ArrayList<Post>) {
        val wishListRVAdapter = WishListRVAdapter(result)
         viewBinding.wishList.adapter = wishListRVAdapter
@@ -54,8 +60,10 @@ class WishListActivity: AppCompatActivity(), LikePostGetResult {
 
         wishListRVAdapter.setItemClickListener(object : WishListRVAdapter.OnItemClickListener {
             override fun onItemClick(post: Post) {
-                val intent = Intent(this@WishListActivity, MyCommercialDetailActivity::class.java)
+                Log.d("post_id", post.post_id.toString())
+                val intent = Intent(this@WishListActivity, AnnounceDetailActivity::class.java)
                 intent.putExtra("post_id", post.post_id)
+                intent.putExtra("user_id", post.user_id)
                 startActivity(intent)
             }
         })

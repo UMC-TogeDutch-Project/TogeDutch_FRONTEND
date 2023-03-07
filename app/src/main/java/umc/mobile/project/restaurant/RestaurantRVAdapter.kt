@@ -6,8 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import umc.mobile.project.databinding.RestaurantRecyclerviewItemBinding
+import umc.mobile.project.restaurant.Auth.NaverApi.NaverSearchData
+import umc.mobile.project.title
 
-class RestaurantRVAdapter(private val restaurantData: ArrayList<RestaurantData>): RecyclerView.Adapter<RestaurantRVAdapter.MyViewHolder>() {
+class RestaurantRVAdapter(private val naverSearchData: ArrayList<NaverSearchData>): RecyclerView.Adapter<RestaurantRVAdapter.MyViewHolder>() {
     lateinit var context : Context
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): MyViewHolder {
         val binding: RestaurantRecyclerviewItemBinding = RestaurantRecyclerviewItemBinding.inflate(
@@ -16,32 +18,38 @@ class RestaurantRVAdapter(private val restaurantData: ArrayList<RestaurantData>)
         context = viewGroup.context
         return MyViewHolder(binding)
     }
-    override fun getItemCount(): Int = restaurantData.size
+    override fun getItemCount(): Int = naverSearchData.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.bind(restaurantData[position])
+        holder.bind(naverSearchData[position])
+
         holder.itemView.setOnClickListener {
-            itemClickListener.onItemClick(restaurantData[position])
+            itemClickListener.onItemClick(naverSearchData[position])
             notifyItemChanged(position)
         }
     }
 
     inner class MyViewHolder(private val binding: RestaurantRecyclerviewItemBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(restaurantData: RestaurantData){
-            binding.resTitle.text = restaurantData.title
-            binding.resPlace.text = restaurantData.place
-            binding.resPhone.text = restaurantData.phone
-            binding.resScore.text = restaurantData.score
-            Glide.with(itemView).load(restaurantData.image).into(binding.resImg)
+        fun bind(restaurantData: NaverSearchData){
+            binding.resTitle.text = title
+//            binding.resPlace.text = restaurantData.address
+//            binding.resPhone.text = restaurantData.category
+//            binding.resScore.text = restaurantData.description
+//            binding.resPlace.text = restaurantData.place
+//            binding.resPhone.text = restaurantData.phone
+//            binding.resScore.text = restaurantData.score
+//            Glide.with(itemView).load(restaurantData.image).into(binding.resImg)
+
 
 
 
 
         }
+
     }
 
     interface OnItemClickListener {
-        fun onItemClick( restaurantData: RestaurantData)
+        fun onItemClick(restaurantData: NaverSearchData)
 
     }
     fun setItemClickListener(onItemClickListener:OnItemClickListener) {

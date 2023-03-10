@@ -4,12 +4,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import umc.mobile.project.databinding.RestaurantRecyclerviewItemBinding
 import umc.mobile.project.restaurant.Auth.NaverApi.NaverSearchData
-import umc.mobile.project.title
 
-class RestaurantRVAdapter(private val naverSearchData: ArrayList<NaverSearchData>): RecyclerView.Adapter<RestaurantRVAdapter.MyViewHolder>() {
+class RestaurantRVAdapter: RecyclerView.Adapter<RestaurantRVAdapter.MyViewHolder>() {
+    var naverList = ArrayList<NaverSearchData>()
     lateinit var context : Context
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): MyViewHolder {
         val binding: RestaurantRecyclerviewItemBinding = RestaurantRecyclerviewItemBinding.inflate(
@@ -18,23 +17,24 @@ class RestaurantRVAdapter(private val naverSearchData: ArrayList<NaverSearchData
         context = viewGroup.context
         return MyViewHolder(binding)
     }
-    override fun getItemCount(): Int = naverSearchData.size
+    override fun getItemCount(): Int = naverList.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.bind(naverSearchData[position])
+
+        holder.bind(naverList[position])
 
         holder.itemView.setOnClickListener {
-            itemClickListener.onItemClick(naverSearchData[position])
+            itemClickListener.onItemClick(naverList[position])
             notifyItemChanged(position)
         }
     }
 
     inner class MyViewHolder(private val binding: RestaurantRecyclerviewItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(restaurantData: NaverSearchData){
-            binding.resTitle.text = title
-//            binding.resPlace.text = restaurantData.address
-//            binding.resPhone.text = restaurantData.category
-//            binding.resScore.text = restaurantData.description
+            binding.resTitle.text = restaurantData.title
+            binding.resPlace.text = restaurantData.address
+            binding.resPhone.text = restaurantData.category
+            binding.resScore.text = restaurantData.description
 //            binding.resPlace.text = restaurantData.place
 //            binding.resPhone.text = restaurantData.phone
 //            binding.resScore.text = restaurantData.score

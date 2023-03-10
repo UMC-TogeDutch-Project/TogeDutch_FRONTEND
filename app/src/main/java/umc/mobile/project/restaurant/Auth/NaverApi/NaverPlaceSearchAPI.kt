@@ -14,7 +14,7 @@ class NaverPlaceSearchAPI{
     val clientId = "wmV0kYp4ek0ba6kCCbxB"
     val clientSecret = "PgxJ1saGO6"
     var naverList = ArrayList<NaverSearchData>()
-    fun main() {
+    fun main(): ArrayList<NaverSearchData> {
         var text: String? = null
 
         try {
@@ -32,7 +32,8 @@ class NaverPlaceSearchAPI{
 
 
         val responseBody = get(apiURL, requestHeaders)
-        parseData(responseBody)
+        val result = parseData(responseBody)
+        return result
     }
 
     private operator fun get(apiUrl: String, requestHeaders: Map<String, String>): String {
@@ -90,7 +91,7 @@ class NaverPlaceSearchAPI{
     }
 
 
-    private fun parseData(responseBody: String) {
+    private fun parseData(responseBody: String): ArrayList<NaverSearchData> {
         var title: Array<String?> = arrayOfNulls<String>(5)
         var category: String
         var description: String
@@ -133,7 +134,7 @@ class NaverPlaceSearchAPI{
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-
+        return naverList
     }
 
 }

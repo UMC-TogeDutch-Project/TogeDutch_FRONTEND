@@ -1,22 +1,18 @@
 package umc.mobile.project
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import org.json.JSONException
-import org.json.JSONObject
 //import umc.mobile.project.chat.ChatRoom
 //import umc.mobile.project.chat.ChattingActivity
 import umc.mobile.project.databinding.FragmentRestaurantBinding
-import umc.mobile.project.restaurant.Auth.NaverApi.NaverImageSearchAPI
 import umc.mobile.project.restaurant.Auth.NaverApi.NaverPlaceSearchAPI
 import umc.mobile.project.restaurant.Auth.NaverApi.NaverSearchData
-import umc.mobile.project.restaurant.RestaurantData
 import umc.mobile.project.restaurant.RestaurantRVAdapter
-import java.io.BufferedWriter
-import java.io.OutputStreamWriter
 
 
 class RestaurantFragment : Fragment() {
@@ -26,7 +22,7 @@ class RestaurantFragment : Fragment() {
 
     private lateinit var binding: FragmentRestaurantBinding
     private lateinit var restaurantRVAdapter: RestaurantRVAdapter
-    var mRestaurnatData = ArrayList<NaverSearchData>()
+    var result = ArrayList<NaverSearchData>()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,23 +30,37 @@ class RestaurantFragment : Fragment() {
     ): View {
         binding = FragmentRestaurantBinding.inflate(inflater, container, false)
 
-        val thread = Thread {
-            var naverPlaceSearch = NaverPlaceSearchAPI()
-            naverPlaceSearch.main()
+//        val thread = Thread {
+//            var naverPlaceSearch = NaverPlaceSearchAPI()
+//           result =  naverPlaceSearch.main()
+//            Log.d("naver", result[0].toString())
+//
+//        }.start()
 
-        }.start()
         initRecyclerView()
-
         return binding.root
     }
 
 
+    fun loadData() : ArrayList<NaverSearchData>{
+        val thread = Thread{
+            var naverPlaceSearch = NaverPlaceSearchAPI()
+            result = naverPlaceSearch.main()
+        }.start()
 
-    private fun initRecyclerView() {
-        mRestaurnatData.addAll(mRestaurnatData)
-        restaurantRVAdapter = RestaurantRVAdapter(mRestaurnatData)
+        return result
+    }
+
+
+    private fun initRecyclerView( ) {
+        restaurantRVAdapter = RestaurantRVAdapter()
+        restaurantRVAdapter.naverList = loadData() // RestaurantRVAdapter 안에 naverlist 변수 추가
         binding.rvRes.adapter = restaurantRVAdapter //리사이클러뷰에 어댑터 연결
         binding.rvRes.layoutManager = LinearLayoutManager(context) //레이아웃 매니저 연결
+
+//        restaurantRVAdapter = RestaurantRVAdapter(result)
+//        binding.rvRes.adapter = restaurantRVAdapter //리사이클러뷰에 어댑터 연결
+//        binding.rvRes.layoutManager = LinearLayoutManager(context) //레이아웃 매니저 연결
 //        mRestaurnatData.apply {
 //            add(RestaurantData("파이프그라운드 ", "서울 용산구 한남대로27길 66 지하1층", "02-4948-3929", "4.1", R.drawable.img1))
 //            add(RestaurantData("꽁티드툴레아 ", "서울 강남구 도산대로49길 39", "02-4938-2939", "3.3", R.drawable.img2))

@@ -36,6 +36,7 @@ class SignUpRegionActivity : AppCompatActivity() {
         var keyWordIdx: Int = intent.getIntExtra("keyWordIdx", 1)
         var latitude: Double = 50.02
         var longitude: Double = 60.02
+        var image = intent.getStringExtra("image")
 
         Log.d(TAG, "onCreate: ${name}, ${email}, ${password}, ${phoneNum}, ${keyWordIdx}")
 
@@ -48,6 +49,7 @@ class SignUpRegionActivity : AppCompatActivity() {
             intent.putExtra("keyWordIdx", keyWordIdx)
             intent.putExtra("latitude", latitude)
             intent.putExtra("longitude", longitude)
+            intent.putExtra("image", image)
 //            intent.putExtra("region", viewBinding.etInputRegion.text.toString())
             startActivity(intent)
             overridePendingTransition(0, 0)

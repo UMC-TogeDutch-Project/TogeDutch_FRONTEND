@@ -22,7 +22,6 @@ class LikePostGetService {
                 val resp : LikePostGetResponse = response.body()!!
                 Log.d("success code: ", resp.code.toString())
                 when(resp.code) {
-//                    1000 ->
                     1000 -> likePostGetResult.getPostUploadSuccess(resp.code, resp.result!!)
                     else -> likePostGetResult.getPostUploadFailure(resp.code, resp.message)
                 }

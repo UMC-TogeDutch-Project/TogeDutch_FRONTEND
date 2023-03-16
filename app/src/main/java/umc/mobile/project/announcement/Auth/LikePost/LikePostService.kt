@@ -13,7 +13,7 @@ import java.util.*
 class LikePostService {
     var timestamp = Timestamp(Date().time)
 //var timestamp = Date(System.currentTimeMillis())
-    private var result : Result = Result(likeIdx = 1, postIdx = 1, Post_User_userIdx = 1, Like_userIdx = 1)
+    //private var result : Result = Result(likeIdx = 0, postIdx = 0, post_User_userIdx = 0, like_userIdx = 0)
 
     private lateinit var likePostResult : LikePostResult
 
@@ -23,21 +23,20 @@ class LikePostService {
 
     fun sendLike(userIdx : Int, postIdx : Int){
         val authService = getRetrofit().create(LikePostRetrofitInterfaces::class.java)
-        authService.sendPost(userIdx,postIdx).enqueue(object: Callback<ApplyRecordResponse> {
-            override fun onResponse(call: Call<ApplyRecordResponse>, response: Response<ApplyRecordResponse>) {
+        authService.sendPost(userIdx,postIdx).enqueue(object: Callback<LikePostResponse> {
+            override fun onResponse(call: Call<LikePostResponse>, response: Response<LikePostResponse>) {
                 Log.d("RECORD/SUCCESS",response.toString())
-                val resp: ApplyRecordResponse = response.body()!!
-
+                val resp: LikePostResponse = response.body()!!
                 when(resp.code){
-                    1000 -> {likePostResult.LikePostSuccess(result)
-                            Log.d("postiIdx: ", result.postIdx.toString())
-                            Log.d("userId", result.Like_userIdx.toString())}
+                    1000 -> {likePostResult.LikePostSuccess(resp.result!!)
+                            Log.d("postIdx: ", resp.result!!.postIdx.toString())
+                            Log.d("userId", resp.result!!.like_userIdx.toString())}
                     2033 -> likePostResult.LikePostFailureMyPost()
                     2034 -> likePostResult.LikePostFailureAdd()
                 }
             }
 
-            override fun onFailure(call: Call<ApplyRecordResponse>, t: Throwable) {
+            override fun onFailure(call: Call<LikePostResponse>, t: Throwable) {
                 Log.d("RECORD/FAILURE",t.message.toString())
             }
         })

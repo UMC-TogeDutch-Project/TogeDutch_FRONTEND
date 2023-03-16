@@ -88,7 +88,7 @@ class AnnounceDetailActivity:AppCompatActivity() , PostDetailGetResult, ApplyRec
     }
 
     override fun getPostUploadFailure(code: Int, message: String) {
-        TODO("Not yet implemented")
+        Log.d("업로드", "실패")
     }
 
 

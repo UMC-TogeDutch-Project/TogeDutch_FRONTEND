@@ -50,7 +50,7 @@
         android:text=""
         android:hint="신고 사유를 적어주세요 (필수 사항)"
         android:textColorHint="#737373"
-        android:textColor="#FF7F61"
+        android:textColor="@color/black"
         android:textSize="12sp"
 
         android:paddingLeft="19dp"

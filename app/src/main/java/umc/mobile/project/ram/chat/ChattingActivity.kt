@@ -26,6 +26,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import kotlinx.coroutines.DEBUG_PROPERTY_VALUE_AUTO
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -53,6 +54,9 @@ import umc.mobile.project.ram.Auth.ChatLocation.PostLocationResult
 import umc.mobile.project.ram.Auth.ChatLocation.PostLocationService
 import umc.mobile.project.ram.Auth.ChatPhoto.ChatPhotoPost.PostPhotoResult
 import umc.mobile.project.ram.Auth.ChatPhoto.ChatPhotoPost.PostPhotoService
+import umc.mobile.project.ram.Auth.Declaration.DeclarationPost.PostDeclarationResult
+import umc.mobile.project.ram.Auth.Declaration.DeclarationPost.PostDeclarationService
+import umc.mobile.project.ram.Auth.Declaration.DeclarationPost.declarationPost
 import umc.mobile.project.ram.Auth.Post.GetPost.PostGetService
 import umc.mobile.project.ram.Auth.Post.GetPostAll.PostGetAllResult
 import umc.mobile.project.ram.Auth.Post.GetPostAll.PostGetAllService
@@ -74,7 +78,7 @@ var location_dialog = ""
 
 class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult, PostGetAllResult,
     PostChatResult, ChatAllGetResult, PostPhotoResult,
-    PostChatMeetTimeResult, ChatGetResult, PostLocationResult {
+    PostChatMeetTimeResult, ChatGetResult, PostLocationResult, PostDeclarationResult {
     lateinit var binding: ActivityChattingBinding
     lateinit var chatRVAdapter: ChatRVAdapter
     var timestamp = Timestamp(Date().time)
@@ -89,6 +93,7 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
     lateinit var dialog_etc: BottomSheetDialog
 
     private var PICK_IMAGE = 1
+    private var CAMERA_IMAGE = 2
     var picture: MultipartBody.Part? = null
 
     var writer_me = ""
@@ -103,6 +108,9 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
 
     lateinit var place_chat_iv: AppCompatButton
     lateinit var picture_chat_iv: AppCompatButton
+
+    var phone_number : String = ""
+    var phoneNum_send = "tel:"
 
     /// stomp 연결
     private var url =
@@ -141,7 +149,9 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
         var chatDatas = mutableListOf<Chat>()
         chatRVAdapter = ChatRVAdapter(this)
         binding.recyclerMessages.adapter = chatRVAdapter
-        binding.recyclerMessages.layoutManager = LinearLayoutManager(this)
+        binding.recyclerMessages.layoutManager = LinearLayoutManager(this).apply{
+            this.stackFromEnd = true // 가장 최근의 대화를 표시하기 위해 맨 아래로 정렬.
+        }
 
         chatRVAdapter.chatList = chatDatas
         chatRVAdapter.notifyDataSetChanged()
@@ -161,12 +171,15 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
 
         binding.etcBtn.setOnClickListener {
             // 다이얼로그 부분
-//            val dialog:BottomSheetDialog = BottomSheetDialog(this)
             dialog_etc = BottomSheetDialog(this)
             dialog_etc.setContentView(R.layout.chat_bottom_dialog_content)
 
             val phone_btn = dialog_etc.findViewById<AppCompatButton>(R.id.phone_btn)
             phone_btn?.setOnClickListener {
+                phoneNum_send += phone_number
+                var intent = Intent(Intent.ACTION_DIAL)
+                intent.data = Uri.parse(phoneNum_send)
+                startActivity(intent)
                 Toast.makeText(this, "전화 걸기 클릭", Toast.LENGTH_LONG).show()
             }
 
@@ -174,8 +187,17 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
             declaration_btn?.setOnClickListener {
                 Toast.makeText(this, "신고 버튼 클릭", Toast.LENGTH_LONG).show()
 
-                val dlg = DeclarationPopupDialog(this)
-                dlg.start()
+                val declarationPopupDialog = DeclarationPopupDialog(this)
+                declarationPopupDialog.start()
+                declarationPopupDialog.setOnClickListener(object :
+                    DeclarationPopupDialog.ButtonClickListener {
+                    override fun onClicked(text: String) {
+                        // 약속시간 전송하는거 해주기
+                        Log.d("가져온 text : ", text)
+                        // 신고접수 처리
+                        sendDeclaration(chatRoom_id_get, declarationPost(text))
+                    }
+                })
 
             }
 
@@ -189,7 +211,6 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
 
         binding.moreBtn.setOnClickListener {
             // 다이얼로그 부분
-//            val dialog:BottomSheetDialog = BottomSheetDialog(this)
             dialog_more = BottomSheetDialog(this)
             dialog_more.setContentView(R.layout.chat_bottom_dialog_more)
             picture_chat_iv = dialog_more.findViewById<AppCompatButton>(R.id.picture_chat_iv)!!
@@ -198,8 +219,6 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
             val photo_btn = dialog_more.findViewById<AppCompatButton>(R.id.btn_photo)
             photo_btn?.setOnClickListener {
                 Toast.makeText(this, "사진 클릭", Toast.LENGTH_LONG).show()
-
-
                 val status = ContextCompat.checkSelfPermission(
                     this,
                     android.Manifest.permission.READ_EXTERNAL_STORAGE
@@ -223,14 +242,27 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
             val camera_btn = dialog_more.findViewById<AppCompatButton>(R.id.btn_camera)
             camera_btn?.setOnClickListener {
                 Toast.makeText(this, "카메라 클릭", Toast.LENGTH_LONG).show()
+                val status = ContextCompat.checkSelfPermission(
+                    this,
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE
+                )
+                if (status == PackageManager.PERMISSION_GRANTED) {
+                    // Permission 허용
+                    getCamera()
+                } else {
+                    // Permission 허용
+                    // 허용 요청
+                    ActivityCompat.requestPermissions(
+                        this,
+                        arrayOf<String>(android.Manifest.permission.READ_EXTERNAL_STORAGE),
+                        100
+                    )
+                }
 
             }
 
             val location_btn = dialog_more.findViewById<AppCompatButton>(R.id.btn_location)
             location_btn?.setOnClickListener {
-
-//                val dlg = LocationPopupDialog(this)
-//                dlg.start()
                 val intent = Intent(this@ChattingActivity, PlaceSearchActivity::class.java)
                 startActivityForResult(intent, SUBACTIITY_REQUEST_CODE)
 
@@ -514,7 +546,6 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
         )
     }
 
-
     /////////////////////////////////////////////////////////
 
     private fun initActionBar() {
@@ -570,6 +601,7 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
 
     override fun getUserSuccess(code: Int, result: UserGet) {
         binding.itemIdTxt.text = result.name
+        phone_number = result.phone
     }
 
     override fun getUserFailure(code: Int, message: String) {
@@ -788,9 +820,32 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
                 picture = body
                 setAdjImgUri(imagePath!!)
                 Toast.makeText(this, "사진 첨부", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "오류가 발생하였습니다.", Toast.LENGTH_SHORT).show()
             }
+
+            if (requestCode == CAMERA_IMAGE) {
+                //값 담기
+                val extras = data!!.extras
+
+
+                val imagePath = data!!.data
+                val file = File(absolutelyPath(imagePath, this))
+                val requestFile = RequestBody.create(MediaType.parse("image/*"), file)
+                val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
+
+                Log.d("파일 생성!! ======== ", file.name)
+
+                picture_chat_iv.visibility = View.VISIBLE
+                picture_chat_iv.setText(file.name)
+                edit_message.hint = ""
+
+                picture = body
+                setAdjImgUri(imagePath!!)
+                Toast.makeText(this, "사진 첨부", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        else {
+            Toast.makeText(this, "오류가 발생하였습니다.", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -811,6 +866,13 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
         intent.type = MediaStore.Images.Media.CONTENT_TYPE
         intent.type = "image/*" // 모든 이미지
         startActivityForResult(intent, PICK_IMAGE)
+    }
+
+    fun getCamera(){
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        intent.resolveActivity(packageManager)?.also {
+            startActivityForResult(intent, CAMERA_IMAGE)
+        }
     }
 
     private fun setAdjImgUri(imgUri: Uri) {
@@ -911,9 +973,22 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
     override fun sendLocationFailure() {
         Log.d(
             "=============================== ChatPlace Post 실패!!!!!!!!!!!!!!!!!!!!",
-            "=================================================="
+            ""
         )
     }
 
+    private fun sendDeclaration(chatRoom_id: Int, text : declarationPost){
+        val postDeclarationService = PostDeclarationService()
+        postDeclarationService.setDeclarationResult(this)
+        postDeclarationService.sendDeclaration(chatRoom_id, text)
+    }
+    override fun sendDeclarationSuccess(result: umc.mobile.project.ram.Auth.Declaration.DeclarationPost.Result) {
+        Log.d("SEND-SUCCESS", "신고사유 전송 성공")
+        Toast.makeText(this, "신고 접수가 완료되었습니다.", Toast.LENGTH_LONG)
+    }
 
+    override fun sendDeclarationFailure() {
+        Log.d("SEND-FAILURE", "신고사유 전송 실패")
+        Toast.makeText(this, "신고 접수가 실패하였습니다.", Toast.LENGTH_LONG)
+    }
 }

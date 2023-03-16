@@ -41,7 +41,7 @@
         android:clickable="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/your_profile_img"
-        android:layout_marginTop="3dp"/>
+        android:maxWidth="220dp"/>
     <ImageView
         android:id="@+id/your_image_iv"
         android:layout_width="200dp"

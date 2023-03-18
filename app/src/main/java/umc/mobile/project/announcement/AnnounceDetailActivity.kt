@@ -42,6 +42,12 @@ class AnnounceDetailActivity:AppCompatActivity() , PostDetailGetResult, ApplyRec
             finish()
         }
 
+        if(intent.hasExtra("post_id") && intent.hasExtra("user_id")) {
+            user_id_var = intent.getIntExtra("user_id", 0)
+            post_id_to_detail = intent.getIntExtra("post_id", 0)
+        } else {
+            Log.d("intent-> ", "전달된 값이 없음")
+        }
 
         getPostUpload()
 

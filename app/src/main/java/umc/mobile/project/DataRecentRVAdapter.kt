@@ -6,6 +6,7 @@ import android.util.Log
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.BaseAdapter
 import android.widget.Button
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
@@ -21,15 +22,19 @@ import umc.mobile.project.ram.Geocoder_location
 import umc.mobile.project.ram.my_application_1.post_id_to_detail
 import umc.mobile.project.ram.my_application_1.user_id_logined
 import umc.mobile.project.ram.my_application_1.user_id_var
+import umc.mobile.project.wishlist.GetLikePost.LikePostGetResult
+import umc.mobile.project.wishlist.GetLikePost.LikePostGetService
 
 class DataRecentRVAdapter(private val homeDataList: ArrayList<Post>) : RecyclerView.Adapter<DataRecentRVAdapter.RecentViewHolder>() {
 
     lateinit var context : Context
-    private val checkboxStatus = SparseBooleanArray()
+
+    private var contentPostId = 0
 
     //ViewHolder 객체
     inner class RecentViewHolder(val viewBinding: ItemDataBinding) :
-        RecyclerView.ViewHolder(viewBinding.root) , LikePostResult, AnnounceAlertDialogInterface {
+        RecyclerView.ViewHolder(viewBinding.root) , LikePostResult, AnnounceAlertDialogInterface,
+        LikePostGetResult {
 
         fun bind(homeData: Post) {
 
@@ -51,6 +56,8 @@ class DataRecentRVAdapter(private val homeDataList: ArrayList<Post>) : RecyclerV
             viewBinding.annApp.text = homeData.recruited_num.toString() // 신청인원
             viewBinding.annRecruit.text = homeData.num_of_recruits.toString() //총 인원
 
+            contentPostId = homeData.post_id
+            getLikePost()
 
             viewBinding.btnLikeThird.setOnClickListener {
                 val likePostService = LikePostService()
@@ -59,6 +66,27 @@ class DataRecentRVAdapter(private val homeDataList: ArrayList<Post>) : RecyclerV
                 Log.d("post_id: ", homeData.post_id.toString())
             }
 
+        }
+
+        private fun getLikePost() {
+            val likePostGetService = LikePostGetService()
+            likePostGetService.setLikePostGetResult(this)
+            likePostGetService.getLikePost(user_id_logined)
+        }
+
+        override fun getPostUploadSuccess(code: Int, result: ArrayList<Post>) {
+            for(i in 0 .. result.size - 1) {
+                if(contentPostId == result[i].post_id) {
+                    Log.d("contentPostId: ", contentPostId.toString())
+                    Log.d("result.post_id", result[i].post_id.toString())
+                    viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon_fill)
+                    break;
+                }
+            }
+        }
+
+        override fun getPostUploadFailure(code: Int, message: String) {
+            Log.d("", "")
         }
 
         override fun LikePostSuccess(result: Result) {
@@ -84,10 +112,6 @@ class DataRecentRVAdapter(private val homeDataList: ArrayList<Post>) : RecyclerV
 
         override fun btnFinish() {
         }
-
-
-
-
 
     }
 
@@ -118,6 +142,9 @@ class DataRecentRVAdapter(private val homeDataList: ArrayList<Post>) : RecyclerV
     }
 
 
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
 
     //표현할 아이템의 총 갯수
     override fun getItemCount(): Int = homeDataList.size

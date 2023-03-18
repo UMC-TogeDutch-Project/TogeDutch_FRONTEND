@@ -30,6 +30,7 @@ class SignUpAlarmKeywordActivity : AppCompatActivity() {
         var email = intent.getStringExtra("email")
         var password = intent.getStringExtra("password")
         var phoneNum = intent.getStringExtra("phoneNum")
+        var image = intent.getStringExtra("image")
 
         val retrofit = Retrofit.Builder()
             .baseUrl("http://ec2-3-34-255-129.ap-northeast-2.compute.amazonaws.com:9000/")
@@ -84,6 +85,7 @@ class SignUpAlarmKeywordActivity : AppCompatActivity() {
             intent.putExtra("password", password)
             intent.putExtra("phoneNum", phoneNum)
             intent.putExtra("keyWord", viewBinding.etInputAlarmKeyword.text.toString())
+            intent.putExtra("image", image)
 
             for(i in 0..keywordList.size - 1){
                 keywordListIt[i] = keywordList.get(i).toString().substring(22, keywordList.get(i).toString().lastIndex)

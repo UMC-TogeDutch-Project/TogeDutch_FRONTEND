@@ -9,7 +9,6 @@
         android:id="@+id/res_include"
         layout="@layout/actionbar_restaurant_top" />
 
-
     <EditText
         android:id="@+id/res_search_post"
         android:layout_width="match_parent"

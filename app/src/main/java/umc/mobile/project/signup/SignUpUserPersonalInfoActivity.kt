@@ -31,8 +31,10 @@ class SignUpUserPersonalInfoActivity : AppCompatActivity() {
         var status= intent.getStringExtra("status")
         var latitude = intent.getDoubleExtra("latitude", 50.02)
         var longitude = intent.getDoubleExtra("longitude", 60.02)
+        var image = intent.getStringExtra("image")
 
-        Log.d(TAG, "onCreate: ${name}, ${email}, ${password}, ${phoneNum}, ${keyWordIdx}, ${status}, ${role}, ${latitude}, ${longitude}")
+
+        Log.d(TAG, "onCreate: ${name}, ${email}, ${password}, ${phoneNum}, ${keyWordIdx}, ${image},${status}, ${role}, ${latitude}, ${longitude}")
 
         val retrofit = Retrofit.Builder()
             .baseUrl("http://ec2-3-34-255-129.ap-northeast-2.compute.amazonaws.com:9000/")
@@ -55,7 +57,7 @@ class SignUpUserPersonalInfoActivity : AppCompatActivity() {
         viewBinding.btnNext.setOnClickListener {
 
           apiService.createNewUser(SignUpRequest(
-              keyWordIdx, "${name}", "${role}", "${email}","${password}","${phoneNum}","${status}", latitude, longitude))
+              keyWordIdx, "${name}", "${role}", "${email}","${password}","${phoneNum}","${image}", "${status}", latitude, longitude))
               .enqueue(object : Callback<SignUpResponse>{
                   override fun onResponse(
                       call: Call<SignUpResponse>,

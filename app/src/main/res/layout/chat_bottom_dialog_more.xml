@@ -54,7 +54,7 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/place_chat_iv"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="28dp"
         android:text="동덕여대 인문관"
         android:textSize="14sp"
@@ -67,11 +67,14 @@
         app:layout_constraintBottom_toBottomOf="@id/edit_message"
         android:layout_marginLeft="10dp"
         android:drawableLeft="@drawable/icon_close_chatting_edittext"
-        android:visibility="gone"/>
+        app:layout_constraintWidth_percent="0.62"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:visibility="gone" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/picture_chat_iv"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="28dp"
         android:text="사진"
         android:textSize="14sp"
@@ -84,6 +87,9 @@
         app:layout_constraintBottom_toBottomOf="@id/edit_message"
         android:layout_marginLeft="10dp"
         android:drawableLeft="@drawable/icon_close_chatting_edittext"
+        app:layout_constraintWidth_percent="0.62"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:visibility="gone"/>
 
     <androidx.appcompat.widget.AppCompatButton

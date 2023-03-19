@@ -1,17 +1,21 @@
 package umc.mobile.project.ram.chat
 
 import Post
+import android.Manifest.permission.CAMERA
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.ImageDecoder
 import android.graphics.Matrix
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
@@ -23,10 +27,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import kotlinx.coroutines.DEBUG_PROPERTY_VALUE_AUTO
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -57,19 +61,17 @@ import umc.mobile.project.ram.Auth.ChatPhoto.ChatPhotoPost.PostPhotoService
 import umc.mobile.project.ram.Auth.Declaration.DeclarationPost.PostDeclarationResult
 import umc.mobile.project.ram.Auth.Declaration.DeclarationPost.PostDeclarationService
 import umc.mobile.project.ram.Auth.Declaration.DeclarationPost.declarationPost
-import umc.mobile.project.ram.Auth.Post.GetPost.PostGetService
 import umc.mobile.project.ram.Auth.Post.GetPostAll.PostGetAllResult
 import umc.mobile.project.ram.Auth.Post.GetPostAll.PostGetAllService
 import umc.mobile.project.ram.Auth.Post.GetPostDetail.PostDetailGetResult
 import umc.mobile.project.ram.Auth.Post.GetPostDetail.PostDetailGetService
 import umc.mobile.project.ram.Geocoder_location
-import umc.mobile.project.ram.my_application_1.user_id_logined
 import umc.mobile.project.ram.my_application_1.*
 import java.io.File
+import java.io.IOException
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 var post_id_dialog: Int = 0
@@ -111,6 +113,8 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
 
     var phone_number : String = ""
     var phoneNum_send = "tel:"
+
+    lateinit var currentPhotoPath : String
 
     /// stomp 연결
     private var url =
@@ -242,21 +246,13 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
             val camera_btn = dialog_more.findViewById<AppCompatButton>(R.id.btn_camera)
             camera_btn?.setOnClickListener {
                 Toast.makeText(this, "카메라 클릭", Toast.LENGTH_LONG).show()
-                val status = ContextCompat.checkSelfPermission(
-                    this,
-                    android.Manifest.permission.READ_EXTERNAL_STORAGE
-                )
-                if (status == PackageManager.PERMISSION_GRANTED) {
+
+                if (checkPersmission()) {
                     // Permission 허용
-                    getCamera()
+                    dispatchTakePictureIntent()
                 } else {
-                    // Permission 허용
                     // 허용 요청
-                    ActivityCompat.requestPermissions(
-                        this,
-                        arrayOf<String>(android.Manifest.permission.READ_EXTERNAL_STORAGE),
-                        100
-                    )
+                    requestPermission()
                 }
 
             }
@@ -537,6 +533,8 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
         edit_message.text = Editable.Factory.getInstance().newEditable("") // 채팅 입력창 다시 초기화시켜주기
 
         sendStomp(result.image, result.chatRoomId, user_id_logined)
+
+        dialog_more.dismiss()
     }
 
     override fun sendPhotoFailure() {
@@ -822,13 +820,11 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
                 Toast.makeText(this, "사진 첨부", Toast.LENGTH_SHORT).show()
             }
 
-            if (requestCode == CAMERA_IMAGE) {
-                //값 담기
-                val extras = data!!.extras
+            if (requestCode == REQUEST_IMAGE_CAPTURE) {
 
-
-                val imagePath = data!!.data
-                val file = File(absolutelyPath(imagePath, this))
+                // 카메라로부터 받은 데이터가 있을경우에만
+                val file = File(currentPhotoPath)
+                val imagePath = Uri.fromFile(file)
                 val requestFile = RequestBody.create(MediaType.parse("image/*"), file)
                 val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
 
@@ -868,12 +864,90 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
         startActivityForResult(intent, PICK_IMAGE)
     }
 
-    fun getCamera(){
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        intent.resolveActivity(packageManager)?.also {
-            startActivityForResult(intent, CAMERA_IMAGE)
+
+
+    //////////////// 카메라 접근
+
+    val REQUEST_IMAGE_CAPTURE = 2
+
+    // 카메라 권한 요청
+    private fun requestPermission() {
+        ActivityCompat.requestPermissions(this, arrayOf(READ_EXTERNAL_STORAGE, CAMERA),
+            REQUEST_IMAGE_CAPTURE)
+    }
+
+    // 카메라 권한 체크
+    private fun checkPersmission(): Boolean {
+        return (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) ==
+                PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this,
+            android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+    }
+
+    // 권한요청 결과
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            Log.d("TAG", "Permission: " + permissions[0] + "was " + grantResults[0] + "카메라 허가")
+        }else{
+            Log.d("TAG","카메라 불허가")
         }
     }
+
+    private fun dispatchTakePictureIntent() {
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            if (takePictureIntent.resolveActivity(this.packageManager) != null) {
+                // 찍은 사진을 그림파일로 만들기
+                val photoFile: File? =
+                    try {
+                        createImageFile()
+                    } catch (ex: IOException) {
+                        Log.d("TAG", "그림파일 만드는도중 에러생김")
+                        null
+                    }
+
+                // 그림파일을 성공적으로 만들었다면 onActivityForResult로 보내기
+                // z카메라 이미지 저장
+                if (Build.VERSION.SDK_INT < 24) {
+                    if(photoFile != null){
+                        val photoURI = Uri.fromFile(photoFile)
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+                    }
+                }
+                else{
+                    photoFile?.also {
+                        val photoURI: Uri = FileProvider.getUriForFile(
+                            this, "umc.mobile.project.fileprovider", it
+                        )
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+                    }
+                }
+            }
+        }
+    }
+
+    // 카메라로 촬영한 이미지를 파일로 저장
+    @Throws(IOException::class)
+    private fun createImageFile(): File {
+        // Create an image file name
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        ).apply {
+            // Save a file: path for use with ACTION_VIEW intents
+            currentPhotoPath = absolutePath
+        }
+    }
+
+
 
     private fun setAdjImgUri(imgUri: Uri) {
 
@@ -929,6 +1003,8 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
         edit_message.text = Editable.Factory.getInstance().newEditable("") // 채팅 입력창 다시 초기화시켜주기
 
         sendStomp(result.meetTime, result.chatRoomId, user_id_logined)
+
+        dialog_more.dismiss()
     }
 
     override fun sendChatMeetTimeFailure() {
@@ -968,6 +1044,8 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
         edit_message.text = Editable.Factory.getInstance().newEditable("") // 채팅 입력창 다시 초기화시켜주기
 
         sendStomp("장소채팅" + place_basic + "&" + place_detail, result.chatRoomId, user_id_logined)
+
+        dialog_more.dismiss()
     }
 
     override fun sendLocationFailure() {
@@ -991,4 +1069,8 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
         Log.d("SEND-FAILURE", "신고사유 전송 실패")
         Toast.makeText(this, "신고 접수가 실패하였습니다.", Toast.LENGTH_LONG)
     }
+
+
+
+
 }

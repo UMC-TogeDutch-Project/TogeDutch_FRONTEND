@@ -1,12 +1,15 @@
 package umc.mobile.project.restaurant.blog
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import umc.mobile.project.RestaurantFragment
 import umc.mobile.project.announcement.AnnounceRVAdapterDecoration
 import umc.mobile.project.databinding.ActivityCommercialListBinding
 import umc.mobile.project.databinding.ActivityRestaurantPageBinding
+import umc.mobile.project.restaurant.Auth.NaverApi.NaverData
 import umc.mobile.project.restaurant.RestaurantData
 import umc.mobile.project.restaurant.RestaurantRVAdapter
 
@@ -15,6 +18,11 @@ class RestaurantPageActivity: AppCompatActivity() {
     private lateinit var blogRVAdapter: BlogRVAdapter
     var mBlogData = ArrayList<BlogData>()
     private lateinit var datas : ArrayList<RestaurantData>
+
+
+    var result = ArrayList<NaverData.NaverSearchData>()
+    private lateinit var restaurantRVAdapter: RestaurantRVAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRestaurantPageBinding.inflate(layoutInflater)
@@ -32,6 +40,9 @@ class RestaurantPageActivity: AppCompatActivity() {
 //        binding.resPhone.text = datas.phone
 //        binding.resMenu.text = datas.score
 
+        binding.resTitle.text = intent.getStringExtra("data1")
+        binding.resAddress.text = intent.getStringExtra("data2")
+        binding.resMenu.text = intent.getStringExtra("data3")
     }
 
 

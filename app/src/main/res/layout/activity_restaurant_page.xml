@@ -56,7 +56,7 @@
                 android:layout_marginRight="20dp"
                 android:background="@drawable/button_round_13"
                 android:backgroundTint="@color/grey_2"
-                android:src="@drawable/img1"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/res_title" />
@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="27dp"
                 android:layout_marginTop="5dp"
-                android:drawableLeft="@drawable/ic_star_2"
+                android:drawableLeft="@drawable/tabler_icon_category"
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/notosanskr_bold"
                 android:includeFontPadding="false"
@@ -91,20 +91,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/res_address" />
 
-            <TextView
-                android:id="@+id/res_phone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="27dp"
-                android:layout_marginTop="5dp"
-                android:drawableLeft="@drawable/ic_phone"
-                android:drawablePadding="10dp"
-                android:fontFamily="@font/notosanskr_bold"
-                android:includeFontPadding="false"
-                android:text="02-4948-3929"
-                android:textColor="@color/black"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/res_menu" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/res_blog"

@@ -5,6 +5,9 @@ import android.Manifest.permission.CAMERA
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -23,6 +26,7 @@ import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.app.ActivityCompat
@@ -342,6 +346,7 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun getChatSuccess(code: Int, result: Chat) {
         Log.d("CHAT-GET 성공", "")
         val chat_id = result.chat_id
@@ -354,6 +359,32 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
         val content = result.content
         val writer = result.writer
 
+        // 알림 보내주기
+        var builder = Notification.Builder(this, "My_channel")
+            .setContentTitle("보낸 사람")
+            .setContentText("보낸 내용")
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { // 오레오 버전 이후에는 알림을 받을 때 채널이 필요
+            val channel_id = "MY_channel" // 알림을 받을 채널 id 설정
+            val channel_name = writer // 채널 이름 설정
+            val descriptionText = content // 채널 설명글 설정
+            val importance = NotificationManager.IMPORTANCE_DEFAULT // 알림 우선순위 설정
+            val channel = NotificationChannel(channel_id, channel_name, importance).apply {
+                description = descriptionText
+            }
+
+            channel.enableVibration(true) // 진동
+
+            // 만든 채널 정보를 시스템에 등록
+            val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+
+            // 알림 표시: 알림의 고유 ID(ex: 1002), 알림 결과
+            notificationManager.notify(1002, builder.build())
+        }
+
+
+        // 채팅 속성 체크
         if (result.content.length >= 17 && result.content[4].toString()
                 .equals("-") && result.content[7].toString()
                 .equals("-") && result.content[13].toString()
@@ -430,10 +461,6 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
     }
 
     override fun sendChatSuccess(result: Result) {
-        Log.d(
-            "=============================== Message Post 성공!!!!!!!!!!!!!!!!!!!!",
-            "=================================================="
-        )
         val data = JSONObject()
         data.put("chatId", result.chatId)
         data.put("chatRoomId", result.chatRoomId)

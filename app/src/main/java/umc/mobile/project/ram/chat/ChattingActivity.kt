@@ -5,6 +5,9 @@ import android.Manifest.permission.CAMERA
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -23,6 +26,7 @@ import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.app.ActivityCompat
@@ -58,6 +62,10 @@ import umc.mobile.project.ram.Auth.ChatLocation.PostLocationResult
 import umc.mobile.project.ram.Auth.ChatLocation.PostLocationService
 import umc.mobile.project.ram.Auth.ChatPhoto.ChatPhotoPost.PostPhotoResult
 import umc.mobile.project.ram.Auth.ChatPhoto.ChatPhotoPost.PostPhotoService
+import umc.mobile.project.ram.Auth.ChatRoomOfUser.IsOutPut.IsOutPutResult
+import umc.mobile.project.ram.Auth.ChatRoomOfUser.IsOutPut.IsOutPutService
+import umc.mobile.project.ram.Auth.ChatRoomOfUser.IsReadPut.IsReadPutResult
+import umc.mobile.project.ram.Auth.ChatRoomOfUser.IsReadPut.IsReadPutService
 import umc.mobile.project.ram.Auth.Declaration.DeclarationPost.PostDeclarationResult
 import umc.mobile.project.ram.Auth.Declaration.DeclarationPost.PostDeclarationService
 import umc.mobile.project.ram.Auth.Declaration.DeclarationPost.declarationPost
@@ -80,7 +88,7 @@ var location_dialog = ""
 
 class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult, PostGetAllResult,
     PostChatResult, ChatAllGetResult, PostPhotoResult,
-    PostChatMeetTimeResult, ChatGetResult, PostLocationResult, PostDeclarationResult {
+    PostChatMeetTimeResult, ChatGetResult, PostLocationResult, PostDeclarationResult, IsReadPutResult, IsOutPutResult {
     lateinit var binding: ActivityChattingBinding
     lateinit var chatRVAdapter: ChatRVAdapter
     var timestamp = Timestamp(Date().time)
@@ -126,15 +134,20 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
         binding = ActivityChattingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // 채팅 부분
+        chatRoom_id_get = intent.getIntExtra("chatRoom_id", -1)
+        Log.d("ChattingActivity 넘어온 chatRoom_id: $chatRoom_id_get", "")
+
+        val isReadPutService = IsReadPutService()
+        isReadPutService.setIsReadPutResult(this)
+        isReadPutService.putIsRead(chatRoom_id_get, user_id_logined) // 현재 유저가 들어와서 메세지 읽었다는 표시
+
+
         val postGetAllService = PostGetAllService() // 공고 전체 불러오기
         postGetAllService.setPostGetResult(this)
         postGetAllService.getPostAll()
 
         initActionBar()
-
-        // 채팅 부분
-        chatRoom_id_get = intent.getIntExtra("chatRoom_id", -1)
-        Log.d("ChattingActivity 넘어온 chatRoom_id: $chatRoom_id_get", "")
 
         if (chatRoom_id_get != -1) {
             try {
@@ -342,6 +355,7 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun getChatSuccess(code: Int, result: Chat) {
         Log.d("CHAT-GET 성공", "")
         val chat_id = result.chat_id
@@ -353,7 +367,33 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
 
         val content = result.content
         val writer = result.writer
+//
+//        // 알림 보내주기
+//        var builder = Notification.Builder(this, "My_channel")
+//            .setContentTitle("보낸 사람")
+//            .setContentText("보낸 내용")
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { // 오레오 버전 이후에는 알림을 받을 때 채널이 필요
+//            val channel_id = "MY_channel" // 알림을 받을 채널 id 설정
+//            val channel_name = writer // 채널 이름 설정
+//            val descriptionText = content // 채널 설명글 설정
+//            val importance = NotificationManager.IMPORTANCE_DEFAULT // 알림 우선순위 설정
+//            val channel = NotificationChannel(channel_id, channel_name, importance).apply {
+//                description = descriptionText
+//            }
+//
+//            channel.enableVibration(true) // 진동
+//
+//            // 만든 채널 정보를 시스템에 등록
+//            val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+//            notificationManager.createNotificationChannel(channel)
+//
+//            // 알림 표시: 알림의 고유 ID(ex: 1002), 알림 결과
+//            notificationManager.notify(1002, builder.build())
+//        }
 
+
+        // 채팅 속성 체크
         if (result.content.length >= 17 && result.content[4].toString()
                 .equals("-") && result.content[7].toString()
                 .equals("-") && result.content[13].toString()
@@ -430,10 +470,6 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
     }
 
     override fun sendChatSuccess(result: Result) {
-        Log.d(
-            "=============================== Message Post 성공!!!!!!!!!!!!!!!!!!!!",
-            "=================================================="
-        )
         val data = JSONObject()
         data.put("chatId", result.chatId)
         data.put("chatRoomId", result.chatRoomId)
@@ -774,7 +810,10 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
 
     override fun onDestroy() {
         super.onDestroy()
-        stompClient.disconnect()
+
+        val isOutPutService = IsOutPutService()
+        isOutPutService.setIsOutPutResult(this)
+        isOutPutService.putIsOut(chatRoom_id_get, user_id_logined) // 현재 유저가 채팅방 나가서 메세지 안 읽는다는 표시
     }
 
     //////////////////////// 사진 /////////////////////////
@@ -1070,7 +1109,29 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
         Toast.makeText(this, "신고 접수가 실패하였습니다.", Toast.LENGTH_LONG)
     }
 
+    override fun putIsReadSuccess(
+        code: Int,
+        result: umc.mobile.project.ram.Auth.ChatRoomOfUser.IsReadPut.Result
+    ) {
+        Log.d("READ-PUT SUCCESS","")
+    }
 
+    override fun putIsReadFailure(code: Int, message: String) {
+        Log.d("READ-PUT FAILURE","")
+    }
+
+    override fun putIsOutSuccess(
+        code: Int,
+        result: umc.mobile.project.ram.Auth.ChatRoomOfUser.IsOutPut.Result
+    ) {
+        Log.d("OUT-PUT SUCCESS","")
+
+        stompClient.disconnect()
+    }
+
+    override fun putIsOutFailure(code: Int, message: String) {
+        Log.d("OUT-PUT FAILURE","")
+    }
 
 
 }

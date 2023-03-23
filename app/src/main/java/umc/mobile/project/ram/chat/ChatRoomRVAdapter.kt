@@ -17,6 +17,9 @@ import umc.mobile.project.ram.Auth.Application.GetUser.UserGetService
 import umc.mobile.project.ram.Auth.Chat.ChatAllGet.ChatAllGetResult
 import umc.mobile.project.ram.Auth.Chat.ChatAllGet.ChatAllGetService
 import umc.mobile.project.ram.Auth.ChatRoom.ChatRoomGetList.ChatRoomList
+import umc.mobile.project.ram.Auth.ChatRoomOfUser.ChatRoomOfUserGet.ChatMember
+import umc.mobile.project.ram.Auth.ChatRoomOfUser.ChatRoomOfUserGet.ChatRoomOfUserGetResult
+import umc.mobile.project.ram.Auth.ChatRoomOfUser.ChatRoomOfUserGet.ChatRoomOfUserGetService
 import umc.mobile.project.ram.Auth.Post.GetPostAll.PostGetAllResult
 import umc.mobile.project.ram.Auth.Post.GetPostAll.PostGetAllService
 import umc.mobile.project.ram.Auth.Post.GetPostChatIdx.PostChatIdxGetResult
@@ -69,7 +72,7 @@ class ChatRoomRVAdapter(private val chatRoomList: ArrayList<ChatRoomList>) :
 
     // 레이아웃 내 view 연결
     inner class ViewHolder(val binding: ItemChatRoomBinding) :
-        RecyclerView.ViewHolder(binding.root), ChatAllGetResult, UserGetResult, PostChatIdxGetResult {
+        RecyclerView.ViewHolder(binding.root), ChatAllGetResult, ChatRoomOfUserGetResult, PostChatIdxGetResult {
         //        PostJoinGetResult, UserGetResult,
         fun bind(chatRoom: ChatRoomList) {
             chatRoom_id_list.add(chatRoom.chatRoomIdx)
@@ -90,9 +93,9 @@ class ChatRoomRVAdapter(private val chatRoomList: ArrayList<ChatRoomList>) :
 
             binding.itemSubjectTxt.text = txtSubject
 
-            val userGetService = UserGetService()
-            userGetService.setUserGetResult(this)
-            userGetService.getUser(result.user_id)
+            val chatRoomOfUserGetService = ChatRoomOfUserGetService()
+            chatRoomOfUserGetService.setMemberChatGetResult(this)
+            chatRoomOfUserGetService.getChatRoomOfUser(result.chatRoom_id)
 
             val chatAllGetService = ChatAllGetService()
             chatAllGetService.setChatAllGetResult(this)
@@ -103,12 +106,23 @@ class ChatRoomRVAdapter(private val chatRoomList: ArrayList<ChatRoomList>) :
             Log.d("getPostChatIdxFailure ===============================================", code.toString())
         }
 
-        override fun getUserSuccess(code: Int, result: UserGet) {
-            val txtUserID: String = result.name // 상대방 유저 아이디
+        override fun getChatMemberSuccess(code: Int, result : ArrayList<ChatMember>) {
+
+            var name_string = ""
+
+            for (i in 0 until result.count() ) {
+                if(i == result.count())
+                    name_string += result[i].userName
+                else
+                    name_string += result[i].userName + ", "
+            }
+
+
+            val txtUserID: String = name_string // 상대방 유저 아이디
             binding.itemIdTxt.text = txtUserID
         }
 
-        override fun getUserFailure(code: Int, message: String) {
+        override fun getChatMemberFailure(code: Int, message: String) {
             Log.d("getUserFailure ===============================================", code.toString())
         }
 //

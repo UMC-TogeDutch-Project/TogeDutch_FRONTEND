@@ -37,7 +37,6 @@ class MyCommercialDetailActivity : AppCompatActivity(), PostDetailGetResult {
         val postDetailGetService = PostDetailGetService()
         postDetailGetService.setPostDetailGetResult(this)
         postDetailGetService.getPostDetail(post_id_to_detail , user_id_var) // 임의로 지정
-
     }
 
     override fun getPostUploadSuccess(code: Int, result: Post) {

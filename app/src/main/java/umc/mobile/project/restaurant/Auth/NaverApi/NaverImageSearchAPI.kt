@@ -11,8 +11,8 @@ import java.net.URLEncoder
 class NaverImageSearchAPI {
     val clientId = "wmV0kYp4ek0ba6kCCbxB"
     val clientSecret = "PgxJ1saGO6"
-
-    fun main(searchTitle: String?) {
+    var naverImgList = ArrayList<NaverData.NaverImgData>()
+    fun main(searchTitle: String?): ArrayList<NaverData.NaverImgData> {
         var text: String? = null
 
         try {
@@ -30,7 +30,8 @@ class NaverImageSearchAPI {
 
 
         val responseBody = get(apiURL, requestHeaders)
-        parseData(responseBody)
+        val result = parseData(responseBody)
+        return result
     }
 
     private operator fun get(apiUrl: String, requestHeaders: Map<String, String>): String {
@@ -88,7 +89,7 @@ class NaverImageSearchAPI {
     }
 
 
-    private fun parseData(responseBody: String) {
+    private fun parseData(responseBody: String): ArrayList<NaverData.NaverImgData> {
         var title: String
         var thumbnail: String
         var sizeHeight: String
@@ -102,11 +103,17 @@ class NaverImageSearchAPI {
 
             for (i in 0 until jsonArray.length()) {
                 val item = jsonArray.getJSONObject(i)
+                val naverData = NaverData.NaverImgData(
+                    item.getString("thumbnail")
+                )
+                naverImgList.add(naverData)
+
                 title = item.getString("title")
                 thumbnail = item.getString("thumbnail")
                 sizeHeight = item.getString("sizeheight")
                 sizeWidth = item.getString("sizewidth")
                 bw.write("TITLE : $title THUMBNAIL : $thumbnail SIZEHEIGHT : $sizeHeight SIZEWIDTH : $sizeWidth \n");
+
             }
 
             bw.flush()
@@ -114,6 +121,6 @@ class NaverImageSearchAPI {
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-
+        return naverImgList
     }
 }

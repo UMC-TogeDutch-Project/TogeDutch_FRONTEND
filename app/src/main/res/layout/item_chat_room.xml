@@ -51,7 +51,7 @@
 
     <TextView
         android:id="@+id/item_chat_content_txt"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="알겠습니다~"
         android:textColor="@color/black"
@@ -60,6 +60,9 @@
         app:layout_constraintStart_toStartOf="@id/item_id_txt"
         app:layout_constraintTop_toTopOf="@+id/item_apply_curr_iv"
         android:layout_marginTop="62dp"
+        app:layout_constraintWidth_percent="0.5"
+        android:maxLines="1"
+        android:ellipsize="end"
         />
 
     <TextView

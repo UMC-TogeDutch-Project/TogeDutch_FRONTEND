@@ -19,6 +19,7 @@
         android:clickable="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:maxWidth="220dp"
         android:layout_marginTop="5dp"/>
     <ImageView
         android:id="@+id/my_image_iv"

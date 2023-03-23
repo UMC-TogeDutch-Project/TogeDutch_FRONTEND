@@ -35,33 +35,6 @@ class PromisePopupDialog(context: Context) : Dialog(context) {
         start()
     }
     fun start(){
-//        dlg.requestWindowFeature(Window.FEATURE_NO_TITLE)
-//        dlg.setContentView(R.layout.promise_popup_dialog)     //다이얼로그에 사용할 xml 파일을 불러옴
-//        dlg.setCancelable(false)    //다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않도록 함
-
-//        btn_close = dlg.findViewById(R.id.close_btn)
-//        btn_close.setOnClickListener {
-//            dlg.dismiss()
-//        }
-//
-//        editText6 = dlg.findViewById(R.id.dialog_ann_et_year)
-//        editText7 = dlg.findViewById(R.id.dialog_ann_et_month)
-//        editText8 = dlg.findViewById(R.id.dialog_ann_et_day)
-//        editText9 = dlg.findViewById(R.id.dialog_ann_et_time)
-//        editText10 = dlg.findViewById(R.id.dialog_ann_et_hour)
-//        editText11 = dlg.findViewById(R.id.dialog_ann_et_minute)
-//
-//        dlg_meet_time_txt = string_to_timestamp(editText6!!.text.toString(),editText7!!.text.toString(), editText8!!.text.toString(), editText9!!.text.toString()
-//            ,editText10!!.text.toString(), editText11!!.text.toString())
-//
-//        Log.d("dlg_시간  : ", dlg_meet_time_txt)
-//
-//
-//        btn_send = dlg.findViewById(R.id.meet_time_send_btn)
-//        btn_send.setOnClickListener {
-//            onClickListener.onClicked(dlg_meet_time_txt)
-//            dlg.dismiss()
-//        }
 
         btn_close = binding.closeBtn
         btn_close.setOnClickListener {

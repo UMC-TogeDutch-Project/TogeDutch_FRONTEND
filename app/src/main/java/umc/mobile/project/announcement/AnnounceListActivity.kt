@@ -36,6 +36,28 @@ class AnnounceListActivity : AppCompatActivity(), PostRecentGetResult, PostImmin
         setupSpinnerText()
         setupSpinnerHandler()
 
+//        if(num1 == 0){
+//            initRecyclerViewRecent()
+//
+//        }
+//
+//        if(num1 == 1){
+//            binding.spinner.setSelection(1)
+//            initRecyclerViewImminent()
+//            binding.recent.visibility = View.INVISIBLE // 최신순 화면 invisible
+//            binding.imminent.visibility = View.VISIBLE
+//
+//        }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initActionBar()
+//        if(num1 == 0)
+//            initRecyclerViewRecent()
+//        else
+//            initRecyclerViewImminent()
         if(num1 == 0){
             initRecyclerViewRecent()
 
@@ -48,7 +70,10 @@ class AnnounceListActivity : AppCompatActivity(), PostRecentGetResult, PostImmin
             binding.imminent.visibility = View.VISIBLE
 
         }
+    }
 
+    override fun onDestroy() {
+        super.onDestroy()
     }
 
     private fun setupSpinnerText() {

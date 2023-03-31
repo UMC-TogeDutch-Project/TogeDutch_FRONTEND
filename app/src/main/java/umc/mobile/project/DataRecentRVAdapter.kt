@@ -74,8 +74,17 @@ class DataRecentRVAdapter(private val homeDataList: ArrayList<Post>) : RecyclerV
             }
 
 
-
             viewBinding.btnLikeThird.setOnClickListener {
+//                viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon_fill)
+                viewBinding.btnLikeThird.isSelected = !viewBinding.btnLikeThird.isSelected
+
+                if(viewBinding.btnLikeThird.isSelected) {
+                    viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon_fill)
+                } else {
+                    viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon)
+                }
+                notifyDataSetChanged()
+
                 val likePostService = LikePostService()
                 likePostService.setLikePostResult(this)
                 likePostService.sendLike(user_id_logined, homeData.post_id)
@@ -84,7 +93,6 @@ class DataRecentRVAdapter(private val homeDataList: ArrayList<Post>) : RecyclerV
             }
 
         }
-
 
 
         override fun LikePostSuccess(result: Result) {
@@ -100,6 +108,8 @@ class DataRecentRVAdapter(private val homeDataList: ArrayList<Post>) : RecyclerV
         }
 
         override fun LikePostFailureMyPost() {
+            viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon)
+            notifyDataSetChanged()
             val dlg = AnnounceAlertDialog(context, this)
             dlg.start5()
         }

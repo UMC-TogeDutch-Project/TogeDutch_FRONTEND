@@ -116,6 +116,7 @@ class WishListRVAdapter (private val wishApplicationList: ArrayList<Post>) : Rec
     fun removePost(position: Int){
         if(position >= 0){
             wishApplicationList.removeAt(position)
+
             notifyDataSetChanged()
         }
     }

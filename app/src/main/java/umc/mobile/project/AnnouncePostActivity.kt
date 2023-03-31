@@ -224,6 +224,9 @@ class AnnouncePostActivity : AppCompatActivity(), PostRecordResult {
         Log.d("post_id 변환 값 ==========================", result.post_id.toString())
         picture_upload_uri_list.add(Picture_Save(result.post_id, picture_name, picture!!)) // 이전에 저장한 사진이랑 다른 거면 리스트에 저장해두기
 //        Toast.makeText(this, "공고 등록 성공.", Toast.LENGTH_SHORT).show()
+
+
+
         finish()
 
     }

@@ -5,15 +5,11 @@ import android.Manifest.permission.CAMERA
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.graphics.BitmapFactory
-import android.graphics.ImageDecoder
 import android.graphics.Matrix
 import android.net.Uri
 import android.os.Build
@@ -49,6 +45,8 @@ import umc.mobile.project.ram.Auth.Application.GetUser.UserGetResult
 import umc.mobile.project.ram.Auth.Application.GetUser.UserGetService
 import umc.mobile.project.ram.Auth.Chat.ChatAllGet.ChatAllGetResult
 import umc.mobile.project.ram.Auth.Chat.ChatAllGet.ChatAllGetService
+import umc.mobile.project.ram.Auth.Chat.ChatDelete.ChatRoomDeleteResult
+import umc.mobile.project.ram.Auth.Chat.ChatDelete.ChatRoomDeleteService
 import umc.mobile.project.ram.Auth.Chat.ChatGet.ChatGetResult
 import umc.mobile.project.ram.Auth.Chat.ChatGet.ChatGetService
 import umc.mobile.project.ram.Auth.Chat.ChatMeetTimePost.ChatMeetTime
@@ -88,7 +86,8 @@ var location_dialog = ""
 
 class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult, PostGetAllResult,
     PostChatResult, ChatAllGetResult, PostPhotoResult,
-    PostChatMeetTimeResult, ChatGetResult, PostLocationResult, PostDeclarationResult, IsReadPutResult, IsOutPutResult {
+    PostChatMeetTimeResult, ChatGetResult, PostLocationResult, PostDeclarationResult, IsReadPutResult, IsOutPutResult,
+    ChatRoomDeleteResult {
     lateinit var binding: ActivityChattingBinding
     lateinit var chatRVAdapter: ChatRVAdapter
     var timestamp = Timestamp(Date().time)
@@ -220,7 +219,7 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
 
             val exit_btn = dialog_etc.findViewById<AppCompatButton>(R.id.exit_btn)
             exit_btn?.setOnClickListener {
-                Toast.makeText(this, "나가기 클릭", Toast.LENGTH_LONG).show()
+                deleteUser()
 
             }
             dialog_etc.show()
@@ -367,30 +366,7 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
 
         val content = result.content
         val writer = result.writer
-//
-//        // 알림 보내주기
-//        var builder = Notification.Builder(this, "My_channel")
-//            .setContentTitle("보낸 사람")
-//            .setContentText("보낸 내용")
-//
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { // 오레오 버전 이후에는 알림을 받을 때 채널이 필요
-//            val channel_id = "MY_channel" // 알림을 받을 채널 id 설정
-//            val channel_name = writer // 채널 이름 설정
-//            val descriptionText = content // 채널 설명글 설정
-//            val importance = NotificationManager.IMPORTANCE_DEFAULT // 알림 우선순위 설정
-//            val channel = NotificationChannel(channel_id, channel_name, importance).apply {
-//                description = descriptionText
-//            }
-//
-//            channel.enableVibration(true) // 진동
-//
-//            // 만든 채널 정보를 시스템에 등록
-//            val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-//            notificationManager.createNotificationChannel(channel)
-//
-//            // 알림 표시: 알림의 고유 ID(ex: 1002), 알림 결과
-//            notificationManager.notify(1002, builder.build())
-//        }
+
 
 
         // 채팅 속성 체크
@@ -1131,6 +1107,21 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
 
     override fun putIsOutFailure(code: Int, message: String) {
         Log.d("OUT-PUT FAILURE","")
+    }
+
+    fun deleteUser(){
+        val userDeleteService = ChatRoomDeleteService()
+        userDeleteService.setChatGetResult(this)
+        userDeleteService.deleteUser(chatRoom_id_get, user_id_logined)
+    }
+
+    override fun userDeleteSuccess(code: Int, result: Int) {
+        Log.d("채팅방 나가기 성공", "")
+        finish()
+    }
+
+    override fun userDeleteFailure(code: Int, message: String) {
+        Log.d("채팅방 나가기 실패", "")
     }
 
 

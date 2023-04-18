@@ -32,14 +32,33 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/res_blog_date"
+        android:id="@+id/res_blog_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@+id/res_blog_img"
         app:layout_constraintTop_toBottomOf="@+id/res_blog_title"
         android:layout_marginLeft="11dp"
         android:layout_marginTop="4dp"
+        android:text="닉네임"
+        android:textSize="11dp" />
+    <TextView
+        android:id="@+id/res_blog_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/res_blog_id"
+        app:layout_constraintTop_toBottomOf="@+id/res_blog_title"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="4dp"
         android:text="0000.00.00.00:00"
         android:textSize="11dp" />
+
+    <View
+        android:background="@color/grey_3"
+        android:layout_width="match_parent"
+        android:layout_height="0.7dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/res_blog_img"
+
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

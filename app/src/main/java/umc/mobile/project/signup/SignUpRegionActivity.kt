@@ -70,6 +70,7 @@ class SignUpRegionActivity : AppCompatActivity() {
             Log.d("editTextaddress: ", viewBinding.etInputRegion.text.toString())
             Log.d("address: ", address)
 
+
             try {                                   //지역  , 읽을 개수
                 locationNameList = geocoder.getFromLocationName(address, 10)
             } catch (e: IOException) {
@@ -101,6 +102,6 @@ class SignUpRegionActivity : AppCompatActivity() {
             }
 
         }
-
     }
+
 }

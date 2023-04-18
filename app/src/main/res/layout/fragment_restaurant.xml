@@ -8,18 +8,16 @@
     <include
         android:id="@+id/res_include"
         layout="@layout/actionbar_restaurant_top" />
-
     <EditText
         android:id="@+id/res_search_post"
         android:layout_width="match_parent"
         android:layout_height="37dp"
         android:background="@drawable/button_round_11"
         android:backgroundTint="#1F767680"
-        android:drawableLeft="@drawable/ic_search"
         android:drawableRight="@drawable/ic_mic"
         android:drawablePadding="7dp"
         android:hint="검색"
-        android:paddingLeft="7dp"
+        android:paddingLeft="30dp"
         android:paddingRight="7dp"
         android:layout_marginRight="15dp"
         android:layout_marginLeft="15dp"
@@ -27,14 +25,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/res_include" />
 
+    <ImageButton
+        android:id="@+id/search_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_search"
+        android:layout_marginTop="7dp"
+        android:layout_marginLeft="5dp"
+        app:layout_constraintStart_toStartOf="@+id/res_search_post"
+        app:layout_constraintTop_toBottomOf="@+id/res_include" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_res"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="450dp"
         android:layout_marginTop="44dp"
         app:layout_constraintEnd_toEndOf="parent"
-
+        android:nestedScrollingEnabled="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/res_search_post"
         tools:listitem="@layout/restaurant_recyclerview_item">
@@ -42,14 +50,8 @@
     </androidx.recyclerview.widget.RecyclerView>
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_res2"
-        android:layout_width="wrap_content"
-        android:layout_height="500dp"
-        android:layout_marginTop="44dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/res_search_post"
-        tools:listitem="@layout/restaurant_recyclerview_item2" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,9 +11,16 @@
     android:layout_marginBottom="12dp">
 
 
-
-
-
+    <ImageView
+        android:id="@+id/res_img"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:background="@drawable/button_round_8"
+        android:backgroundTint="@color/grey_2"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="11dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <TextView
         android:id="@+id/res_title"
         android:layout_width="wrap_content"
@@ -23,9 +30,9 @@
         android:textColor="@color/black"
         android:includeFontPadding="false"
         android:layout_marginTop="11dp"
-        android:layout_marginLeft="77dp"
+        android:layout_marginLeft="11dp"
         android:textSize="13dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/res_img"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -33,9 +40,9 @@
         android:layout_width="15dp"
         android:layout_height="15dp"
         android:layout_marginTop="5dp"
-        android:layout_marginLeft="77dp"
+        android:layout_marginLeft="11dp"
         android:src="@drawable/ic_map_2"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/res_img"
         app:layout_constraintTop_toBottomOf="@+id/res_title" />
 
     <TextView
@@ -57,10 +64,10 @@
         android:id="@+id/res_icon2"
         android:layout_width="15dp"
         android:layout_height="15dp"
-        android:layout_marginLeft="77dp"
+        android:layout_marginLeft="11dp"
         android:layout_marginTop="3dp"
         android:src="@drawable/tabler_icon_category"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/res_img"
         app:layout_constraintTop_toBottomOf="@+id/res_icon1" />
 
     <TextView

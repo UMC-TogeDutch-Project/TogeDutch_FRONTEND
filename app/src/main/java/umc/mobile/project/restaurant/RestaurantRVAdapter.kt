@@ -35,6 +35,7 @@ class RestaurantRVAdapter(private val naverList: ArrayList<NaverData.NaverSearch
         return MyViewHolder(binding)
     }
     override fun getItemCount(): Int = naverList.size + naverList2.size
+
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.bind(naverList[position], naverList2[position])
 
@@ -57,7 +58,14 @@ class RestaurantRVAdapter(private val naverList: ArrayList<NaverData.NaverSearch
                     putExtra("data2", restaurantData.address)
                     putExtra("data3", restaurantData.category)
                     putExtra("data4", restaurantData2.thumbnail)
+                     when(position){
+                         0 -> putExtra("position", 0 )
+                         1 -> putExtra("position", 1 )
+                         2 -> putExtra("position", 2 )
+                         3 -> putExtra("position", 3 )
+                         4 -> putExtra("position", 4 )
 
+                     }
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 }.run { context.startActivity(this) }
 
@@ -75,28 +83,7 @@ class RestaurantRVAdapter(private val naverList: ArrayList<NaverData.NaverSearch
 
     }
 
-    //    inner class MyViewHolder2(private val binding: RestaurantRecyclerviewItem2Binding): RecyclerView.ViewHolder(binding.root){
-//
-//
-//        fun bind(restaurantData: NaverData.NaverImgData) {
-//
-//            Glide.with(context).load(restaurantData.thumbnail).centerCrop().apply(RequestOptions.bitmapTransform(
-//                RoundedCorners(13)
-//            )).into(binding.resImg)
-//
-//            itemView.setOnClickListener{
-//                Intent(context, RestaurantPageActivity::class.java).apply {
-//                    putExtra("data4", restaurantData.thumbnail)
-//
-//                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-//                }.run { context.startActivity(this) }
-//            }
-//        }
-//
-//
-//
-//
-//    }
+
     interface OnItemClickListener {
         fun onItemClick(restaurantData: NaverData.NaverSearchData)
 

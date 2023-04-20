@@ -4,15 +4,13 @@ package umc.mobile.project
 
 
 import android.annotation.SuppressLint
-
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.json.JSONException
 import org.json.JSONObject
@@ -25,6 +23,7 @@ import java.net.HttpURLConnection
 import java.net.MalformedURLException
 import java.net.URL
 import java.net.URLEncoder
+
 //임시
  var searchResult = "연남동 맛집"
 class RestaurantFragment : Fragment() {
@@ -61,8 +60,15 @@ class RestaurantFragment : Fragment() {
 
         binding.searchBtn.setOnClickListener{
             searchResult = binding.resSearchPost.text.toString() + " 맛집"
-
+//            val ft: FragmentTransaction = this.requireFragmentManager().beginTransaction()
+//            ft.detach(this).attach(this).commit()
+            val fragment = RestaurantFragment()
+            val fragmentManager = requireActivity().supportFragmentManager
+            val transaction = fragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_restaurant, fragment)
+            transaction.commit()
         }
+
 
         val thread = Thread {
             var naverPlaceSearch = RestaurantFragment()

@@ -78,6 +78,7 @@
         <activity android:name=".ram.my_application_1.PostRetouchActivity" />
         <activity android:name=".mypage.alarmKeyword.MypageAlarmKeywordActivity" />
         <activity android:name=".search.SearchActivity"/>
+        <activity android:name=".restaurant.blog.RestaurantPlaceActivity"/>
         <activity
             android:name=".login.LoginActivity"
             android:exported="false" /> <!-- 23.02.06 제이 추가Kakao 로그인 -->

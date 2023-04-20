@@ -24,7 +24,7 @@ class NaverBlogAPI {
             throw RuntimeException("검색어 인코딩 실패", e)
         }
         val apiURL =
-            "https://openapi.naver.com/v1/search/blog?query="  + text!! + "&display=10"  // JSON 결과
+            "https://openapi.naver.com/v1/search/blog?query="  + text!! + "&display=5"  // JSON 결과
 
         val requestHeaders: HashMap<String, String> = HashMap()
         requestHeaders.put("X-Naver-Client-Id", clientId)
@@ -132,27 +132,7 @@ class NaverBlogAPI {
             bw.flush()
             bw.close()
 
-//            for(i in 0 until jsonArray.length()){
-//                val thread = Thread {
-//                    var naverImageSearch = NaverImageSearchAPI()
-//                    naverImgList = naverImageSearch.main(title[i])
-//
-//
-//
-//                    handler.post{
-//                        restaurantImgRVAdapter = RestaurantImgRVAdapter(naverImgList)
-//
-//
-////                        restaurantImgRVAdapter.notifyDataSetChanged()
-//
-//                        Log.d("이미지ㅣㅣ", naverImgList.toString())
-//
-//
-//
-//                    }
-//                }.start()
-//
-//            }
+
         } catch (e: JSONException) {
             e.printStackTrace()
         }

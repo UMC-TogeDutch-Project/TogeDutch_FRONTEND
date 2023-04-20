@@ -4,6 +4,8 @@ package umc.mobile.project
 
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -23,9 +25,15 @@ import java.net.HttpURLConnection
 import java.net.MalformedURLException
 import java.net.URL
 import java.net.URLEncoder
+import java.util.*
+import java.util.regex.Pattern
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
-//임시
- var searchResult = "연남동 맛집"
+//주변맛집에 필요한 위도경도
+var latitude = 50.02
+var longitude = 60.02
+
 class RestaurantFragment : Fragment() {
     var Titles: Array<String?> = arrayOfNulls<String>(5)
     var Titles2: Array<String?> = arrayOfNulls<String>(5)
@@ -46,7 +54,7 @@ class RestaurantFragment : Fragment() {
     var result = ArrayList<NaverData.NaverSearchData>()
     var resultT = ArrayList<NaverData.NaverTitle>()
     var naverBlog = ArrayList<BlogData>()
-
+    var searchResult = "연남동 맛집"
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -71,10 +79,12 @@ class RestaurantFragment : Fragment() {
 
 
         val thread = Thread {
+            searchResult = context?.let { defaultAddress(it) }.toString()
+            Log.d("스레드에서 searchResult", searchResult)
             var naverPlaceSearch = RestaurantFragment()
-            result =  naverPlaceSearch.main()
+            result =  naverPlaceSearch.main(searchResult)
 
-            resultT =  naverPlaceSearch.main2()
+            resultT =  naverPlaceSearch.main2(searchResult)
             Log.d("resultT", resultT.toString())
             var naverImageSearch = NaverImageSearchAPI()
             Log.d("resultT 입니당", naverImageSearch.main(resultT[0]).toString())
@@ -97,21 +107,48 @@ class RestaurantFragment : Fragment() {
         }.start()
 
 
-
-
-
-
         return binding.root
+    }
+
+    //회원가입시 저장한 위도 경도 가지고 주소 변환
+    fun defaultAddress(context: Context):String{
+        val geocoder = Geocoder(context, Locale.KOREAN)
+        val addressList = geocoder.getFromLocation(latitude, longitude, 1)
+        var dongAddress = ""
+        if (addressList.isNotEmpty()) {
+            val address = addressList[0]
+            val city = address.locality
+            val state = address.adminArea
+            val country = address.countryName
+            val addressLine = address.getAddressLine(0)
+            val fullAddress = "$addressLine, $city, $state, $country"
+
+            val pattern = Pattern.compile("(\\S+[동|가|로|길])")
+            val matcher = pattern.matcher(fullAddress)
+
+            if (matcher.find()) {
+                 dongAddress = matcher.group()
+                // dongAddress에 "동" 저장
+                dongAddress += " 맛집"
+
+
+
+            }
+            else println("실패")
+
+
+
+
+        }
+        return dongAddress
     }
 
 
 
 
-
-
-
-    fun main(): ArrayList<NaverData.NaverSearchData> {
+    fun main(searchResult: String): ArrayList<NaverData.NaverSearchData> {
         var text: String? = null
+
 
         try {
             text = URLEncoder.encode(searchResult, "UTF-8")    // 검색어
@@ -133,7 +170,7 @@ class RestaurantFragment : Fragment() {
     }
 
 
-    fun main2(): ArrayList<NaverData.NaverTitle> {
+    fun main2(searchResult: String): ArrayList<NaverData.NaverTitle> {
         var text: String? = null
 
         try {
@@ -180,7 +217,7 @@ class RestaurantFragment : Fragment() {
                     item.getString("title")
                 )
                 naverTitleList.add(naverData)
-                Titles[i] = item.getString("title")
+                Titles[i] = item.getString("title").replace(Regex("<b>"),"").replace(Regex("</b>"),"")
                 title[i] = item.getString("title")
                 category = item.getString("category")
                 description = item.getString("description")
@@ -282,14 +319,14 @@ class RestaurantFragment : Fragment() {
                 val item = jsonArray.getJSONObject(i)
 
                 val naverData = NaverData.NaverSearchData(
-                    item.getString("title"),
-                    item.getString("category"),
+                    item.getString("title").replace(Regex("<b>"),"").replace(Regex("</b>"),""),
+                    item.getString("category").replace(Regex(">"),"-"),
                     item.getString("description"),
                     item.getString("address")
                 )
                 naverList.add(naverData)
 
-                title[i] = item.getString("title")
+                title[i] = item.getString("title").replace(Regex("<b>"),"").replace(Regex("</b>"),"")
                 category = item.getString("category")
                 description = item.getString("description")
                 address = item.getString("address")

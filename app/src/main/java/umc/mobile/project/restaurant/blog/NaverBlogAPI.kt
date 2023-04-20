@@ -3,7 +3,7 @@ import org.json.JSONObject
 import umc.mobile.project.RestaurantFragment
 import umc.mobile.project.restaurant.Auth.NaverApi.NaverData
 import umc.mobile.project.restaurant.blog.BlogData
-import umc.mobile.project.searchResult
+
 
 import java.io.*
 import java.net.HttpURLConnection
@@ -103,25 +103,20 @@ class NaverBlogAPI {
             jsonObject = JSONObject(responseBody)
             val jsonArray = jsonObject.getJSONArray("items")
 
-//            for (i in 0 until jsonArray.length()) {
-//                val item = jsonArray.getJSONObject(i)
-//                Titles[i] = item.getString("title")
-//            }
-
 
             for (i in 0 until jsonArray.length()) {
 
                 val item = jsonArray.getJSONObject(i)
 
                 val blogData = BlogData(
-                    item.getString("title"),
+                    item.getString("title").replace(Regex("<b>"),"").replace(Regex("</b>"),"").replace(Regex("&apos;"),""),
                     item.getString("postdate"),
                     item.getString("bloggername"),
                     item.getString("link")
                 )
                 blogList.add(blogData)
-
-                title = item.getString("title")
+                                                    //<b> 태그 제거
+                title = item.getString("title").replace(Regex("<b>"),"").replace(Regex("</b>"),"").replace(Regex("&apos;"),"")
                 link = item.getString("link")
                 description = item.getString("description")
                 name = item.getString("bloggername")

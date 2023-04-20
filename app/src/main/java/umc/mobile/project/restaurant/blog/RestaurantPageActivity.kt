@@ -22,7 +22,7 @@ class RestaurantPageActivity: AppCompatActivity() {
 
     var result = ArrayList<BlogData>()
     private lateinit var restaurantRVAdapter: RestaurantRVAdapter
-
+    var searchResult = "연남동 맛집"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRestaurantPageBinding.inflate(layoutInflater)
@@ -33,14 +33,6 @@ class RestaurantPageActivity: AppCompatActivity() {
             finish()
         }
 
-
-//        datas = intent.getSerializableExtra("data") as ArrayList<RestaurantData>
-//
-//        Glide.with(this).load(datas.image).into(binding.resImg)
-//        binding.resTitle.text = datas.title
-//        binding.resAddress.text = datas.place
-//        binding.resPhone.text = datas.phone
-//        binding.resMenu.text = datas.score
 
         binding.resTitle.text = intent.getStringExtra("data1")
         val titleData = intent.getStringExtra("data1")
@@ -61,8 +53,12 @@ class RestaurantPageActivity: AppCompatActivity() {
             }.run { startActivity(this) }
         }
         val thread = Thread{
+            var dAddress = RestaurantFragment()
+
+            searchResult =  dAddress.defaultAddress(this)
+
             var naverPlaceSearch = RestaurantFragment()
-            resultT =  naverPlaceSearch.main2()
+            resultT =  naverPlaceSearch.main2(searchResult)
             var naverblog = NaverBlogAPI()
 //            Log.d("blogT 입니당", naverblog.main(resultT[0]).toString())
 //            Log.d("blogT 입니당", naverblog.main(resultT[1]).toString())

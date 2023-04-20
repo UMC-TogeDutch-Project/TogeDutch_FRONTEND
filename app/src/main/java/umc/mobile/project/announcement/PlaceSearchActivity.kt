@@ -87,7 +87,6 @@ class PlaceSearchActivity : AppCompatActivity(), OnMapReadyCallback,
             supportFragmentManager.findFragmentById(R.id.gps_map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        binding.btnSearch.setOnClickListener {
             geocoder = Geocoder(this)
 
             var locationNameList: List<Address>? = null
@@ -139,7 +138,7 @@ class PlaceSearchActivity : AppCompatActivity(), OnMapReadyCallback,
                 }
 
             }
-        }
+
 
         binding.gpsBackBtn.setOnClickListener {
             // 값 저장 및 반환

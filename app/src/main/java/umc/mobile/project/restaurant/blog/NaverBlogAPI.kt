@@ -109,7 +109,7 @@ class NaverBlogAPI {
                 val item = jsonArray.getJSONObject(i)
 
                 val blogData = BlogData(
-                    item.getString("title").replace(Regex("<b>"),"").replace(Regex("</b>"),"").replace(Regex("&apos;"),""),
+                    item.getString("title").replace(Regex("<b>"),"").replace(Regex("</b>"),"").replace(Regex("&apos;"),"").replace(Regex("&quot;"),""),
                     item.getString("postdate"),
                     item.getString("bloggername"),
                     item.getString("link")

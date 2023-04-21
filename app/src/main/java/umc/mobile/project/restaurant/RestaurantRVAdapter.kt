@@ -37,6 +37,9 @@ class RestaurantRVAdapter(private val naverList: ArrayList<NaverData.NaverSearch
     override fun getItemCount(): Int = naverList.size + naverList2.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        if (position >= naverList.size || position >= naverList2.size) {
+            return  println("맛집 리스트 모자름")
+        }
         holder.bind(naverList[position], naverList2[position])
 
 

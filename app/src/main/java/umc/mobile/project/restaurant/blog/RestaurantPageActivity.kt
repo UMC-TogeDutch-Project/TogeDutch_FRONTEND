@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import umc.mobile.project.RestaurantFragment
 import umc.mobile.project.databinding.ActivityRestaurantPageBinding
+import umc.mobile.project.mSearchResult
 import umc.mobile.project.restaurant.Auth.NaverApi.NaverData
 import umc.mobile.project.restaurant.RestaurantData
 import umc.mobile.project.restaurant.RestaurantRVAdapter
@@ -22,7 +23,11 @@ class RestaurantPageActivity: AppCompatActivity() {
 
     var result = ArrayList<BlogData>()
     private lateinit var restaurantRVAdapter: RestaurantRVAdapter
-    var searchResult = "연남동 맛집"
+
+    var searchResult: String? = null
+    var defaultResult = ""
+    var useResult = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRestaurantPageBinding.inflate(layoutInflater)
@@ -44,6 +49,8 @@ class RestaurantPageActivity: AppCompatActivity() {
 
         Glide.with(this).load(intent.getStringExtra("data4")).into(binding.resImg)
 
+
+
         binding.resAddress.setOnClickListener {
             Intent(this, RestaurantPlaceActivity::class.java).apply {
                 putExtra("addressData", addressData)
@@ -52,19 +59,25 @@ class RestaurantPageActivity: AppCompatActivity() {
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }.run { startActivity(this) }
         }
+
+
         val thread = Thread{
             var dAddress = RestaurantFragment()
 
-            searchResult =  dAddress.defaultAddress(this)
+            defaultResult = dAddress.defaultAddress(this)
+
+            if (mSearchResult != null){
+                useResult = mSearchResult as String
+            }else{
+                useResult = defaultResult
+            }
+
+
 
             var naverPlaceSearch = RestaurantFragment()
-            resultT =  naverPlaceSearch.main2(searchResult)
+            resultT =  naverPlaceSearch.main2(useResult)
             var naverblog = NaverBlogAPI()
-//            Log.d("blogT 입니당", naverblog.main(resultT[0]).toString())
-//            Log.d("blogT 입니당", naverblog.main(resultT[1]).toString())
-//            Log.d("blogT 입니당", naverblog.main(resultT[2]).toString())
-//            Log.d("blogT 입니당", naverblog.main(resultT[3]).toString())
-//            Log.d("blogT 입니당", naverblog.main(resultT[intent.getIntExtra("position", 0)]).toString())
+
             result = naverblog.main(resultT[intent.getIntExtra("position", 0)])
             runOnUiThread{
                 blogRVAdapter = BlogRVAdapter(result)

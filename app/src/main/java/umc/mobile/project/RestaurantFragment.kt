@@ -78,9 +78,11 @@ class RestaurantFragment : Fragment() {
 
         scroll()
         binding.searchBtn.setOnClickListener{
+            scroll()
             searchResult = binding.resSearchPost.text.toString()
             searchResult = "$searchResult 맛집"
             mSearchResult = searchResult as String
+
             val thread2 = Thread {
                 defaultResult = context?.let { defaultAddress(it) }.toString()
 //                if(searchResult != null){
@@ -177,6 +179,7 @@ class RestaurantFragment : Fragment() {
             }
         })
     }
+
     //회원가입시 저장한 위도 경도 가지고 주소 변환
     fun defaultAddress(context: Context):String{
         val geocoder = Geocoder(context, Locale.KOREAN)

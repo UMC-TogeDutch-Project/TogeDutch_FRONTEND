@@ -21,7 +21,7 @@ import umc.mobile.project.ram.Auth.Post.GetPostUpload.PostUploadGetService
 import umc.mobile.project.ram.my_application_1.*
 
 
-class MyProfileFragment : Fragment(), PostUploadGetResult, EmotionStatusGetResult {
+class MyProfileFragment : Fragment(), PostUploadGetResult {
     private lateinit var viewBinding: FragmentMyprofileBinding
     //private lateinit var orderRVAdapter: OrderRVAdapter
     //private lateinit var reviewRVAdapter: ReviewRVAdapter
@@ -95,6 +95,8 @@ class MyProfileFragment : Fragment(), PostUploadGetResult, EmotionStatusGetResul
         viewBinding.orderList.adapter = orderRVAdapter
         viewBinding.orderList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
+        Log.d("initRecycler ======================== ", "====")
+
         orderRVAdapter.setItemClickListener(object :
             OrderRVAdapter.OnItemClickListener {
 
@@ -131,24 +133,6 @@ class MyProfileFragment : Fragment(), PostUploadGetResult, EmotionStatusGetResul
         super.onDestroy()
     }
 
-    // 점수
-    fun getEmotionStatus() {
-        val emotionStatusGetService = EmotionStatusGetService()
-        emotionStatusGetService.setEmotionStatusGetResult(this)
-        emotionStatusGetService.getEmotionStatus(user_id_logined)
-    }
 
-    override fun getEmotionStatusSuccess(code: Int, result: ArrayList<EmotionStatusGet>) {
-        for(i in 0 .. result.size - 1) {
-            Log.d("result post_id값 : ", result[i].post_id.toString())
-            Log.d("점수 값 : ", result[i].avg.toString())
-        }
 
-        Log.d("점수 조회", "성공")
-    }
-
-    override fun getEmotionStatusFailure(code: Int, message: String) {
-        Log.d("실패 : ", code.toString())
-        Log.d("실패 : ", message)
-    }
 }

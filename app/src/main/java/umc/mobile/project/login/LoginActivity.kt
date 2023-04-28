@@ -23,13 +23,10 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import umc.mobile.project.MainActivity
-import umc.mobile.project.R
+import umc.mobile.project.*
 import umc.mobile.project.announcement.access_token
 import umc.mobile.project.signup.SignUpActivity
 import umc.mobile.project.databinding.ActivityLoginBinding
-import umc.mobile.project.latitude_var
-import umc.mobile.project.longtitude_var
 import umc.mobile.project.ram.my_application_1.user_id_logined
 import java.util.logging.Handler
 import java.util.regex.Pattern
@@ -76,6 +73,10 @@ class LoginActivity : AppCompatActivity(), MyCustomDialogInterface {
                                 access_token = loginResponseData.result.jwt
                                 latitude_var = loginResponseData.result.latitude
                                 longtitude_var = loginResponseData.result.longitude
+                                //주변맛집에 필요한 위도 경도
+                                latitude = latitude_var
+                                longitude = longtitude_var
+
                                 myCustomDialog.show()
                             }
                             2010 -> Toast.makeText(this@LoginActivity, "${loginResponseData.message}    오류코드:${loginResponseData.code}, ${loginResponseData.isSuccess}", Toast.LENGTH_SHORT).show()

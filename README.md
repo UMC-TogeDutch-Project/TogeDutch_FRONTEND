@@ -77,17 +77,15 @@
 <br>
 
 ## 5️⃣ 사용 기술
-![Java Badge](https://img.shields.io/badge/Java-007396?style=flat&logo=Java&logoColor=white)&nbsp;
-![SpringBoot Badge](https://img.shields.io/badge/Spring&nbsp;Boot-6DB33F?style=flat&logo=SpringBoot&logoColor=white)&nbsp;
-![MySQL Badge](https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=MySQL&logoColor=white)&nbsp;
-![AWS EC2 Badge](https://img.shields.io/badge/Amazon&nbsp;EC2-FF9900?style=flat&logo=Amazon-EC2&logoColor=white)&nbsp; 
-![AWS S3 Badge](https://img.shields.io/badge/Amazon&nbsp;S3-569A31?style=flat&logo=Amazon-S3&logoColor=white)&nbsp; 
-![AWS RDS Badge](https://img.shields.io/badge/Amazon&nbsp;RDS-527FFF?style=flat&logo=Amazon-RDS&logoColor=white)&nbsp; 
+![Kotlin Badge](https://img.shields.io/badge/Kotlin-7F52FF?style=flat&logo=Kotlin&logoColor=white)&nbsp;
+![Java Badge](https://img.shields.io/badge/Java-007396?style=flat&logo=Java&logoColor=white)
+![GoogleMap Badge](https://img.shields.io/badge/Google_Map-4285F4?style=flat&logo=GoogleMap&logoColor=white)
+![Retrofit2 Badge](https://img.shields.io/badge/Retrofit2-EA4335?style=flat&logo=Retrofit2&logoColor=white)
+![Okhttp3 Badge](https://img.shields.io/badge/Okhttp3-FF7143?style=flat&logo=Okhttp3&logoColor=white)
+![Gson Badge](https://img.shields.io/badge/Gson-00AC47?style=flat&logo=Gson&logoColor=white)
 
-![IntelliJ Badge](https://img.shields.io/badge/IntelliJ_IDEA-000000?style=flat&logo=IntelliJ-IDEA&logoColor=white)&nbsp; 
+![Android Badge](https://img.shields.io/badge/Android_Studio-3DDC84?style=flat&logo=Android&logoColor=white)&nbsp; 
 ![Github Badge](https://img.shields.io/badge/github-181717?style=flat&logo=github&logoColor=white)&nbsp; 
-![Postman](https://img.shields.io/badge/Postman-FF6C37?style=flat&logo=Postman&logoColor=white)&nbsp;
-![Swagger](https://img.shields.io/badge/Swagger-85EA2D?style=flat&logo=Swagger&logoColor=white)&nbsp;
 ![Notion](https://img.shields.io/badge/Notion-000000?style=flat&logo=Notion&logoColor=white)&nbsp;
 
 <br>

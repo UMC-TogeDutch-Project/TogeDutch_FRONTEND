@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import umc.mobile.project.*
@@ -15,9 +16,14 @@ import umc.mobile.project.announcement.Auth.PostImminentGet.PostImminentGetServi
 import umc.mobile.project.announcement.Auth.PostRecentGet.PostRecentGetResult
 import umc.mobile.project.announcement.Auth.PostRecentGet.PostRecentGetService
 import umc.mobile.project.databinding.ActivityAnnounceListBinding
+import umc.mobile.project.ram.my_application_1.user_id_logined
+import umc.mobile.project.ram.my_application_1.user_id_var
+import umc.mobile.project.wishlist.GetLikePost.LikePostGetResult
+import umc.mobile.project.wishlist.GetLikePost.LikePostGetService
 import kotlin.collections.ArrayList
 
-class AnnounceListActivity : AppCompatActivity(), PostRecentGetResult, PostImminentGetResult {
+class AnnounceListActivity : AppCompatActivity(), PostRecentGetResult, PostImminentGetResult,
+    LikePostGetResult {
     private lateinit var binding: ActivityAnnounceListBinding
     private lateinit var dataRecentRVAdapter: DataRecentRVAdapter
     private lateinit var dataImminentRVAdapter: DataImminentRVAdapter
@@ -25,6 +31,9 @@ class AnnounceListActivity : AppCompatActivity(), PostRecentGetResult, PostImmin
 //    var imminentAnnounceData = ArrayList<Post>()
     private var postList = ArrayList<Post>()
     private var postList1 = ArrayList<Post>()
+
+    var like_list = ArrayList<Post>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAnnounceListBinding.inflate(layoutInflater)
@@ -54,6 +63,7 @@ class AnnounceListActivity : AppCompatActivity(), PostRecentGetResult, PostImmin
     override fun onResume() {
         super.onResume()
         initActionBar()
+        getLikePost()
 //        if(num1 == 0)
 //            initRecyclerViewRecent()
 //        else
@@ -176,7 +186,7 @@ private fun getPostLatest(){
 //        Toast.makeText(this, "공고 등록 성공.", Toast.LENGTH_SHORT).show()
 //        finish()
         postList.addAll(result)
-        dataRecentRVAdapter = DataRecentRVAdapter(postList)
+        dataRecentRVAdapter = DataRecentRVAdapter(postList, like_list)
         binding.rvMainRecent.adapter = dataRecentRVAdapter //리사이클러뷰에 어댑터 연결
         binding.rvMainRecent.layoutManager= LinearLayoutManager(this) //레이아웃 매니저 연결
 
@@ -214,5 +224,22 @@ private fun getPostLatest(){
 
     override fun recordFailure1() {
         TODO("Not yet implemented")
+    }
+
+    private fun getLikePost() {
+        val likePostGetService = LikePostGetService()
+        likePostGetService.setLikePostGetResult(this)
+        likePostGetService.getLikePost(user_id_logined)
+        user_id_var = user_id_logined // 상세목록 볼 때 현재 로그인된 유저를 보여줄 수 있게 덮어씌워주기
+
+    }
+
+    override fun getPostUploadSuccess(code: Int, result: ArrayList<Post>) {
+        like_list = result
+        //Toast.makeText(this, "관심목록 불러오기 성공", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun getPostUploadFailure(code: Int, message: String) {
+        Toast.makeText(this, "관심목록 불러오기 실패", Toast.LENGTH_SHORT).show()
     }
 }

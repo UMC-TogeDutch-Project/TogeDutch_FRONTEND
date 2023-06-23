@@ -26,9 +26,13 @@ import umc.mobile.project.announcement.Auth.PostRecentGet.PostRecentGetResult
 import umc.mobile.project.announcement.Auth.PostRecentGet.PostRecentGetService
 import umc.mobile.project.databinding.FragmentHomeBinding
 import umc.mobile.project.news.NewsActivity
+import umc.mobile.project.ram.my_application_1.user_id_logined
+import umc.mobile.project.ram.my_application_1.user_id_var
 import umc.mobile.project.search.SearchActivity
+import umc.mobile.project.wishlist.GetLikePost.LikePostGetResult
+import umc.mobile.project.wishlist.GetLikePost.LikePostGetService
 
-class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
+class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult, LikePostGetResult {
     lateinit var dataRecentRVAdapter: DataRecentRVAdapter
     lateinit var dataImminentRVAdapter: DataImminentRVAdapter
     private lateinit var viewBinding: FragmentHomeBinding
@@ -42,6 +46,9 @@ class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
 
     private var postList = ArrayList<Post>()
     private var postList1 = ArrayList<Post>()
+
+    var like_list = ArrayList<Post>()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -152,6 +159,7 @@ class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
     override fun onResume() {
         super.onResume()
         Log.d("프래그먼트 재호출" ,"")
+        getLikePost()
         initRecyclerViewRecent()
         initRecyclerViewImminent()
 
@@ -188,7 +196,7 @@ class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
 //        postList.addAll(result)
 //        println("postList 가장 최근에 넣은 값 : " + postList[0].title)
 //        dataRecentRVAdapter = DataRecentRVAdapter(postList)
-        dataRecentRVAdapter = DataRecentRVAdapter(result)
+        dataRecentRVAdapter = DataRecentRVAdapter(result, like_list)
 
         println("가장 최근에 넣은 값 : " + result[0].title)
 
@@ -239,4 +247,21 @@ class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
 //        super.onDestroyView()
 //        _viewBinding = null
 //    }
+
+    private fun getLikePost() {
+        val likePostGetService = LikePostGetService()
+        likePostGetService.setLikePostGetResult(this)
+        likePostGetService.getLikePost(user_id_logined)
+        user_id_var = user_id_logined // 상세목록 볼 때 현재 로그인된 유저를 보여줄 수 있게 덮어씌워주기
+
+    }
+
+    override fun getPostUploadSuccess(code: Int, result: ArrayList<Post>) {
+        like_list = result
+        //Toast.makeText(this, "관심목록 불러오기 성공", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun getPostUploadFailure(code: Int, message: String) {
+        Toast.makeText(context, "관심목록 불러오기 실패", Toast.LENGTH_SHORT).show()
+    }
 }

@@ -47,6 +47,8 @@ class DataRecentRVAdapter(private val homeDataList: ArrayList<Post>, private val
                 if(homeData.post_id == it.post_id) run {
                     viewBinding.btnLikeThird.isSelected = true
                     checkStatus.put(adapterPosition, true)
+                    Log.d("homeData.post_id: ", homeData.post_id.toString())
+                    Log.d("it.post_id: ", it.post_id.toString())
                     viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon_fill)
                 }
             }
@@ -124,7 +126,6 @@ class DataRecentRVAdapter(private val homeDataList: ArrayList<Post>, private val
             LayoutInflater.from(viewGroup.context),
             viewGroup, false)
         context = viewGroup.context
-        getLikePost()
 
         return RecentViewHolder(viewBinding)
     }
@@ -174,5 +175,10 @@ class DataRecentRVAdapter(private val homeDataList: ArrayList<Post>, private val
     }
 
     private lateinit var itemClickListener : OnItemClickListener
+
+
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
 
 }

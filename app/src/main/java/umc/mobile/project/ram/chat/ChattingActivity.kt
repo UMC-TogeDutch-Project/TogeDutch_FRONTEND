@@ -5,15 +5,11 @@ import android.Manifest.permission.CAMERA
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.graphics.BitmapFactory
-import android.graphics.ImageDecoder
 import android.graphics.Matrix
 import android.net.Uri
 import android.os.Build
@@ -49,6 +45,10 @@ import umc.mobile.project.ram.Auth.Application.GetUser.UserGetResult
 import umc.mobile.project.ram.Auth.Application.GetUser.UserGetService
 import umc.mobile.project.ram.Auth.Chat.ChatAllGet.ChatAllGetResult
 import umc.mobile.project.ram.Auth.Chat.ChatAllGet.ChatAllGetService
+import umc.mobile.project.ram.Auth.Chat.ChatDelete.ChatRoomDeleteResult
+import umc.mobile.project.ram.Auth.Chat.ChatDelete.ChatRoomDeleteService
+import umc.mobile.project.ram.Auth.Chat.ChatDelete.UserDeleteResult
+import umc.mobile.project.ram.Auth.Chat.ChatDelete.UserDeleteService
 import umc.mobile.project.ram.Auth.Chat.ChatGet.ChatGetResult
 import umc.mobile.project.ram.Auth.Chat.ChatGet.ChatGetService
 import umc.mobile.project.ram.Auth.Chat.ChatMeetTimePost.ChatMeetTime
@@ -88,7 +88,8 @@ var location_dialog = ""
 
 class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult, PostGetAllResult,
     PostChatResult, ChatAllGetResult, PostPhotoResult,
-    PostChatMeetTimeResult, ChatGetResult, PostLocationResult, PostDeclarationResult, IsReadPutResult, IsOutPutResult {
+    PostChatMeetTimeResult, ChatGetResult, PostLocationResult, PostDeclarationResult, IsReadPutResult, IsOutPutResult,
+    ChatRoomDeleteResult, UserDeleteResult {
     lateinit var binding: ActivityChattingBinding
     lateinit var chatRVAdapter: ChatRVAdapter
     var timestamp = Timestamp(Date().time)
@@ -220,7 +221,7 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
 
             val exit_btn = dialog_etc.findViewById<AppCompatButton>(R.id.exit_btn)
             exit_btn?.setOnClickListener {
-                Toast.makeText(this, "나가기 클릭", Toast.LENGTH_LONG).show()
+                deleteUser()
 
             }
             dialog_etc.show()
@@ -293,6 +294,7 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
 
             }
 
+            val editMessage = dialog_more.findViewById<EditText>(R.id.edit_message)
             dialog_more.findViewById<AppCompatButton>(R.id.btn_submit_dialog)!!.setOnClickListener {
                 if (picture_chat_iv.visibility == View.VISIBLE) {
                     picture_chat_iv.visibility == View.GONE
@@ -304,8 +306,11 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
                     // 장소 전송
                     sendLocation(chatRoom_id_get, user_id_logined, latitude, longitude)
                 }
-
+                else{
+                    sendStomp(editMessage!!.text.toString(), chatRoom_id_get, user_id_logined)
+                }
             }
+
 
             dialog_more.show()
         }
@@ -367,30 +372,7 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
 
         val content = result.content
         val writer = result.writer
-//
-//        // 알림 보내주기
-//        var builder = Notification.Builder(this, "My_channel")
-//            .setContentTitle("보낸 사람")
-//            .setContentText("보낸 내용")
-//
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { // 오레오 버전 이후에는 알림을 받을 때 채널이 필요
-//            val channel_id = "MY_channel" // 알림을 받을 채널 id 설정
-//            val channel_name = writer // 채널 이름 설정
-//            val descriptionText = content // 채널 설명글 설정
-//            val importance = NotificationManager.IMPORTANCE_DEFAULT // 알림 우선순위 설정
-//            val channel = NotificationChannel(channel_id, channel_name, importance).apply {
-//                description = descriptionText
-//            }
-//
-//            channel.enableVibration(true) // 진동
-//
-//            // 만든 채널 정보를 시스템에 등록
-//            val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-//            notificationManager.createNotificationChannel(channel)
-//
-//            // 알림 표시: 알림의 고유 ID(ex: 1002), 알림 결과
-//            notificationManager.notify(1002, builder.build())
-//        }
+
 
 
         // 채팅 속성 체크
@@ -445,6 +427,9 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
         }
 
         runOnUiThread {
+            binding.recyclerMessages.layoutManager = LinearLayoutManager(this).apply{
+                this.stackFromEnd = true // 가장 최근의 대화를 표시하기 위해 맨 아래로 정렬.
+            }
             chatRVAdapter.notifyDataSetChanged()
         }
 
@@ -536,6 +521,9 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
         }
 
         runOnUiThread {
+            binding.recyclerMessages.layoutManager = LinearLayoutManager(this).apply{
+                this.stackFromEnd = true // 가장 최근의 대화를 표시하기 위해 맨 아래로 정렬.
+            }
             chatRVAdapter.notifyDataSetChanged()
         }
     }
@@ -575,8 +563,8 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
 
     override fun sendPhotoFailure() {
         Log.d(
-            "=============================== Photo Post 실패!!!!!!!!!!!!!!!!!!!!",
-            "=================================================="
+            "Photo Post 실패",
+            ""
         )
     }
 
@@ -610,7 +598,7 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
     }
 
     override fun getPostAllFailure(code: Int, message: String) {
-        Log.d("getPostAllFailure ===============================================", code.toString())
+        Log.d("모집글 상세 가져오기 실패", code.toString())
     }
 
 
@@ -630,7 +618,7 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
     }
 
     override fun getPostUploadFailure(code: Int, message: String) {
-        Log.d("실패 ===============================================", code.toString())
+        Log.d("getPostUploadFailure", code.toString())
     }
 
     override fun getUserSuccess(code: Int, result: UserGet) {
@@ -639,13 +627,13 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
     }
 
     override fun getUserFailure(code: Int, message: String) {
-        Log.d("getUserFailure ===============================================", code.toString())
+        Log.d("getUserFailure", code.toString())
     }
 
     override fun getChatAllSuccess(code: Int, result: ArrayList<Chat>) {
         Log.d(
-            "=============================== getChatAllSuccess!!!!!!!!!!!!!!!!!!!!",
-            "=================================================="
+            "getChatAllSuccess",
+            ""
         )
 
         if (result.size == 0)
@@ -769,14 +757,16 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
             }
         }
 
-
+        binding.recyclerMessages.layoutManager = LinearLayoutManager(this).apply{
+            this.stackFromEnd = true // 가장 최근의 대화를 표시하기 위해 맨 아래로 정렬.
+        }
         chatRVAdapter.notifyDataSetChanged()
     }
 
     override fun getChatAllFailure(code: Int, message: String) {
         Log.d(
-            "=============================== getChatAllFailure!!!!!!!!!!!!!!!!!!!!",
-            "=================================================="
+            "getChatAllFailure",
+            ""
         )
     }
 
@@ -1028,8 +1018,8 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
 
     override fun sendChatMeetTimeSuccess(result: ChatMeetTime) {
         Log.d(
-            "=============================== ChatMeetTime Post 성공!!!!!!!!!!!!!!!!!!!!",
-            "=================================================="
+            "ChatMeetTime Post 성공",
+            ""
         )
         val data = JSONObject()
         data.put("chatMeetTimeId", result.chatMeetTimeId)
@@ -1048,8 +1038,8 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
 
     override fun sendChatMeetTimeFailure() {
         Log.d(
-            "=============================== ChatMeetTime Post 실패!!!!!!!!!!!!!!!!!!!!",
-            "=================================================="
+            "ChatMeetTime Post 실패",
+            ""
         )
     }
 
@@ -1068,8 +1058,8 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
 
     override fun sendLocationSuccess(result: umc.mobile.project.ram.Auth.ChatLocation.Result) {
         Log.d(
-            "=============================== ChatPlace Post 성공!!!!!!!!!!!!!!!!!!!!",
-            "=================================================="
+            "ChatPlace Post 성공",
+            ""
         )
         val data = JSONObject()
         data.put("chatLocationIdx", result.chatLocationIdx)
@@ -1089,7 +1079,7 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
 
     override fun sendLocationFailure() {
         Log.d(
-            "=============================== ChatPlace Post 실패!!!!!!!!!!!!!!!!!!!!",
+            "ChatPlace Post 실패",
             ""
         )
     }
@@ -1131,6 +1121,30 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
 
     override fun putIsOutFailure(code: Int, message: String) {
         Log.d("OUT-PUT FAILURE","")
+    }
+
+    fun deleteUser(){
+        val userDeleteService = UserDeleteService()
+        userDeleteService.setUserDeleteResult(this)
+        userDeleteService.deleteUser(chatRoom_id_get, user_id_logined)
+    }
+
+    override fun userDeleteSuccess(code: Int, result: Int) {
+        Log.d("채팅방 나가기 성공", "")
+        dialog_etc.dismiss()
+        finish()
+    }
+
+    override fun userDeleteFailure(code: Int, message: String) {
+        Log.d("채팅방 나가기 실패", "")
+    }
+
+    override fun chatRoomDeleteSuccess(code: Int, result: Int) {
+        Log.d("채팅방 삭제 성공", "")
+    }
+
+    override fun chatRoomDeleteFailure(code: Int, message: String) {
+        Log.d("채팅방 삭제 실패", "")
     }
 
 

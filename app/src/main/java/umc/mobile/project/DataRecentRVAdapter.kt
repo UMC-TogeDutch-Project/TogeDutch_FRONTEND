@@ -3,6 +3,7 @@ package umc.mobile.project
 import android.content.Context
 import Post
 import android.util.Log
+import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
@@ -23,27 +24,34 @@ import umc.mobile.project.wishlist.GetLikePost.LikePostGetService
 import umc.mobile.project.wishlist.Like
 import umc.mobile.project.wishlist.LikePost
 
-class DataRecentRVAdapter(private val homeDataList: ArrayList<Post>) : RecyclerView.Adapter<DataRecentRVAdapter.RecentViewHolder>(), LikePostGetResult {
+class DataRecentRVAdapter(private val homeDataList: ArrayList<Post>, private val like_list: ArrayList<Post>) : RecyclerView.Adapter<DataRecentRVAdapter.RecentViewHolder>() {
 
     lateinit var context : Context
 
     private var contentPostId = 0
 
-    private val clickedLikeStatus = arrayListOf<Post>()
+//    private val clickedLikeStatus = arrayListOf<Post>()
+    var checkStatus = SparseBooleanArray()
 
     private lateinit var likes : Like
 
     private var itemPosition : Int = 0
 
-    private lateinit var copyPost : Post
-
 
     //ViewHolder 객체
     inner class RecentViewHolder(val viewBinding: ItemDataBinding) :
-        RecyclerView.ViewHolder(viewBinding.root) , LikePostResult, AnnounceAlertDialogInterface
-         {
+        RecyclerView.ViewHolder(viewBinding.root) , LikePostResult, AnnounceAlertDialogInterface {
 
         fun bind(homeData: Post) {
+            like_list.forEach{
+                if(homeData.post_id == it.post_id) run {
+                    viewBinding.btnLikeThird.isSelected = true
+                    checkStatus.put(adapterPosition, true)
+                    Log.d("homeData.post_id: ", homeData.post_id.toString())
+                    Log.d("it.post_id: ", it.post_id.toString())
+                    viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon_fill)
+                }
+            }
 
             Glide.with(context).load(homeData.image).centerCrop().into(viewBinding.ivItemImageThird)
 
@@ -67,33 +75,15 @@ class DataRecentRVAdapter(private val homeDataList: ArrayList<Post>) : RecyclerV
 
             Log.d("absoluteAdapterPosition: ", absoluteAdapterPosition.toString())
 
-            //viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon)
-
-            var id = clickedLikeStatus.find { it.post_id == homeData.post_id }
-            if(id != null) {
-                Log.d("RecentViewHolder 체크된 post 제목 ======================== ", homeData.title)
-                viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon_fill)
-            } else {
-                viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon)
-            }
-
-
             viewBinding.btnLikeThird.setOnClickListener {
-                copyPost = homeData
-//                viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon_fill)
                 viewBinding.btnLikeThird.isSelected = !viewBinding.btnLikeThird.isSelected
 
                 if(viewBinding.btnLikeThird.isSelected) {
-                    viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon_fill)
-                } else {
-                    viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon)
+                    val likePostService = LikePostService()
+                    likePostService.setLikePostResult(this)
+                    likePostService.sendLike(user_id_logined, homeData.post_id)
+                    Log.d("post_id: ", homeData.post_id.toString())
                 }
-
-
-                val likePostService = LikePostService()
-                likePostService.setLikePostResult(this)
-                likePostService.sendLike(user_id_logined, homeData.post_id)
-                Log.d("post_id: ", homeData.post_id.toString())
 
                 notifyDataSetChanged()
             }
@@ -102,9 +92,8 @@ class DataRecentRVAdapter(private val homeDataList: ArrayList<Post>) : RecyclerV
 
 
         override fun LikePostSuccess(result: Result) {
-//            likes.isSelected = viewBinding.btnLikeThird.isSelected
+            checkStatus.put(adapterPosition, true)
             viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon_fill)
-            clickedLikeStatus.add(copyPost)
             notifyDataSetChanged()
             Log.d("관심목록 등록 성공", "")
             Log.d("post_id: ", result.postIdx.toString())
@@ -137,26 +126,10 @@ class DataRecentRVAdapter(private val homeDataList: ArrayList<Post>) : RecyclerV
             LayoutInflater.from(viewGroup.context),
             viewGroup, false)
         context = viewGroup.context
-        getLikePost()
 
         return RecentViewHolder(viewBinding)
     }
 
-    private fun getLikePost() {
-        val likePostGetService = LikePostGetService()
-        likePostGetService.setLikePostGetResult(this)
-        likePostGetService.getLikePost(user_id_logined)
-    }
-
-    override fun getPostUploadSuccess(code: Int, result: ArrayList<Post>) {
-        clickedLikeStatus.addAll(result)
-        for(i in 0..result.size-1)
-            Log.d("title : ", result[i].title)
-    }
-
-    override fun getPostUploadFailure(code: Int, message: String) {
-        Log.d("", "")
-    }
 
     //ViewHolder가 실제로 데이터를 표시해야 할 때 호출되는 함수
     override fun onBindViewHolder(holder: DataRecentRVAdapter.RecentViewHolder, position: Int) {
@@ -164,15 +137,6 @@ class DataRecentRVAdapter(private val homeDataList: ArrayList<Post>) : RecyclerV
 //                holder.bind(homeDataList[position], clickedLikeStatus[position])
             holder.bind(homeDataList[position])
             post_id_to_detail = homeDataList[position].post_id
-
-
-            var id = clickedLikeStatus.find { it.post_id == homeDataList[position].post_id }
-            if(id != null) {
-                Log.d("onBindViewHolder 체크된 post 제목 ======================== ", homeDataList[position].title)
-                holder.viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon_fill)
-            } else {
-                holder.viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon)
-            }
 
             holder.itemView.setOnClickListener {
                 user_id_var = homeDataList[position].user_id
@@ -197,5 +161,9 @@ class DataRecentRVAdapter(private val homeDataList: ArrayList<Post>) : RecyclerV
     }
 
     private lateinit var itemClickListener : OnItemClickListener
+
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
 
 }

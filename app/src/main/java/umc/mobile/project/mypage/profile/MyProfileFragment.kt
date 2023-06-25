@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import umc.mobile.project.MyApplication
 import umc.mobile.project.databinding.FragmentMyprofileBinding
 import umc.mobile.project.mypage.profile.emotionStatus.EmotionStatusGet
 import umc.mobile.project.mypage.profile.emotionStatus.EmotionStatusGetResult
@@ -47,18 +48,17 @@ class MyProfileFragment : Fragment(), PostUploadGetResult, EmotionStatusGetResul
         viewBinding = FragmentMyprofileBinding.inflate(layoutInflater)
 
         Log.d("name: ", arguments?.getString("name").toString())
-        Log.d("image: ", arguments?.getString("image").toString())
 
         name = arguments?.getString("name").toString()
-        image = arguments?.getString("image").toString()
 
         viewBinding.nickname.text = name
 
         Log.d("name: ", name)
-        Log.d("image: ", image)
+
+        image = MyApplication.prefs.getString("image", "")
 
         if(image != "null"){
-            Glide.with(this).load(arguments?.getString("image")).into(viewBinding.profileImage)
+            Glide.with(this).load(image).into(viewBinding.profileImage)
         }
 
         //initReview()
@@ -68,7 +68,6 @@ class MyProfileFragment : Fragment(), PostUploadGetResult, EmotionStatusGetResul
 
         }
 
-        // 변경된 사진있으면 사진 보내고 페이지 변경
         viewBinding.profileRevise.setOnClickListener {
             myProfileActivity!!.replaceFragment(1)
         }
@@ -139,15 +138,6 @@ class MyProfileFragment : Fragment(), PostUploadGetResult, EmotionStatusGetResul
 
     override fun getEmotionStatusSuccess(code: Int, result: ArrayList<EmotionStatusGet>) {
         score_list = result
-
-        Log.d("score_list size: ", score_list.size.toString())
-
-        for(i in 0 .. result.size - 1) {
-            Log.d("result post_id값 : ", result[i].post_id.toString())
-            Log.d("점수 값 : ", result[i].avg.toString())
-        }
-
-        Log.d("점수 조회", "성공")
         getPostUpload()
     }
 

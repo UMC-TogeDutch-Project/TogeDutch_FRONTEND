@@ -13,6 +13,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import umc.mobile.project.MyApplication
 import umc.mobile.project.R
 import umc.mobile.project.announcement.access_token
 import umc.mobile.project.databinding.FragmentMypageProfileReviseBinding
@@ -42,20 +43,18 @@ class MyProfileReviseFragment : Fragment(), PasswordPatchResult {
         initActionBar()
 
         Log.d("name: ", arguments?.getString("name").toString())
-        Log.d("image: ", arguments?.getString("image").toString())
 
         name = arguments?.getString("name").toString()
-        image = arguments?.getString("image").toString()
 
         viewBinding.nickname.text = name
 
         Log.d("name: ", name)
-        Log.d("image: ", image)
+
+        image = MyApplication.prefs.getString("image", "")
 
         if(image != "null"){
-            Glide.with(this).load(arguments?.getString("image")).into(viewBinding.profileImage)
+            Glide.with(this).load(MyApplication.prefs.getString("image", "")).into(viewBinding.profileImage)
         }
-
 
         viewBinding.btnAuthentication.setOnClickListener {
             save()

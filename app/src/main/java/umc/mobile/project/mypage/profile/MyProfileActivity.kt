@@ -27,14 +27,11 @@ class MyProfileActivity : AppCompatActivity() {
         setContentView(viewBinding.root)
 
         name = intent.getStringExtra("name").toString()
-        image = intent.getStringExtra("image").toString()
 
         Log.d("Activity, name: ", name)
-        Log.d("Activity, image: ", image)
 
         val bundle = Bundle()
         bundle.putString("name", name)
-        bundle.putString("image", image)
 
         val myProfileFragment = MyProfileFragment()
 
@@ -49,14 +46,11 @@ class MyProfileActivity : AppCompatActivity() {
 
     fun replaceFragment(int: Int) {
         name = intent.getStringExtra("name").toString()
-        image = intent.getStringExtra("image").toString()
 
         Log.d("Activity, name: ", name)
-        Log.d("Activity, image: ", image)
 
         val bundle = Bundle()
         bundle.putString("name", name)
-        bundle.putString("image", image)
 
         val myProfileReviseFragment = MyProfileReviseFragment()
         val myProfilePhoneNumReviseFragment = MyPhoneNumReviseFragment()

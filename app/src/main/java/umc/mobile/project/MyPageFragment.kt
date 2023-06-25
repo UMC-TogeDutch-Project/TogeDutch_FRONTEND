@@ -41,7 +41,7 @@ class MyPageFragment: Fragment(), UserGetResult {
         viewBinding.btnProfile.setOnClickListener {
             val intent = Intent(context, MyProfileActivity::class.java)
             intent.putExtra("name", userName)
-            intent.putExtra("image", userImage)
+
             //startActivityForResult(intent, SUBACTIITY_REQUEST_CODE)
             startActivity(intent)
         }
@@ -95,7 +95,6 @@ class MyPageFragment: Fragment(), UserGetResult {
         viewBinding.tvName.text = result.name
 
         Log.d("name: ", result.name)
-        Log.d("image: ", result.image.toString())
 
         if(result.image != null){
             Glide.with(this).load(result.image).into(viewBinding.imageView)
@@ -103,6 +102,8 @@ class MyPageFragment: Fragment(), UserGetResult {
 
         userName = result.name
         userImage = result.image.toString()
+
+        MyApplication.prefs.setString("image", userImage)
 
         Log.d("userName: ", userName)
         Log.d("userImage: ", userImage)

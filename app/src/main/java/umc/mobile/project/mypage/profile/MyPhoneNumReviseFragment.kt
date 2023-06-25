@@ -17,6 +17,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import umc.mobile.project.MyApplication
 import umc.mobile.project.R
 import umc.mobile.project.announcement.access_token
 import umc.mobile.project.databinding.FragmentMypagePhonenumberReviseBinding
@@ -59,18 +60,17 @@ class MyPhoneNumReviseFragment : Fragment(), PhoneNumberPatchResult {
         initActionBar()
 
         Log.d("name: ", arguments?.getString("name").toString())
-        Log.d("image: ", arguments?.getString("image").toString())
 
         name = arguments?.getString("name").toString()
-        image = arguments?.getString("image").toString()
 
         viewBinding.nickname.text = name
 
         Log.d("name: ", name)
-        Log.d("image: ", image)
+
+        image = MyApplication.prefs.getString("image", "")
 
         if(image != "null"){
-            Glide.with(this).load(arguments?.getString("image")).into(viewBinding.profileImage)
+            Glide.with(this).load(MyApplication.prefs.getString("image", "")).into(viewBinding.profileImage)
         }
 
         newPhoneNumberEditText = viewBinding.newPhoneNumber

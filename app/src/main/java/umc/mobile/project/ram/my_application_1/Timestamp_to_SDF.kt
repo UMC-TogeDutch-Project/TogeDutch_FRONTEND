@@ -39,11 +39,15 @@ class  Timestamp_to_SDF {
         else
             hour = hour_cal // 계산한 거 그대로 넣어주기
 
-//        var sdf = SimpleDateFormat("HH시 mm분", Locale.KOREAN)
-////        sdf.timeZone = TimeZone.getTimeZone("Asia/Seoul")
-//        var date = sdf.format(timestamp)
-
-        return hour.toString() + "시 " + minute.toString() + "분"
+        if(hour < 12){
+            return "오전 ${hour}시 ${minute}분"
+        }
+        else if(hour == 12){
+            return "오후 ${hour}시 ${minute}분"
+        }
+        else{
+            return "오후 ${hour - 12}시 ${minute}분"
+        }
     }
 
     fun timestamp_to_String(timestamp: Long) : String{

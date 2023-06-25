@@ -72,7 +72,9 @@
         android:textFontWeight="600"
         android:textColor="#557AFF"
         app:layout_constraintStart_toStartOf="@id/item_content_txt"
-        app:layout_constraintTop_toBottomOf="@id/item_content_txt"/>
+        app:layout_constraintTop_toBottomOf="@id/item_content_txt"
+        app:layout_constraintBottom_toBottomOf="@id/item_profile_img"
+        />
 
 
 

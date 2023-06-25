@@ -30,7 +30,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/your_chat_iv"
         android:layout_width="wrap_content"
-        android:layout_height="39.59dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/your_chat_box"
         android:text="안녕하세요^^"
         android:textColor="@color/white"
@@ -38,7 +38,10 @@
         android:textAlignment="center"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:clickable="false"
+        android:layout_marginTop="5dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/your_profile_img"
         android:maxWidth="220dp"/>

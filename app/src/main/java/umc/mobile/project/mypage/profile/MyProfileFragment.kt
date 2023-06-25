@@ -21,7 +21,7 @@ import umc.mobile.project.ram.Auth.Post.GetPostUpload.PostUploadGetService
 import umc.mobile.project.ram.my_application_1.*
 
 
-class MyProfileFragment : Fragment(), PostUploadGetResult {
+class MyProfileFragment : Fragment(), PostUploadGetResult, EmotionStatusGetResult {
     private lateinit var viewBinding: FragmentMyprofileBinding
     //private lateinit var orderRVAdapter: OrderRVAdapter
     //private lateinit var reviewRVAdapter: ReviewRVAdapter
@@ -31,6 +31,8 @@ class MyProfileFragment : Fragment(), PostUploadGetResult {
 
     var name : String = ""
     var image : String = ""
+
+    var score_list = ArrayList<EmotionStatusGet>()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -86,12 +88,12 @@ class MyProfileFragment : Fragment(), PostUploadGetResult {
 
     override fun onResume() {
         super.onResume()
-        getPostUpload()
-        //getEmotionStatus()
+        getEmotionStatus()
     }
 
     private fun initRecycler(result : ArrayList<Post>) {
-        val orderRVAdapter = OrderRVAdapter(result)
+        Log.d("score_list size: ", score_list.size.toString())
+        val orderRVAdapter = OrderRVAdapter(result, score_list)
         viewBinding.orderList.adapter = orderRVAdapter
         viewBinding.orderList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
@@ -115,13 +117,8 @@ class MyProfileFragment : Fragment(), PostUploadGetResult {
 
     }
 
-    override fun getPostUploadSuccess(
-        code: Int,
-        result: ArrayList<Post>
-
-    ) {
+    override fun getPostUploadSuccess(code: Int, result: ArrayList<Post>) {
         initRecycler(result)
-
         //Toast.makeText(context, "업로드 불러오기 성공", Toast.LENGTH_SHORT).show()
     }
 
@@ -133,6 +130,30 @@ class MyProfileFragment : Fragment(), PostUploadGetResult {
         super.onDestroy()
     }
 
+     //점수
+    fun getEmotionStatus() {
+        val emotionStatusGetService = EmotionStatusGetService()
+        emotionStatusGetService.setEmotionStatusGetResult(this)
+        emotionStatusGetService.getEmotionStatus(user_id_logined)
+    }
 
+    override fun getEmotionStatusSuccess(code: Int, result: ArrayList<EmotionStatusGet>) {
+        score_list = result
+
+        Log.d("score_list size: ", score_list.size.toString())
+
+        for(i in 0 .. result.size - 1) {
+            Log.d("result post_id값 : ", result[i].post_id.toString())
+            Log.d("점수 값 : ", result[i].avg.toString())
+        }
+
+        Log.d("점수 조회", "성공")
+        getPostUpload()
+    }
+
+    override fun getEmotionStatusFailure(code: Int, message: String) {
+        Log.d("실패 : ", code.toString())
+        Log.d("실패 : ", message)
+    }
 
 }

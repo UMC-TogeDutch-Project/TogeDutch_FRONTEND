@@ -1,7 +1,5 @@
 package umc.mobile.project
 
-import Post
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -12,18 +10,12 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import umc.mobile.project.ram.chat.ChatRoom
 import umc.mobile.project.ram.chat.ChatRoomRVAdapter
 import umc.mobile.project.ram.chat.ChattingActivity
 import umc.mobile.project.databinding.FragmentChatBinding
-import umc.mobile.project.databinding.FragmentRandomMatchingBinding
-import umc.mobile.project.ram.Auth.Application.GetUser.UserGetService
 import umc.mobile.project.ram.Auth.ChatRoom.ChatRoomGetList.ChatRoomList
 import umc.mobile.project.ram.Auth.ChatRoom.ChatRoomGetList.ChatRoomListGetResult
 import umc.mobile.project.ram.Auth.ChatRoom.ChatRoomGetList.ChatRoomListGetService
-import umc.mobile.project.ram.Auth.Post.GetPostJoin.PostJoinGetResult
-import umc.mobile.project.ram.Auth.Post.GetPostJoin.PostJoinGetService
-import umc.mobile.project.ram.chat.post_id_chatroom
 import umc.mobile.project.ram.my_application_1.user_id_logined
 
 class ChatFragment : Fragment(), ChatRoomListGetResult {

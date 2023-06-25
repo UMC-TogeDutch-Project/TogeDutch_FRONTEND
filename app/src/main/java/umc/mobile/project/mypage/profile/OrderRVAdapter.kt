@@ -19,8 +19,7 @@ import umc.mobile.project.ram.my_application_1.post_id_to_detail
 import umc.mobile.project.ram.my_application_1.user_id_logined
 
 
-class OrderRVAdapter (private val orderList: ArrayList<Post>): RecyclerView.Adapter<OrderRVAdapter.ViewHolder>(),
-    EmotionStatusGetResult {
+class OrderRVAdapter (private val orderList: ArrayList<Post>, private val score_list: ArrayList<EmotionStatusGet>): RecyclerView.Adapter<OrderRVAdapter.ViewHolder>(){
     val TAG: String = "로그"
 
     private lateinit var viewBinding: ReviewCollectionDialogBinding
@@ -33,7 +32,8 @@ class OrderRVAdapter (private val orderList: ArrayList<Post>): RecyclerView.Adap
 
     lateinit var binding: OrderListAdapterBinding
 
-    private val reviewScore = arrayListOf<EmotionStatusGet>()
+//    private val reviewScore = arrayListOf<EmotionStatusGet>()
+
 
     // 보여줄 아이템 개수만큼 View를 생성 (RecyclerView가 초기화 될 때 호출)
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
@@ -43,7 +43,7 @@ class OrderRVAdapter (private val orderList: ArrayList<Post>): RecyclerView.Adap
         )
         context = viewGroup.context
 
-        getEmotionStatus()
+//        getEmotionStatus()
 
         viewBinding = ReviewCollectionDialogBinding.inflate(
             LayoutInflater.from(viewGroup.context),
@@ -72,6 +72,12 @@ class OrderRVAdapter (private val orderList: ArrayList<Post>): RecyclerView.Adap
     // ViewHolder 단위 객체로 View의 데이터를 설정
     inner class ViewHolder(val binding: OrderListAdapterBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(post: Post) {
+            Log.d("score_list size: ", score_list.size.toString())
+            score_list.forEach {
+                if(post.post_id == it.post_id) run {
+                    binding.score.text = it.avg.toString()
+                }
+            }
             val txt_title : String = post.title
 
             var latLong_to_address : String = Geocoder_location().calculate_location(context, post.latitude, post.longitude)
@@ -91,19 +97,6 @@ class OrderRVAdapter (private val orderList: ArrayList<Post>): RecyclerView.Adap
             binding.orderListTime.text = txt_time_substring
 
             postId = post.post_id
-            Log.d("postId값: ", postId.toString())
-            Log.d("post_id값: ", post.post_id.toString())
-
-            binding.score.text = 0.toString()
-
-            var id = reviewScore.find {it.post_id == post.post_id}
-            if(id != null) {
-                Log.d("post id ======================== ", post.post_id.toString())
-                Log.d("post title ======================== ", post.title)
-                val index = reviewScore.indexOf(id)
-                binding.score.text = reviewScore[index].avg.toString()
-                Log.d("avg ======================== ", reviewScore[index].avg.toString())
-            }
 
             binding.listItemScore.setOnClickListener {
                 Log.d(TAG, "화면 연결")
@@ -113,28 +106,6 @@ class OrderRVAdapter (private val orderList: ArrayList<Post>): RecyclerView.Adap
             }
 
         }
-    }
-
-    // 점수
-    fun getEmotionStatus() {
-        val emotionStatusGetService = EmotionStatusGetService()
-        emotionStatusGetService.setEmotionStatusGetResult(this)
-        emotionStatusGetService.getEmotionStatus(user_id_logined)
-    }
-
-    override fun getEmotionStatusSuccess(code: Int, result: ArrayList<EmotionStatusGet>) {
-        reviewScore.addAll(result)
-        for(i in 0 .. result.size - 1) {
-            Log.d("result post_id값 : ", result[i].post_id.toString())
-            Log.d("점수 값 : ", result[i].avg.toString())
-        }
-
-        Log.d("점수 조회", "성공")
-    }
-
-    override fun getEmotionStatusFailure(code: Int, message: String) {
-        Log.d("실패 : ", code.toString())
-        Log.d("실패 : ", message)
     }
 
     interface OnItemClickListener {
@@ -147,4 +118,7 @@ class OrderRVAdapter (private val orderList: ArrayList<Post>): RecyclerView.Adap
 
     private lateinit var itemClickListener : OnItemClickListener
 
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
 }

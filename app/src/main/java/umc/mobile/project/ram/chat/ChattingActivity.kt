@@ -294,6 +294,7 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
 
             }
 
+            val editMessage = dialog_more.findViewById<EditText>(R.id.edit_message)
             dialog_more.findViewById<AppCompatButton>(R.id.btn_submit_dialog)!!.setOnClickListener {
                 if (picture_chat_iv.visibility == View.VISIBLE) {
                     picture_chat_iv.visibility == View.GONE
@@ -305,8 +306,11 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
                     // 장소 전송
                     sendLocation(chatRoom_id_get, user_id_logined, latitude, longitude)
                 }
-
+                else{
+                    sendStomp(editMessage!!.text.toString(), chatRoom_id_get, user_id_logined)
+                }
             }
+
 
             dialog_more.show()
         }
@@ -423,6 +427,9 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
         }
 
         runOnUiThread {
+            binding.recyclerMessages.layoutManager = LinearLayoutManager(this).apply{
+                this.stackFromEnd = true // 가장 최근의 대화를 표시하기 위해 맨 아래로 정렬.
+            }
             chatRVAdapter.notifyDataSetChanged()
         }
 
@@ -514,6 +521,9 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
         }
 
         runOnUiThread {
+            binding.recyclerMessages.layoutManager = LinearLayoutManager(this).apply{
+                this.stackFromEnd = true // 가장 최근의 대화를 표시하기 위해 맨 아래로 정렬.
+            }
             chatRVAdapter.notifyDataSetChanged()
         }
     }
@@ -553,8 +563,8 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
 
     override fun sendPhotoFailure() {
         Log.d(
-            "=============================== Photo Post 실패!!!!!!!!!!!!!!!!!!!!",
-            "=================================================="
+            "Photo Post 실패",
+            ""
         )
     }
 
@@ -588,7 +598,7 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
     }
 
     override fun getPostAllFailure(code: Int, message: String) {
-        Log.d("getPostAllFailure ===============================================", code.toString())
+        Log.d("모집글 상세 가져오기 실패", code.toString())
     }
 
 
@@ -608,7 +618,7 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
     }
 
     override fun getPostUploadFailure(code: Int, message: String) {
-        Log.d("실패 ===============================================", code.toString())
+        Log.d("getPostUploadFailure", code.toString())
     }
 
     override fun getUserSuccess(code: Int, result: UserGet) {
@@ -617,13 +627,13 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
     }
 
     override fun getUserFailure(code: Int, message: String) {
-        Log.d("getUserFailure ===============================================", code.toString())
+        Log.d("getUserFailure", code.toString())
     }
 
     override fun getChatAllSuccess(code: Int, result: ArrayList<Chat>) {
         Log.d(
-            "=============================== getChatAllSuccess!!!!!!!!!!!!!!!!!!!!",
-            "=================================================="
+            "getChatAllSuccess",
+            ""
         )
 
         if (result.size == 0)
@@ -747,14 +757,16 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
             }
         }
 
-
+        binding.recyclerMessages.layoutManager = LinearLayoutManager(this).apply{
+            this.stackFromEnd = true // 가장 최근의 대화를 표시하기 위해 맨 아래로 정렬.
+        }
         chatRVAdapter.notifyDataSetChanged()
     }
 
     override fun getChatAllFailure(code: Int, message: String) {
         Log.d(
-            "=============================== getChatAllFailure!!!!!!!!!!!!!!!!!!!!",
-            "=================================================="
+            "getChatAllFailure",
+            ""
         )
     }
 
@@ -1006,8 +1018,8 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
 
     override fun sendChatMeetTimeSuccess(result: ChatMeetTime) {
         Log.d(
-            "=============================== ChatMeetTime Post 성공!!!!!!!!!!!!!!!!!!!!",
-            "=================================================="
+            "ChatMeetTime Post 성공",
+            ""
         )
         val data = JSONObject()
         data.put("chatMeetTimeId", result.chatMeetTimeId)
@@ -1026,8 +1038,8 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
 
     override fun sendChatMeetTimeFailure() {
         Log.d(
-            "=============================== ChatMeetTime Post 실패!!!!!!!!!!!!!!!!!!!!",
-            "=================================================="
+            "ChatMeetTime Post 실패",
+            ""
         )
     }
 
@@ -1046,8 +1058,8 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
 
     override fun sendLocationSuccess(result: umc.mobile.project.ram.Auth.ChatLocation.Result) {
         Log.d(
-            "=============================== ChatPlace Post 성공!!!!!!!!!!!!!!!!!!!!",
-            "=================================================="
+            "ChatPlace Post 성공",
+            ""
         )
         val data = JSONObject()
         data.put("chatLocationIdx", result.chatLocationIdx)
@@ -1067,7 +1079,7 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
 
     override fun sendLocationFailure() {
         Log.d(
-            "=============================== ChatPlace Post 실패!!!!!!!!!!!!!!!!!!!!",
+            "ChatPlace Post 실패",
             ""
         )
     }
@@ -1132,7 +1144,7 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
     }
 
     override fun chatRoomDeleteFailure(code: Int, message: String) {
-        TODO("Not yet implemented")
+        Log.d("채팅방 삭제 실패", "")
     }
 
 

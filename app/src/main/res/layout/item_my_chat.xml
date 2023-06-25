@@ -8,7 +8,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/my_chat_iv"
         android:layout_width="wrap_content"
-        android:layout_height="39.59dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/my_chat_box"
         android:text="안녕하세요!"
         android:textColor="@color/white"
@@ -16,6 +16,8 @@
         android:textAlignment="center"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
         android:clickable="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

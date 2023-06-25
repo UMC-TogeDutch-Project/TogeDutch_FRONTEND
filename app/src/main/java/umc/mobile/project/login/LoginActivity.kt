@@ -106,19 +106,7 @@ class LoginActivity : AppCompatActivity(), MyCustomDialogInterface {
 
         }
 
-        // 23.02.06 제이 추가
-        /** HashKey확인 */
-        val keyHash = Utility.getKeyHash(this)
-        Log.d(TAG, "키 해시 값 : " + keyHash)
 
-        /** KakoSDK init */
-        KakaoSdk.init(this, this.getString(R.string.kakao_native_key))
-
-        viewBinding.btnKakaoLogin.setOnClickListener {
-            val myCustomDialog = MyCustomDialog(this, this)
-
-            kakaoLogin() // 카카오 로그인
-        }
 
         viewBinding.tbFindPassword.setOnClickListener {
             val email = viewBinding.etEmailId.text.toString()
@@ -170,6 +158,19 @@ class LoginActivity : AppCompatActivity(), MyCustomDialogInterface {
             }
         })
 
+        // 23.02.06 제이 추가
+        /** HashKey확인 */
+        val keyHash = Utility.getKeyHash(this)
+        Log.d(TAG, "키 해시 값 : " + keyHash)
+
+        /** KakoSDK init */
+        KakaoSdk.init(this, this.getString(R.string.kakao_native_key))
+
+        viewBinding.btnKakaoLogin.setOnClickListener {
+            val myCustomDialog = MyCustomDialog(this, this)
+
+            kakaoLogin() // 카카오 로그인
+        }
 
     }
 
@@ -197,6 +198,7 @@ class LoginActivity : AppCompatActivity(), MyCustomDialogInterface {
                             "me: ${user}")
                     kakaoNickname = "${user?.kakaoAccount?.profile?.nickname}"
                     kakaoEmail = "${user?.kakaoAccount?.email}"
+
                 }
 
                 android.os.Handler(Looper.getMainLooper()).postDelayed({
@@ -259,6 +261,8 @@ class LoginActivity : AppCompatActivity(), MyCustomDialogInterface {
                         Log.d(TAG, "카카오톡으로 로그인 성공 \n\n " +
                                 "token: ${token.accessToken} \n\n " +
                                 "me: ${user}")
+                        kakaoNickname = "${user?.kakaoAccount?.profile?.nickname}"
+                        kakaoEmail = "${user?.kakaoAccount?.email}"
                     }
 
                     android.os.Handler(Looper.getMainLooper()).postDelayed({
@@ -279,7 +283,7 @@ class LoginActivity : AppCompatActivity(), MyCustomDialogInterface {
                                             setLogin(false) // 카카오 로그인 버튼 없애기
                                         }
 
-                                        when (loginResponseData?.code) {
+                                        when (loginResponseData.code) {
                                             1000 -> {
                                                 Log.d(TAG, "onResponse:login응답 성공 userIdx: ${loginResponseData.result!!.userIdx}, 상태: ${loginResponseData.result!!.status}")
                                                 user_id_logined = loginResponseData.result!!.userIdx

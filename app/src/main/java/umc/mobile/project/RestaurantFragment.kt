@@ -1,140 +1,233 @@
 package umc.mobile.project
-import android.content.Intent
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.google.gson.JsonArray
-import org.json.JSONArray
-import org.json.JSONException
-import org.json.JSONObject
-import umc.mobile.project.announcement.AnnounceDetailActivity
-import umc.mobile.project.announcement.AnnounceListActivity
 //import umc.mobile.project.chat.ChatRoom
 //import umc.mobile.project.chat.ChattingActivity
+
+
+import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
+import android.location.Geocoder
+import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+
+import org.json.JSONException
+import org.json.JSONObject
 import umc.mobile.project.databinding.FragmentRestaurantBinding
 import umc.mobile.project.restaurant.Auth.NaverApi.*
-import umc.mobile.project.restaurant.RestaurantImgRVAdapter
 import umc.mobile.project.restaurant.RestaurantRVAdapter
-import umc.mobile.project.restaurant.blog.RestaurantPageActivity
+import umc.mobile.project.restaurant.blog.BlogData
+import umc.mobile.project.restaurant.blog.RestaurantPlaceActivity
 import java.io.*
 import java.net.HttpURLConnection
 import java.net.MalformedURLException
 import java.net.URL
 import java.net.URLEncoder
+import java.util.*
+import java.util.regex.Pattern
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
+//주변맛집에 필요한 위도경도
+var latitude = 50.02
+var longitude = 60.02
+
+var mSearchResult: String? = null
 
 class RestaurantFragment : Fragment() {
     var Titles: Array<String?> = arrayOfNulls<String>(5)
+    var Titles2: Array<String?> = arrayOfNulls<String>(5)
 
     val clientId = "wmV0kYp4ek0ba6kCCbxB"
     val clientSecret = "PgxJ1saGO6"
 
+
     private lateinit var binding: FragmentRestaurantBinding
+
     private lateinit var restaurantRVAdapter: RestaurantRVAdapter
-    private lateinit var restaurantImgRVAdapter: RestaurantImgRVAdapter
 
-
-    var handler= Handler(Looper.getMainLooper())
 
     var naverList = ArrayList<NaverData.NaverSearchData>()
     var naverImgList = ArrayList<NaverData.NaverImgData>()
-    var naverTitle = ArrayList<NaverData.NaverTitle>()
 
+    var naverTitleList = ArrayList<NaverData.NaverTitle>()
     var result = ArrayList<NaverData.NaverSearchData>()
-    var resultImage = ArrayList<NaverData.NaverImgData>()
     var resultT = ArrayList<NaverData.NaverTitle>()
+    var naverBlog = ArrayList<BlogData>()
 
+    var useResult = ""
+    var searchResult: String? = null
+    var defaultResult = ""
+
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
+
         binding = FragmentRestaurantBinding.inflate(inflater, container, false)
 
 
+        scroll()
+        binding.searchBtn.setOnClickListener{
+            scroll()
+            searchResult = binding.resSearchPost.text.toString()
+            searchResult = "$searchResult 맛집"
+            mSearchResult = searchResult as String
+
+            val thread2 = Thread {
+                defaultResult = context?.let { defaultAddress(it) }.toString()
+//                if(searchResult != null){
+//                    useResult = searchResult as String
+//                }else
+//                    useResult = defaultResult
+
+
+                useResult = searchResult as String
+                Log.d("searchResult useResult", useResult)
+                var naverPlaceSearch = RestaurantFragment()
+                result =  naverPlaceSearch.main(useResult)
+
+                resultT =  naverPlaceSearch.main2(useResult)
+                Log.d("resultT", resultT.toString())
+                var naverImageSearch = NaverImageSearchAPI()
+                Log.d("resultT 입니당", naverImageSearch.main(resultT[0]).toString())
+                Log.d("resultT 입니당", naverImageSearch.main(resultT[1]).toString())
+                Log.d("resultT 입니당", naverImageSearch.main(resultT[2]).toString())
+                Log.d("resultT 입니당", naverImageSearch.main(resultT[3]).toString())
+
+                naverImgList = naverImageSearch.main(resultT[4])
+                Log.d("naver", result.toString())
+                activity?.runOnUiThread {
+
+                    restaurantRVAdapter = RestaurantRVAdapter(result, naverImgList)
+                    binding.rvRes.adapter = restaurantRVAdapter //리사이클러뷰에 어댑터 연결
+                    binding.rvRes.layoutManager = LinearLayoutManager(context) //레이아웃 매니저 연결
+
+
+                    restaurantRVAdapter.notifyDataSetChanged()
+
+                }
+            }.start()
+//            val fragment = RestaurantFragment()
+//            val fragmentManager = requireActivity().supportFragmentManager
+//            val transaction = fragmentManager.beginTransaction()
+//            transaction.replace(R.id.fragment_restaurant, fragment)
+//            transaction.commit()
+
+        }
+//        if(searchResult != null){
+//            useResult = searchResult as String
+//        }else{
+//            useResult = defaultResult
+//
+//        }
+
+
+        var thread1 = Thread {
+            defaultResult = context?.let { defaultAddress(it) }.toString()
+            useResult = defaultResult
 
 
 
-        val thread = Thread {
+            Log.d("defaultResult useResult", useResult)
             var naverPlaceSearch = RestaurantFragment()
-            result =  naverPlaceSearch.main()
+            result = naverPlaceSearch.main(useResult)
 
+            resultT = naverPlaceSearch.main2(useResult)
+            Log.d("resultT", resultT.toString())
+            var naverImageSearch = NaverImageSearchAPI()
+            Log.d("resultT 입니당", naverImageSearch.main(resultT[0]).toString())
+            Log.d("resultT 입니당", naverImageSearch.main(resultT[1]).toString())
+            Log.d("resultT 입니당", naverImageSearch.main(resultT[2]).toString())
+            Log.d("resultT 입니당", naverImageSearch.main(resultT[3]).toString())
 
+            naverImgList = naverImageSearch.main(resultT[4])
             Log.d("naver", result.toString())
             activity?.runOnUiThread {
-                restaurantRVAdapter = RestaurantRVAdapter(result)
+
+                restaurantRVAdapter = RestaurantRVAdapter(result, naverImgList)
                 binding.rvRes.adapter = restaurantRVAdapter //리사이클러뷰에 어댑터 연결
                 binding.rvRes.layoutManager = LinearLayoutManager(context) //레이아웃 매니저 연결
 
 
                 restaurantRVAdapter.notifyDataSetChanged()
 
-
             }
         }.start()
-
 
 
         return binding.root
     }
 
+    //스크롤 막는 코드
+    fun scroll(){
+        binding.rvRes.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
-
-
-    private fun initRecyclerView() {
-
-//        restaurantRVAdapter = RestaurantRVAdapter(result)
-//        binding.rvRes.adapter = restaurantRVAdapter //리사이클러뷰에 어댑터 연결
-//        binding.rvRes.layoutManager = LinearLayoutManager(context) //레이아웃 매니저 연결
-//        mRestaurnatData.apply {
-//            add(RestaurantData("파이프그라운드 ", "서울 용산구 한남대로27길 66 지하1층", "02-4948-3929", "4.1", R.drawable.img1))
-//            add(RestaurantData("꽁티드툴레아 ", "서울 강남구 도산대로49길 39", "02-4938-2939", "3.3", R.drawable.img2))
-//            add(RestaurantData("세상의모든아침 여의도점 ", "서울 영등포구 여의대로 24 전경련회관 50층, 51층", "02-4756-3872", "4.3", R.drawable.img3))
-//            add(RestaurantData("땀땀 ", "서울 강남구 강남대로98길 12-5", "02-7663-8883", "3.5",R.drawable.img4))
-//            add(RestaurantData("애플하우스 ", "서울 동작구 동작대로27다길 29 2층", "02-8839-9288", "4.0",R.drawable.img5))
-//            add(RestaurantData("까폼 ", "서울 강남구 선릉로153길 18 지하1층", "02-3229-1182", "4.1",R.drawable.img6))
-//            add(RestaurantData("Summer Lane ", "서울 용산구 이태원로55가길 49 1층 summerlane", "02-8837-2211", "3.3",R.drawable.img7))
-//
-//        }
-//        Toast.makeText(context, "구글 주변장소 성공.", Toast.LENGTH_SHORT).show()
-
-
-
-//        restaurantRVAdapter.setItemClickListener(object : RestaurantRVAdapter.OnItemClickListener {
-//            override fun onItemClick(restaurantData: Result) {
-//                val dlg = context?.let { RestaurantPageDialog(it) }
-//                if (dlg != null) {
-//                    dlg.start()
-//                }
-////                Intent(context, RestaurantPageActivity::class.java).apply {
-////                    putExtra("data", mRestaurnatData)
-////                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-////                }.run { context?.startActivity(this) }
-//            }
-//        })
-
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                // 스크롤이 움직이면 다음 코드를 실행
+                recyclerView.stopScroll()
+            }
+        })
     }
 
-    fun main(): ArrayList<NaverData.NaverSearchData> {
+    //회원가입시 저장한 위도 경도 가지고 주소 변환
+    fun defaultAddress(context: Context):String{
+        val geocoder = Geocoder(context, Locale.KOREAN)
+        val addressList = geocoder.getFromLocation(latitude, longitude, 1)
+        var dongAddress = ""
+        if (addressList.isNotEmpty()) {
+            val address = addressList[0]
+            val city = address.locality
+            val state = address.adminArea
+            val country = address.countryName
+            val addressLine = address.getAddressLine(0)
+            val fullAddress = "$addressLine, $city, $state, $country"
+
+            val pattern = Pattern.compile("(\\S+[동|가|로|길])")
+            val matcher = pattern.matcher(fullAddress)
+
+            if (matcher.find()) {
+                dongAddress = matcher.group()
+                // dongAddress에 "동" 저장
+                dongAddress += " 맛집"
+
+
+
+            }
+            else println("실패")
+
+
+
+
+        }
+        return dongAddress
+    }
+
+
+
+
+    fun main(searchResult: String): ArrayList<NaverData.NaverSearchData> {
         var text: String? = null
 
+
         try {
-            text = URLEncoder.encode("익선동 맛집", "UTF-8")    // 검색어
+            text = URLEncoder.encode(searchResult, "UTF-8")    // 검색어
         } catch (e: UnsupportedEncodingException) {
             throw RuntimeException("검색어 인코딩 실패", e)
         }
 
         val apiURL =
-            "https://openapi.naver.com/v1/search/local.json?query=" + text!! + "&display=10"   // json 결과
+            "https://openapi.naver.com/v1/search/local.json?query=" + text!! + "&display=5"   // json 결과
 
         val requestHeaders: HashMap<String, String> = HashMap()
         requestHeaders.put("X-Naver-Client-Id", clientId)
@@ -145,6 +238,76 @@ class RestaurantFragment : Fragment() {
         val result = parseData(responseBody)
         return result
     }
+
+
+    fun main2(searchResult: String): ArrayList<NaverData.NaverTitle> {
+        var text: String? = null
+
+        try {
+            text = URLEncoder.encode(searchResult, "UTF-8")    // 검색어
+        } catch (e: UnsupportedEncodingException) {
+            throw RuntimeException("검색어 인코딩 실패", e)
+        }
+
+        val apiURL =
+            "https://openapi.naver.com/v1/search/local.json?query=" + text!! + "&display=5"   // json 결과
+
+        val requestHeaders: HashMap<String, String> = HashMap()
+        requestHeaders.put("X-Naver-Client-Id", clientId)
+        requestHeaders.put("X-Naver-Client-Secret", clientSecret)
+
+
+        val responseBody = get(apiURL, requestHeaders)
+        val result = parseData2(responseBody)
+        return result
+    }
+
+
+    private fun parseData2(responseBody: String): ArrayList<NaverData.NaverTitle> {
+
+        var title: Array<String?> = arrayOfNulls<String>(5)
+        var category: String
+        var description: String
+        var address: String
+        var jsonObject: JSONObject? = null
+
+        var bw = BufferedWriter(OutputStreamWriter(System.out))
+
+        try {
+            jsonObject = JSONObject(responseBody)
+            val jsonArray = jsonObject.getJSONArray("items")
+
+
+
+            for (i in 0 until jsonArray.length()) {
+
+                val item = jsonArray.getJSONObject(i)
+
+                val naverData = NaverData.NaverTitle(
+                    item.getString("title")
+                )
+                naverTitleList.add(naverData)
+                Titles[i] = item.getString("title").replace(Regex("<b>"),"").replace(Regex("</b>"),"")
+                title[i] = item.getString("title")
+                category = item.getString("category")
+                description = item.getString("description")
+                address = item.getString("address")
+                bw.write("TITLE : " + title[i] + " CATEGORY : $category DESCRIPTION : $description ADDRESS : $address \n");
+
+            }
+            bw.flush()
+            bw.close()
+
+
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+        Log.d("titles", Titles.toString())
+        Log.d("title0", Titles[0].toString())
+
+        return naverTitleList
+    }
+
 
     private operator fun get(apiUrl: String, requestHeaders: Map<String, String>): String {
         val con = connect(apiUrl)
@@ -214,22 +377,26 @@ class RestaurantFragment : Fragment() {
         try {
             jsonObject = JSONObject(responseBody)
             val jsonArray = jsonObject.getJSONArray("items")
-            for (i in 0 until jsonArray.length()) {
+
+//            for (i in 0 until jsonArray.length()) {
+//                val item = jsonArray.getJSONObject(i)
+//                Titles[i] = item.getString("title")
+//            }
+
+
+            for (i in 0 until 5) {
 
                 val item = jsonArray.getJSONObject(i)
+
                 val naverData = NaverData.NaverSearchData(
-                    item.getString("title"),
-                    item.getString("category"),
+                    item.getString("title").replace(Regex("<b>"),"").replace(Regex("</b>"),""),
+                    item.getString("category").replace(Regex(">"),"-"),
                     item.getString("description"),
                     item.getString("address")
                 )
                 naverList.add(naverData)
-//                val naverDataT = NaverData.NaverTitle(
-//                    item.getString("title")
-//                )
-//                naverTitle.add(naverDataT)
-                Titles[i] = item.getString("title")
-                title[i] = item.getString("title")
+
+                title[i] = item.getString("title").replace(Regex("<b>"),"").replace(Regex("</b>"),"")
                 category = item.getString("category")
                 description = item.getString("description")
                 address = item.getString("address")
@@ -239,28 +406,11 @@ class RestaurantFragment : Fragment() {
             bw.flush()
             bw.close()
 
-            for(i in 0 until jsonArray.length()){
-                val thread = Thread {
-                    var naverImageSearch = NaverImageSearchAPI()
-                    naverImgList = naverImageSearch.main(title[i])
-                    Log.d("이미지 리스트", naverImgList.toString())
-                    Log.d("스레드 안 title", Titles.toString())
 
-//                    handler.post{
-//                        restaurantImgRVAdapter = RestaurantImgRVAdapter(naverImgList)
-//                        binding.rvRes.adapter = restaurantImgRVAdapter //리사이클러뷰에 어댑터 연결
-//                        binding.rvRes.layoutManager = LinearLayoutManager(context) //레이아웃 매니저 연결
-//
-//
-//                        restaurantImgRVAdapter.notifyDataSetChanged()
-//                    }
-                }.start()
-
-            }
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-        Log.d("titles", Titles.toString())
+
         return naverList
     }
 

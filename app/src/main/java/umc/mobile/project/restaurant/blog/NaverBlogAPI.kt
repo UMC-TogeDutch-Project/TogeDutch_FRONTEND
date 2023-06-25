@@ -1,39 +1,37 @@
-package umc.mobile.project.restaurant.Auth.NaverApi
-
 import org.json.JSONException
 import org.json.JSONObject
+import umc.mobile.project.RestaurantFragment
+import umc.mobile.project.restaurant.Auth.NaverApi.NaverData
+import umc.mobile.project.restaurant.blog.BlogData
+
+
 import java.io.*
 import java.net.HttpURLConnection
 import java.net.MalformedURLException
 import java.net.URL
 import java.net.URLEncoder
 
+class NaverBlogAPI {
+    var blogList = ArrayList<BlogData>()
 
-class NaverImageSearchAPI {
-    val clientId = "wmV0kYp4ek0ba6kCCbxB"
-    val clientSecret = "PgxJ1saGO6"
-    var naverImgList = ArrayList<NaverData.NaverImgData>()
-
-    fun main(searchTitle: NaverData.NaverTitle): ArrayList<NaverData.NaverImgData> {
+    fun main(searchTitle: NaverData.NaverTitle): ArrayList<BlogData> {
+        val clientId = "wmV0kYp4ek0ba6kCCbxB"
+        val clientSecret = "PgxJ1saGO6"
         var text: String? = null
-
-        try {
-            text = URLEncoder.encode(searchTitle.title, "UTF-8")    // 검색어
+        text = try {
+            URLEncoder.encode(searchTitle.title, "UTF-8")
         } catch (e: UnsupportedEncodingException) {
             throw RuntimeException("검색어 인코딩 실패", e)
         }
-
         val apiURL =
-            "https://openapi.naver.com/v1/search/image?query=" + text!! + "&display=1"   // json 결과
+            "https://openapi.naver.com/v1/search/blog?query="  + text!! + "&display=5"  // JSON 결과
 
         val requestHeaders: HashMap<String, String> = HashMap()
         requestHeaders.put("X-Naver-Client-Id", clientId)
         requestHeaders.put("X-Naver-Client-Secret", clientSecret)
-
-
         val responseBody = get(apiURL, requestHeaders)
         val result = parseData(responseBody)
-        return result
+       return result
     }
 
     private operator fun get(apiUrl: String, requestHeaders: Map<String, String>): String {
@@ -90,43 +88,51 @@ class NaverImageSearchAPI {
         }
     }
 
+    private fun parseData(responseBody: String): ArrayList<BlogData> {
 
-    private fun parseData(responseBody: String): ArrayList<NaverData.NaverImgData> {
         var title: String
-        var thumbnail: String
-        var sizeHeight: String
-        var sizeWidth: String
+        var link: String
+        var description: String
+        var name: String
+        var date: String
         var jsonObject: JSONObject? = null
+
         var bw = BufferedWriter(OutputStreamWriter(System.out))
 
         try {
             jsonObject = JSONObject(responseBody)
             val jsonArray = jsonObject.getJSONArray("items")
 
+
             for (i in 0 until jsonArray.length()) {
+
                 val item = jsonArray.getJSONObject(i)
 
-                val naverData = NaverData.NaverImgData(
-                    item.getString("thumbnail")
+                val blogData = BlogData(
+                    item.getString("title").replace(Regex("<b>"),"").replace(Regex("</b>"),"").replace(Regex("&apos;"),"").replace(Regex("&quot;"),""),
+                    item.getString("postdate"),
+                    item.getString("bloggername"),
+                    item.getString("link")
                 )
-                naverImgList.add(naverData)
-
-
-                title = item.getString("title")
-                thumbnail = item.getString("thumbnail")
-                sizeHeight = item.getString("sizeheight")
-                sizeWidth = item.getString("sizewidth")
-
-
-                bw.write("TITLE : $title THUMBNAIL : $thumbnail SIZEHEIGHT : $sizeHeight SIZEWIDTH : $sizeWidth \n");
+                blogList.add(blogData)
+                                                    //<b> 태그 제거
+                title = item.getString("title").replace(Regex("<b>"),"").replace(Regex("</b>"),"").replace(Regex("&apos;"),"")
+                link = item.getString("link")
+                description = item.getString("description")
+                name = item.getString("bloggername")
+                date = item.getString("postdate")
+                bw.write("TITLE : $title LINK : $link DESCRIPTION : $description NAME : $name DATE : $date\n");
 
             }
-
             bw.flush()
             bw.close()
+
+
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-        return naverImgList
+
+        return blogList
     }
+
 }

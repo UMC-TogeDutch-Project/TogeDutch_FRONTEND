@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import umc.mobile.project.DataRecentRVAdapter
 import umc.mobile.project.databinding.OrderListAdapterBinding
 import umc.mobile.project.databinding.ReviewCollectionDialogBinding
 import umc.mobile.project.mypage.profile.emotionStatus.EmotionStatusGet
@@ -15,9 +16,11 @@ import umc.mobile.project.mypage.profile.emotionStatus.EmotionStatusGetResult
 import umc.mobile.project.mypage.profile.emotionStatus.EmotionStatusGetService
 import umc.mobile.project.ram.Geocoder_location
 import umc.mobile.project.ram.my_application_1.post_id_to_detail
+import umc.mobile.project.ram.my_application_1.user_id_logined
 
 
-class OrderRVAdapter (private val orderList: ArrayList<Post>): RecyclerView.Adapter<OrderRVAdapter.ViewHolder>() {
+class OrderRVAdapter (private val orderList: ArrayList<Post>): RecyclerView.Adapter<OrderRVAdapter.ViewHolder>(),
+    EmotionStatusGetResult {
     val TAG: String = "로그"
 
     private lateinit var viewBinding: ReviewCollectionDialogBinding
@@ -30,6 +33,8 @@ class OrderRVAdapter (private val orderList: ArrayList<Post>): RecyclerView.Adap
 
     lateinit var binding: OrderListAdapterBinding
 
+    private val reviewScore = arrayListOf<EmotionStatusGet>()
+
     // 보여줄 아이템 개수만큼 View를 생성 (RecyclerView가 초기화 될 때 호출)
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
        binding = OrderListAdapterBinding.inflate(
@@ -37,6 +42,8 @@ class OrderRVAdapter (private val orderList: ArrayList<Post>): RecyclerView.Adap
             viewGroup, false
         )
         context = viewGroup.context
+
+        getEmotionStatus()
 
         viewBinding = ReviewCollectionDialogBinding.inflate(
             LayoutInflater.from(viewGroup.context),
@@ -50,12 +57,15 @@ class OrderRVAdapter (private val orderList: ArrayList<Post>): RecyclerView.Adap
     override fun getItemCount(): Int = orderList.size
 
     // 생성된 View에 보여줄 데이터를 설정
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(orderList[position])
-        holder.itemView.setOnClickListener {
+    override fun onBindViewHolder(holder: OrderRVAdapter.ViewHolder, position: Int) {
+        if(holder is ViewHolder) {
+            holder.bind(orderList[position])
             post_id_to_detail = orderList[position].post_id
-            itemClickListener.onItemClick(orderList[position])
-            notifyItemChanged(position)
+
+            holder.itemView.setOnClickListener {
+                itemClickListener.onItemClick(orderList[position])
+                notifyItemChanged(position)
+            }
         }
     }
 
@@ -84,6 +94,16 @@ class OrderRVAdapter (private val orderList: ArrayList<Post>): RecyclerView.Adap
             Log.d("postId값: ", postId.toString())
             Log.d("post_id값: ", post.post_id.toString())
 
+            binding.score.text = 0.toString()
+
+            var id = reviewScore.find {it.post_id == post.post_id}
+            if(id != null) {
+                Log.d("post id ======================== ", post.post_id.toString())
+                Log.d("post title ======================== ", post.title)
+                val index = reviewScore.indexOf(id)
+                binding.score.text = reviewScore[index].avg.toString()
+                Log.d("avg ======================== ", reviewScore[index].avg.toString())
+            }
 
             binding.listItemScore.setOnClickListener {
                 Log.d(TAG, "화면 연결")
@@ -91,7 +111,30 @@ class OrderRVAdapter (private val orderList: ArrayList<Post>): RecyclerView.Adap
                 dialog.start()
 
             }
+
         }
+    }
+
+    // 점수
+    fun getEmotionStatus() {
+        val emotionStatusGetService = EmotionStatusGetService()
+        emotionStatusGetService.setEmotionStatusGetResult(this)
+        emotionStatusGetService.getEmotionStatus(user_id_logined)
+    }
+
+    override fun getEmotionStatusSuccess(code: Int, result: ArrayList<EmotionStatusGet>) {
+        reviewScore.addAll(result)
+        for(i in 0 .. result.size - 1) {
+            Log.d("result post_id값 : ", result[i].post_id.toString())
+            Log.d("점수 값 : ", result[i].avg.toString())
+        }
+
+        Log.d("점수 조회", "성공")
+    }
+
+    override fun getEmotionStatusFailure(code: Int, message: String) {
+        Log.d("실패 : ", code.toString())
+        Log.d("실패 : ", message)
     }
 
     interface OnItemClickListener {

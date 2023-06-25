@@ -9,7 +9,7 @@ import retrofit2.Response
 class ChatRoomDeleteService {
     private lateinit var chatRoomDeleteResult: ChatRoomDeleteResult
 
-    fun setChatGetResult(chatRoomDeleteResult: ChatRoomDeleteResult){
+    fun setDeleteChatRoomResult(chatRoomDeleteResult: ChatRoomDeleteResult){
         this.chatRoomDeleteResult = chatRoomDeleteResult
     }
 

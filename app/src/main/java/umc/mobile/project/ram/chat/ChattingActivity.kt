@@ -47,6 +47,8 @@ import umc.mobile.project.ram.Auth.Chat.ChatAllGet.ChatAllGetResult
 import umc.mobile.project.ram.Auth.Chat.ChatAllGet.ChatAllGetService
 import umc.mobile.project.ram.Auth.Chat.ChatDelete.ChatRoomDeleteResult
 import umc.mobile.project.ram.Auth.Chat.ChatDelete.ChatRoomDeleteService
+import umc.mobile.project.ram.Auth.Chat.ChatDelete.UserDeleteResult
+import umc.mobile.project.ram.Auth.Chat.ChatDelete.UserDeleteService
 import umc.mobile.project.ram.Auth.Chat.ChatGet.ChatGetResult
 import umc.mobile.project.ram.Auth.Chat.ChatGet.ChatGetService
 import umc.mobile.project.ram.Auth.Chat.ChatMeetTimePost.ChatMeetTime
@@ -87,7 +89,7 @@ var location_dialog = ""
 class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult, PostGetAllResult,
     PostChatResult, ChatAllGetResult, PostPhotoResult,
     PostChatMeetTimeResult, ChatGetResult, PostLocationResult, PostDeclarationResult, IsReadPutResult, IsOutPutResult,
-    ChatRoomDeleteResult {
+    ChatRoomDeleteResult, UserDeleteResult {
     lateinit var binding: ActivityChattingBinding
     lateinit var chatRVAdapter: ChatRVAdapter
     var timestamp = Timestamp(Date().time)
@@ -1110,18 +1112,27 @@ class ChattingActivity : AppCompatActivity(), PostDetailGetResult, UserGetResult
     }
 
     fun deleteUser(){
-        val userDeleteService = ChatRoomDeleteService()
-        userDeleteService.setChatGetResult(this)
+        val userDeleteService = UserDeleteService()
+        userDeleteService.setUserDeleteResult(this)
         userDeleteService.deleteUser(chatRoom_id_get, user_id_logined)
     }
 
     override fun userDeleteSuccess(code: Int, result: Int) {
         Log.d("채팅방 나가기 성공", "")
+        dialog_etc.dismiss()
         finish()
     }
 
     override fun userDeleteFailure(code: Int, message: String) {
         Log.d("채팅방 나가기 실패", "")
+    }
+
+    override fun chatRoomDeleteSuccess(code: Int, result: Int) {
+        Log.d("채팅방 삭제 성공", "")
+    }
+
+    override fun chatRoomDeleteFailure(code: Int, message: String) {
+        TODO("Not yet implemented")
     }
 
 

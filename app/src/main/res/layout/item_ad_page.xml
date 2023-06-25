@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+            <ImageView
+                android:id="@+id/ad_adsMain"
+                android:layout_width="370dp"
+                android:layout_height="120dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/main_ads_background" />
+
+
+            <TextView
+                android:id="@+id/ad_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/ad_adsMain"
+                android:text="버거킹 월곡점"
+                android:fontFamily="@font/notosanskr_black"
+                android:textColor="#000000"
+                android:textSize="25dp"
+                app:layout_constraintBottom_toBottomOf="@id/ad_adsMain"
+                app:layout_constraintEnd_toStartOf="@id/ad_image"
+                app:layout_constraintStart_toStartOf="@id/ad_adsMain"
+                android:layout_marginBottom="20dp"
+                android:layout_marginEnd="20dp"
+                />
+
+            <TextView
+                android:id="@+id/ad_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="200분의 기다림, 더 깊어진 풍미"
+                android:textColor="@color/black"
+                android:textSize="13dp"
+                app:layout_constraintStart_toStartOf="@id/ad_title"
+                app:layout_constraintBottom_toBottomOf="@id/ad_title"
+                />
+
+            <ImageView
+                android:id="@+id/ad_image"
+                android:layout_width="80dp"
+                android:layout_height="65dp"
+                app:layout_constraintTop_toTopOf="@id/ad_adsMain"
+                app:layout_constraintBottom_toBottomOf="@id/ad_adsMain"
+                app:layout_constraintEnd_toEndOf="@id/ad_adsMain"
+                app:layout_constraintStart_toEndOf="@id/ad_title"
+                android:layout_marginStart="25dp"
+                />
+</androidx.constraintlayout.widget.ConstraintLayout>

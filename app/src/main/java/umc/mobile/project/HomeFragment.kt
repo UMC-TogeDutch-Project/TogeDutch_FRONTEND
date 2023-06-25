@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.widget.MarginPageTransformer
+import androidx.viewpager2.widget.ViewPager2
 
 import umc.mobile.project.announcement.AnnounceDetailActivity
 
@@ -18,6 +20,9 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import umc.mobile.project.Ad슬라이드추가한것.Ad
+import umc.mobile.project.Ad슬라이드추가한것.AdDetailDialog
+import umc.mobile.project.Ad슬라이드추가한것.ViewPager2Adepter
 
 import umc.mobile.project.announcement.AnnounceListActivity
 import umc.mobile.project.announcement.Auth.PostImminentGet.PostImminentGetResult
@@ -142,6 +147,30 @@ class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult {
 //        initRecyclerViewRecent()
 //        initRecyclerViewImminent()
 
+
+        // 2023.06.25 람 추가
+        var adList = mutableListOf<Ad>().apply {
+            add(Ad("엽떡 모지점", "엽떡 모지점 진심을 다해 만든다고 강조해주세요.", "https://umcbucket.s3.ap-northeast-2.amazonaws.com/%EB%96%A1%EB%B3%B6%EC%9D%B41.jpg" ))
+            add(Ad("엽떡 이지점", "엽떡 이지점 튀김도 정말 맛있게 합니다.", "https://umcbucket.s3.ap-northeast-2.amazonaws.com/%EB%96%A1%EB%B3%B6%EC%9D%B42.jpgg" ))
+        }
+        viewBinding.adsMain.apply {
+            clipToPadding = false
+            clipChildren = false
+            offscreenPageLimit = 1
+            adapter = ViewPager2Adepter(context, adList)
+        }
+        viewBinding.adsMain.setPageTransformer(MarginPageTransformer(100))
+        viewBinding.btnBack.setOnClickListener {
+            if(viewBinding.adsMain.currentItem != 0){
+                viewBinding.adsMain.currentItem -= 1
+            }
+        }
+
+        viewBinding.btnNext.setOnClickListener {
+            if(viewBinding.adsMain.currentItem != adList.size-1){
+                viewBinding.adsMain.currentItem += 1
+            }
+        }
 
         return viewBinding.root
 

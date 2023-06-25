@@ -222,7 +222,7 @@ class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult, Like
 
     override fun recordSuccess1(result: ArrayList<Post>) {
         postList1.addAll(result)
-        dataImminentRVAdapter = DataImminentRVAdapter(postList1)
+        dataImminentRVAdapter = DataImminentRVAdapter(postList1, like_list)
         viewBinding.rvImminent.adapter = dataImminentRVAdapter //리사이클러뷰에 어댑터 연결
         viewBinding.rvImminent.layoutManager= LinearLayoutManager(context) //레이아웃 매니저 연결
 

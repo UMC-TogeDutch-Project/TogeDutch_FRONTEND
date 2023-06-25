@@ -23,21 +23,30 @@ import umc.mobile.project.wishlist.GetLikePost.LikePostGetResult
 import umc.mobile.project.wishlist.GetLikePost.LikePostGetService
 
 
-class DataImminentRVAdapter(private val homeDataList: ArrayList<Post>) : RecyclerView.Adapter<DataImminentRVAdapter.ImminentViewHolder>(),
-    LikePostGetResult {
+class DataImminentRVAdapter(private val homeDataList: ArrayList<Post>, private val like_list: ArrayList<Post>) : RecyclerView.Adapter<DataImminentRVAdapter.ImminentViewHolder>() {
 
     private val checkboxStatus = SparseBooleanArray()
     lateinit var context : Context
 
     private var contentPostId = 0
 
-    private val clickedLikeStatus = arrayListOf<Post>()
+    var checkStatus = SparseBooleanArray()
 
     //ViewHolder 객체
    inner class ImminentViewHolder(private val viewBinding: ItemDataBinding) :
         RecyclerView.ViewHolder(viewBinding.root), LikePostResult, AnnounceAlertDialogInterface {
 
         fun bind(homeData: Post) {
+            like_list.forEach{
+                if(homeData.post_id == it.post_id) run {
+                    viewBinding.btnLikeThird.isSelected = true
+                    checkStatus.put(adapterPosition, true)
+                    Log.d("homeData.post_id: ", homeData.post_id.toString())
+                    Log.d("it.post_id: ", it.post_id.toString())
+                    viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon_fill)
+                }
+            }
+
             Glide.with(context).load(homeData.image).centerCrop().into(viewBinding.ivItemImageThird)
             viewBinding.tvItemTitle.text = homeData.title //제목
 
@@ -59,37 +68,24 @@ class DataImminentRVAdapter(private val homeDataList: ArrayList<Post>) : Recycle
 
             Log.d("absoluteAdapterPosition: ", absoluteAdapterPosition.toString())
 
-            viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon)
-
-            var id = clickedLikeStatus.find { it.post_id == homeData.post_id }
-            if(id != null) {
-                Log.d("체크된 post 제목 ======================== ", homeData.title)
-                viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon_fill)
-            }
-
-
             viewBinding.btnLikeThird.setOnClickListener {
-//                viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon_fill)
                 viewBinding.btnLikeThird.isSelected = !viewBinding.btnLikeThird.isSelected
 
                 if(viewBinding.btnLikeThird.isSelected) {
-                    viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon_fill)
-                } else {
-                    viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon)
+                    val likePostService = LikePostService()
+                    likePostService.setLikePostResult(this)
+                    likePostService.sendLike(user_id_logined, homeData.post_id)
+                    Log.d("post_id: ", homeData.post_id.toString())
                 }
+
                 notifyDataSetChanged()
-
-                val likePostService = LikePostService()
-                likePostService.setLikePostResult(this)
-                likePostService.sendLike(user_id_logined, homeData.post_id)
-                Log.d("post_id: ", homeData.post_id.toString())
-
             }
 
         }
 
 
         override fun LikePostSuccess(result: Result) {
+            checkStatus.put(adapterPosition, true)
             viewBinding.btnLikeThird.setBackgroundResource(R.drawable.main_item_heart_icon_fill)
             notifyDataSetChanged()
             Log.d("관심목록 등록 성공", "")
@@ -124,25 +120,8 @@ class DataImminentRVAdapter(private val homeDataList: ArrayList<Post>) : Recycle
             viewGroup, false)
 
         context = viewGroup.context
-        getLikePost()
 
         return ImminentViewHolder(viewBinding)
-    }
-
-    private fun getLikePost() {
-        val likePostGetService = LikePostGetService()
-        likePostGetService.setLikePostGetResult(this)
-        likePostGetService.getLikePost(user_id_logined)
-    }
-
-    override fun getPostUploadSuccess(code: Int, result: ArrayList<Post>) {
-        clickedLikeStatus.addAll(result)
-        for(i in 0..result.size-1)
-            Log.d("title : ", result[i].title)
-    }
-
-    override fun getPostUploadFailure(code: Int, message: String) {
-        Log.d("", "")
     }
 
     //ViewHolder가 실제로 데이터를 표시해야 할 때 호출되는 함수
@@ -175,4 +154,7 @@ class DataImminentRVAdapter(private val homeDataList: ArrayList<Post>) : Recycle
 
     private lateinit var itemClickListener : OnItemClickListener
 
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
 }

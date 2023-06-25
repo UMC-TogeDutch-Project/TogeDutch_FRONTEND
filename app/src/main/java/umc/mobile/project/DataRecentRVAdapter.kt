@@ -24,7 +24,7 @@ import umc.mobile.project.wishlist.GetLikePost.LikePostGetService
 import umc.mobile.project.wishlist.Like
 import umc.mobile.project.wishlist.LikePost
 
-class DataRecentRVAdapter(private val homeDataList: ArrayList<Post>, private val like_list: ArrayList<Post>) : RecyclerView.Adapter<DataRecentRVAdapter.RecentViewHolder>(), LikePostGetResult {
+class DataRecentRVAdapter(private val homeDataList: ArrayList<Post>, private val like_list: ArrayList<Post>) : RecyclerView.Adapter<DataRecentRVAdapter.RecentViewHolder>() {
 
     lateinit var context : Context
 
@@ -130,20 +130,6 @@ class DataRecentRVAdapter(private val homeDataList: ArrayList<Post>, private val
         return RecentViewHolder(viewBinding)
     }
 
-    private fun getLikePost() {
-        val likePostGetService = LikePostGetService()
-        likePostGetService.setLikePostGetResult(this)
-        likePostGetService.getLikePost(user_id_logined)
-    }
-
-    override fun getPostUploadSuccess(code: Int, result: ArrayList<Post>) {
-        for(i in 0..result.size-1)
-            Log.d("title : ", result[i].title)
-    }
-
-    override fun getPostUploadFailure(code: Int, message: String) {
-        Log.d("", "")
-    }
 
     //ViewHolder가 실제로 데이터를 표시해야 할 때 호출되는 함수
     override fun onBindViewHolder(holder: DataRecentRVAdapter.RecentViewHolder, position: Int) {
@@ -175,7 +161,6 @@ class DataRecentRVAdapter(private val homeDataList: ArrayList<Post>, private val
     }
 
     private lateinit var itemClickListener : OnItemClickListener
-
 
     override fun getItemViewType(position: Int): Int {
         return position

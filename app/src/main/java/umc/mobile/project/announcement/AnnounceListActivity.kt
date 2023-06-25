@@ -209,7 +209,7 @@ private fun getPostLatest(){
 
     override fun recordSuccess1(result: ArrayList<Post>) {
         postList1.addAll(result)
-        dataImminentRVAdapter = DataImminentRVAdapter(postList1)
+        dataImminentRVAdapter = DataImminentRVAdapter(postList1, like_list)
         binding.rvMainImminent.adapter = dataImminentRVAdapter
         binding.rvMainImminent.layoutManager= LinearLayoutManager(this) //레이아웃 매니저 연결
 

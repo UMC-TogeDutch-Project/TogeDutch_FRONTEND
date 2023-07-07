@@ -12,6 +12,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -70,7 +71,7 @@ class MyPhoneNumReviseFragment : Fragment(), PhoneNumberPatchResult {
         image = MyApplication.prefs.getString("image", "")
 
         if(image != "null"){
-            Glide.with(this).load(MyApplication.prefs.getString("image", "")).into(viewBinding.profileImage)
+            Glide.with(this).load(MyApplication.prefs.getString("image", "")).apply(RequestOptions().circleCrop().centerCrop()).into(viewBinding.profileImage)
         }
 
         newPhoneNumberEditText = viewBinding.newPhoneNumber

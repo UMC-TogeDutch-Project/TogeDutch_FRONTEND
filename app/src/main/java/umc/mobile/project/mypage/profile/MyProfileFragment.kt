@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -79,7 +80,7 @@ class MyProfileFragment : Fragment(), PostUploadGetResult, EmotionStatusGetResul
         image = MyApplication.prefs.getString("image", "")
 
         if(image != "null"){
-            Glide.with(this).load(image).into(viewBinding.profileImage)
+            Glide.with(this).load(image).apply(RequestOptions().circleCrop().centerCrop()).into(viewBinding.profileImage)
         }
 
         profileImage = viewBinding.profileImage
@@ -249,6 +250,7 @@ class MyProfileFragment : Fragment(), PostUploadGetResult, EmotionStatusGetResul
 
                     profileImage.setImageURI(selectedImageUri)
 
+
                     Log.d("profileImage: ", profileImage.toString())
 
                     MyApplication.prefs.setString("image", selectedImageUri.toString())
@@ -287,7 +289,7 @@ class MyProfileFragment : Fragment(), PostUploadGetResult, EmotionStatusGetResul
     }
 
     override fun profileImageSuccess(code: Int, result: ChangeProfileResult) {
-        Log.d("비밀번호 변환 값 ==========================", result.image)
+        Log.d("이미지 값 ==========================", result.image)
     }
 
     override fun profileImageFailure(code: Int, message: String) {

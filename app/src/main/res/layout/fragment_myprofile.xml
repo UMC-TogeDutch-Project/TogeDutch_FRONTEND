@@ -13,16 +13,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/profileImage"
-        android:layout_width="128dp"
-        android:layout_height="128dp"
-        android:layout_marginTop="40dp"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/myprofile_actionbar"
-        app:srcCompat="@drawable/profile" />
+        android:id="@+id/profileImageLayout">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profileImage"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/profile"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </LinearLayout>
+
+<!--    <ImageView-->
+<!--        android:id="@+id/profileImage"-->
+<!--        android:layout_width="128dp"-->
+<!--        android:layout_height="128dp"-->
+<!--        android:layout_marginTop="40dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.498"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/myprofile_actionbar"-->
+<!--        app:srcCompat="@drawable/profile" />-->
 
     <ImageView
         android:id="@+id/changeProfile"
@@ -32,7 +51,7 @@
         android:layout_marginTop="43dp"
         android:onClick="onClick"
         android:src="@drawable/icon_revise"
-        app:layout_constraintStart_toStartOf="@+id/profileImage"
+        app:layout_constraintStart_toStartOf="@+id/profileImageLayout"
         app:layout_constraintTop_toBottomOf="@+id/myprofile_actionbar" />
 
     <TextView
@@ -46,7 +65,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileImage" />
+        app:layout_constraintTop_toBottomOf="@+id/profileImageLayout" />
 
     <TextView
         android:id="@+id/textView4"
@@ -180,6 +199,6 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/nickname"
-        app:layout_constraintTop_toBottomOf="@+id/profileImage" />
+        app:layout_constraintTop_toBottomOf="@+id/profileImageLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,15 +12,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/profileImage"
-        android:layout_width="128dp"
-        android:layout_height="128dp"
-        android:layout_marginTop="38dp"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include"
-        app:srcCompat="@drawable/profile" />
+        android:id="@+id/profileImageLayout">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profileImage"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_marginTop="38dp"
+            android:src="@drawable/profile"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </LinearLayout>
+
+<!--    <ImageView-->
+<!--        android:id="@+id/profileImage"-->
+<!--        android:layout_width="128dp"-->
+<!--        android:layout_height="128dp"-->
+<!--        android:layout_marginTop="38dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/include"-->
+<!--        app:srcCompat="@drawable/profile" />-->
 
     <TextView
         android:id="@+id/nickname"
@@ -33,7 +51,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileImage" />
+        app:layout_constraintTop_toBottomOf="@+id/profileImageLayout" />
 
     <TextView
         android:id="@+id/textView4"
@@ -114,9 +132,9 @@
 
     <Button
         android:id="@+id/phone_authentication"
-        android:layout_width="103dp"
+        android:layout_width="95dp"
         android:layout_height="37dp"
-        android:layout_marginStart="3dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="9dp"
         android:layout_marginEnd="18dp"
         android:background="@drawable/button_round_11"

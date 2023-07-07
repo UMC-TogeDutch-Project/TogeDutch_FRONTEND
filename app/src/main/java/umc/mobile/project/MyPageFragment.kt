@@ -6,8 +6,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import umc.mobile.project.commercial.CommercialListActivity
 import umc.mobile.project.databinding.FragmentMypageBinding
 import umc.mobile.project.login.LoginActivity
@@ -28,6 +30,8 @@ class MyPageFragment: Fragment(), UserGetResult {
     val SUBACTIITY_REQUEST_CODE = 100
 
     val TAG: String = "로그"
+    var image : String = ""
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -97,7 +101,7 @@ class MyPageFragment: Fragment(), UserGetResult {
         Log.d("name: ", result.name)
 
         if(result.image != null){
-            Glide.with(this).load(result.image).into(viewBinding.imageView)
+            Glide.with(this).load(result.image).apply(RequestOptions().circleCrop().centerCrop()).into(viewBinding.imageView)
         }
 
         userName = result.name
@@ -123,5 +127,15 @@ class MyPageFragment: Fragment(), UserGetResult {
 //            }
 //        }
 //    }
+
+    // 프로필 이미지 변경 후 돌아 왔을 때 바뀐 이미지 받음
+    override fun onResume() {
+        super.onResume()
+        image = MyApplication.prefs.getString("image", "")
+
+        if(image != "null"){
+            Glide.with(this).load(image).apply(RequestOptions().circleCrop().centerCrop()).into(viewBinding.imageView)
+        }
+    }
 
 }

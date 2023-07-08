@@ -51,7 +51,7 @@
                 android:layout_width="370dp"
                 android:layout_height="41dp"
                 android:hint="검색"
-                android:paddingLeft="17dp"
+                android:paddingLeft="45dp"
                 android:background="@drawable/sign_up_alram__edit_text_box"
                 />
 
@@ -59,10 +59,21 @@
                 android:id="@+id/btnInputAlarm"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_gravity="right"
-                android:layout_marginRight="15dp"
+                android:layout_gravity="left"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/sign_up_tabler_icon_search"
+
+                />
+
+            <Button
+                android:id="@+id/btnRecord"
+                android:layout_width="18dp"
+                android:layout_height="30dp"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/searchmic"
 
                 />
 

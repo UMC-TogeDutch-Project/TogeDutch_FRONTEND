@@ -1,13 +1,23 @@
 package umc.mobile.project
 
 import Post
+import android.Manifest
+import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.speech.RecognitionListener
+import android.speech.RecognizerIntent
+import android.speech.SpeechRecognizer
+import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 
@@ -29,6 +39,8 @@ import umc.mobile.project.news.NewsActivity
 import umc.mobile.project.ram.my_application_1.user_id_logined
 import umc.mobile.project.ram.my_application_1.user_id_var
 import umc.mobile.project.search.SearchActivity
+import java.util.*
+import kotlin.collections.ArrayList
 import umc.mobile.project.wishlist.GetLikePost.LikePostGetResult
 import umc.mobile.project.wishlist.GetLikePost.LikePostGetService
 
@@ -36,6 +48,8 @@ class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult, Like
     lateinit var dataRecentRVAdapter: DataRecentRVAdapter
     lateinit var dataImminentRVAdapter: DataImminentRVAdapter
     private lateinit var viewBinding: FragmentHomeBinding
+    private var speechRecognizer: SpeechRecognizer? = null
+    private val REQUEST_CODE = 1
 
     val TAG: String = "로그"
 //    private var _viewBinding: FragmentHomeBinding? = null
@@ -60,6 +74,12 @@ class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult, Like
 //        binding = ActivityAnnounceListBinding.inflate(inflater, container, false)
 
         Log.d(TAG, "onCreateView: TestLog")
+
+        // 권한 체크 코드
+        if (Build.VERSION.SDK_INT >= 23)
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.INTERNET, Manifest.permission.RECORD_AUDIO), REQUEST_CODE)
+
+        viewBinding.btnRecord.setOnClickListener { startSTT() }
 
         //Retrofit2 선언
         val retrofit = Retrofit.Builder()
@@ -186,6 +206,52 @@ class HomeFragment: Fragment(), PostRecentGetResult, PostImminentGetResult, Like
 
     }
 
+    /***
+     *  SpeechToText 설정 및 동작
+     */
+    private  fun startSTT() {
+        val speechRecognizerIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+            putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, requireActivity().packageName)
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+        }
+
+        speechRecognizer = SpeechRecognizer.createSpeechRecognizer(requireContext()).apply {
+            setRecognitionListener(recognitionListener())
+            startListening(speechRecognizerIntent)
+        }
+
+    }
+
+    /***
+     *  SpeechToText 기능 세팅
+     */
+    private fun recognitionListener() = object : RecognitionListener {
+
+        override fun onReadyForSpeech(params: Bundle?) = Toast.makeText(activity, "음성인식 시작", Toast.LENGTH_SHORT).show()
+
+        override fun onRmsChanged(rmsdB: Float) {}
+
+        override fun onBufferReceived(buffer: ByteArray?) {}
+
+        override fun onPartialResults(partialResults: Bundle?) {}
+
+        override fun onEvent(eventType: Int, params: Bundle?) {}
+
+        override fun onBeginningOfSpeech() {}
+
+        override fun onEndOfSpeech() {}
+
+        override fun onError(error: Int) {
+            when(error) {
+                SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS -> Toast.makeText(activity, "퍼미션 없음", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        override fun onResults(results: Bundle) {
+            Toast.makeText(activity, "음성인식 종료", Toast.LENGTH_SHORT).show()
+            viewBinding.etInputAlarmKeyword.setText(results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)!![0])
+        }
+    }
 
 
 
